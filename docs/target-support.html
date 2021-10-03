@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Target support &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4"><h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/installing" class="sidebar-link ">Installing</a></li><li class="sidebar-item level-1"><a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a></li><li class="sidebar-item level-1"><a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a></li></ul><h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/terminology" class="sidebar-link ">Terminology</a></li><li class="sidebar-item level-1"><p class="sidebar-item-selected">Target support</p></li><li class="sidebar-item level-1"><a href="/docs/configuration" class="sidebar-link ">Configuration</a></li><li class="sidebar-item level-1"><a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a></li><li class="sidebar-item level-1"><a href="/docs/configuring-logging" class="sidebar-link ">Configuring logging</a></li><li class="sidebar-item level-1"><a href="/docs/security" class="sidebar-link ">Security and protection</a></li><li class="sidebar-item level-1"><a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a></li></ul><h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/options" class="sidebar-link ">Session options list</a></li><li class="sidebar-item level-1"><a href="/docs/command-reference" class="sidebar-link ">Command reference</a></li></ul><h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/python-api" class="sidebar-link ">Introduction to the API</a></li><li class="sidebar-item level-1"><a href="/docs/api-examples" class="sidebar-link ">Python API examples</a></li></ul><h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a></li><li class="sidebar-item level-1"><a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a></li><li class="sidebar-item level-1"><a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a></li><li class="sidebar-item level-1"><a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a></li><li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2"><li class="sidebar-item level-2"><a href="/docs/architecture" class="sidebar-link ">Architecture</a></li><li class="sidebar-item level-2"><a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a></li></ul>
+        </li></ul></div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Target support</h1>
+                  
+                
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">Contents</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#target-types">Target types</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#generic-target-type">Generic target type</a></li>
+<li class="toc-entry toc-h3"><a href="#setting-the-target-type">Setting the target type</a></li>
+<li class="toc-entry toc-h3"><a href="#target-type-auto-detection">Target type auto-detection</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#target-support-sources">Target support sources</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#built-in">Built-in</a></li>
+<li class="toc-entry toc-h3"><a href="#cmsis-packs">CMSIS-Packs</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#managed-packs">Managed packs</a></li>
+<li class="toc-entry toc-h4"><a href="#manual-pack-usage">Manual pack usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+                    </div>
+                  </div>
+                
+                  <p>Through both built-in support and CMSIS-Packs, pyOCD supports nearly every Cortex-M MCU that is
+available on the market.</p>
+
+<p>In addition, because pyOCD dynamically inspects the target’s debug infrastructure, basic
+debug functionality is enabled for any target that correctly implement the CoreSight architecture.</p>
+
+<h2 id="target-types">Target types</h2>
+
+<p>When pyOCD connects to a device, it needs to know what type of device (target) it is controlling.
+The type of device is known as the “target type”. The target type defines the flash programming
+algorithm and determine the device’s memory map and other important information. Each target type is
+identified by a short string that is either the full or partial part number for the device. For
+example, “k64f” or “stm32l072”.</p>
+
+<p>Target types are either built-in to pyOCD or come from CMSIS-Packs. The sections below describe more
+about the sources of target support.</p>
+
+<p>To see the available target types you can run <code class="highlighter-rouge">pyocd list --targets</code>. This command will print a
+table of supported target types, including the target name, vendor, and part number. In addition, it
+prints whether each target target is built-in or comes from a CMSIS-Pack.</p>
+
+<h3 id="generic-target-type">Generic target type</h3>
+
+<p>PyOCD furnishes a generic target type named “cortex_m”. This target type will be able to connect to
+and debug almost any Cortex-M device that correctly implements the CoreSight architecture. However,
+flash memory cannot be programmed, and a memory map is not provided. In addition, it may not work
+for certain devices that require special handling of operations such as reset and halt.</p>
+
+<p>Because of the limitations of the generic “cortex_m” target, the warning shown below will be logged
+if the target type is “cortex_m”.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0000183:WARNING:board:Generic cortex_m target type is selected; is this intentional? You will be
+able to debug but not program flash. To set the target type use the '--target' argument or
+'target_override' option. Use 'pyocd list --targets' to see available targets.
+</code></pre></div></div>
+
+<h3 id="setting-the-target-type">Setting the target type</h3>
+
+<p>There are two ways to specify the target type.</p>
+
+<p>The first is to pass the <code class="highlighter-rouge">--target</code> command line argument to the <code class="highlighter-rouge">pyocd</code> tool and pass the target
+type name. This argument must be passed every time you run <code class="highlighter-rouge">pyocd</code> with a subcommand that connects
+to the target.</p>
+
+<p>Another method is to set the <code class="highlighter-rouge">target_override</code> session option in a <code class="highlighter-rouge">pyocd.yaml</code> configuration file. The
+<a href="/docs/configuration">configuration file documentation</a> describes how to do this for a specific debug
+probe instead of globally.</p>
+
+<h3 id="target-type-auto-detection">Target type auto-detection</h3>
+
+<p>Certain on-board debug probes know the type of target with which they are connected. The Arm DAPLink
+and STLinkV2-1 firmwares both support this feature. When using a probe with target type
+auto-detection, you do not need to tell pyOCD</p>
+
+<p>To check whether your debug probe supports auto-detection, run <code class="highlighter-rouge">pyocd list</code>. This command prints
+a list of all connected debug probes. If a probe does not support auto-detection, the name of the
+probe firmware is printed. Whereas probes that do support auto-detection will show up with the
+name of the board plus the target type in brackets.</p>
+
+<p>Example probe listing:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #   Probe                               Unique ID
+--------------------------------------------------------------------------------------------
+  0   DISCO-L475VG-IOT01A [stm32l475xg]   066EFF555051897267233656
+  1   KEIL - Tools By ARM Keil ULINKplus  L02932983A
+</code></pre></div></div>
+
+<p>This example shows two probes. The first does support auto-detection, while the second does not.
+Note how the first probe’s description shows the name of the board and the target type
+“stm32l475xg” in brackets.</p>
+
+<p>If the target type is <em>not</em> auto-detected, it will default to “cortex_m” unless specified as
+described above.</p>
+
+<h2 id="target-support-sources">Target support sources</h2>
+
+<h3 id="built-in">Built-in</h3>
+
+<p>PyOCD has built-in support for over 70 popular MCUs from various vendors.</p>
+
+<p>Because new targets are addded fairly often, the best way to see the available built-in targets is
+by running <code class="highlighter-rouge">pyocd list --targets</code>. This command will print a table of supported target types.
+Built-in targets will be identified as such in the “SOURCE” column.</p>
+
+<h3 id="cmsis-packs">CMSIS-Packs</h3>
+
+<p>The <a href="http://arm-software.github.io/CMSIS_5/General/html/index.html">CMSIS</a> specification defines the
+<a href="http://arm-software.github.io/CMSIS_5/Pack/html/index.html">Device Family Pack</a> (DFP) standard for
+distributing device support files. PyOCD uses DFPs as a means to add support for devices that do
+not have support built in. This allows pyOCD to support nearly every Cortex-M MCU on the market. It
+also means that pyOCD can immediately support newly released devices as soon as the silicon vendor
+makes a DFP available.</p>
+
+<p>The <a href="http://www.keil.com/dd2/pack/">CMSIS-Pack list</a> web page is the official list of all available
+packs. You can choose to download individual packs.</p>
+
+<p>There are two methods to use a DFP within pyOCD. First, you can let pyOCD fully manage packs for
+you, where all you have to do is tell it the part number(s) for which you wish to install support.
+Alternatively, you can manually download packs and tell pyOCD which pack files to use.</p>
+
+<p><em>Note:</em> As with any software release, CMSIS-Packs may be buggy and have incorrect or missing
+information about a device. Sometimes memory regions will be missing, attributes of a memory region
+or flash algorithm might be wrong, or the flash algorithm itself might be buggy. If you encounter an
+issue with a pack, you can report the issue on the <a href="https://www.github.com/pyocd/pyOCD/issues">pyOCD GitHub
+site</a> to let other users know about the problem. You
+should also report the issue to the pack vendor so it can be fixed.</p>
+
+<h4 id="managed-packs">Managed packs</h4>
+
+<p>The <code class="highlighter-rouge">pyocd</code> tool’s <code class="highlighter-rouge">pack</code> subcommand provides completely automated management of CMSIS-Packs. It
+allows you to install new device support with a single command line invocation.</p>
+
+<p>As part of the pack management, pyOCD keeps an index of all available DFPs. The pack index is a two-
+level hierarchy of pack lists, with the top level pointing to individual vendor indexes. Once the
+index is downloaded, pyOCD can very quickly locate the DFP that provides support for a given
+MCU part number. To learn more about the index, see the <a href="http://arm-software.github.io/CMSIS_5/Pack/html/packIndexFile.html">CMSIS-Pack index
+files</a> documentation.</p>
+
+<p>The two most useful subcommands of the <code class="highlighter-rouge">pack</code> subcommand are <code class="highlighter-rouge">find</code> and <code class="highlighter-rouge">install</code>. The options accept a glob-style
+pattern that is matched against MCU part numbers in the index. If the index has not been downloaded yet, that will be
+done first, or you can run <code class="highlighter-rouge">pyocd pack update</code> yourself. The <code class="highlighter-rouge">find</code> subcommand will print out a list of matching part
+numbers and the names of the containing DFPs. <code class="highlighter-rouge">install</code> performs the same match, but downloads and installs the matching
+DFPs. The part number patterns are matched case-insensitively and as a contains comparison.</p>
+
+<p>For instance, if you know the specific part number of the device you are using, say STM32L073, you
+can run this command to install support:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd pack install stm32l073
+</code></pre></div></div>
+
+<p>This will download the index if required, then download the STM32L0xx_DFP pack. The</p>
+
+<p>As another example, to find which pack(s) support the NXP MK26F family, you could run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd pack find k26
+</code></pre></div></div>
+
+<p>This will print a table similar to:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Part             Vendor   Pack          Version
+---------------------------------------------------
+  MK26FN2M0CAC18   NXP      MK26F18_DFP   11.0.1
+  MK26FN2M0VLQ18   NXP      MK26F18_DFP   11.0.1
+  MK26FN2M0VMD18   NXP      MK26F18_DFP   11.0.1
+  MK26FN2M0VMI18   NXP      MK26F18_DFP   11.0.1
+</code></pre></div></div>
+
+<p>Once a DFP is installed, the <code class="highlighter-rouge">pyocd list --targets</code> command will show the new targets in its output,
+and you can immediately begin using the target support with the other <code class="highlighter-rouge">pyocd</code> subcommands.</p>
+
+<p>To get a list of all installed packs, use the <code class="highlighter-rouge">pack show</code> subcommand.</p>
+
+<h4 id="manual-pack-usage">Manual pack usage</h4>
+
+<p>If you prefer to manually manage packs, or if the managed pack system cannot access online packs
+from your network, you can download them yourself from the <a href="http://www.keil.com/dd2/pack/">official CMSIS-Pack
+list</a>. The downloaded pack files can be stored wherever you like.
+Typically you would group them in a single common directory. Another good option is to place the
+pack file used with a project in a project-relative location.</p>
+
+<p>There are two ways to use a manually downloaded pack.</p>
+
+<p>The simplest option is to pass the <code class="highlighter-rouge">--pack</code> option to the <code class="highlighter-rouge">pyocd</code> tool, specifying the path to the
+.pack file. PyOCD does not cache any information about packs used this way, so this argument must be
+passed for every invocation in addition to the other arguments. For instance, to run the GDB server,
+you might execute <code class="highlighter-rouge">pyocd gdbserver --pack=Keil.STM32L4xx_DFP.2.2.0.pack</code>. Note that you can pass
+multiple <code class="highlighter-rouge">--pack</code> arguments to pyOCD, which might be useful in a scripted execution of pyOCD.</p>
+
+<p>For a more permanent solution, use a <a href="/docs/configuration"><code class="highlighter-rouge">pyocd.yaml</code> configuration file</a>. In the
+config file, set the <code class="highlighter-rouge">pack</code> session option to either a single .pack file path or a list of paths. Now
+when you run the <code class="highlighter-rouge">pyocd</code> tool, it will automatically pick up the pack file(s) to use.</p>
+
+<p>Here is an example config file that lists two packs.</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">pack</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">/Users/admin/CMSIS-Packs/Keil.STM32L0xx_DFP.2.0.0.pack</span>
+  <span class="pi">-</span> <span class="s">/Users/admin/CMSIS-Packs/NXP.MKV58F24_DFP.11.0.0.pack</span>
+</code></pre></div></div>
+
+<p>To see the targets provided by a .pack file, run <code class="highlighter-rouge">pyocd list --targets</code> and pass the approprate
+<code class="highlighter-rouge">--pack</code> option or use a config file, as described above.</p>
+
+<p><em>Note:</em> .pack files are simply zip archives with a different extension. To examine the contents of
+a pack, change the extension to .zip and extract.</p>
+
+
+
+                </div>
+              </div>
+            </main>
+          
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+      
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>

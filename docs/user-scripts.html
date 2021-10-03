@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>User Scripts &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4"><h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/installing" class="sidebar-link ">Installing</a></li><li class="sidebar-item level-1"><a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a></li><li class="sidebar-item level-1"><a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a></li></ul><h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/terminology" class="sidebar-link ">Terminology</a></li><li class="sidebar-item level-1"><a href="/docs/target-support" class="sidebar-link ">Target support</a></li><li class="sidebar-item level-1"><a href="/docs/configuration" class="sidebar-link ">Configuration</a></li><li class="sidebar-item level-1"><a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a></li><li class="sidebar-item level-1"><a href="/docs/configuring-logging" class="sidebar-link ">Configuring logging</a></li><li class="sidebar-item level-1"><a href="/docs/security" class="sidebar-link ">Security and protection</a></li><li class="sidebar-item level-1"><a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a></li></ul><h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/options" class="sidebar-link ">Session options list</a></li><li class="sidebar-item level-1"><a href="/docs/command-reference" class="sidebar-link ">Command reference</a></li></ul><h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/python-api" class="sidebar-link ">Introduction to the API</a></li><li class="sidebar-item level-1"><a href="/docs/api-examples" class="sidebar-link ">Python API examples</a></li></ul><h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a></li><li class="sidebar-item level-1"><a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a></li><li class="sidebar-item level-1"><a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a></li><li class="sidebar-item level-1"><a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a></li><li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2"><li class="sidebar-item level-2"><a href="/docs/architecture" class="sidebar-link ">Architecture</a></li><li class="sidebar-item level-2"><a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a></li></ul>
+        </li></ul></div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">User Scripts</h1>
+                  
+                
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">Contents</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h2"><a href="#examples">Examples</a></li>
+<li class="toc-entry toc-h2"><a href="#script-globals">Script globals</a></li>
+<li class="toc-entry toc-h2"><a href="#script-functions">Script functions</a></li>
+</ul>
+                    </div>
+                  </div>
+                
+                  <h2 id="introduction">Introduction</h2>
+
+<p>pyOCD has support for customization through what are called user scripts. These are Python scripts
+that are loaded by pyOCD before it connects to the target. A user script can define functions that
+are called as hooks at certain points in the connection lifetime, and can extend, modify, or
+completely override the default behaviour.</p>
+
+<p>If a file named <code class="highlighter-rouge">pyocd_user.py</code> or <code class="highlighter-rouge">.pyocd_user.py</code> is placed in the project directory, pyOCD will
+automatically detect it and load it as a user script. If you prefer another name, you can set the
+<code class="highlighter-rouge">user_script</code> option. Another alternative is to provide the filename using the <code class="highlighter-rouge">--script</code> command
+line argument. If a relative path is set either with the option or command line, it will be searched
+for in the project directory.</p>
+
+<p>The arguments for hook functions defined in user scripts are the same arguments accepted by delegate
+methods. However, all arguments to user script functions are optional. If provided, the argument
+names must match the specification. But you can specify arguments in any order, and exclude any or
+all arguments if they are not needed. In fact, most arguments are not required because the same
+objects are available as script globals, for instance <code class="highlighter-rouge">board</code> and <code class="highlighter-rouge">target</code>.</p>
+
+<h2 id="examples">Examples</h2>
+
+<p>This example user script shows how to add a new memory region.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This example applies to the Nordic nRF52 devices.
+</span>
+<span class="k">def</span> <span class="nf">will_connect</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+    <span class="c1"># Create the new ROM region for the FICR.
+</span>    <span class="n">ficr</span> <span class="o">=</span> <span class="n">pyocd</span><span class="p">.</span><span class="n">core</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">RomRegion</span><span class="p">(</span>
+                                        <span class="n">name</span><span class="o">=</span><span class="s">"ficr"</span><span class="p">,</span>
+                                        <span class="n">start</span><span class="o">=</span><span class="mh">0x10000000</span><span class="p">,</span>
+                                        <span class="n">length</span><span class="o">=</span><span class="mh">0x460</span>
+                                        <span class="p">)</span>
+
+    <span class="c1"># Add the FICR region to the memory map.
+</span>    <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">add_region</span><span class="p">(</span><span class="n">ficr</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This example shows how to override the flash algorithm for an external flash memory.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This example applies to the NXP i.MX RT10x0 devices.
+</span>
+<span class="c1"># Unlike the previous example, the board argument is excluded here.
+</span><span class="k">def</span> <span class="nf">will_connect</span><span class="p">():</span>
+    <span class="c1"># Look up the external flash memory region.
+</span>    <span class="n">extFlash</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">get_first_matching_region</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"flexspi"</span><span class="p">)</span>
+
+    <span class="c1"># Set the path to an .FLM flash algorithm.
+</span>    <span class="n">extFlash</span><span class="p">.</span><span class="n">flm</span> <span class="o">=</span> <span class="s">"MIMXRT105x_QuadSPI_4KB_SEC.FLM"</span>
+</code></pre></div></div>
+
+<p>This example demonstrates setting the DBGMCU_CR register on reset for STM32 devices.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This example applies to the ST STM32L0x1 devicess.
+</span>
+<span class="n">DBG_CR</span> <span class="o">=</span> <span class="mh">0x40015804</span>
+
+<span class="k">def</span> <span class="nf">did_reset</span><span class="p">():</span>
+    <span class="c1"># Set STANDBY, STOP, and SLEEP bits all to 1.
+</span>    <span class="n">target</span><span class="p">.</span><span class="n">write32</span><span class="p">(</span><span class="n">DBG_CR</span><span class="p">,</span> <span class="mh">0x7</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Another common use for a script is to initialize external memory such as SDRAM.</p>
+
+<h2 id="script-globals">Script globals</h2>
+
+<p>A number of useful symbols are made available in the global namespace of user scripts. These include
+both target related objects, as well as parts of the pyOCD Python API.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">__file__</code></td>
+      <td>Path to the user script.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">__name__</code></td>
+      <td>Module name of the user script.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">aps</code></td>
+      <td>Dictionary of CoreSight Access Port (AP) objects. The keys are the APSEL value.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">board</code></td>
+      <td>The <code class="highlighter-rouge">Board</code> object.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">BreakpointType</code></td>
+      <td>Enumeration of breakpoint types.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">DeviceRegion</code></td>
+      <td>Device-type memory region class.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">dp</code></td>
+      <td>The CoreSight Debug Port (DP) object.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Error</code></td>
+      <td>The base class for all pyOCD exceptions.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Event</code></td>
+      <td>Enumeration of notification event types.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">exceptions</code></td>
+      <td>Module containing the exception classes.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FileProgrammer</code></td>
+      <td>Utility class to program files to target flash.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashEraser</code></td>
+      <td>Utility class to erase target flash.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashLoader</code></td>
+      <td>Utility class to program raw binary data to target flash.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashRegion</code></td>
+      <td>Flash memory region.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">HaltReason</code></td>
+      <td>Enumeration of halt reasons.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">LOG</code></td>
+      <td><code class="highlighter-rouge">Logger</code> object for the user script.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">MemoryMap</code></td>
+      <td>Class representing the device’s memory map.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">MemoryType</code></td>
+      <td>Memory region type enumeration.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">options</code></td>
+      <td>The session options dictionary.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">probe</code></td>
+      <td>The connected debug probe object.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">pyocd</code></td>
+      <td>The root pyOCD package.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">RamRegion</code></td>
+      <td>RAM memory region.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetType</code></td>
+      <td>Reset type enumeration.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">RomRegion</code></td>
+      <td>ROM memory region.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">RunType</code></td>
+      <td>Enumeration of types of run operations (step or run).</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">SecurityState</code></td>
+      <td>Enumeration of core security states.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">session</code></td>
+      <td>The session object, which is the root of the connection object graph.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">State</code></td>
+      <td>Enumeration of target state.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Target</code></td>
+      <td>Base class, mostly useful for numerous constants that are defined within the class.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">target</code></td>
+      <td>The <code class="highlighter-rouge">CoreSightTarget</code> or subclass instance representing the MCU.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">TransferError</code></td>
+      <td>Exception class for all transfer errors.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">TransferFaultError</code></td>
+      <td>Exception subclass of <code class="highlighter-rouge">TransferError</code> for bus faults.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">VectorCatch</code></td>
+      <td>Namespace class containing bit mask constants for vector catch options.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">WatchpointType</code></td>
+      <td>Enumeration of watchpoint types.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="script-functions">Script functions</h2>
+
+<p>This section documents all functions that user scripts can provide to modify pyOCD’s behaviour.</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">will_connect(board)</code><br />
+  Pre-init hook for the board.</p>
+
+    <p><em>board</em> - A <code class="highlighter-rouge">Board</code> instance that is about to be initialized.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">did_connect(board)</code><br />
+  Post-initialization hook for the board.</p>
+
+    <p><em>board</em> - A <code class="highlighter-rouge">Board</code> instance.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">will_init_target(target, init_sequence)</code><br />
+  Hook to review and modify init call sequence prior to execution.</p>
+
+    <p><em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object about to be initialized.<br />
+  <em>init_sequence</em> - The <code class="highlighter-rouge">CallSequence</code> that will be invoked. Because call sequences are
+      mutable, this parameter can be modified before return to change the init calls.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">did_init_target(target)</code><br />
+  Post-initialization hook.</p>
+
+    <p><em>target</em> - Either a <code class="highlighter-rouge">CoreSightTarget</code> or <code class="highlighter-rouge">CortexM</code> object.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">will_start_debug_core(core)</code><br />
+  Hook to enable debug for the given core.</p>
+
+    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object about to be initialized.<br />
+  <strong>Result</strong> - <em>True</em> Do not perform the normal procedure to start core debug.
+      <em>False/None</em> Continue with normal behaviour.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">did_start_debug_core(core)</code><br />
+  Post-initialization hook.</p>
+
+    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">will_stop_debug_core(core)</code><br />
+  Pre-cleanup hook for the core.</p>
+
+    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object.<br />
+  <strong>Result</strong> - <em>True</em> Do not perform the normal procedure to disable core debug.
+      <em>False/None</em> Continue with normal behaviour.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">did_stop_debug_core(core)</code><br />
+  Post-cleanup hook for the core.</p>
+
+    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">will_disconnect(target, resume)</code><br />
+  Pre-disconnect hook.</p>
+
+    <p><em>target</em> - Either a <code class="highlighter-rouge">CoreSightTarget</code> or <code class="highlighter-rouge">CortexM</code> object.<br />
+  <em>resume</em> - The value of the <code class="highlighter-rouge">disconnect_on_resume</code> option.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">did_disconnect(target, resume)</code><br />
+  Post-disconnect hook.</p>
+
+    <p><em>target</em> - Either a <code class="highlighter-rouge">CoreSightTarget</code> or <code class="highlighter-rouge">CortexM</code> object.<br />
+  <em>resume</em> - The value of the <code class="highlighter-rouge">disconnect_on_resume</code> option.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">will_reset(core, reset_type)</code><br />
+  Pre-reset hook.</p>
+
+    <p><em>core</em> - A CortexM instance.<br />
+  <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
+  <strong>Result</strong> - <em>True</em> The hook performed the reset. <em>False/None</em> Caller should perform the normal
+      reset procedure.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">did_reset(core, reset_type)</code><br />
+  Post-reset hook.</p>
+
+    <p><em>core</em> - A CortexM instance.<br />
+  <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">set_reset_catch(core, reset_type)</code><br />
+  Hook to prepare target for halting on reset.</p>
+
+    <p><em>core</em> - A CortexM instance.<br />
+  <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
+  <strong>Result</strong> - <em>True</em> This hook handled setting up reset catch, caller should do nothing.
+              <em>False/None</em> Perform the default reset catch set using vector catch.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">clear_reset_catch(core, reset_type)</code><br />
+  Hook to clean up target after a reset and halt.</p>
+
+    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> instance.<br />
+  <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
+  <strong>Result</strong> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">mass_erase(target)</code><br />
+  Hook to override mass erase.</p>
+
+    <p><em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object.<br />
+  <strong>Result</strong> - <em>True</em> Indicate that mass erase was performed by the hook.
+              <em>False/None</em> Mass erase was not overridden and the caller should proceed with the
+                  standard mass erase procedure.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">trace_start(self, target, mode)</code><br />
+  Hook to prepare for tracing the target.</p>
+
+    <p><em>target</em> - A CoreSightTarget object.<br />
+  <em>mode</em> - The trace mode. Currently always 0 to indicate SWO.<br />
+  <em>Result</em> - Ignored.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">trace_stop(self, target, mode)</code><br />
+  Hook to clean up after tracing the target.</p>
+
+    <p><em>target</em> - A CoreSightTarget object.<br />
+  <em>mode</em> - The trace mode. Currently always 0 to indicate SWO.<br />
+  <em>Result</em> - Ignored.</p>
+  </li>
+</ul>
+
+
+                </div>
+              </div>
+            </main>
+          
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+      
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>

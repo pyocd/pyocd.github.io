@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Terminology &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4"><h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/installing" class="sidebar-link ">Installing</a></li><li class="sidebar-item level-1"><a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a></li><li class="sidebar-item level-1"><a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a></li></ul><h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><p class="sidebar-item-selected">Terminology</p></li><li class="sidebar-item level-1"><a href="/docs/target-support" class="sidebar-link ">Target support</a></li><li class="sidebar-item level-1"><a href="/docs/configuration" class="sidebar-link ">Configuration</a></li><li class="sidebar-item level-1"><a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a></li><li class="sidebar-item level-1"><a href="/docs/configuring-logging" class="sidebar-link ">Configuring logging</a></li><li class="sidebar-item level-1"><a href="/docs/security" class="sidebar-link ">Security and protection</a></li><li class="sidebar-item level-1"><a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a></li></ul><h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/options" class="sidebar-link ">Session options list</a></li><li class="sidebar-item level-1"><a href="/docs/command-reference" class="sidebar-link ">Command reference</a></li></ul><h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/python-api" class="sidebar-link ">Introduction to the API</a></li><li class="sidebar-item level-1"><a href="/docs/api-examples" class="sidebar-link ">Python API examples</a></li></ul><h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a></li><li class="sidebar-item level-1"><a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a></li><li class="sidebar-item level-1"><a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a></li><li class="sidebar-item level-1"><a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a></li><li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2"><li class="sidebar-item level-2"><a href="/docs/architecture" class="sidebar-link ">Architecture</a></li><li class="sidebar-item level-2"><a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a></li></ul>
+        </li></ul></div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Terminology</h1>
+                  
+                
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">Contents</h5>
+                        <ul id="toc" class="section-nav">
+</ul>
+                    </div>
+                  </div>
+                
+                  <p>These are the key terms used by pyOCD and its documentation.</p>
+
+<ul>
+  <li><strong>ADI</strong>: Arm Debug Interface, an Arm architecture specification for how JTAG and SWD interface with CoreSight.
+  It defines the DAP structure and registers.</li>
+  <li><strong>AP</strong>: Access Port, part of the DAP, connected to the DP, that allows the debugger to perform operations
+  on the chip and cores. There are multiple types of AP that serve different purposes (see MEM-AP). Some MCU
+  vendors implement proprietary APs in their chips.</li>
+  <li><strong>Commander</strong>: Refers to the <code class="highlighter-rouge">pyocd commander</code> subcommand that presents an interactive interface for exploring
+  the connected target.</li>
+  <li><strong>CoreSight</strong>: An Arm architecture specification for debug subsystems. It defines a standardised way
+  to discover the debug resources provided by a device.</li>
+  <li><strong>DAP</strong>: Debug Access Port, the debugging module that is accessed via the JTAG or SWD port. Composed of a
+  DP and one or more APs.</li>
+  <li><strong>DP</strong>: Debug Port, part of the DAP that handles SWD or JTAG. Most chips only have a single DP.</li>
+  <li><strong>debug link</strong>: The connection between the debugger and target. This is usually a physical connection over
+  which the SWD or JTAG wire protocol runs, but different arrangements are possible.</li>
+  <li><strong>debug probe</strong>: The device that drives SWD or JTAG. Usually connected to the host via USB.</li>
+  <li><strong>delegation</strong>: A code pattern used to extend or modify functionality of a class by implementing
+  methods in a companion object rather than through subclassing.</li>
+  <li><strong>core</strong>: Refers to a CPU and the closely coupled components surrounding it such as debug and trace
+  support.</li>
+  <li><strong>flash algorithm</strong>: A small piece of code downloaded to and executed from target RAM that
+  performs flash erase and program operations.</li>
+  <li><strong>gdbserver</strong>: A server that implements gdb’s Remote Serial Protocol (RSP) to allow gdb to debug a remote
+  target. PyOCD acts as a bridge between gdb and the target.</li>
+  <li><strong>host</strong>: The computer running pyOCD.</li>
+  <li><strong>JTAG</strong>: Debug link wire protocol standard defined by IEEE Std 1149.1-2001 and subsequent specifications.</li>
+  <li><strong>MEM-AP</strong>: Generic standard for a special type of AP used by the debugger to perform memory reads and
+  writes within the chip. Concrete MEM-APs have names that represent the kind of bus fabric with which they
+  interface, such as AHB-AP or AXI-AP.</li>
+  <li><strong>probe server</strong>: Server that shares a debug probe over TCP/IP.</li>
+  <li><strong>REPL</strong>: Read-Eval-Print-Loop. An interactive type of command interface used by pyOCD Commander, as well as
+  Python and other similar tools.</li>
+  <li><strong>session</strong>: Represents a connection to a debug probe and the runtime object graph.</li>
+  <li><strong>session option</strong>: A named setting that controls some feature of pyOCD. Options are associated with
+  a session, and each session can have different values for a given option.. They can be set from the
+  command line or configuration files.</li>
+  <li><strong>SoC</strong>: System on Chip, a complete computer on a single chip, like a microcontroller.</li>
+  <li><strong>SWD</strong>: Serial Wire Debug, an Arm standard for a 2-signal serial wire protocol that is an alternative to
+  JTAG. It provides nearly the same functionality, except for lack of boundary scan.</li>
+  <li><strong>SWO</strong>: Serial Wire Output, SWV frames usually come out this one pin output. Because it shares the JTAG
+  signal TDO, SWO is only accessible when using SWD.</li>
+  <li><strong>SWV</strong>: Serial Wire Viewer, A trace capability providing display of reads, writes, exceptions, PC Samples
+  and printf.</li>
+  <li><strong>target</strong>: The device that is being controlled by pyOCD through the debug probe.</li>
+  <li><strong>target type</strong>: The part number for the target. Represented by an identifier that is either
+  the full part number or a shortened form of it.</li>
+  <li><strong>unique ID</strong>: The unique identifier for a debug probe. Nominally a URI, but usually just the probe’s
+  serial number.</li>
+  <li><strong>user script</strong>: A Python script written by the user and loaded at runtime that can extend or
+  modify pyOCD’s behaviour.</li>
+  <li><strong>wire protocol</strong>: The protocol used on the debug link, either SWD or JTAG for Arm-based devices.</li>
+</ul>
+
+
+
+                </div>
+              </div>
+            </main>
+          
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+      
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>

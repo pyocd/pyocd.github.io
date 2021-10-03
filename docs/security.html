@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Security and protection &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4"><h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/installing" class="sidebar-link ">Installing</a></li><li class="sidebar-item level-1"><a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a></li><li class="sidebar-item level-1"><a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a></li></ul><h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/terminology" class="sidebar-link ">Terminology</a></li><li class="sidebar-item level-1"><a href="/docs/target-support" class="sidebar-link ">Target support</a></li><li class="sidebar-item level-1"><a href="/docs/configuration" class="sidebar-link ">Configuration</a></li><li class="sidebar-item level-1"><a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a></li><li class="sidebar-item level-1"><a href="/docs/configuring-logging" class="sidebar-link ">Configuring logging</a></li><li class="sidebar-item level-1"><p class="sidebar-item-selected">Security and protection</p></li><li class="sidebar-item level-1"><a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a></li></ul><h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/options" class="sidebar-link ">Session options list</a></li><li class="sidebar-item level-1"><a href="/docs/command-reference" class="sidebar-link ">Command reference</a></li></ul><h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/python-api" class="sidebar-link ">Introduction to the API</a></li><li class="sidebar-item level-1"><a href="/docs/api-examples" class="sidebar-link ">Python API examples</a></li></ul><h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a></li><li class="sidebar-item level-1"><a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a></li><li class="sidebar-item level-1"><a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a></li><li class="sidebar-item level-1"><a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a></li><li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2"><li class="sidebar-item level-2"><a href="/docs/architecture" class="sidebar-link ">Architecture</a></li><li class="sidebar-item level-2"><a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a></li></ul>
+        </li></ul></div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Security and protection</h1>
+                  
+                
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">Contents</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#supported-targets">Supported Targets</a></li>
+<li class="toc-entry toc-h2"><a href="#connecting-to-a-locked-target">Connecting to a locked target</a></li>
+<li class="toc-entry toc-h2"><a href="#unsupported-targets">Unsupported targets</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#useful-options">Useful Options</a></li>
+<li class="toc-entry toc-h3"><a href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+                    </div>
+                  </div>
+                
+                  <p>Many targets support some way of disabling JTAG/SWD access or protecting the flash from read-back or write.
+In the text below, this is called a “locked” target, though each silicon vendor tends to have their
+own terminology for this feature.</p>
+
+<h2 id="supported-targets">Supported Targets</h2>
+
+<p>pyOCD currently supports the security features of these target families:</p>
+<ul>
+  <li>NXP Kinetis</li>
+  <li>Nordic Semiconductor nRF52 families</li>
+</ul>
+
+<p>Both built-in and CMSIS-Pack based targets from these families support security features.</p>
+
+<h2 id="connecting-to-a-locked-target">Connecting to a locked target</h2>
+
+<p>If you attempt to run pyOCD Commander against a locked target, you’ll encounter a message like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>venv<span class="o">)</span> ~/devel/contrib/pyocd<span class="nv">$ </span>pyocd commander <span class="nt">--target</span> nrf52
+0000265:WARNING:target_nRF52:NRF52832 APPROTECT enabled: not automatically unlocking
+Exception <span class="k">while </span>initing board: No cores were discovered!
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">"devel/contrib/pyocd/pyocd/tools/pyocd.py"</span>, line 769, <span class="k">in </span>connect
+    self.session.open<span class="o">(</span><span class="nv">init_board</span><span class="o">=</span>not self.args.no_init<span class="o">)</span>
+  File <span class="s2">"devel/contrib/pyocd/pyocd/core/session.py"</span>, line 371, <span class="k">in </span>open
+    self._board.init<span class="o">()</span>
+  File <span class="s2">"devel/contrib/pyocd/pyocd/board/board.py"</span>, line 83, <span class="k">in </span>init
+    self.target.init<span class="o">()</span>
+  File <span class="s2">"devel/contrib/pyocd/pyocd/core/coresight_target.py"</span>, line 164, <span class="k">in </span>init
+    seq.invoke<span class="o">()</span>
+  File <span class="s2">"devel/contrib/pyocd/pyocd/utility/sequencer.py"</span>, line 208, <span class="k">in </span>invoke
+    resultSequence <span class="o">=</span> call<span class="o">()</span>
+  File <span class="s2">"devel/contrib/pyocd/pyocd/core/coresight_target.py"</span>, line 298, <span class="k">in </span>check_for_cores
+    raise exceptions.DebugError<span class="o">(</span><span class="s2">"No cores were discovered!"</span><span class="o">)</span>
+pyocd.core.exceptions.DebugError: No cores were discovered!
+</code></pre></div></div>
+
+<p>pyOCD has noticed that the chip is locked. It attempts routine initialization anyway, but fails to find any cores.</p>
+
+<p>For all other pyOCD commands that connect to the target, pyOCD will, by default, attempt to
+automatically unlock the target.</p>
+
+<p>Disabling the security features on supported targets is very straight-forward. It typically requires
+performing a mass erase of all device memory. For those pyOCD targets with support for security
+features, pyOCD can perform this unlock procedure for you.</p>
+
+<p><em><strong>WARNING:</strong> Unlocking a locked device will erase all data on the chip!</em></p>
+
+<p>You can add the option <code class="highlighter-rouge">auto_unlock</code> to your <a href="/docs/configuration">configuration</a>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>venv<span class="o">)</span> ~/devel/contrib/pyocd<span class="nv">$ </span>pyocd commander <span class="nt">--target</span> nrf52 <span class="nt">-O</span> auto_unlock
+0000264:WARNING:target_nRF52:NRF52832 APPROTECT enabled: will try to unlock via mass erase
+Connected to NRF52832 <span class="o">[</span>Halted]: I3FSNZOV
+<span class="o">&gt;&gt;&gt;</span>
+</code></pre></div></div>
+
+<p>Note that the default for <code class="highlighter-rouge">auto_unlock</code> is True. Only in pyOCD Commander is this default changed,
+because of how Commander is intended to be used for low-level interaction and inspection of the
+target.</p>
+
+<p>You can also do this interactively with pyOCD Commander:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(venv) $ pyocd commander --target nrf52840 -N
+&gt;&gt;&gt; initdp
+&gt;&gt;&gt; makeap 1
+&gt;&gt;&gt; status
+Security:       Locked
+&gt;&gt;&gt; unlock
+&gt;&gt;&gt; status
+Security:       Unlocked
+&gt;&gt;&gt; reinit
+&gt;&gt;&gt; status
+Security:       Unlocked
+Core 0 status:  Halted
+&gt;&gt;&gt;
+</code></pre></div></div>
+
+<p>An explanation of some of the commands and options appears below.</p>
+
+<h2 id="unsupported-targets">Unsupported targets</h2>
+
+<p>If pyOCD doesn’t support the security features of your MCU, you can still likely access them with
+pyOCD Commander with the <code class="highlighter-rouge">no-init</code> option. A common pattern is that the security function locks out
+the fully-functional AHB-AP, but leaves a second, proprietary AP unlocked. The second AP usually has
+very few functions, mostly related to management (reset) or erase/unlock of the chip. Another method
+used by some device families is to use only the standard AHB-AP, but when the device is locked the
+accessible address range is limited to a small handful of registers.</p>
+
+<p>Starting pyOCD Commander in <code class="highlighter-rouge">--no-init</code> mode is intended to help in these situations. It intentionally doesn’t attempt
+to interact with the target on startup. Without initialization, most commands will not work. You’ll need to do some
+manual initialization.</p>
+
+<p>The usefulness of <code class="highlighter-rouge">--no-init</code> mode is that it allows Commander to start when initialization would
+normally fail due to missing support for the target or security features of the MCU.</p>
+
+<h3 id="useful-options">Useful Options</h3>
+
+<p>Once you’ve started Commander <code class="highlighter-rouge">--no-init</code>, the following commands are most useful.</p>
+
+<dl>
+<dt><em>initdp</em></dt>
+<dd>Powers on and initializes the on-chip *Debug Port*, allowing Commander to issue commands to the
+target</dd>
+
+<dt><em>makeap &lt;ap num&gt;</em></dt>
+<dd>Targets have at least one, but sometimes more, *Access Ports*. Access port #0 is usually an AHB-AP that allows
+debugging of the target. Access port #1, if it exists, is often proprietary to the vendor and allows
+for certain functions to proceed *even if AP #0 is locked*.</dd>
+
+<dt><em>readap &lt;APSEL&gt; &lt;address&gt;</em></dt>
+<dd>Read from an AP register</dd>
+
+<dt><em>writeap &lt;APSEL&gt; &lt;address&gt; &lt;value&gt;</em></dt>
+<dd>Write to an AP register</dd>
+
+<dt><em>status</em></dt>
+<dd>Will show security status for supported targets. If the target is unlocked and the AHB-AP is
+initialized, it will also show status for any cores detected (Running, Halted, &amp;c)</dd>
+
+<dt><em>reinit</em></dt>
+<dd>This command will attempt to perform the normal initialization steps for the selected target. If you
+manually unlock a target, you may want to run `reinit` so that the cores are accessible *without* restarting
+Commander in normal mode (without `--no-init`)</dd>
+</dl>
+
+<h3 id="example">Example</h3>
+
+<p>Let’s pretend the nRF52 family is unsupported. Here’s an example session where we’ll use <code class="highlighter-rouge">no-init</code> mode to manually
+unlock the target:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(venv) nock@nocko-wired:~/devel/contrib/pyocd$ pyocd commander -N
+0000136:WARNING:board:Generic 'cortex_m' target type is selected; is this intentional? You will be able to debug but not program flash. To set the target type use the '--target' argument or 'target_override' option. Use 'pyocd list --targets' to see available targets types.
+&gt;&gt;&gt; initdp
+</code></pre></div></div>
+<p>We use <code class="highlighter-rouge">initdp</code> to initialize the <em>Debug Port</em> and power on the on-chip debug hardware.</p>
+
+<p>The <a href="https://infocenter.nordicsemi.com/pdf/nRF52832_PS_v1.1.pdf">nRF52 Product Specification</a> says that the chip has a
+proprietary <em>CTRL-AP</em> at index 1 that supports a few operations even if the main AP is locked.</p>
+
+<p>Let’s let pyOCD know about it with <code class="highlighter-rouge">makeap</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; makeap 1
+AP#1 IDR = 0x02880000
+</code></pre></div></div>
+
+<p>The IDR register matches the datasheet! The datasheet says that CTRL-AP (AP #1) has the following registers:</p>
+
+<dl>
+<dt><em>RESET</em> (0x000)</dt>
+<dd>Writing 1 to this register asserts reset on the chip. Writing 0 takes is out of reset</dd>
+
+<dt><em>ERASEALL</em> (0x004)</dt>
+<dd>Writing 1 to this register starts a mass erase of the chip <i>and removes APPROTECT</i> unlocking the chip</dd>
+
+<dt><em>ERASEALLSTATUS</em> (0x008)</dt>
+<dd>While the chip is busy doing a mass erase, this register will read 1. When the mass erase is complete, the register
+will read 0.</dd>
+
+<dt><em>APPROTECTSTATUS</em> (0x00C)</dt>
+<dd>If this register is 0, then APPROTECT is enabled (chip is locked), if 1 the chip is unlocked</dd>
+</dl>
+
+<p>We can read the register value with <code class="highlighter-rouge">readap</code> and write a new value with <code class="highlighter-rouge">writeap</code>. Let’s see if the chip is locked by
+reading <em>APPROTECTSTATUS</em> on AP #1:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x00C
+AP register 0x100000c = 0x00000000
+</code></pre></div></div>
+
+<p>This chip is locked! Let’s unlock it. We need to write a 1 to <em>ERASEALL</em> (on AP #1) to start the mass erase:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; writeap 1 0x004 1
+</code></pre></div></div>
+
+<p>Let’s see if it has finished, by reading <em>ERASEALLSTATUS</em>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x008
+AP register 0x1000008 = 0x00000001
+&gt;&gt;&gt; readap 1 0x008
+AP register 0x1000008 = 0x00000000
+</code></pre></div></div>
+
+<p>After the first <code class="highlighter-rouge">readap</code> it was still erasing, but by the time the second <code class="highlighter-rouge">readap</code> was issued it was complete.
+Let’s check the security status by reading <em>APPROTECTSTATUS</em> again:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x00C
+AP register 0x100000c = 0x00000001
+</code></pre></div></div>
+
+<p>It’s unlocked! Let’s check the <code class="highlighter-rouge">status</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; status
+Security:       Unlocked
+&gt;&gt;&gt; reinit
+&gt;&gt;&gt; status
+Security:       Unlocked
+Core 0 status:  Halted
+&gt;&gt;&gt;
+</code></pre></div></div>
+
+<p>The security was unlocked, but there are no cores (many commands like halt, reset, and so on need a core). It doesn’t exist
+since we started Commander in <code class="highlighter-rouge">no-init</code> mode. Running <code class="highlighter-rouge">reinit</code> from the CLI finishes the initialization that’s
+possible now that the chip is unlocked.</p>
+
+
+                </div>
+              </div>
+            </main>
+          
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+      
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>

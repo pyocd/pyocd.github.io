@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Adding a new built-in target &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4"><h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/installing" class="sidebar-link ">Installing</a></li><li class="sidebar-item level-1"><a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a></li><li class="sidebar-item level-1"><a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a></li></ul><h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/terminology" class="sidebar-link ">Terminology</a></li><li class="sidebar-item level-1"><a href="/docs/target-support" class="sidebar-link ">Target support</a></li><li class="sidebar-item level-1"><a href="/docs/configuration" class="sidebar-link ">Configuration</a></li><li class="sidebar-item level-1"><a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a></li><li class="sidebar-item level-1"><a href="/docs/configuring-logging" class="sidebar-link ">Configuring logging</a></li><li class="sidebar-item level-1"><a href="/docs/security" class="sidebar-link ">Security and protection</a></li><li class="sidebar-item level-1"><a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a></li></ul><h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/options" class="sidebar-link ">Session options list</a></li><li class="sidebar-item level-1"><a href="/docs/command-reference" class="sidebar-link ">Command reference</a></li></ul><h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/python-api" class="sidebar-link ">Introduction to the API</a></li><li class="sidebar-item level-1"><a href="/docs/api-examples" class="sidebar-link ">Python API examples</a></li></ul><h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a></li><li class="sidebar-item level-1"><p class="sidebar-item-selected">Adding a new built-in target</p></li><li class="sidebar-item level-1"><a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a></li><li class="sidebar-item level-1"><a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a></li><li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2"><li class="sidebar-item level-2"><a href="/docs/architecture" class="sidebar-link ">Architecture</a></li><li class="sidebar-item level-2"><a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a></li></ul>
+        </li></ul></div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Adding a new built-in target</h1>
+                  
+                
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">Contents</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#device-family-pack-intro">Device Family Pack intro</a></li>
+<li class="toc-entry toc-h3"><a href="#steps-to-add-a-new-target">Steps to add a new target</a></li>
+<li class="toc-entry toc-h3"><a href="#steps-to-add-a-new-board">Steps to add a new board</a></li>
+</ul>
+                    </div>
+                  </div>
+                
+                  <p>This guide describes how to manually add support for a new target and/or board to pyOCD. In most
+cases you do not need to add a builtin target anymore, and can use pyOCD’s support for CMSIS
+Device Family Packs.</p>
+
+<p>For background information, review the <a href="/docs/architecture">architecture overview</a> document first. The
+<a href="https://arm-software.github.io/CMSIS_5/Pack/html/index.html">CMSIS Pack documentation</a> may also be helpful.</p>
+
+<h3 id="device-family-pack-intro">Device Family Pack intro</h3>
+
+<p>The instructions below assume you have a CMSIS Device Family Pack (DFP) available for your target. See the
+<a href="https://www.keil.com/dd2/pack/">list of all publicly available Packs</a> to find and download the DFP for your
+target.</p>
+
+<p>A DFP is simply a zip file with a .pack extension. To extract the contents you can change the extension to
+.zip and extract with your favourite archive utility.</p>
+
+<p>For this context, the most important thing inside the DFP are .FLM files that contain the flash programming
+algorithms used in step 5 below. The .pdsc file can also be useful. It is an XML file that contains details
+such as the memory map for the target devices described by the DFP.</p>
+
+<h3 id="steps-to-add-a-new-target">Steps to add a new target</h3>
+
+<ol>
+  <li>
+    <p>Create a new <code class="highlighter-rouge">CoreSightTarget</code> subclass in a file under <code class="highlighter-rouge">pyocd/target/builtin/</code>. You can copy one of the
+ existing target files like <code class="highlighter-rouge">pyocd/target/builtin/target_ncs36510.py</code> and rename the class.</p>
+
+    <p>The target source file name must follow the pattern “target_&lt;device&gt;.py”, where “&lt;device&gt;” is the
+ device’s <code class="highlighter-rouge">Dname</code> or <code class="highlighter-rouge">Dvariant</code> part number value from the appropriate CMSIS Device Family Pack (DFP). For
+ instance, <code class="highlighter-rouge">target_LPC54608J512ET180.py</code>. You may substitute an “x” for certain fields in the part number,
+ such as a package or pin count code, temperature code, or memory size (if multiple memory sizes are
+ supported via classes within the one source file). For instance, <code class="highlighter-rouge">target_STM32F412xx.py</code>. If the device
+ doesn’t have a DFP, then use a similar, complete part number.</p>
+  </li>
+  <li>
+    <p>Set the <code class="highlighter-rouge">VENDOR</code> class attribute on the <code class="highlighter-rouge">CoreSightTarget</code> subclass. The vendor name must be one
+ of the standard values defined by the
+ <a href="http://arm-software.github.io/CMSIS_5/Pack/html/pdsc_family_pg.html#DeviceVendorEnum"><code class="highlighter-rouge">DeviceVendorEnum</code></a>
+ type for CMSIS Packs. (If the vendor is not listed, please contact Arm.)</p>
+  </li>
+  <li>
+    <p>You may optionally add <code class="highlighter-rouge">PART_NUMBER</code> and/or <code class="highlighter-rouge">PART_FAMILIES</code> class attributes to your target class. T</p>
+  </li>
+  <li>
+    <p>Create the target’s memory map from information in the device’s reference manual. The memory map
+ should be a <code class="highlighter-rouge">MEMORY_MAP</code> class attribute of the target class. Modifying an existing memory map is
+ easiest, and there are many examples in the other targets.</p>
+  </li>
+  <li>
+    <p>To create the flash algo, the recommended method is to use the
+ <a href="https://github.com/pyocd/pyocd/scripts/generate_flash_algo_.py"><code class="highlighter-rouge">scripts/generate_flash_algo_.py</code></a> script
+ included in the pyocd repo. This script will generate an output file in the form required for pyocd from
+ an .FLM file that is included as part of a CMSIS DFP.</p>
+
+    <ol>
+      <li>
+        <p>Locate the correct .FLM file from the DFP for your target.</p>
+      </li>
+      <li>
+        <p>Run <code class="highlighter-rouge">scripts/generate_flash_algo_.py \&lt;path to FLM&gt;</code>. It will write the output files to the working directory
+ from where you called the script.</p>
+      </li>
+      <li>
+        <p>The <code class="highlighter-rouge">pyocd_blob.py</code> output file contains the Python code for the flash algo. Copy the <code class="highlighter-rouge">FLASH_ALGO_*</code>
+ dictionary (the name will have a suffix based on the FLM name) into the target source file.</p>
+      </li>
+      <li>
+        <p>Review the addresses in the <code class="highlighter-rouge">flash_algo</code> dictionary to make sure they are valid. The memory
+layout should look like:</p>
+
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|----------------|-------------|------------|-----|-----------------|-----------------|
+|  load_address  | static_base | &lt;&lt; (stack) | ... | page_buffers[0] | page_buffers[1] |
+|----------------|-------------|------------|-----|-----------------|-----------------|
+^                                           ^     ^
+RAM start            begin_stack (grows down)     also begin_data
+</code></pre></div>        </div>
+
+        <p>Each of the addresses in the <code class="highlighter-rouge">page_buffers</code> list points to a buffer of the maximum page
+size of any flash region. If there is not enough RAM to hold two page buffers, then remove
+one of the addresses from the list. This will disable double buffered flash programming.</p>
+      </li>
+      <li>
+        <p>To enable efficient scanning for modified pages via CRC checking, you can set the
+ <code class="highlighter-rouge">analyzer_supported</code> key to True and the <code class="highlighter-rouge">analyzer_address</code> to the start address for an
+ unused range of (1224 + 4 * number-of-flash-pages) bytes of RAM.</p>
+      </li>
+      <li>
+        <p>Pass the <code class="highlighter-rouge">FLASH_ALGO_*</code> dict for the <code class="highlighter-rouge">algo</code> parameter to the <code class="highlighter-rouge">FlashRegion</code> constructor in
+ your memory map. This binds the flash algo to that flash memory region.</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>If the target has multiple flash algos for different flash types, repeat step 5 as necessary.</p>
+  </li>
+  <li>
+    <p>Edit <code class="highlighter-rouge">pyocd/target/builtin/__init__.py</code> to import your target source file and add your new target
+ to the <code class="highlighter-rouge">BUILTIN_TARGETS</code> dict.</p>
+  </li>
+  <li>
+    <p>You or your employer own the copyright on the new code, so make sure you set the copyright on the new target file.
+ You should also add a copyright to any existing files you modified.</p>
+  </li>
+</ol>
+
+<p>Now your new target is available for use via the <code class="highlighter-rouge">--target</code> command line option! You can test its availability
+by running <code class="highlighter-rouge">pyocd list --targets --name &lt;target-name&gt;</code>.</p>
+
+<h3 id="steps-to-add-a-new-board">Steps to add a new board</h3>
+
+<p>This section only applies if your board has an on-board debug probe that either:</p>
+
+<ul>
+  <li>Uses the <a href="https://github.com/ARMmbed/DAPLink">Arm DAPLink</a> firmware. DAPLink presents the board ID
+  as the first 4 characters of the USB serial number.</li>
+  <li>Uses the STLinkV2-1 or STLinkV3 firmware and the board is Mbed-enabled. STLink presents the board ID
+  as the first 4 characters of the code in the HTML file on the USB mass storage volume.</li>
+</ul>
+
+<p>If neither applies, then pyOCD will be unable to automatically detect the board type. However, you
+can still use the target by passing the <code class="highlighter-rouge">--target</code> argument to pyOCD.</p>
+
+<p>Follow these steps:</p>
+
+<ol>
+  <li>
+    <p>Identify the 4-character board ID.</p>
+  </li>
+  <li>
+    <p>Insert a row into the <code class="highlighter-rouge">BOARD_ID_TO_INFO</code> table in <code class="highlighter-rouge">pyocd/board/board_ids.py</code> with the board ID,
+ board name, target type, and test binary file name.</p>
+
+    <p>The new row should look similar to this:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> "0205": BoardInfo(  "FRDM-KL28Z",           "kl28z",            "l1_kl28z.bin",         ),
+</code></pre></div>    </div>
+
+    <p>Be sure to insert the row in sorted order by board ID, and please align columns.</p>
+  </li>
+  <li>
+    <p>Place a test firmware binary file listed in the board info into the <code class="highlighter-rouge">test/data/binaries/</code>
+ directory. The test firmware can be nothing more than a tiny LED blinky demo. It must not require
+ any user input, and should provide immediate visual feedback that the code is successfully
+ running, assuming there are LEDs on the board.</p>
+  </li>
+</ol>
+
+
+                </div>
+              </div>
+            </main>
+          
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+      
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>

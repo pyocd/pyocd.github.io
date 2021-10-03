@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Command reference &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4"><h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/installing" class="sidebar-link ">Installing</a></li><li class="sidebar-item level-1"><a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a></li><li class="sidebar-item level-1"><a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a></li></ul><h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/terminology" class="sidebar-link ">Terminology</a></li><li class="sidebar-item level-1"><a href="/docs/target-support" class="sidebar-link ">Target support</a></li><li class="sidebar-item level-1"><a href="/docs/configuration" class="sidebar-link ">Configuration</a></li><li class="sidebar-item level-1"><a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a></li><li class="sidebar-item level-1"><a href="/docs/configuring-logging" class="sidebar-link ">Configuring logging</a></li><li class="sidebar-item level-1"><a href="/docs/security" class="sidebar-link ">Security and protection</a></li><li class="sidebar-item level-1"><a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a></li></ul><h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/options" class="sidebar-link ">Session options list</a></li><li class="sidebar-item level-1"><p class="sidebar-item-selected">Command reference</p></li></ul><h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/python-api" class="sidebar-link ">Introduction to the API</a></li><li class="sidebar-item level-1"><a href="/docs/api-examples" class="sidebar-link ">Python API examples</a></li></ul><h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a></li><li class="sidebar-item level-1"><a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a></li><li class="sidebar-item level-1"><a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a></li><li class="sidebar-item level-1"><a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a></li><li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2"><li class="sidebar-item level-2"><a href="/docs/architecture" class="sidebar-link ">Architecture</a></li><li class="sidebar-item level-2"><a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a></li></ul>
+        </li></ul></div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Command reference</h1>
+                  
+                
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">Contents</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#all-commands">All commands</a></li>
+<li class="toc-entry toc-h2"><a href="#all-values">All values</a></li>
+<li class="toc-entry toc-h2"><a href="#commands">Commands</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#breakpoints">Breakpoints</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#break">break</a></li>
+<li class="toc-entry toc-h5"><a href="#lsbreak">lsbreak</a></li>
+<li class="toc-entry toc-h5"><a href="#lswatch">lswatch</a></li>
+<li class="toc-entry toc-h5"><a href="#rmbreak">rmbreak</a></li>
+<li class="toc-entry toc-h5"><a href="#rmwatch">rmwatch</a></li>
+<li class="toc-entry toc-h5"><a href="#watch">watch</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#bringup">Bringup</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#initdp">initdp</a></li>
+<li class="toc-entry toc-h5"><a href="#makeap">makeap</a></li>
+<li class="toc-entry toc-h5"><a href="#reinit">reinit</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#commander">Commander</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#exit">exit</a></li>
+<li class="toc-entry toc-h5"><a href="#list">list</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#core">Core</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#continue">continue</a></li>
+<li class="toc-entry toc-h5"><a href="#core-1">core</a></li>
+<li class="toc-entry toc-h5"><a href="#halt">halt</a></li>
+<li class="toc-entry toc-h5"><a href="#step">step</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#dap">Dap</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#readap">readap</a></li>
+<li class="toc-entry toc-h5"><a href="#readdp">readdp</a></li>
+<li class="toc-entry toc-h5"><a href="#writeap">writeap</a></li>
+<li class="toc-entry toc-h5"><a href="#writedp">writedp</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#device">Device</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#reset">reset</a></li>
+<li class="toc-entry toc-h5"><a href="#unlock">unlock</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#general">General</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#help">help</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#memory">Memory</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#compare">compare</a></li>
+<li class="toc-entry toc-h5"><a href="#disasm">disasm</a></li>
+<li class="toc-entry toc-h5"><a href="#erase">erase</a></li>
+<li class="toc-entry toc-h5"><a href="#fill">fill</a></li>
+<li class="toc-entry toc-h5"><a href="#find">find</a></li>
+<li class="toc-entry toc-h5"><a href="#load">load</a></li>
+<li class="toc-entry toc-h5"><a href="#loadmem">loadmem</a></li>
+<li class="toc-entry toc-h5"><a href="#read16">read16</a></li>
+<li class="toc-entry toc-h5"><a href="#read32">read32</a></li>
+<li class="toc-entry toc-h5"><a href="#read64">read64</a></li>
+<li class="toc-entry toc-h5"><a href="#read8">read8</a></li>
+<li class="toc-entry toc-h5"><a href="#savemem">savemem</a></li>
+<li class="toc-entry toc-h5"><a href="#write16">write16</a></li>
+<li class="toc-entry toc-h5"><a href="#write32">write32</a></li>
+<li class="toc-entry toc-h5"><a href="#write64">write64</a></li>
+<li class="toc-entry toc-h5"><a href="#write8">write8</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#registers">Registers</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#reg">reg</a></li>
+<li class="toc-entry toc-h5"><a href="#wreg">wreg</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#semihosting">Semihosting</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#arm">arm</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#servers">Servers</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#gdbserver">gdbserver</a></li>
+<li class="toc-entry toc-h5"><a href="#probeserver">probeserver</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#symbols">Symbols</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#symbol">symbol</a></li>
+<li class="toc-entry toc-h5"><a href="#where">where</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#target">Target</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#status">status</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#threads">Threads</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#threads-1">threads</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#values">Values</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#set">set</a></li>
+<li class="toc-entry toc-h5"><a href="#show">show</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+                    </div>
+                  </div>
+                
+                  <p>PyOCD has a simple command processor that is accessible from the console via the commander subcommand,
+or from gdb as remote monitor commands.</p>
+
+<p>The syntax for the commands is straightforward. The command line is first split into individual
+commands separated by <code class="highlighter-rouge">;</code> (semicolon). Each command is then split into words separated by
+whitespace. The whitespace characters are space, tab, CR, and LF. Words can be quoted with either a
+single or double quote to include whitespace (or quotes) in the word.</p>
+
+<p>Any prefix of a command name is accepted as long as it is unique. If a command prefix is entered
+that ambiguous because it matches multiple commands, an error will be reported showing the matched
+command names. In addition, commonly used commands often have a short alias. The alias takes
+precedence even when it is a prefix of multiple other commands.</p>
+
+<!-- Maintainer note: the following is auto-generated. Edit the command INFO source material. -->
+
+<h2 id="all-commands">All commands</h2>
+
+<table class="docs-table">
+
+<tr><th>Command</th><th>Arguments</th><th>Description</th></tr>
+
+<tr><td colspan="3"><b>Breakpoints</b></td></tr>
+
+<tr><td>
+<a href="#break"><tt>break</tt></a>
+</td><td>
+ADDR
+</td><td>
+Set a breakpoint address.
+</td></tr>
+
+<tr><td>
+<a href="#lsbreak"><tt>lsbreak</tt></a>
+</td><td>
+</td><td>
+List breakpoints.
+</td></tr>
+
+<tr><td>
+<a href="#lswatch"><tt>lswatch</tt></a>
+</td><td>
+</td><td>
+List watchpoints.
+</td></tr>
+
+<tr><td>
+<a href="#rmbreak"><tt>rmbreak</tt></a>
+</td><td>
+ADDR
+</td><td>
+Remove a breakpoint.
+</td></tr>
+
+<tr><td>
+<a href="#rmwatch"><tt>rmwatch</tt></a>
+</td><td>
+ADDR
+</td><td>
+Remove a watchpoint.
+</td></tr>
+
+<tr><td>
+<a href="#watch"><tt>watch</tt></a>
+</td><td>
+ADDR [r|w|rw] [1|2|4]
+</td><td>
+Set a watchpoint address, and optional access type (default rw) and size (4).
+</td></tr>
+
+<tr><td colspan="3"><b>Bringup</b></td></tr>
+
+<tr><td>
+<a href="#initdp"><tt>initdp</tt></a>
+</td><td>
+</td><td>
+Init DP and power up debug.
+</td></tr>
+
+<tr><td>
+<a href="#makeap"><tt>makeap</tt></a>
+</td><td>
+APSEL
+</td><td>
+Creates a new AP object for the given APSEL.
+</td></tr>
+
+<tr><td>
+<a href="#reinit"><tt>reinit</tt></a>
+</td><td>
+</td><td>
+Reinitialize the target object.
+</td></tr>
+
+<tr><td colspan="3"><b>Commander</b></td></tr>
+
+<tr><td>
+<a href="#exit"><tt>exit</tt></a>,
+<a href="#exit"><tt>quit</tt></a>
+</td><td>
+</td><td>
+Quit pyocd commander.
+</td></tr>
+
+<tr><td>
+<a href="#list"><tt>list</tt></a>
+</td><td>
+</td><td>
+Show available targets.
+</td></tr>
+
+<tr><td colspan="3"><b>Core</b></td></tr>
+
+<tr><td>
+<a href="#continue"><tt>continue</tt></a>,
+<a href="#continue"><tt>c</tt></a>,
+<a href="#continue"><tt>go</tt></a>,
+<a href="#continue"><tt>g</tt></a>
+</td><td>
+</td><td>
+Resume execution of the target.
+</td></tr>
+
+<tr><td>
+<a href="#core"><tt>core</tt></a>
+</td><td>
+[NUM]
+</td><td>
+Select CPU core by number or print selected core.
+</td></tr>
+
+<tr><td>
+<a href="#halt"><tt>halt</tt></a>,
+<a href="#halt"><tt>h</tt></a>
+</td><td>
+</td><td>
+Halt the target.
+</td></tr>
+
+<tr><td>
+<a href="#step"><tt>step</tt></a>,
+<a href="#step"><tt>s</tt></a>
+</td><td>
+[COUNT]
+</td><td>
+Step one or more instructions.
+</td></tr>
+
+<tr><td colspan="3"><b>Dap</b></td></tr>
+
+<tr><td>
+<a href="#readap"><tt>readap</tt></a>,
+<a href="#readap"><tt>rap</tt></a>
+</td><td>
+[APSEL] ADDR
+</td><td>
+Read AP register.
+</td></tr>
+
+<tr><td>
+<a href="#readdp"><tt>readdp</tt></a>,
+<a href="#readdp"><tt>rdp</tt></a>
+</td><td>
+ADDR
+</td><td>
+Read DP register.
+</td></tr>
+
+<tr><td>
+<a href="#writeap"><tt>writeap</tt></a>,
+<a href="#writeap"><tt>wap</tt></a>
+</td><td>
+[APSEL] ADDR DATA
+</td><td>
+Write AP register.
+</td></tr>
+
+<tr><td>
+<a href="#writedp"><tt>writedp</tt></a>,
+<a href="#writedp"><tt>wdp</tt></a>
+</td><td>
+ADDR DATA
+</td><td>
+Write DP register.
+</td></tr>
+
+<tr><td colspan="3"><b>Device</b></td></tr>
+
+<tr><td>
+<a href="#reset"><tt>reset</tt></a>
+</td><td>
+[halt|-halt|-h] [TYPE]
+</td><td>
+Reset the target, optionally specifying the reset type.
+</td></tr>
+
+<tr><td>
+<a href="#unlock"><tt>unlock</tt></a>
+</td><td>
+</td><td>
+Unlock security on the target.
+</td></tr>
+
+<tr><td colspan="3"><b>General</b></td></tr>
+
+<tr><td>
+<a href="#help"><tt>help</tt></a>,
+<a href="#help"><tt>?</tt></a>
+</td><td>
+[CMD]
+</td><td>
+Show help for commands.
+</td></tr>
+
+<tr><td colspan="3"><b>Memory</b></td></tr>
+
+<tr><td>
+<a href="#compare"><tt>compare</tt></a>,
+<a href="#compare"><tt>cmp</tt></a>
+</td><td>
+ADDR [LEN] FILENAME
+</td><td>
+Compare a memory range against a binary file.
+</td></tr>
+
+<tr><td>
+<a href="#disasm"><tt>disasm</tt></a>,
+<a href="#disasm"><tt>d</tt></a>
+</td><td>
+[-c/--center] ADDR [LEN]
+</td><td>
+Disassemble instructions at an address.
+</td></tr>
+
+<tr><td>
+<a href="#erase"><tt>erase</tt></a>
+</td><td>
+[ADDR] [COUNT]
+</td><td>
+Erase all internal flash or a range of sectors.
+</td></tr>
+
+<tr><td>
+<a href="#fill"><tt>fill</tt></a>
+</td><td>
+[SIZE] ADDR LEN PATTERN
+</td><td>
+Fill a range of memory with a pattern.
+</td></tr>
+
+<tr><td>
+<a href="#find"><tt>find</tt></a>
+</td><td>
+ADDR LEN BYTE+
+</td><td>
+Search for a value in memory within the given address range.
+</td></tr>
+
+<tr><td>
+<a href="#load"><tt>load</tt></a>
+</td><td>
+FILENAME [ADDR]
+</td><td>
+Load a binary, hex, or elf file with optional base address.
+</td></tr>
+
+<tr><td>
+<a href="#loadmem"><tt>loadmem</tt></a>
+</td><td>
+ADDR FILENAME
+</td><td>
+Load a binary file to an address in memory (RAM or flash).
+</td></tr>
+
+<tr><td>
+<a href="#read16"><tt>read16</tt></a>,
+<a href="#read16"><tt>rh</tt></a>
+</td><td>
+ADDR [LEN]
+</td><td>
+Read 16-bit halfwords.
+</td></tr>
+
+<tr><td>
+<a href="#read32"><tt>read32</tt></a>,
+<a href="#read32"><tt>rw</tt></a>
+</td><td>
+ADDR [LEN]
+</td><td>
+Read 32-bit words.
+</td></tr>
+
+<tr><td>
+<a href="#read64"><tt>read64</tt></a>,
+<a href="#read64"><tt>rd</tt></a>
+</td><td>
+ADDR [LEN]
+</td><td>
+Read 64-bit words.
+</td></tr>
+
+<tr><td>
+<a href="#read8"><tt>read8</tt></a>,
+<a href="#read8"><tt>rb</tt></a>
+</td><td>
+ADDR [LEN]
+</td><td>
+Read 8-bit bytes.
+</td></tr>
+
+<tr><td>
+<a href="#savemem"><tt>savemem</tt></a>
+</td><td>
+ADDR LEN FILENAME
+</td><td>
+Save a range of memory to a binary file.
+</td></tr>
+
+<tr><td>
+<a href="#write16"><tt>write16</tt></a>,
+<a href="#write16"><tt>wh</tt></a>
+</td><td>
+ADDR DATA+
+</td><td>
+Write 16-bit halfwords to memory.
+</td></tr>
+
+<tr><td>
+<a href="#write32"><tt>write32</tt></a>,
+<a href="#write32"><tt>ww</tt></a>
+</td><td>
+ADDR DATA+
+</td><td>
+Write 32-bit words to memory.
+</td></tr>
+
+<tr><td>
+<a href="#write64"><tt>write64</tt></a>,
+<a href="#write64"><tt>wd</tt></a>
+</td><td>
+ADDR DATA...
+</td><td>
+Write 64-bit double-words to memory.
+</td></tr>
+
+<tr><td>
+<a href="#write8"><tt>write8</tt></a>,
+<a href="#write8"><tt>wb</tt></a>
+</td><td>
+ADDR DATA+
+</td><td>
+Write 8-bit bytes to memory.
+</td></tr>
+
+<tr><td colspan="3"><b>Registers</b></td></tr>
+
+<tr><td>
+<a href="#reg"><tt>reg</tt></a>
+</td><td>
+[-f] [REG]
+</td><td>
+Print core or peripheral register(s).
+</td></tr>
+
+<tr><td>
+<a href="#wreg"><tt>wreg</tt></a>
+</td><td>
+[-r] REG VALUE
+</td><td>
+Set the value of a core or peripheral register.
+</td></tr>
+
+<tr><td colspan="3"><b>Semihosting</b></td></tr>
+
+<tr><td>
+<a href="#arm"><tt>arm</tt></a>
+</td><td>
+semihosting {enable,disable}
+</td><td>
+Enable or disable semihosting.
+</td></tr>
+
+<tr><td colspan="3"><b>Servers</b></td></tr>
+
+<tr><td>
+<a href="#gdbserver"><tt>gdbserver</tt></a>
+</td><td>
+{start,stop,status}
+</td><td>
+Control the gdbserver for the selected core.
+</td></tr>
+
+<tr><td>
+<a href="#probeserver"><tt>probeserver</tt></a>
+</td><td>
+{start,stop,status}
+</td><td>
+Control the debug probe server.
+</td></tr>
+
+<tr><td colspan="3"><b>Symbols</b></td></tr>
+
+<tr><td>
+<a href="#symbol"><tt>symbol</tt></a>
+</td><td>
+NAME
+</td><td>
+Show a symbol's value.
+</td></tr>
+
+<tr><td>
+<a href="#where"><tt>where</tt></a>
+</td><td>
+[ADDR]
+</td><td>
+Show symbol, file, and line for address.
+</td></tr>
+
+<tr><td colspan="3"><b>Target</b></td></tr>
+
+<tr><td>
+<a href="#status"><tt>status</tt></a>,
+<a href="#status"><tt>st</tt></a>
+</td><td>
+</td><td>
+Show the target's current state.
+</td></tr>
+
+<tr><td colspan="3"><b>Threads</b></td></tr>
+
+<tr><td>
+<a href="#threads"><tt>threads</tt></a>
+</td><td>
+{flush,enable,disable,status}
+</td><td>
+Control thread awareness.
+</td></tr>
+
+<tr><td colspan="3"><b>Values</b></td></tr>
+
+<tr><td>
+<a href="#set"><tt>set</tt></a>
+</td><td>
+NAME VALUE
+</td><td>
+Set a value.
+</td></tr>
+
+<tr><td>
+<a href="#show"><tt>show</tt></a>
+</td><td>
+NAME
+</td><td>
+Display a value.
+</td></tr>
+
+
+</table>
+
+<h2 id="all-values">All values</h2>
+
+<p>Values represent a setting or piece of information that can be read and/or changed. They are accessed with
+the <a href="#show"><code class="highlighter-rouge">show</code></a> and <a href="#set"><code class="highlighter-rouge">set</code></a> commands. The “Access” column of the table below shows whether the
+command can be read, written, or both.</p>
+
+<table>
+
+<tr><th>Value</th><th>Access</th><th>Description</th></tr>
+
+<tr><td>
+<a href="#cores"><tt>cores</tt></a>
+</td><td>
+read-only
+</td><td>
+Information about CPU cores in the target.
+</td></tr>
+
+<tr><td>
+<a href="#fault"><tt>fault</tt></a>
+</td><td>
+read-only
+</td><td>
+Fault status information.
+</td></tr>
+
+<tr><td>
+<a href="#frequency"><tt>frequency</tt></a>
+</td><td>
+write-only
+</td><td>
+Set SWD or JTAG clock frequency in Hertz.
+</td></tr>
+
+<tr><td>
+<a href="#graph"><tt>graph</tt></a>
+</td><td>
+read-only
+</td><td>
+Print the target object graph.
+</td></tr>
+
+<tr><td>
+<a href="#hnonsec"><tt>hnonsec</tt></a>
+</td><td>
+read-write
+</td><td>
+The current HNONSEC value used by the selected MEM-AP.
+</td></tr>
+
+<tr><td>
+<a href="#hprot"><tt>hprot</tt></a>
+</td><td>
+read-write
+</td><td>
+The current HPROT value used by the selected MEM-AP.
+</td></tr>
+
+<tr><td>
+<a href="#locked"><tt>locked</tt></a>
+</td><td>
+read-only
+</td><td>
+Report whether the target is locked.
+</td></tr>
+
+<tr><td>
+<a href="#log"><tt>log</tt></a>
+</td><td>
+write-only
+</td><td>
+Set log level to one of 'debug', 'info', 'warning', 'error', 'critical'.
+</td></tr>
+
+<tr><td>
+<a href="#map"><tt>map</tt></a>
+</td><td>
+read-only
+</td><td>
+Target memory map.
+</td></tr>
+
+<tr><td>
+<a href="#mem-ap"><tt>mem-ap</tt></a>
+</td><td>
+read-write
+</td><td>
+The currently selected MEM-AP used for memory read/write commands.
+</td></tr>
+
+<tr><td>
+<a href="#nreset"><tt>nreset</tt></a>
+</td><td>
+read-write
+</td><td>
+Current nRESET signal state.
+</td></tr>
+
+<tr><td>
+<a href="#option"><tt>option</tt></a>
+</td><td>
+read-write
+</td><td>
+The current value of one or more session options.
+</td></tr>
+
+<tr><td>
+<a href="#peripherals"><tt>peripherals</tt></a>
+</td><td>
+read-only
+</td><td>
+List of target peripheral instances.
+</td></tr>
+
+<tr><td>
+<a href="#probe-uid"><tt>probe-uid</tt></a>,
+<a href="#probe-uid"><tt>uid</tt></a>
+</td><td>
+read-only
+</td><td>
+Target's unique ID.
+</td></tr>
+
+<tr><td>
+<a href="#register-groups"><tt>register-groups</tt></a>
+</td><td>
+read-only
+</td><td>
+Display available register groups for the selected core.
+</td></tr>
+
+<tr><td>
+<a href="#step-into-interrupts"><tt>step-into-interrupts</tt></a>,
+<a href="#step-into-interrupts"><tt>si</tt></a>
+</td><td>
+read-write
+</td><td>
+Display whether interrupts are enabled when single stepping.
+</td></tr>
+
+<tr><td>
+<a href="#target"><tt>target</tt></a>
+</td><td>
+read-only
+</td><td>
+General target information.
+</td></tr>
+
+<tr><td>
+<a href="#vector-catch"><tt>vector-catch</tt></a>,
+<a href="#vector-catch"><tt>vc</tt></a>
+</td><td>
+read-write
+</td><td>
+Show current vector catch settings.
+</td></tr>
+
+
+</table>
+
+<h2 id="commands">Commands</h2>
+
+<h3 id="breakpoints">Breakpoints</h3>
+
+<h5 id="break"><code class="highlighter-rouge">break</code></h5>
+
+<p><strong>Usage</strong>: ADDR <br />
+Set a breakpoint address.</p>
+
+<h5 id="lsbreak"><code class="highlighter-rouge">lsbreak</code></h5>
+
+<p><strong>Usage</strong>:  <br />
+List breakpoints.</p>
+
+<h5 id="lswatch"><code class="highlighter-rouge">lswatch</code></h5>
+
+<p><strong>Usage</strong>:  <br />
+List watchpoints.</p>
+
+<h5 id="rmbreak"><code class="highlighter-rouge">rmbreak</code></h5>
+
+<p><strong>Usage</strong>: ADDR <br />
+Remove a breakpoint.</p>
+
+<h5 id="rmwatch"><code class="highlighter-rouge">rmwatch</code></h5>
+
+<p><strong>Usage</strong>: ADDR <br />
+Remove a watchpoint.</p>
+
+<h5 id="watch"><code class="highlighter-rouge">watch</code></h5>
+
+<p><strong>Usage</strong>: ADDR [r|w|rw] [1|2|4] <br />
+Set a watchpoint address, and optional access type (default rw) and size (4).</p>
+
+<h3 id="bringup">Bringup</h3>
+<p>These commands are meant to be used when starting up Commander in no-init mode. They are primarily useful for low-level debugging of debug infrastructure on a new chip.</p>
+
+<h5 id="initdp"><code class="highlighter-rouge">initdp</code></h5>
+
+<p><strong>Usage</strong>:  <br />
+Init DP and power up debug.</p>
+
+<h5 id="makeap"><code class="highlighter-rouge">makeap</code></h5>
+
+<p><strong>Usage</strong>: APSEL <br />
+Creates a new AP object for the given APSEL. The type of AP, MEM-AP or generic, is autodetected.</p>
+
+<h5 id="reinit"><code class="highlighter-rouge">reinit</code></h5>
+
+<p><strong>Usage</strong>:  <br />
+Reinitialize the target object.</p>
+
+<h3 id="commander">Commander</h3>
+
+<h5 id="exit"><code class="highlighter-rouge">exit</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">quit</code> <br />
+<strong>Usage</strong>:  <br />
+Quit pyocd commander.</p>
+
+<h5 id="list"><code class="highlighter-rouge">list</code></h5>
+
+<p><strong>Usage</strong>:  <br />
+Show available targets.</p>
+
+<h3 id="core">Core</h3>
+
+<h5 id="continue"><code class="highlighter-rouge">continue</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">c</code>, <code class="highlighter-rouge">go</code>, <code class="highlighter-rouge">g</code> <br />
+<strong>Usage</strong>:  <br />
+Resume execution of the target. The target’s state is read back after resuming. If the target is not running, then it’s state is reported. For instance, if the target is halted immediately after resuming, a debug event such as a breakpoint most likely occurred.</p>
+
+<h5 id="core-1"><code class="highlighter-rouge">core</code></h5>
+
+<p><strong>Usage</strong>: [NUM] <br />
+Select CPU core by number or print selected core.</p>
+
+<h5 id="halt"><code class="highlighter-rouge">halt</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">h</code> <br />
+<strong>Usage</strong>:  <br />
+Halt the target.</p>
+
+<h5 id="step"><code class="highlighter-rouge">step</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">s</code> <br />
+<strong>Usage</strong>: [COUNT] <br />
+Step one or more instructions.</p>
+
+<h3 id="dap">Dap</h3>
+
+<h5 id="readap"><code class="highlighter-rouge">readap</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">rap</code> <br />
+<strong>Usage</strong>: [APSEL] ADDR <br />
+Read AP register.</p>
+
+<h5 id="readdp"><code class="highlighter-rouge">readdp</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">rdp</code> <br />
+<strong>Usage</strong>: ADDR <br />
+Read DP register.</p>
+
+<h5 id="writeap"><code class="highlighter-rouge">writeap</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">wap</code> <br />
+<strong>Usage</strong>: [APSEL] ADDR DATA <br />
+Write AP register.</p>
+
+<h5 id="writedp"><code class="highlighter-rouge">writedp</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">wdp</code> <br />
+<strong>Usage</strong>: ADDR DATA <br />
+Write DP register.</p>
+
+<h3 id="device">Device</h3>
+
+<h5 id="reset"><code class="highlighter-rouge">reset</code></h5>
+
+<p><strong>Usage</strong>: [halt|-halt|-h] [TYPE] <br />
+Reset the target, optionally specifying the reset type. The reset type must be one of ‘default’, ‘hw’, ‘sw’, ‘hardware’, ‘software’, ‘sw_sysresetreq’, ‘sw_vectreset’, ‘sw_emulated’, ‘sysresetreq’, ‘vectreset’, or ‘emulated’.</p>
+
+<h5 id="unlock"><code class="highlighter-rouge">unlock</code></h5>
+
+<p><strong>Usage</strong>:  <br />
+Unlock security on the target.</p>
+
+<h3 id="general">General</h3>
+
+<h5 id="help"><code class="highlighter-rouge">help</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">?</code> <br />
+<strong>Usage</strong>: [CMD] <br />
+Show help for commands.</p>
+
+<h3 id="memory">Memory</h3>
+
+<h5 id="compare"><code class="highlighter-rouge">compare</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">cmp</code> <br />
+<strong>Usage</strong>: ADDR [LEN] FILENAME <br />
+Compare a memory range against a binary file. If the length is not provided, then the length of the file is used.</p>
+
+<h5 id="disasm"><code class="highlighter-rouge">disasm</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">d</code> <br />
+<strong>Usage</strong>: [-c/–center] ADDR [LEN] <br />
+Disassemble instructions at an address. Only available if the capstone library is installed. To install capstone, run ‘pip install capstone’.</p>
+
+<h5 id="erase"><code class="highlighter-rouge">erase</code></h5>
+
+<p><strong>Usage</strong>: [ADDR] [COUNT] <br />
+Erase all internal flash or a range of sectors.</p>
+
+<h5 id="fill"><code class="highlighter-rouge">fill</code></h5>
+
+<p><strong>Usage</strong>: [SIZE] ADDR LEN PATTERN <br />
+Fill a range of memory with a pattern. The optional SIZE parameter must be one of 8, 16, or 32. If not provided, the size is determined by the pattern value’s most significant set bit. Only RAM regions may be filled.</p>
+
+<h5 id="find"><code class="highlighter-rouge">find</code></h5>
+
+<p><strong>Usage</strong>: ADDR LEN BYTE+ <br />
+Search for a value in memory within the given address range. A pattern of any number of bytes can be searched for. Each BYTE parameter must be an 8-bit value.</p>
+
+<h5 id="load"><code class="highlighter-rouge">load</code></h5>
+
+<p><strong>Usage</strong>: FILENAME [ADDR] <br />
+Load a binary, hex, or elf file with optional base address.</p>
+
+<h5 id="loadmem"><code class="highlighter-rouge">loadmem</code></h5>
+
+<p><strong>Usage</strong>: ADDR FILENAME <br />
+Load a binary file to an address in memory (RAM or flash). This command is deprecated in favour of the more flexible ‘load’.</p>
+
+<h5 id="read16"><code class="highlighter-rouge">read16</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">rh</code> <br />
+<strong>Usage</strong>: ADDR [LEN] <br />
+Read 16-bit halfwords. Optional length parameter is the number of bytes (not half-words) to read. It must be divisible by 2. If the length is not provided, one halfword is read. The address may be unaligned.</p>
+
+<h5 id="read32"><code class="highlighter-rouge">read32</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">rw</code> <br />
+<strong>Usage</strong>: ADDR [LEN] <br />
+Read 32-bit words. Optional length parameter is the number of bytes (not words) to read. It must be divisible by 4. If the length is not provided, one word is read. The address may be unaligned.</p>
+
+<h5 id="read64"><code class="highlighter-rouge">read64</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">rd</code> <br />
+<strong>Usage</strong>: ADDR [LEN] <br />
+Read 64-bit words. Optional length parameter is the number of bytes (not double-words!) to read. It must be divisible by 8. If the length is not provided, one word is read. The address may be unaligned.</p>
+
+<h5 id="read8"><code class="highlighter-rouge">read8</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">rb</code> <br />
+<strong>Usage</strong>: ADDR [LEN] <br />
+Read 8-bit bytes. Optional length parameter is the number of bytes to read. If the length is not provided, one byte is read.</p>
+
+<h5 id="savemem"><code class="highlighter-rouge">savemem</code></h5>
+
+<p><strong>Usage</strong>: ADDR LEN FILENAME <br />
+Save a range of memory to a binary file.</p>
+
+<h5 id="write16"><code class="highlighter-rouge">write16</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">wh</code> <br />
+<strong>Usage</strong>: ADDR DATA+ <br />
+Write 16-bit halfwords to memory. The data arguments are 16-bit halfwords in big-endian format and are written as little-endian. The address may be unaligned. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
+
+<h5 id="write32"><code class="highlighter-rouge">write32</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">ww</code> <br />
+<strong>Usage</strong>: ADDR DATA+ <br />
+Write 32-bit words to memory. The data arguments are 32-bit words in big-endian format and are written as little-endian. The address may be unaligned. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
+
+<h5 id="write64"><code class="highlighter-rouge">write64</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">wd</code> <br />
+<strong>Usage</strong>: ADDR DATA… <br />
+Write 64-bit double-words to memory. The data arguments are 64-bit words in big-endian format and are written as little-endian. The address may be unaligned. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
+
+<h5 id="write8"><code class="highlighter-rouge">write8</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">wb</code> <br />
+<strong>Usage</strong>: ADDR DATA+ <br />
+Write 8-bit bytes to memory. The data arguments are 8-bit bytes. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
+
+<h3 id="registers">Registers</h3>
+
+<h5 id="reg"><code class="highlighter-rouge">reg</code></h5>
+
+<p><strong>Usage</strong>: [-f] [REG] <br />
+Print core or peripheral register(s). If no arguments are provided, all core registers will be printed. Either a core register name, the name of a peripheral, or a peripheral.register can be provided. When a peripheral name is provided without a register, all registers in the peripheral will be printed. If the -f option is passed, then individual fields of peripheral registers will be printed in addition to the full value.</p>
+
+<h5 id="wreg"><code class="highlighter-rouge">wreg</code></h5>
+
+<p><strong>Usage</strong>: [-r] REG VALUE <br />
+Set the value of a core or peripheral register. The REG parameter must be a core register name or a peripheral.register. When a peripheral register is written, if the -r option is passed then it is read back and the updated value printed.</p>
+
+<h3 id="semihosting">Semihosting</h3>
+
+<h5 id="arm"><code class="highlighter-rouge">arm</code></h5>
+
+<p><strong>Usage</strong>: semihosting {enable,disable} <br />
+Enable or disable semihosting. Provided for compatibility with OpenOCD. The same functionality can be achieved by setting the ‘enable_semihosting’ session option.</p>
+
+<h3 id="servers">Servers</h3>
+
+<h5 id="gdbserver"><code class="highlighter-rouge">gdbserver</code></h5>
+
+<p><strong>Usage</strong>: {start,stop,status} <br />
+Control the gdbserver for the selected core. The action argument should be either ‘start’, ‘stop’, or ‘status’. Use the ‘gdbserver_port’ and ‘telnet_port’ session options to control the ports the gdbserver uses.</p>
+
+<h5 id="probeserver"><code class="highlighter-rouge">probeserver</code></h5>
+
+<p><strong>Usage</strong>: {start,stop,status} <br />
+Control the debug probe server. The action argument should be either ‘start’, ‘stop’, or ‘status. Use the ‘probeserver.port’ option to control the TCP port the server uses.</p>
+
+<h3 id="symbols">Symbols</h3>
+<p>These commands require an ELF to be set.</p>
+
+<h5 id="symbol"><code class="highlighter-rouge">symbol</code></h5>
+
+<p><strong>Usage</strong>: NAME <br />
+Show a symbol’s value. An ELF file must have been specified with the –elf option.</p>
+
+<h5 id="where"><code class="highlighter-rouge">where</code></h5>
+
+<p><strong>Usage</strong>: [ADDR] <br />
+Show symbol, file, and line for address. The symbol name, source file path, and line number are displayed for the specified address. If no address is given then current PC is used. An ELF file must have been specified with the –elf option.</p>
+
+<h3 id="target">Target</h3>
+
+<h5 id="status"><code class="highlighter-rouge">status</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">st</code> <br />
+<strong>Usage</strong>:  <br />
+Show the target’s current state.</p>
+
+<h3 id="threads">Threads</h3>
+
+<h5 id="threads-1"><code class="highlighter-rouge">threads</code></h5>
+
+<p><strong>Usage</strong>: {flush,enable,disable,status} <br />
+Control thread awareness.</p>
+
+<h3 id="values">Values</h3>
+
+<h5 id="set"><code class="highlighter-rouge">set</code></h5>
+
+<p><strong>Usage</strong>: NAME VALUE <br />
+Set a value.</p>
+
+<h5 id="show"><code class="highlighter-rouge">show</code></h5>
+
+<p><strong>Usage</strong>: NAME <br />
+Display a value.</p>
+
+
+
+                </div>
+              </div>
+            </main>
+          
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+      
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>

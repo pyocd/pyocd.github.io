@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Introduction to the API &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4"><h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/installing" class="sidebar-link ">Installing</a></li><li class="sidebar-item level-1"><a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a></li><li class="sidebar-item level-1"><a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a></li></ul><h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/terminology" class="sidebar-link ">Terminology</a></li><li class="sidebar-item level-1"><a href="/docs/target-support" class="sidebar-link ">Target support</a></li><li class="sidebar-item level-1"><a href="/docs/configuration" class="sidebar-link ">Configuration</a></li><li class="sidebar-item level-1"><a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a></li><li class="sidebar-item level-1"><a href="/docs/configuring-logging" class="sidebar-link ">Configuring logging</a></li><li class="sidebar-item level-1"><a href="/docs/security" class="sidebar-link ">Security and protection</a></li><li class="sidebar-item level-1"><a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a></li></ul><h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/options" class="sidebar-link ">Session options list</a></li><li class="sidebar-item level-1"><a href="/docs/command-reference" class="sidebar-link ">Command reference</a></li></ul><h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><p class="sidebar-item-selected">Introduction to the API</p></li><li class="sidebar-item level-1"><a href="/docs/api-examples" class="sidebar-link ">Python API examples</a></li></ul><h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a></li><li class="sidebar-item level-1"><a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a></li><li class="sidebar-item level-1"><a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a></li><li class="sidebar-item level-1"><a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a></li><li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2"><li class="sidebar-item level-2"><a href="/docs/architecture" class="sidebar-link ">Architecture</a></li><li class="sidebar-item level-2"><a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a></li></ul>
+        </li></ul></div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Introduction to the API</h1>
+                  
+                
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">Contents</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#connecting">Connecting</a></li>
+<li class="toc-entry toc-h2"><a href="#dp-access">DP access</a></li>
+<li class="toc-entry toc-h2"><a href="#ap-access">AP access</a></li>
+<li class="toc-entry toc-h2"><a href="#reset-control">Reset control</a></li>
+<li class="toc-entry toc-h2"><a href="#notes">Notes</a></li>
+</ul>
+                    </div>
+                  </div>
+                
+                  <p>Using pyOCD’s Python API, you have extreme flexibility and precise control, and can do anything
+SWD allows, at the expense of more complexity compared to <code class="highlighter-rouge">pyocd commander</code>. Using pyOCD like this is
+particularly useful for situations where other debuggers become ineffective, such as device and
+board bringup, or automated testing.</p>
+
+<p>This document assumes familiarity with the Arm CoreSight debug architecture.</p>
+
+<p>See the <a href="/docs/architecture">architecture</a> documentation for an overview of the classes and how
+they are connected.</p>
+
+<h2 id="connecting">Connecting</h2>
+
+<p>pyOCD provides a handful of helper routines that make it very easy to enumerate and connect to
+available debug probes. These routines are all available as static methods on the <code class="highlighter-rouge">ConnectHelper</code>
+class in <code class="highlighter-rouge">pyocd.core.helpers</code>.</p>
+
+<p><code class="highlighter-rouge">ConnectHelper.session_with_chosen_probe()</code> is the primary connection helper. This method returns
+a single <code class="highlighter-rouge">Session</code> object, or None. If only a single probe is available, a new session for that
+probe is returned immediately. But if there are multiple probes available, then by default, it will
+present a simple console UI that lets the user select which probe they want to use. Other options
+allow automatically picking the first available probe.</p>
+
+<p>One of the most useful parameters for <code class="highlighter-rouge">session_with_chosen_probe()</code> is <code class="highlighter-rouge">unique_id</code>. Pass whole or
+part of a probe’s unique ID (aka serial number) to programmatically select a specific probe.</p>
+
+<p>Session options may be passed to <code class="highlighter-rouge">session_with_chosen_probe()</code> in two ways. The <code class="highlighter-rouge">options</code>
+parameter accepts a dictionary of session options. Or, you may pass options as keyword parameters.
+The two methods may be combined.</p>
+
+<h2 id="dp-access">DP access</h2>
+
+<p>The DP is controlled through an instance of the <code class="highlighter-rouge">DebugPort</code> class (in <code class="highlighter-rouge">pyocd.coresight.dap</code>). You
+get the <code class="highlighter-rouge">DebugPort</code> object via the ‘dp’ attribute of the target instance, i.e., <code class="highlighter-rouge">session.board.target.dp</code>.</p>
+
+<p>The <code class="highlighter-rouge">DebugPort</code> class has <code class="highlighter-rouge">read_reg(addr)</code> and <code class="highlighter-rouge">write_reg(addr, data)</code> methods. ‘addr’ must be an
+integer in the set (0x0, 0x4, 0x8, 0xC).</p>
+
+<p>Example:</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">board</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">dp</span><span class="p">.</span><span class="n">read_reg</span><span class="p">(</span><span class="mh">0x4</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="n">board</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">dp</span><span class="p">.</span><span class="n">write_reg</span><span class="p">(</span><span class="mh">0x8</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>For completeness, the DebugPort class also has <code class="highlighter-rouge">readDP(addr)</code>, <code class="highlighter-rouge">writeDP(addr, data)</code>, <code class="highlighter-rouge">readAP(addr)</code>, and
+<code class="highlighter-rouge">writeAP(addr, data)</code> methods. They work as described below, except that the <code class="highlighter-rouge">readAP()</code> and <code class="highlighter-rouge">writeAP()</code> methods
+require the APSEL in the address (i.e., 0x010000fc to read ID of APSEL=1). The AP will automatically be
+selected.</p>
+
+<h2 id="ap-access">AP access</h2>
+
+<p>CoreSight APs are represented with <code class="highlighter-rouge">AccessPort</code> classes defined in <code class="highlighter-rouge">pyocd.coresight.ap</code>. These include
+the <code class="highlighter-rouge">MEM_AP</code> subclass and <code class="highlighter-rouge">AHB_AP</code> subclass of that.</p>
+
+<p>To get the AP objects you can use the ‘aps’ attribute of the <code class="highlighter-rouge">DebugPort</code>. This attribute is a dict
+with the keys being the APSEL number and values being AccessPort instances. For instance, use
+<code class="highlighter-rouge">session.board.target.aps[1]</code> to get the AP with APSEL=1, assuming it exists (if not, you’ll get an
+<code class="highlighter-rouge">IndexError</code> exception).</p>
+
+<p><code class="highlighter-rouge">AccessPort</code> also has <code class="highlighter-rouge">read_reg(addr)</code> and <code class="highlighter-rouge">write_reg(addr, data)</code> methods. For these methods, <code class="highlighter-rouge">addr</code> is
+an integer of the register offset. Note that you do not need to include the APSEL in the address, and
+you do not need to modify the DP’s SELECT register prior to accessing AP registers. The AP will
+automatically be selected in the DP as required.</p>
+
+<p>The <code class="highlighter-rouge">MEM_AP</code>/<code class="highlighter-rouge">AHB_AP</code> class has the memory access methods that are available on
+the target, but the access is, of course, performed through that specific AP. This is particularly
+useful for multicore devices or Cortex-A class devices.</p>
+
+<p>Example showing access of the proprietary MDM-AP of NXP Kinetis MCUs:</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mdm_ap</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">board</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">dp</span><span class="p">.</span><span class="n">aps</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">idr</span> <span class="o">=</span> <span class="n">mdm_ap</span><span class="p">.</span><span class="n">read_reg</span><span class="p">(</span><span class="mh">0xfc</span><span class="p">)</span> <span class="c1"># Read IDR.
+</span><span class="n">mdm_ap</span><span class="p">.</span><span class="n">write_reg</span><span class="p">(</span><span class="mh">0x4</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="reset-control">Reset control</h2>
+
+<p>To control reset, there are several options.</p>
+
+<p><code class="highlighter-rouge">DebugPort</code> has methods for driving the hardware reset signal:</p>
+<ul>
+  <li><code class="highlighter-rouge">DebugPort.reset()</code>, asks the debug probe to perform a hardware reset of the target.</li>
+  <li><code class="highlighter-rouge">DebugPort.assert_reset(asserted)</code> to directly control the nRESET signal. Pass True to drive
+nRESET low, False to drive high.</li>
+</ul>
+
+<p>A wider range of reset options is provided by these <code class="highlighter-rouge">Target</code> methods:</p>
+<ul>
+  <li><code class="highlighter-rouge">Target.reset(reset_type=None)</code>. Normally performs a software reset unless the optional parameter
+is set to False.</li>
+  <li><code class="highlighter-rouge">Target.reset_and_halt(reset_type=None)</code> to perform a halting reset. Again, the reset defaults
+to software but may be set to hardware.</li>
+</ul>
+
+<p>The <code class="highlighter-rouge">reset_type</code> parameter on the <code class="highlighter-rouge">Target</code> reset methods can be set to one of the <code class="highlighter-rouge">Target.ResetType</code>
+enums:</p>
+<ul>
+  <li><code class="highlighter-rouge">ResetType.HW</code>: Hardware reset using the nRESET signal.</li>
+  <li><code class="highlighter-rouge">ResetType.SW</code>: Uses the core’s default software reset method.</li>
+  <li><code class="highlighter-rouge">ResetType.SW_SYSRESETREQ</code>: Software reset using SYSRESETREQ, which usually resets the entire system
+on most MCUs.</li>
+  <li><code class="highlighter-rouge">ResetType.SW_VECTRESET</code>: Software reset using VECTRESET, only available on v7-M targets. This
+resets only the core itself. If requested on non-v7-M targets, it will fall back to <code class="highlighter-rouge">SW_EMULATED</code>.</li>
+  <li><code class="highlighter-rouge">ResetType.SW_EMULATED</code>: Restores the core to reset conditions by writing registers. However, this
+will not trigger a reset vector catch.</li>
+</ul>
+
+<p>The <code class="highlighter-rouge">CortexM</code> objects have <code class="highlighter-rouge">default_reset_type</code> and <code class="highlighter-rouge">default_software_reset_type</code> properties that
+let you control the overall default reset type (any one of the <code class="highlighter-rouge">ResetType</code> enums), as well as the
+default if <code class="highlighter-rouge">ResetType.SW</code> is selected, respectively.</p>
+
+<p>Another option for performing a halting reset is by setting vector catch with the target’s <code class="highlighter-rouge">set_vector_catch()</code>
+method, then using a normal reset. This has the benefit of always halting at reset, if you leave the
+vector catch enabled.</p>
+
+<p>Example timed reset using the DP:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import time
+
+dp = session.board.target.dp
+
+# Timed reset.
+dp.assert_reset(True)
+time.sleep(1.0)
+dp.assert_reset(False)
+</code></pre></div></div>
+
+<h2 id="notes">Notes</h2>
+
+<p>You are encouraged to look through the code to see what additional functionality is available. The
+most interesting places to look at are:</p>
+
+<ul>
+  <li>pyocd.core.target: defines Target class, which is the main API.</li>
+  <li>pyocd.core.coresight_target: Represents the chip as a whole,
+  provides access to DP and APs, as well as each of the cores.</li>
+  <li>pyocd.coresight.cortex_m: CortexM class to control a core,
+  implements Target API and adds some stuff.</li>
+  <li>pyocd.flash.loader: high level flash programming of raw binary data.</li>
+  <li>pyocd.flash.eraser: high level flash erasing.</li>
+  <li>pyocd.flash.file_programmer: high level file programming.</li>
+  <li>pyocd.flash.flash: low level flash programming API in the @ref pyocd.flash.flash.Flash “Flash”
+  class. Each flash memory region has a @ref pyocd.flash.flash.Flash “Flash” class instance
+  associated with it, accessible from the <code class="highlighter-rouge">flash</code> property on the region. To get the boot flash
+  memory region, call <code class="highlighter-rouge">target.memory_map.get_boot_memory()</code>. The <code class="highlighter-rouge">flash</code> attribute of this region
+  then returns the boot flash memory’s @ref pyocd.flash.flash.Flash “Flash” instance.</li>
+</ul>
+
+
+
+                </div>
+              </div>
+            </main>
+          
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+      
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>
