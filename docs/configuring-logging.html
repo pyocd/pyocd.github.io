@@ -78,17 +78,92 @@
             
 
 <div class="sidebar docs-sidebar-1" id="sidebar1">
-  <div class="p-4"><h5 class="sidebar-header level-1">Getting started</h5>
-    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/installing" class="sidebar-link ">Installing</a></li><li class="sidebar-item level-1"><a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a></li><li class="sidebar-item level-1"><a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a></li></ul><h5 class="sidebar-header level-1">User documentation</h5>
-    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/terminology" class="sidebar-link ">Terminology</a></li><li class="sidebar-item level-1"><a href="/docs/target-support" class="sidebar-link ">Target support</a></li><li class="sidebar-item level-1"><a href="/docs/configuration" class="sidebar-link ">Configuration</a></li><li class="sidebar-item level-1"><a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a></li><li class="sidebar-item level-1"><p class="sidebar-item-selected">Configuring logging</p></li><li class="sidebar-item level-1"><a href="/docs/security" class="sidebar-link ">Security and protection</a></li><li class="sidebar-item level-1"><a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a></li></ul><h5 class="sidebar-header level-1">Reference</h5>
-    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/options" class="sidebar-link ">Session options list</a></li><li class="sidebar-item level-1"><a href="/docs/command-reference" class="sidebar-link ">Command reference</a></li></ul><h5 class="sidebar-header level-1">Python API</h5>
-    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/python-api" class="sidebar-link ">Introduction to the API</a></li><li class="sidebar-item level-1"><a href="/docs/api-examples" class="sidebar-link ">Python API examples</a></li></ul><h5 class="sidebar-header level-1">Developers</h5>
-    <ul class="list-unstyled level-1"><li class="sidebar-item level-1"><a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a></li><li class="sidebar-item level-1"><a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a></li><li class="sidebar-item level-1"><a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a></li><li class="sidebar-item level-1"><a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a></li><li>
+  <div class="p-4">
+    <h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/installing" class="sidebar-link ">Installing</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/installing-on-non-x86" class="sidebar-link ">Installing on non-x86 platforms</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/gdb-setup" class="sidebar-link ">GDB setup</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/terminology" class="sidebar-link ">Terminology</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/target-support" class="sidebar-link ">Target support</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuration" class="sidebar-link ">Configuration</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/user-scripts" class="sidebar-link ">User Scripts</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <p class="sidebar-item-selected">Configuring logging</p>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/security" class="sidebar-link ">Security and protection</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/multicore-debug" class="sidebar-link ">Multicore debug</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/options" class="sidebar-link ">Session options list</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/command-reference" class="sidebar-link ">Command reference</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/python-api" class="sidebar-link ">Introduction to the API</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api-examples" class="sidebar-link ">Python API examples</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/how-to-build" class="sidebar-link ">How to build binary</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/automated-tests" class="sidebar-link ">Automated tests</a>
+            </li>
+          <li>
         <p class="sidebar-header level-2">
           Internal design
         </p>
-        <ul class="list-unstyled level-2"><li class="sidebar-item level-2"><a href="/docs/architecture" class="sidebar-link ">Architecture</a></li><li class="sidebar-item level-2"><a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a></li></ul>
-        </li></ul></div>
+        <ul class="list-unstyled level-2">
+        <li class="sidebar-item level-2">
+              <a href="/docs/architecture" class="sidebar-link ">Architecture</a>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/remote-probe-protocol" class="sidebar-link ">Remote probe protocol</a>
+              </li>
+            </ul>
+        </li></ul>
+    </div>
 </div>
 
           </div>
