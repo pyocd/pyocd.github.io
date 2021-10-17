@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>User Scripts &mdash; pyOCD</title>
+  <title>User scripts &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -103,7 +103,7 @@
             <a href="/docs/configuration" class="sidebar-link ">Configuration</a>
             </li>
           <li class="sidebar-item level-1">
-            <p class="sidebar-item-selected">User Scripts</p>
+            <p class="sidebar-item-selected">User scripts</p>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a>
@@ -121,6 +121,9 @@
     <h5 class="sidebar-header level-1">Reference</h5>
     <ul class="list-unstyled level-1">
     <li class="sidebar-item level-1">
+            <a href="/docs/builtin-targets" class="sidebar-link ">Built-in targets</a>
+            </li>
+          <li class="sidebar-item level-1">
             <a href="/docs/options" class="sidebar-link ">Session options list</a>
             </li>
           <li class="sidebar-item level-1">
@@ -139,7 +142,7 @@
     <h5 class="sidebar-header level-1">Developers</h5>
     <ul class="list-unstyled level-1">
     <li class="sidebar-item level-1">
-            <a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a>
+            <a href="/docs/developers-guide" class="sidebar-link ">Developers' guide</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a>
@@ -183,7 +186,7 @@
               <div class="row">
                 <div class="container docs-content">
                   
-                  <h1 class="mb-4 mt-0">User Scripts</h1>
+                  <h1 class="mb-4 mt-0">User scripts</h1>
                   
                 
                   <!-- floating table of contents -->
@@ -454,7 +457,7 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
   Hook to enable debug for the given core.</p>
 
     <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object about to be initialized.<br />
-  <strong>Result</strong> - <em>True</em> Do not perform the normal procedure to start core debug.
+  <strong>Result</strong> - <em>True</em> Do not perform the normal procedure to start core debug. <br />
       <em>False/None</em> Continue with normal behaviour.</p>
   </li>
   <li>
@@ -469,7 +472,7 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
   Pre-cleanup hook for the core.</p>
 
     <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object.<br />
-  <strong>Result</strong> - <em>True</em> Do not perform the normal procedure to disable core debug.
+  <strong>Result</strong> - <em>True</em> Do not perform the normal procedure to disable core debug. <br />
       <em>False/None</em> Continue with normal behaviour.</p>
   </li>
   <li>
@@ -501,7 +504,8 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
 
     <p><em>core</em> - A CortexM instance.<br />
   <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
-  <strong>Result</strong> - <em>True</em> The hook performed the reset. <em>False/None</em> Caller should perform the normal
+  <strong>Result</strong> - <em>True</em> The hook performed the reset.  <br />
+  <em>False/None</em> Caller should perform the normal
       reset procedure.</p>
   </li>
   <li>
@@ -518,7 +522,7 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
 
     <p><em>core</em> - A CortexM instance.<br />
   <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
-  <strong>Result</strong> - <em>True</em> This hook handled setting up reset catch, caller should do nothing.
+  <strong>Result</strong> - <em>True</em> This hook handled setting up reset catch, caller should do nothing. <br />
               <em>False/None</em> Perform the default reset catch set using vector catch.</p>
   </li>
   <li>
@@ -534,7 +538,7 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
   Hook to override mass erase.</p>
 
     <p><em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object.<br />
-  <strong>Result</strong> - <em>True</em> Indicate that mass erase was performed by the hook.
+  <strong>Result</strong> - <em>True</em> Indicate that mass erase was performed by the hook. <br />
               <em>False/None</em> Mass erase was not overridden and the caller should proceed with the
                   standard mass erase procedure.</p>
   </li>

@@ -103,7 +103,7 @@
             <a href="/docs/configuration" class="sidebar-link ">Configuration</a>
             </li>
           <li class="sidebar-item level-1">
-            <a href="/docs/user-scripts" class="sidebar-link ">User Scripts</a>
+            <a href="/docs/user-scripts" class="sidebar-link ">User scripts</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/remote-probe-access" class="sidebar-link ">Remote probe access</a>
@@ -121,6 +121,9 @@
     <h5 class="sidebar-header level-1">Reference</h5>
     <ul class="list-unstyled level-1">
     <li class="sidebar-item level-1">
+            <a href="/docs/builtin-targets" class="sidebar-link ">Built-in targets</a>
+            </li>
+          <li class="sidebar-item level-1">
             <a href="/docs/options" class="sidebar-link ">Session options list</a>
             </li>
           <li class="sidebar-item level-1">
@@ -139,7 +142,7 @@
     <h5 class="sidebar-header level-1">Developers</h5>
     <ul class="list-unstyled level-1">
     <li class="sidebar-item level-1">
-            <a href="/docs/developers-guide" class="sidebar-link ">Developers' Guide</a>
+            <a href="/docs/developers-guide" class="sidebar-link ">Developers' guide</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/adding-new-targets" class="sidebar-link ">Adding a new built-in target</a>
@@ -265,6 +268,11 @@
 <li class="toc-entry toc-h5"><a href="#write8">write8</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#openocd_compatibility">Openocd_compatibility</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#init">init</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h3"><a href="#registers">Registers</a>
 <ul>
 <li class="toc-entry toc-h5"><a href="#reg">reg</a></li>
@@ -327,7 +335,7 @@ precedence even when it is a prefix of multiple other commands.</p>
 
 <h2 id="all-commands">All commands</h2>
 
-<table class="docs-table">
+<table>
 
 <tr><th>Command</th><th>Arguments</th><th>Description</th></tr>
 
@@ -663,6 +671,16 @@ ADDR DATA+
 Write 8-bit bytes to memory.
 </td></tr>
 
+<tr><td colspan="3"><b>Openocd_compatibility</b></td></tr>
+
+<tr><td>
+<a href="#init"><tt>init</tt></a>
+</td><td>
+init
+</td><td>
+Ignored; for OpenOCD compatibility.
+</td></tr>
+
 <tr><td colspan="3"><b>Registers</b></td></tr>
 
 <tr><td>
@@ -777,6 +795,14 @@ command can be read, written, or both.</p>
 <table>
 
 <tr><th>Value</th><th>Access</th><th>Description</th></tr>
+
+<tr><td>
+<a href="#aps"><tt>aps</tt></a>
+</td><td>
+read-only
+</td><td>
+List discovered Access Ports.
+</td></tr>
 
 <tr><td>
 <a href="#cores"><tt>cores</tt></a>
@@ -1155,6 +1181,13 @@ Write 64-bit double-words to memory. The data arguments are 64-bit words in big-
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">wb</code> <br />
 <strong>Usage</strong>: ADDR DATA+ <br />
 Write 8-bit bytes to memory. The data arguments are 8-bit bytes. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
+
+<h3 id="openocd_compatibility">Openocd_compatibility</h3>
+
+<h5 id="init"><code class="highlighter-rouge">init</code></h5>
+
+<p><strong>Usage</strong>: init <br />
+Ignored; for OpenOCD compatibility.</p>
 
 <h3 id="registers">Registers</h3>
 
