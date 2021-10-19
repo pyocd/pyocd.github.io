@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>Welcome &mdash; pyOCD</title>
+  <title>pyOCD 0.32.1 released &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -77,37 +77,75 @@
           <main role="main" class="content-scroll p-3 p-md-4">
             <p>&larr; <a href="/posts/">View all posts</a></p>
 
-<h1><a href="/blog/welcome-to-pyocd/">Welcome</a></h1>
+<h1><a href="/posts/2021/10-18-pyocd-0.32.1-released.html">pyOCD 0.32.1 released</a></h1>
 
 <p class="text-muted border-bottom">
-  <strong>Oct 3, 2021</strong>
+  <strong>Oct 18, 2021</strong>
   <br/>Chris Reed
   
 </p>
 
-<p>Welcome to pyOCD’s new site! At long last, pyOCD has its own website with documentation and information.
-Hopefully this will make pyOCD easier for everyone to use, and especially for new users to get started.</p>
+<p>I’m happy to announce that pyOCD version 0.32.1 has been released. This is a small bug fix release that
+primarily is intended to add Python 3.10 support through the release of Python 3.10 wheels. We also
+released cmsis-pack-manager version 0.4.0 with pre-built wheels for Python 3.10.</p>
 
-<p>While this site is primarily focused on pyOCD itself, it will eventually also serve as the site for the other
-projects under the pyOCD organisation, most importantly cmsis-pack-manager.</p>
+<p>One noteworthy change is for J-Link support. Previously, pyOCD would always “connect” the J-Link (versus only
+opening it) using a default device name of “Cortex-M4”. If the target’s CPU didn’t match, the J-Link driver
+would log a warning and carry on just fine. The warning was normally invisible to pyOCD users unless debug
+logging is turned on for the <code class="highlighter-rouge">pyocd.probes.jlink_probe.trace</code> logger, so it wasn’t much of an issue.</p>
 
-<p>Now that there’s a real documentation site, my plan is to start adding a bunch of new documentation. The
-first focus will be on improving the getting started and installation material. Also in the works will be
-a series of how-tos for specific debug probes and development boards.</p>
+<p>In fact, connecting is unnecessary for the low-level CoreSight operations that pyOCD uses. The J-Link only
+needs to be opened and CoreSight configured. So now pyOCD will only connect the J-Link if the
+<code class="highlighter-rouge">jlink.device</code> session option is set to a valid J-Link device name. Currently, the benefit of setting this
+is minimal since pyOCD has its own target support. In the future, this option may be required to enable
+J-Link’s fast memory transfers.</p>
 
-<p>At the same time, we are launching a new Slack workspace, <a href="https://pyocd.slack.com/">pyocd.slack.com</a>.
-Use <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">this link</a>
-to join the workspace.</p>
+<p>In addition the J-Link probe plug-in now supports a <code class="highlighter-rouge">jlink.non_interactive</code> session option to place the
+J-Link driver in non-interactive mode and prevent dialogs from being presented requiring user action. It
+is enabled by default.</p>
 
-<p>The choice between Slack and Discord was not very easy. Open source projects that
-use one of these two chat systems seem split almost 50/50, at least for the projects I looked at. The
-choice of Slack was primarily because the interface seems a lot more clean to me, and I find it easier
-to use. Plus, we use it extensively at work, so I’m already really familiar with it.</p>
+<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.32.1">v0.32.1 on GitHub</a> <br />
+<a href="https://pypi.org/project/pyocd/0.32.1/">v0.32.1 on PyPI</a></p>
 
-<p>And finally, a <a href="https://groups.google.com/g/pyocd">mailing list</a> for announcements has been created on
-Google groups to better keep users informed about updates and changes.</p>
+<hr />
 
-<p>Enjoy!</p>
+<h3 id="additions">Additions</h3>
+
+<ul>
+  <li>Explicit Python 3.10 support and 3.10 wheels.</li>
+  <li>JLinkProbe: added <code class="highlighter-rouge">jlink.non_interactive</code> option.</li>
+</ul>
+
+<h3 id="targets">Targets</h3>
+
+<ul>
+  <li>Update flash algo for <code class="highlighter-rouge">lpc55s36</code>. (thanks @Hoohaha!)</li>
+</ul>
+
+<h3 id="fixes">Fixes</h3>
+
+<ul>
+  <li>Session options: correctly handle session options with float values from the command line.</li>
+  <li>Board: log description of exception during uninit.</li>
+  <li>JLinkProbe: only connect if <code class="highlighter-rouge">jlink.device</code> is set.</li>
+  <li>CortexM: fixed missing format args for warnings from post reset checks.</li>
+  <li>Packs: correct which vendor is output for find and show.</li>
+</ul>
+
+<h3 id="packaging">Packaging</h3>
+
+<ul>
+  <li>Packaging: dependency version bumps and classifier update. This fixes the issue with a pyyaml version conflict.</li>
+  <li>Packaging: bump cmsis-pack-manager to v0.4.0 release.</li>
+</ul>
+
+<h3 id="ci">CI</h3>
+
+<ul>
+  <li>Workflows: add Python 3.10 to basic test.</li>
+</ul>
+
+<p><a href="https://github.com/pyocd/pyOCD/compare/v0.32.0...v0.32.1"><strong>Full Changelog</strong></a></p>
 
 
 
