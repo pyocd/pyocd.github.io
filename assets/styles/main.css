@@ -126,11 +126,19 @@ p .install-cmd { background-color: #fff; }
 
 .feature-icon > svg { width: 48px; height: 48px; color: #666666; filter: drop-shadow(0.07rem 0.07rem 0.1rem #ced4da); }
 
-#features, #community { font-weight: 300; font-size: 1.1rem; }
+#features, #community, #recent { font-weight: 300; font-size: 1.1rem; }
 
-#features h1, #features h2, #features h3, #features h4, #features h5, #features h6, #community h1, #community h2, #community h3, #community h4, #community h5, #community h6 { font-weight: 600; }
+#features h1, #features h2, #features h3, #features h4, #features h5, #features h6, #community h1, #community h2, #community h3, #community h4, #community h5, #community h6, #recent h1, #recent h2, #recent h3, #recent h4, #recent h5, #recent h6 { font-weight: 600; }
 
-#community a { color: #5B4D59; text-decoration: none; }
+#recent { background-color: #F1F1F1; }
+
+#recent .card-body { color: #adb5bd; background-color: #3E2E42 !important; }
+
+#recent .card-body h5 { color: #ced4da; }
+
+#recent .card-body .card-text { font-size: 1.0rem; }
+
+#recent .card-footer { color: #adb5bd !important; background-color: #5B4D59 !important; }
 
 p code { background-color: #F6F7FA; border-radius: 5px; color: #5B4D59 !important; }
 
