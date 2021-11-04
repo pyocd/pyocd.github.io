@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>News and blog posts &mdash; pyOCD</title>
+  <title>TF-M Technical Forum presentation &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -75,27 +75,54 @@
       <div class="container flex-grow-1">
         <div class="row">
           <main role="main" class="content-scroll p-3 p-md-4">
-            <div class="mt-4 mb-5">
-<h3>News and blog posts</h3>
+            <p>&larr; <a href="/posts/">View all posts</a></p>
+
+<h1><a href="/posts/2021/11-04-tf-m_tech_forum_presentation.html">TF-M Technical Forum presentation</a></h1>
+
+<div class="post-header">
+<p class="text-muted border-bottom">
+  <strong>Nov 4, 2021</strong>
+  <br/>Chris Reed
+  
+</p>
 </div>
+
+<p>Recently, I had a great opportunity to share a short, introductory training presentation for pyOCD at the
+<a href="https://www.trustedfirmware.org/meetings/tf-m-technical-forum/">TrustedFirmware-M Technical Forum</a>. It was
+only a short 35-minute presentation plus Q&amp;A, but was good experience nonetheless.</p>
+
+<p>For some background, TrustedFirmware-M, or TF-M, is the reference implementation of firmware for the Secure
+world on Arm v8-M architecture microcontrollers which have TrustZone-M enabled. MCUs incorporating the
+Cortex-M23 and M33 cores that implement the v8-M architecture have been readily available for about 2.5 years
+now, and more are coming to market. And MCUs with the new Cortex-M55 should start appearing soon. (Not to say
+it’s easy to get them at the moment with all the current silicon supply chain issues!) So the use of TF-M and
+incorporation into MCU vendor SDKs, as well as open source project, is expanding. For instance, TF-M has
+direct support in <a href="https://zephyrproject.org">Zephyr RTOS</a>.</p>
+
+<p>The presentation covers these topics:</p>
+
 <ul>
-  
-    <li>
-      <a href="/posts/2021/11-04-tf-m_tech_forum_presentation.html"><strong>04 Nov 2021</strong> TF-M Technical Forum presentation</a>
-      <div><p>"Introduction to pyOCD" presentation at the TF-M Technical Forum.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/10-18-pyocd-0.32.1-released.html"><strong>18 Oct 2021</strong> pyOCD 0.32.1 released</a>
-      <div><p>Python 3.10 wheels and several bug fixes.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/10-03-welcome-to-pyocd.html"><strong>03 Oct 2021</strong> Welcome</a>
-      <div><p>The pyOCD website is now online, along with new community resources.</p></div>
-    </li>
-  
+  <li>Introduction</li>
+  <li>Features and roadmap</li>
+  <li>Getting started</li>
+  <li>Probes and targets</li>
+  <li>Installing target support</li>
+  <li>Configuration</li>
+  <li>Programming memory</li>
+  <li>Debugging: gdb and VSCode</li>
 </ul>
+
+<p>I’m also working on a more detailed version of the slides, and will add these as an update to this page when
+they’re ready.</p>
+
+<p><strong><a href="https://www.trustedfirmware.org/docs/tech_forum_20211028_pyocd_intro.pdf">Download presentation slides</a></strong></p>
+
+<p>The TF-M page for the Technical Forum also has a link to the recording of the presentation and password: <br />
+<strong><a href="https://www.trustedfirmware.org/meetings/tf-m-technical-forum/">TF-M Technical Forum</a></strong></p>
+
+<p>Many thanks to Anton Komlev for suggesting and arranging the presentation.</p>
+
+
 
           </main>
         </div>
