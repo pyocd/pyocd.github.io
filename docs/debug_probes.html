@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Debug probes &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark py-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4">
+    <h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/installing.html" class="sidebar-link ">Installing</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/installing_on_non_x86.html" class="sidebar-link ">Installing on non-x86 platforms</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/gdb_setup.html" class="sidebar-link ">GDB setup</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/terminology.html" class="sidebar-link ">Terminology</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/target_support.html" class="sidebar-link ">Target support</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <p class="sidebar-item-selected">Debug probes</p>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuration.html" class="sidebar-link ">Configuration</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/user_scripts.html" class="sidebar-link ">User scripts</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/remote_probe_access.html" class="sidebar-link ">Remote probe access</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuring_logging.html" class="sidebar-link ">Configuring logging</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/security.html" class="sidebar-link ">Security and protection</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/multicore_debug.html" class="sidebar-link ">Multicore debug</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/builtin-targets.html" class="sidebar-link ">Built-in targets</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/options.html" class="sidebar-link ">Session options list</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/command_reference.html" class="sidebar-link ">Command reference</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/python_api.html" class="sidebar-link ">Introduction to the API</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/developers_guide.html" class="sidebar-link ">Developers' guide</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/adding_new_targets.html" class="sidebar-link ">Adding a new built-in target</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/automated_tests.html" class="sidebar-link ">Automated tests</a>
+            </li>
+          <li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2">
+        <li class="sidebar-item level-2">
+              <a href="/docs/architecture.html" class="sidebar-link ">Architecture</a>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/remote_probe_protocol.html" class="sidebar-link ">Remote probe protocol</a>
+              </li>
+            </ul>
+        </li></ul>
+    </div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Debug probes</h1>
+                  
+                
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">Contents</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#unique-ids">Unique IDs</a></li>
+<li class="toc-entry toc-h2"><a href="#auto-target-type-identification">Auto target type identification</a></li>
+<li class="toc-entry toc-h2"><a href="#listing-available-debug-probes">Listing available debug probes</a></li>
+<li class="toc-entry toc-h2"><a href="#selecting-the-debug-probe">Selecting the debug probe</a></li>
+<li class="toc-entry toc-h2"><a href="#probe-driver-plug-in-notes">Probe driver plug-in notes</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#cmsis-dap">CMSIS-DAP</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#session-options">Session options</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#stlink">STLink</a></li>
+<li class="toc-entry toc-h3"><a href="#j-link">J-Link</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#session-options-1">Session options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+                    </div>
+                  </div>
+                
+                  <p>The debug probe is the interface between pyOCD and the target, and it drives the SWD or JTAG signals that control
+the target. By way of the connection between the debug probe and target, selecting the debug probe implicitly controls
+which target pyOCD debugs.</p>
+
+<p>There are two major flavours of debug probe:</p>
+
+<ul>
+  <li><strong>On-board probes</strong>. Many evaluation boards include an on-board debug probe, so you can plug it in and start using
+  it without needing any other devices.</li>
+  <li><strong>Standalone probes</strong>. For debugging custom hardware you typically need a standalone probe that connects via an
+  SWD/JTAG cable. Most commercially available debug probes, such as the SEGGER J-Link or Arm ULINKplus, are standalone.</li>
+</ul>
+
+<p>PyOCD uses debug probe driver plug-ins to enable support for different kinds of debug probes. It comes with plug-ins for
+these types of debug probes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Plug-in Name</th>
+      <th>Debug Probe Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">cmsisdap</code></td>
+      <td><a href="http://www.keil.com/pack/doc/CMSIS/DAP/html/index.html">CMSIS-DAP</a></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">pemicro</code></td>
+      <td><a href="https://pemicro.com/">PE Micro</a> Cyclone and Multilink</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">picoprobe</code></td>
+      <td>Raspberry Pi <a href="https://github.com/raspberrypi/picoprobe">Picoprobe</a></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">jlink</code></td>
+      <td><a href="https://segger.com/">SEGGER</a> <a href="https://www.segger.com/products/debug-trace-probes/">J-Link</a></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">stlink</code></td>
+      <td><a href="https://st.com/">STMicro</a> <a href="https://www.st.com/en/development-tools/st-link-v2.html">STLinkV2</a> and <a href="https://www.st.com/en/development-tools/stlink-v3set.html">STLinkV3</a></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">remote</code></td>
+      <td>pyOCD <a href="/docs/remote_probe_access.html">remote debug probe client</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="unique-ids">Unique IDs</h2>
+
+<p>Every debug probe has a <strong>unique ID</strong>. For debug probes that connect with USB, this is nominally the same as
+its USB serial number. However, every debug probe plugin determines for itself what the unique ID means. Some
+debug probes types are not connected with USB but are accessed across the network. In this case, the unique ID
+is the probe’s network address.</p>
+
+<p>The unique ID parameter is actually a simple form of URL. It can be prefixed with the name of a debug probe plugin
+followed by a colon, e.g. <code class="highlighter-rouge">cmsisdap:</code>, to restrict the type of debug probe that will match. This form is also a
+requirement for certain probe types, such as the remote probe client, where the unique ID is a host address rather than
+serial number.</p>
+
+<h2 id="auto-target-type-identification">Auto target type identification</h2>
+
+<p>Certain types of on-board debug probes can report the type of the target to which they are connected.</p>
+
+<p>Debug probes that support automatic target type reporting:</p>
+
+<ul>
+  <li>CMSIS-DAP probes based on the DAPLink firmware</li>
+  <li>STLinkV2-1 and STLinkV3</li>
+</ul>
+
+<h2 id="listing-available-debug-probes">Listing available debug probes</h2>
+
+<p>To view the connected probes and their unique IDs, run <code class="highlighter-rouge">pyocd list</code>. This command will produce output looking like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #   Probe                             Unique ID
+------------------------------------------------------------------------------------------
+  0   Arm LPC55xx DAPLink CMSIS-DAP     000000803f7099a85fdf51158d5dfcaa6102ef474c504355
+  1   Arm Musca-B1 [musca_b1]           500700001c16fcd400000000000000000000000097969902
+</code></pre></div></div>
+
+<p>For those debug probes that support automatic target type reporting, the default target type is visible in brackets
+next to the probe’s name. In addition, the name of the board is printed instead of the type of debug probe. This can be
+seen in the example output above for the “Arm Musca-B1” board, which has a default target type of <code class="highlighter-rouge">musca_b1</code>.</p>
+
+<p>If no target type appears in brackets, as can be seen above for the “Arm LPC55xx DAPLink CMSIS-DAP” probe (because it
+is a standalone probe), it means the debug probe does not report the type of its connected target. In this
+case, the target type must be manually specified either on the command line with the <code class="highlighter-rouge">-t</code> / <code class="highlighter-rouge">--target</code>
+argument, or by setting the <code class="highlighter-rouge">target_override</code> session option (possibly in a config file).</p>
+
+<p>Note that the printed list includes only those probes that pyOCD can actively query for, which currently means only USB
+based probes.</p>
+
+<h2 id="selecting-the-debug-probe">Selecting the debug probe</h2>
+
+<p>All of the pyOCD subcommands that communicate with a target require the user to either implicitly or explicitly
+specify a debug probe.</p>
+
+<p>There are three ways the debug probe is selected:</p>
+
+<ol>
+  <li>
+    <p>Implicitly, if only one probe is connected to the host, pyOCD can use it automatically without further configuration.</p>
+  </li>
+  <li>
+    <p>If there is more than one probe connected and pyOCD is not told which to use, it will ask on the console. It presents
+ the same list of probes reported by <code class="highlighter-rouge">pyocd list</code>, plus this question:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Enter the number of the debug probe or 'q' to quit&gt;
+</code></pre></div>    </div>
+
+    <p>and waits until a probe index is entered.</p>
+  </li>
+  <li>
+    <p>Explicitly, with the use of <code class="highlighter-rouge">-u UID</code> / <code class="highlighter-rouge">--uid=UID</code> / <code class="highlighter-rouge">--probe=UID</code> command line arguments. These arguments accept
+ either a whole or partial unique ID.</p>
+  </li>
+</ol>
+
+<p>If no probes are currently connected and pyOCD is executed without explicitly specifying the probe to use, it will
+by default print a message asking for a probe to be connected and wait. If the <code class="highlighter-rouge">-W</code> / <code class="highlighter-rouge">--no-wait</code> argument is passed,
+pyOCD will exit with an error instead.</p>
+
+<h2 id="probe-driver-plug-in-notes">Probe driver plug-in notes</h2>
+
+<p>This section contains notes on the use of different types of debug probes and the corresponding driver plug-ins.</p>
+
+<h3 id="cmsis-dap">CMSIS-DAP</h3>
+
+<p>There are two major versions of CMSIS-DAP, which use different USB classes:</p>
+
+<ul>
+  <li>v1: USB HID. This version is slower than v2. Still the most common version.</li>
+  <li>v2: USB vendor-specific using bulk pipes. Higher performance than v1. WinUSB-enabled to allow driverless usage on Windows 8 and above. Can be used with Windows 7 only if a driver is installed with a tool such as Zadig.</li>
+</ul>
+
+<p>These are several commercial probes using the CMSIS-DAP protocol:</p>
+
+<ul>
+  <li>Microchip EDBG/nEDBG</li>
+  <li>Microchip Atmel-ICE</li>
+  <li>Cypress KitProg3</li>
+  <li>Cypress MiniProg4</li>
+  <li>Keil ULINKplus</li>
+  <li>NXP LPC-LinkII</li>
+  <li>NXP MCU-Link</li>
+  <li>NXP MCU-Link Pro</li>
+  <li>NXP OpenSDA</li>
+</ul>
+
+<p>In addition, there are numerous other commercial and open source debug probes based on CMSIS-DAP.</p>
+
+<p>PyOCD supports automatic target type identification for debug probes built with the
+<a href="https://github.com/ARMmbed/DAPLink">DAPLink</a> firmware.</p>
+
+<h4 id="session-options">Session options</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">cmsis_dap.deferred_transfers</code> (bool, default True) Whether to use deferred transfers in the CMSIS-DAP probe backend.
+  By disabling deferred transfers, all writes take effect immediately. However, performance is negatively affected.</li>
+  <li><code class="highlighter-rouge">cmsis_dap.limit_packets</code> (bool, default False) Restrict CMSIS-DAP backend to using a single in-flight command at a
+  time. This is useful on some systems where USB is problematic, in particular virtual machines.</li>
+</ul>
+
+<h3 id="stlink">STLink</h3>
+
+<div class="alert alert-warning">
+<b>Note!</b> Recent STLink firmware versions will only allow access to STM32 targets. If you are using a target
+from a silicon vendor other than ST Micro, please use a different debug probe.
+</div>
+
+<p>No host resident drivers need to be installed to use STLink probes; only libusb is required. (This may not be true for Windows 7, but has not been verified.)</p>
+
+<p>The minimum supported STLink firmware version is V2J24, or any V3 version. However, upgrading to the latest version
+is strongly recommended. Numerous bugs have been fixed, and new commands added for feature and performance improvements.</p>
+
+<ul>
+  <li>V2J26: Adds 16-bit transfer support. If not supported, pyOCD will fall back to 8-bit transfers—it is possible this
+  will produce unexpected behaviour if used to access Device memory (e.g. memory mapped registers).</li>
+  <li>V2J28: Minimum version for multicore target support.</li>
+  <li>V2J32/V3J6: Allows access to banked DP registers. Usually not needed.</li>
+</ul>
+
+<p><a href="https://www.st.com/en/development-tools/stsw-link007.html">Firmware updates</a></p>
+
+<p>PyOCD supports automatic target type identification for on-board STLink probes that report a board ID.</p>
+
+<h3 id="j-link">J-Link</h3>
+
+<p>To use a Segger J-Link probe, the driver package must be installed. Segger makes drivers available for Linux, macOS,
+and Windows.</p>
+
+<p><a href="https://www.segger.com/downloads/jlink/">Firmware and driver installer and updates</a></p>
+
+<p>On macOS, you can install the <code class="highlighter-rouge">segger-jlink</code> cask with Homebrew to get automatic driver updates.</p>
+
+<h4 id="session-options-1">Session options</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">jlink.device</code> (str, no default)
+  If this option is set to a supported J-Link device name, then the J-Link will be asked connect
+  using this name. Otherwise, the J-Link is configured for only the low-level CoreSight operations
+  required by pyOCD. Ordinarily, it does not need to be set.</li>
+  <li><code class="highlighter-rouge">jlink.power</code> (bool, default True)
+  Enable target power when connecting via a J-Link probe, and disable power when
+  disconnecting.</li>
+  <li><code class="highlighter-rouge">jlink.non_interactive</code> (bool, default True)
+  Controls whether the J-Link DLL is allowed to present UI dialog boxes and its control
+  panel. Note that dialog boxes will actually still be visible, but the default option
+  will be chosen automatically after 5 seconds.</li>
+</ul>
+
+
+
+                </div>
+              </div>
+            </main>
+          
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+      
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>

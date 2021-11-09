@@ -100,6 +100,9 @@
             <a href="/docs/target_support.html" class="sidebar-link ">Target support</a>
             </li>
           <li class="sidebar-item level-1">
+            <a href="/docs/debug_probes.html" class="sidebar-link ">Debug probes</a>
+            </li>
+          <li class="sidebar-item level-1">
             <a href="/docs/configuration.html" class="sidebar-link ">Configuration</a>
             </li>
           <li class="sidebar-item level-1">
@@ -456,6 +459,9 @@ need to set the level of parent loggers to match the child levels. In fact, sett
 parent logger
 such as <code class="highlighter-rouge">pyocd</code> will set the level for all children—this is an easy way to control the log level
 for all of pyOCD.</p>
+
+<p>Note that because the <code class="highlighter-rouge">logging</code> option is passed to and handled by the Python logging module, it does not support
+wildcard matching against loggers like the <code class="highlighter-rouge">--log-level</code> argument.</p>
 
 <h3 id="full-control">Full control</h3>
 
