@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Installing</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#libusb-installation">libusb installation</a></li>
 <li class="toc-entry toc-h2"><a href="#udev-rules-on-linux">udev rules on Linux</a></li>
@@ -200,7 +200,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <p>PyOCD requires <a href="https://python.org/">Python</a> 3.6 or later, and a recent version of <a href="https://libusb.info/">libusb</a>. It runs on macOS,
 Linux, FreeBSD, and Windows platforms.</p>
 
@@ -281,7 +281,7 @@ CMSIS-Packs.</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -353,7 +353,7 @@ CMSIS-Packs.</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -365,4 +365,11 @@ CMSIS-Packs.</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

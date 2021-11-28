@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Configuration</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
 <li class="toc-entry toc-h2"><a href="#project-directory">Project directory</a></li>
@@ -200,7 +200,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <p>This guide documents how to configure pyOCD.</p>
 
 <h2 id="introduction">Introduction</h2>
@@ -284,7 +284,7 @@ will be applied to all matching probes.</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -356,7 +356,7 @@ will be applied to all matching probes.</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -368,4 +368,11 @@ will be applied to all matching probes.</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

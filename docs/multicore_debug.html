@@ -188,16 +188,16 @@
                   
                   <h1 class="mb-4 mt-0">Multicore debug</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 </ul>
                     </div>
                   </div>
-                
+
                   <p>pyOCD supports debugging multicore devices. It does this by serving one gdb server per core, to which
 you connect independant gdb instances. This is the most reliable method of debugging multicore
 embedded devices using gdb.</p>
@@ -230,7 +230,7 @@ depend on whether the secondary core’s code is running out of flash or RAM.</p
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -302,7 +302,7 @@ depend on whether the secondary core’s code is running out of flash or RAM.</p
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -314,4 +314,11 @@ depend on whether the secondary core’s code is running out of flash or RAM.</p
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

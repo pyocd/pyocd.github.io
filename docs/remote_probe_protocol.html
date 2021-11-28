@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Remote probe protocol</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#protocol">Protocol</a>
 <ul>
@@ -205,7 +205,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <p>PyOCD provides a server and client for sharing and accessing debug probes across a TCP/IP
 network connection. This document describes the protocol design, available commands, and semantics.</p>
 
@@ -431,7 +431,7 @@ and closed when the last client disconnects and closes.</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -503,7 +503,7 @@ and closed when the last client disconnects and closes.</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -515,4 +515,11 @@ and closed when the last client disconnects and closes.</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

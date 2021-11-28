@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Introduction to the API</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#connecting">Connecting</a></li>
 <li class="toc-entry toc-h2"><a href="#dp-access">DP access</a></li>
@@ -202,7 +202,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <p>Using pyOCD’s Python API, you have extreme flexibility and precise control, and can do anything
 SWD allows, at the expense of more complexity compared to <code class="highlighter-rouge">pyocd commander</code>. Using pyOCD like this is
 particularly useful for situations where other debuggers become ineffective, such as device and
@@ -352,7 +352,7 @@ most interesting places to look at are:</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -424,7 +424,7 @@ most interesting places to look at are:</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -436,4 +436,11 @@ most interesting places to look at are:</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

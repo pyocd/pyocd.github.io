@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Security and protection</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#supported-targets">Supported Targets</a></li>
 <li class="toc-entry toc-h2"><a href="#connecting-to-a-locked-target">Connecting to a locked target</a></li>
@@ -205,7 +205,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <p>Many targets support some way of disabling JTAG/SWD access or protecting the flash from read-back or write.
 In the text below, this is called a “locked” target, though each silicon vendor tends to have their
 own terminology for this feature.</p>
@@ -414,7 +414,7 @@ possible now that the chip is unlocked.</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -486,7 +486,7 @@ possible now that the chip is unlocked.</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -498,4 +498,11 @@ possible now that the chip is unlocked.</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

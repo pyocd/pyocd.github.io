@@ -188,18 +188,18 @@
                   
                   <h1 class="mb-4 mt-0">GDB setup</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#standalone-gdb-server">Standalone GDB server</a></li>
 <li class="toc-entry toc-h2"><a href="#recommended-gdb-and-ide-setup">Recommended GDB and IDE setup</a></li>
 </ul>
                     </div>
                   </div>
-                
+
                   <p>Most users will want to set up the GNU GDB debugger in order to use pyOCD for debugging applications. Either
 the command-line GDB or a full IDE can be used.</p>
 
@@ -249,7 +249,7 @@ under the “Help -&gt; Install New Software…” menu item.</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -321,7 +321,7 @@ under the “Help -&gt; Install New Software…” menu item.</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -333,4 +333,11 @@ under the “Help -&gt; Install New Software…” menu item.</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

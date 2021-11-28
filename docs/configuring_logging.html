@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Configuring logging</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#overview">Overview</a></li>
 <li class="toc-entry toc-h2"><a href="#log-levels">Log levels</a></li>
@@ -212,7 +212,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <h2 id="overview">Overview</h2>
 
 <p>pyOCD provides extensive control over log output. It uses the standard Python
@@ -525,7 +525,7 @@ levels:</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -597,7 +597,7 @@ levels:</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -609,4 +609,11 @@ levels:</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

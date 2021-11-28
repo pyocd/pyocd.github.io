@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Python API examples</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h3"><a href="#hello-world-example-code">Hello World example code</a></li>
 <li class="toc-entry toc-h3"><a href="#elf-files-and-breakpoints">ELF files and breakpoints</a></li>
@@ -200,7 +200,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <h3 id="hello-world-example-code">Hello World example code</h3>
 
 <p>This example shows basic connection, loading a firmware binary, and some simple target control.</p>
@@ -338,7 +338,7 @@ manual opening so you could, perhaps, further configure the session before it is
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -410,7 +410,7 @@ manual opening so you could, perhaps, further configure the session before it is
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -422,4 +422,11 @@ manual opening so you could, perhaps, further configure the session before it is
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

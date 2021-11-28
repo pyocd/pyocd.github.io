@@ -188,18 +188,18 @@
                   
                   <h1 class="mb-4 mt-0">Remote probe access</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#server">Server</a></li>
 <li class="toc-entry toc-h2"><a href="#client">Client</a></li>
 </ul>
                     </div>
                   </div>
-                
+
                   <p>PyOCD provides a server and client for sharing and accessing debug probes across a TCP/IP
 network connection. This can be used to provide shared debug access for multiple developers, to
 simplify CI configurations, or simply to enable multiple applications or tools to simultaneously
@@ -277,7 +277,7 @@ for more information about target types.</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -349,7 +349,7 @@ for more information about target types.</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -361,4 +361,11 @@ for more information about target types.</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

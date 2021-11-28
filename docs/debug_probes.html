@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Debug probes</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#unique-ids">Unique IDs</a></li>
 <li class="toc-entry toc-h2"><a href="#auto-target-type-identification">Auto target type identification</a></li>
@@ -216,7 +216,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <p>The debug probe is the interface between pyOCD and the target, and it drives the SWD or JTAG signals that control
 the target. By way of the connection between the debug probe and target, selecting the debug probe implicitly controls
 which target pyOCD debugs.</p>
@@ -437,7 +437,7 @@ and Windows.</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -509,7 +509,7 @@ and Windows.</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -521,4 +521,11 @@ and Windows.</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

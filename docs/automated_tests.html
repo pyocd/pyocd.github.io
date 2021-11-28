@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">Automated tests</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#unit-tests">Unit tests</a></li>
 <li class="toc-entry toc-h2"><a href="#functional-tests">Functional tests</a></li>
@@ -200,7 +200,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <p>Both unit tests and functional tests are used to verify pyOCD.</p>
 
 <p>The primary difference between unit tests and functional tests is that unit tests will work without
@@ -263,7 +263,7 @@ repo. It will create new virtual environments for each Python version and run <c
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -335,7 +335,7 @@ repo. It will create new virtual environments for each Python version and run <c
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -347,4 +347,11 @@ repo. It will create new virtual environments for each Python version and run <c
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>

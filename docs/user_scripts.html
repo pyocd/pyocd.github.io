@@ -188,11 +188,11 @@
                   
                   <h1 class="mb-4 mt-0">User scripts</h1>
                   
-                
+
                   <!-- floating table of contents -->
-                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3">
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
                     <div class="sidebar docs-sidebar-2 p-4">
-                        <h5 class="sidebar-header">Contents</h5>
+                        <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
 <li class="toc-entry toc-h2"><a href="#examples">Examples</a></li>
@@ -201,7 +201,7 @@
 </ul>
                     </div>
                   </div>
-                
+
                   <h2 id="introduction">Introduction</h2>
 
 <p>pyOCD has support for customization through what are called user scripts. These are Python scripts
@@ -564,7 +564,7 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
                 </div>
               </div>
             </main>
-          
+
           </div>
         </div>
       </div>
@@ -636,7 +636,7 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
 </footer>
 
       </div>
-      
+
       <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
         <i class="bi bi-arrow-up-short"></i>
       </a>
@@ -648,4 +648,11 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
  -->
 
   </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+</script>
 </html>
