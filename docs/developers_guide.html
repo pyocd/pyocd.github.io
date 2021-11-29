@@ -203,8 +203,13 @@
 
                   <h2 id="setup">Setup</h2>
 
+<div class="alert alert-info">
+Please familiarise yourself with the [contributing guide](https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md)
+before beginning any development on pyOCD or related projects.
+</div>
+
 <p>PyOCD developers are strongly recommended to setup a working environment using either
-<a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> or the built-in <code class="highlighter-rouge">venv</code> module (only use of virtualenv is shown
+<a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> or the built-in <code class="highlighter-rouge">venv</code> module (only use of <code class="highlighter-rouge">venv</code> is shown
 below, but the two are equivalent). After cloning the code, you can setup a virtualenv and install the pyOCD
 dependencies for the current platform by following the detailed steps below.</p>
 
@@ -218,7 +223,6 @@ dependencies for the current platform by following the detailed steps below.</p>
     </ul>
   </li>
   <li><a href="https://git-scm.com/downloads">Install Git</a>. Add to PATH.</li>
-  <li><a href="https://virtualenv.pypa.io/en/latest/">Install virtualenv</a> in your global Python installation, eg: <code class="highlighter-rouge">pip install virtualenv</code>. Not needed if using the built-in <code class="highlighter-rouge">venv</code> module.</li>
   <li><a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm">Install GNU Arm Embedded toolchain</a>.
   This provides <code class="highlighter-rouge">arm-none-eabi-gdb</code> used for testing the gdbserver. Add to PATH.</li>
 </ul>
@@ -229,7 +233,7 @@ dependencies for the current platform by following the detailed steps below.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/pyocd/pyOCD
 $ cd pyOCD
-$ virtualenv venv
+$ python3 -m venv venv
 </code></pre></div></div>
 
 <p><strong>Step 2.</strong> Activate virtual environment</p>
@@ -239,23 +243,37 @@ the following.</p>
 
 <p>Linux or Mac:</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ source venv/bin/activate
-$ pip install -e .[test]
 </code></pre></div></div>
 
 <p>Windows:</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ venv\Scripts\activate
-$ pip install -e .[test]
 </code></pre></div></div>
 
-<p><strong>Step 3.</strong> Develop</p>
+<p><strong>Step 3.</strong> Install editable pyOCD</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install -e .[test]
+</code></pre></div></div>
+
+<p>If you switch branches, you may need to reinstall.</p>
+
+<p>Because the <code class="highlighter-rouge">develop</code> branch doesn’t have version tags except older tags from the <code class="highlighter-rouge">develop</code> branch point,
+the version number of pyOCD might be significantly out of date. If this is an issue, you can override the
+version by setting the <code class="highlighter-rouge">SETUPTOOLS_SCM_PRETEND_VERSION</code> environmment variable to the desired version number
+(without a “v” prefix).</p>
+
+<p><strong>Step 4.</strong> Develop</p>
 
 <p>See the <a href="/docs/adding_new_targets.html">porting guide</a> for how to add new devices. Of course, we welcome
 all improvements and changes. See the <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">contributor statement</a> for some guidelines.</p>
 
-<p>Normally you should work from the <code class="highlighter-rouge">develop</code> branch. See the <a href="#branch-configuration-policy">branch policy</a> below for
-more information about branches.</p>
+<p>See the <a href="#branch-configuration-policy">branch policy</a> below for details about branches and which branch you should
+work from.</p>
 
-<p><strong>Step 4.</strong> Test</p>
+<p>If you’d like suggestions for something to work on, from small to large, the
+<a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a> workspace is a great
+way to engage with the community and maintainers.</p>
+
+<p><strong>Step 5.</strong> Test</p>
 
 <p>To run the unit tests, you can execute the following.</p>
 
@@ -274,25 +292,39 @@ $ open htmlcov/index.html
 $ python ./automated_test.py
 </code></pre></div></div>
 
-<p><strong>Step 5.</strong> Pull request</p>
+<p><strong>Step 6.</strong> Pull request</p>
 
 <p>Once you are satisfied with your changes and all automated tests pass, please create a
-<a href="https://github.com/pyocd/pyOCD/pull/new/develop">new pull request</a> against the <code class="highlighter-rouge">develop</code> branch on GitHub to share your work.</p>
+<a href="https://github.com/pyocd/pyOCD/pull/new">new pull request</a> on GitHub to share your work. Please see below for
+which branch to target.</p>
 
-<p>Pull requests should be made after a changeset is <a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing/workflow-walkthrough">rebased onto <code class="highlighter-rouge">develop</code></a>.</p>
+<p>Pull requests should be made after a changeset is
+<a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing/workflow-walkthrough">rebased</a>.</p>
 
 <h2 id="branch-configuration-policy">Branch configuration policy</h2>
 
 <p>There are two primary branches:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">main</code>: Stable branch reflecting the most recent release.</li>
-  <li><code class="highlighter-rouge">develop</code>: Active development branch for the next version. Merged into <code class="highlighter-rouge">main</code> at release time.</li>
+  <li><code class="highlighter-rouge">main</code>: Stable branch reflecting the most recent release. May contain bug fixes not yet released, but no new
+  feature commits are allowed.</li>
+  <li><code class="highlighter-rouge">develop</code>: Active development branch for the next minor version. Merged into <code class="highlighter-rouge">main</code> at release time.</li>
 </ul>
 
 <p>There may be other development branches present to host long term development of major new features and backwards incompatible changes, such as API changes.</p>
 
-<p>Changes should generally be made against the <code class="highlighter-rouge">develop</code> branch.</p>
+<p>The branch that your changes should be made against depends on the type and complexity of the changes:</p>
+
+<ul>
+  <li>Only a bug fix: please target <code class="highlighter-rouge">main</code>.</li>
+  <li>Any other changes, or a mix of changes: target the <code class="highlighter-rouge">develop</code> branch. This is also a good choice if you aren’t sure.</li>
+</ul>
+
+<p>Maintainers will cherry-pick commits between <code class="highlighter-rouge">main</code> and <code class="highlighter-rouge">develop</code> as necessary to keep fixes in sync.</p>
+
+<p>If you have any questions about how best to submit changes or the branch policy, please ask in the
+<a href="https://join.slack.com/t/pyocd/shared_invite/zt-wmy3zvg5-nRLj1GBWYh708TVfIx9Llg">Slack</a> workspace or
+<a href="https://github.com/pyocd/pyOCD/discussions">GitHub Discussions</a>. We’ll be happy to help.</p>
 
 
                 </div>

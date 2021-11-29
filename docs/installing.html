@@ -204,7 +204,7 @@
                   <p>PyOCD requires <a href="https://python.org/">Python</a> 3.6 or later, and a recent version of <a href="https://libusb.info/">libusb</a>. It runs on macOS,
 Linux, FreeBSD, and Windows platforms.</p>
 
-<p>The latest stable version of pyOCD may be installed via <a href="https://pip.pypa.io/en/stable/index.html">pip</a>
+<p>The latest stable version of pyOCD may be installed or upgraded via <a href="https://pip.pypa.io/en/stable/index.html">pip</a>
 as follows:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -mpip install -U pyocd
@@ -212,19 +212,22 @@ as follows:</p>
 
 <p><em>Note: depending on your system, you may need to use <code class="highlighter-rouge">python</code> instead of <code class="highlighter-rouge">python3</code>.</em></p>
 
-<p>The latest pyOCD package is available <a href="https://pypi.python.org/pypi/pyOCD/">on PyPI</a> as well as
-<a href="https://github.com/pyocd/pyOCD/releases">on GitHub</a>.</p>
+<p>The latest pyOCD package is available <a href="https://pypi.python.org/pypi/pyOCD/">on PyPI</a>. The
+<a href="https://github.com/pyocd/pyOCD/releases">GitHub releases</a> page details changes between versions.</p>
 
-<p>To install the latest prerelease version from the HEAD of the master branch, you can do
+<p>To install the latest prerelease version from the HEAD of the <code class="highlighter-rouge">develop</code> branch, you can do
 the following:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -mpip install --pre -U git+https://github.com/pyocd/pyOCD.git
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -mpip install --pre -U git+https://github.com/pyocd/pyOCD.git@develop
 </code></pre></div></div>
 
 <p>You can also install directly from the source by cloning the git repository and running:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 setup.py install
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -mpip install .
 </code></pre></div></div>
+
+<p>See the <a href="/docs/developers_guide.html">developer’s guide</a> for more about setting up a development
+environment for pyOCD.</p>
 
 <p>Note that, depending on your operating system, you may run into permissions issues running these commands.
 You have a few options here:</p>
@@ -240,6 +243,10 @@ local to a specific project working set.</li>
 
 <p>For notes about installing and using on non-x86 systems such as Raspberry Pi, see the
 <a href="/docs/installing_on_non_x86.html">relevant documentation</a>.</p>
+
+<p>(Note: Installing by running <code class="highlighter-rouge">setup.py</code> directly is deprecated since pyOCD migrated to PEP 517 based packaging.
+In many cases it will not work at all. Installing with pip or another standards-compliant tool is the only
+supported method.)</p>
 
 <h2 id="libusb-installation">libusb installation</h2>
 
@@ -266,8 +273,8 @@ probes from user space. Otherwise you will need to run pyOCD as root, using sudo
 highly discouraged. (You should <em>never</em> run pyOCD as root on any OS.)</p>
 
 <p>To help with this, example udev rules files are included with pyOCD in the
-<a href="https://github.com/pyocd/pyOCD/tree/master/udev">udev</a> folder. The
-<a href="https://github.com/pyocd/pyOCD/tree/master/udev/README.md">readme</a> in this folder has detailed
+<a href="https://github.com/pyocd/pyOCD/tree/main/udev">udev</a> folder. The
+<a href="https://github.com/pyocd/pyOCD/tree/main/udev/README.md">readme</a> in this folder has detailed
 instructions.</p>
 
 <h2 id="target-support">Target support</h2>
