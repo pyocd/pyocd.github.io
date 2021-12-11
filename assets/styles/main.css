@@ -42,6 +42,12 @@
 
 .docs-content h1, .docs-content h2, .docs-content h3, .docs-content h4, .docs-content h5, .docs-content h6 { clear: none; }
 
+.alert { display: table; }
+
+.alert > p { margin-bottom: 0px; }
+
+.alert-icon { font-size: 200%; float: left; margin-right: 20px; }
+
 .docs-index { background-color: #F1F1F1; font-size: 110%; }
 
 .docs-index .docs-index-header { font-family: "Sarabun", sans-serif; font-weight: 700; color: #666; }

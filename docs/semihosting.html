@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Semihosting &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark py-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4">
+    <h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/installing.html" class="sidebar-link ">Installing</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/installing_on_non_x86.html" class="sidebar-link ">Installing on non-x86 platforms</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/gdb_setup.html" class="sidebar-link ">GDB setup</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/terminology.html" class="sidebar-link ">Terminology</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/target_support.html" class="sidebar-link ">Target support</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/debug_probes.html" class="sidebar-link ">Debug probes</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuration.html" class="sidebar-link ">Configuration</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/user_scripts.html" class="sidebar-link ">User scripts</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/remote_probe_access.html" class="sidebar-link ">Remote probe access</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuring_logging.html" class="sidebar-link ">Configuring logging</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/security.html" class="sidebar-link ">Security and protection</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/multicore_debug.html" class="sidebar-link ">Multicore debug</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <p class="sidebar-item-selected">Semihosting</p>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/builtin-targets.html" class="sidebar-link ">Built-in targets</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/options.html" class="sidebar-link ">Session options list</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/command_reference.html" class="sidebar-link ">Command reference</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/env_vars.html" class="sidebar-link ">Environment variables</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/python_api.html" class="sidebar-link ">Introduction to the API</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/developers_guide.html" class="sidebar-link ">Developers' guide</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/adding_new_targets.html" class="sidebar-link ">Adding a new built-in target</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/automated_tests.html" class="sidebar-link ">Automated tests</a>
+            </li>
+          <li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2">
+        <li class="sidebar-item level-2">
+              <a href="/docs/architecture.html" class="sidebar-link ">Architecture</a>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/remote_probe_protocol.html" class="sidebar-link ">Remote probe protocol</a>
+              </li>
+            </ul>
+        </li></ul>
+    </div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Semihosting</h1>
+                  
+
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">On this page</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#how-it-works">How it works</a></li>
+<li class="toc-entry toc-h3"><a href="#enabling">Enabling</a></li>
+<li class="toc-entry toc-h3"><a href="#routing">Routing</a></li>
+<li class="toc-entry toc-h3"><a href="#building-into-firmware">Building into firmware</a></li>
+<li class="toc-entry toc-h3"><a href="#trace-logging">Trace logging</a></li>
+<li class="toc-entry toc-h3"><a href="#session-options">Session options</a></li>
+<li class="toc-entry toc-h3"><a href="#supported-requests">Supported requests</a></li>
+</ul>
+                    </div>
+                  </div>
+
+                  <p>Semihosting is a technique for routing I/O requests performed on the target to the host. In addition to I/O, some other
+operations are supported. Most commonly, this means integration of the standard C library with the host’s console and
+file system. It allows you to log debug messages before you have peripheral drivers fully functioning or on hardware
+that does not have other debug output capabilities. It can be used to redirect <code class="highlighter-rouge">printf()</code> and other standard I/O to or
+from the host, read keyboard input, access configuration files, transfer data to and from the target, and so on.</p>
+
+<p>The primary downside to semihosting is that it can be quite slow, depending on how it is used and considerations such
+as the debug probe’s latency and SWD/JTAG clock speed.</p>
+
+<p>The <a href="https://developer.arm.com/documentation/dui0471/i/semihosting/what-is-semihosting-?lang=en">Arm semihosting documentation</a>
+has more information about semihosting.</p>
+
+<h3 id="how-it-works">How it works</h3>
+
+<p>To implement semihosting, the debugger intercepts requests from code running on the target and performs
+the specified action on the target’s behalf. Figure 1 below shows how semihosting requests work.</p>
+
+<p><img src="resources/semihosting.svg" alt="" /><br />
+<strong>Figure 1</strong>. Semihosting block diagram.</p>
+
+<p>The figure demonstrates and example of how a C standard library call is made to <code class="highlighter-rouge">printf()</code>. This is routed to a
+semihosting handler, which prepares the request parameters and triggers the debugger to perform the request, in this
+case writing “hello world” to the console.</p>
+
+<p>For Arm Cortex-M devices, a <code class="highlighter-rouge">BKPT</code> instruction with a parameter of 0xAB serves as the trigger detected by the debugger.</p>
+
+<h3 id="enabling">Enabling</h3>
+
+<p>To use semihosting with pyOCD, it first must be enabled. This can be done in several ways:</p>
+
+<ul>
+  <li>Pass <code class="highlighter-rouge">-S</code>/<code class="highlighter-rouge">--semihosting</code> on the <code class="highlighter-rouge">pyocd gdbserver</code> command line.</li>
+  <li>Set the <code class="highlighter-rouge">enable_semihosting</code> session option to true.</li>
+  <li>From gdb, issue a <code class="highlighter-rouge">monitor arm semihosting enable</code> command. This command is supported for compatibility with OpenOCD.</li>
+</ul>
+
+<p>Assuming the default routing options and telnet port number are acceptable, no further configuration is required. When</p>
+
+<div class="alert alert-info">
+Currently semihosting only works when pyOCD's gdbserver is running and the target is resumed, with the gdbserver
+waiting for it to halt. However, the <code>pyocd.debug.semihost.SemihostAgent</code> class is reusable if a custom
+target control loop is implemented.
+</div>
+
+<h3 id="routing">Routing</h3>
+
+<p>There several ways to route semihosting I/O requests in pyOCD, depending on the file on which the request is operating.</p>
+
+<p>First, an I/O request is classified as either “console” or “syscall”. Console requests are those that operate on the
+first three file descriptions: stdin (0), stdout (1), and stderr (2). Certain semihosting requests are always console.
+All other requests, which are always for explicitly opened files, are classified as syscalls.</p>
+
+<p>Console requests have two options for routing, controlled with the <code class="highlighter-rouge">semihost_console_type</code> session option’s value.</p>
+
+<ul>
+  <li>“telnet”: I/O is connected to the “telnet” server. (In fact, it’s not a true telnet server because it doesn’t implement
+  the telnet control requests.) This server runs on the port indicated by the <code class="highlighter-rouge">telnet_port</code> session option or the
+  <code class="highlighter-rouge">-T</code>/<code class="highlighter-rouge">--telnet-port</code> command line argument of the gdbserver subcommand.</li>
+  <li>“console”: pyOCD’s standard I/O is used.</li>
+</ul>
+
+<p>Syscall requests also have two routing options. The <code class="highlighter-rouge">semihost_use_syscalls</code> option controls this depending on whether it
+is true or false.</p>
+
+<ul>
+  <li><em>false</em>: File I/O requests are handled by pyOCD itself, and therefore are performed on the system on which the pyOCD
+  process is running.</li>
+  <li><em>true</em>: File I/O is passed to gdb for handling.</li>
+</ul>
+
+<p>Relative paths passed to the <code class="highlighter-rouge">SYS_OPEN</code> request are interpreted relative to the syscall handler’s working directory.
+In addition, if pyOCD and gdb are running on different systems, absolute paths will be interpreter according to the
+appropriate system’s root filesystem.</p>
+
+<p>Defaults are for console to be routed to telnet and syscalls handled by gdb.</p>
+
+<h3 id="building-into-firmware">Building into firmware</h3>
+
+<p>The blog articles listed earlier have details of how to include semihosting support when linking firmware with gcc
+and newlib. These are the steps in short:</p>
+
+<ul>
+  <li>On the linker command line, add <code class="highlighter-rouge">--specs=rdimon.specs</code> and ensure <code class="highlighter-rouge">-nostartfiles</code> is not present.</li>
+  <li>Call <code class="highlighter-rouge">initialise_monitor_handles()</code> from your firmware before using semihosting.</li>
+</ul>
+
+<p>This small example shows how to init and use semihosting from gcc.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+</span>
+<span class="k">extern</span> <span class="kt">void</span> <span class="nf">initialise_monitor_handles</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// init semihosting console</span>
+    <span class="n">initialise_monitor_handles</span><span class="p">();</span>
+
+    <span class="c1">// say hello via semihosting</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"hello, world!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>These blog articles are also very helpful for gcc:</p>
+
+<ul>
+  <li><a href="https://interrupt.memfault.com/blog/arm-semihosting">Introduction to ARM Semihosting</a> is an excellent
+  overall introduction, including how to link in semihosting support for gcc and newlib-based projects.</li>
+  <li><a href="https://mcuoneclipse.com/2014/09/11/semihosting-with-gnu-arm-embedded-launchpad-and-gnu-arm-eclipse-debug-plugins/">Semihosting with GNU ARM Embedded (LaunchPad) and GNU ARM Eclipse Debug Plugins</a></li>
+</ul>
+
+<p>For other toolchains, please see the vendor’s documentation.</p>
+
+<h3 id="trace-logging">Trace logging</h3>
+
+<p>The semihosting agent supports a trace logger, <code class="highlighter-rouge">pyocd.debug.semihost.trace</code> that will output a log message every time a
+semihosting request is processed. This can be enabled on the command line with <code class="highlighter-rouge">-Lpyocd.debug.semihost.trace=debug</code>.</p>
+
+<h3 id="session-options">Session options</h3>
+
+<p>These are the session options that control semihosting:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">enable_semihosting</code> - Set to true to handle semihosting requests.</li>
+  <li><code class="highlighter-rouge">semihost_console_type</code> - If set to ‘telnet’ then the semihosting telnet server will be started. If set to ‘console’ then semihosting will print to pyOCD’s console.</li>
+  <li><code class="highlighter-rouge">semihost_use_syscalls</code> - Whether to use GDB syscalls for semihosting file access operations, or to have pyOCD perform the operations.)</li>
+  <li><code class="highlighter-rouge">telnet_port</code> - Base TCP port number for the semihosting telnet server. The core number, which will be 0 for the primary core, is added to this value.</li>
+</ul>
+
+<h3 id="supported-requests">Supported requests</h3>
+
+<p>The majority of standard Arm-defined semihosting requests are supported by pyOCD.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">SYS_OPEN</code> (0x01): syscall
+    <ul>
+      <li>The special file name <code class="highlighter-rouge">:tt</code> is used to open standard I/O files, per the Arm semihosting specification. The open
+  mode selects which standard I/O file is opened. “r” (0) is stdin, “w” (4) is stdout, “a” (8) is stderr. With pyOCD’s
+  implementation, explicitly opening the standard I/O files is not required.</li>
+      <li>Standard I/O files opened via this request are only accessible when not routing console to the telnet server.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">SYS_CLOSE</code> (0x02): syscall</li>
+  <li><code class="highlighter-rouge">SYS_WRITEC</code> (0x03): console</li>
+  <li><code class="highlighter-rouge">SYS_WRITE0</code> (0x04): console</li>
+  <li><code class="highlighter-rouge">SYS_WRITE</code> (0x05): console for stdout and stderr, otherwise syscall</li>
+  <li><code class="highlighter-rouge">SYS_READ</code> (0x06): console for stdin, otherwise syscall</li>
+  <li><code class="highlighter-rouge">SYS_READC</code> (0x07): console</li>
+  <li><code class="highlighter-rouge">SYS_ISTTY</code> (0x09): syscall</li>
+  <li><code class="highlighter-rouge">SYS_SEEK</code> (0x0a): syscall</li>
+  <li><code class="highlighter-rouge">SYS_FLEN</code> (0x0c): syscall</li>
+  <li><code class="highlighter-rouge">SYS_REMOVE</code> (0x0e): syscall</li>
+  <li><code class="highlighter-rouge">SYS_RENAME</code> (0x0f): syscall</li>
+  <li><code class="highlighter-rouge">SYS_CLOCK</code> (0x10): returns the number of centiseconds since pyOCD started (technically, since the semihosting agent
+  object was created, so this will not line up with timestamps in pyOCD’s log output)</li>
+  <li><code class="highlighter-rouge">SYS_TIME</code> (0x11): returns the number of seconds since midnight, January 1, 1970</li>
+  <li><code class="highlighter-rouge">SYS_ERRNO</code> (0x13): syscall</li>
+</ul>
+
+<p>The following semihosting requests are not supported. If invoked, the return code is -1 and pyOCD logs a
+warning message, such as “Semihost: unimplemented request pc=&lt;x&gt; r0=&lt;y&gt; r1=&lt;z&gt;”.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">SYS_ISERROR</code> (0x08)</li>
+  <li><code class="highlighter-rouge">SYS_TMPNAM</code> (0x0d)</li>
+  <li><code class="highlighter-rouge">SYS_SYSTEM</code> (0x12)</li>
+  <li><code class="highlighter-rouge">SYS_GET_CMDLINE</code> (0x15)</li>
+  <li><code class="highlighter-rouge">SYS_HEAPINFO</code> (0x16)</li>
+  <li><code class="highlighter-rouge">angel_SWIreason_EnterSVC</code> (0x17)</li>
+  <li><code class="highlighter-rouge">SYS_EXIT</code> (0x18), also called <code class="highlighter-rouge">angel_SWIreason_ReportException</code></li>
+  <li><code class="highlighter-rouge">SYS_ELAPSED</code> (0x30)</li>
+  <li><code class="highlighter-rouge">SYS_TICKFREQ</code> (0x31)</li>
+</ul>
+
+<p>The <a href="https://developer.arm.com/documentation/dui0471/i/semihosting/semihosting-operations?lang=en">Arm semihosting operations</a>
+documentation has the full specification of each request.</p>
+
+
+
+                </div>
+              </div>
+            </main>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+
+// Insert icons for alerts.
+$(".alert-warning").prepend("<div class=\"alert-icon\"><i class=\"bi bi-exclamation-triangle\"></i></div>")
+$(".alert-info").prepend("<div class=\"alert-icon\"><i class=\"bi bi-info-circle\"></i></div>")
+$(".alert-success").prepend("<div class=\"alert-icon\"><i class=\"bi bi-check-circle\"></i></div>")
+</script>
+</html>

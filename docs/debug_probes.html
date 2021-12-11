@@ -120,6 +120,12 @@
           <li class="sidebar-item level-1">
             <a href="/docs/multicore_debug.html" class="sidebar-link ">Multicore debug</a>
             </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/semihosting.html" class="sidebar-link ">Semihosting</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
+            </li>
           </ul>
     <h5 class="sidebar-header level-1">Reference</h5>
     <ul class="list-unstyled level-1">
@@ -131,6 +137,9 @@
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/command_reference.html" class="sidebar-link ">Command reference</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/env_vars.html" class="sidebar-link ">Environment variables</a>
             </li>
           </ul>
     <h5 class="sidebar-header level-1">Python API</h5>
@@ -387,7 +396,7 @@ pyOCD will exit with an error instead.</p>
 <h3 id="stlink">STLink</h3>
 
 <div class="alert alert-warning">
-<b>Note!</b> Recent STLink firmware versions will only allow access to STM32 targets. If you are using a target
+Recent STLink firmware versions will only allow access to STM32 targets. If you are using a target
 from a silicon vendor other than ST Micro, please use a different debug probe.
 </div>
 
@@ -414,7 +423,12 @@ and Windows.</p>
 
 <p><a href="https://www.segger.com/downloads/jlink/">Firmware and driver installer and updates</a></p>
 
-<p>On macOS, you can install the <code class="highlighter-rouge">segger-jlink</code> cask with Homebrew to get automatic driver updates.</p>
+<p>On macOS, you can install the <code class="highlighter-rouge">segger-jlink</code> cask with Homebrew to get managed driver updates.</p>
+
+<p>Please note that flash programming performance using a J-Link through pyOCD is currently slower than using the J-Link
+software directly (or compared to CMSIS-DAP). This is because pyOCD uses the low-level DAP commands provided by J-Link,
+which are inherently slower than higher level commands (which are less flexible and more difficult and complex to
+integrate).</p>
 
 <h4 id="session-options-1">Session options</h4>
 
@@ -527,5 +541,10 @@ and Windows.</p>
 if ($('#toc').children().length < 1) {
   $('#toc-div').hide()
 }
+
+// Insert icons for alerts.
+$(".alert-warning").prepend("<div class=\"alert-icon\"><i class=\"bi bi-exclamation-triangle\"></i></div>")
+$(".alert-info").prepend("<div class=\"alert-icon\"><i class=\"bi bi-info-circle\"></i></div>")
+$(".alert-success").prepend("<div class=\"alert-icon\"><i class=\"bi bi-check-circle\"></i></div>")
 </script>
 </html>

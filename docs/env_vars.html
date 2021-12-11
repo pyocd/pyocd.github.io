@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>Multicore debug &mdash; pyOCD</title>
+  <title>Environment variables &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -118,7 +118,7 @@
             <a href="/docs/security.html" class="sidebar-link ">Security and protection</a>
             </li>
           <li class="sidebar-item level-1">
-            <p class="sidebar-item-selected">Multicore debug</p>
+            <a href="/docs/multicore_debug.html" class="sidebar-link ">Multicore debug</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/semihosting.html" class="sidebar-link ">Semihosting</a>
@@ -139,7 +139,7 @@
             <a href="/docs/command_reference.html" class="sidebar-link ">Command reference</a>
             </li>
           <li class="sidebar-item level-1">
-            <a href="/docs/env_vars.html" class="sidebar-link ">Environment variables</a>
+            <p class="sidebar-item-selected">Environment variables</p>
             </li>
           </ul>
     <h5 class="sidebar-header level-1">Python API</h5>
@@ -195,7 +195,7 @@
               <div class="row">
                 <div class="container docs-content">
                   
-                  <h1 class="mb-4 mt-0">Multicore debug</h1>
+                  <h1 class="mb-4 mt-0">Environment variables</h1>
                   
 
                   <!-- floating table of contents -->
@@ -207,32 +207,41 @@
                     </div>
                   </div>
 
-                  <p>pyOCD supports debugging multicore devices. It does this by serving one gdb server per core, to which
-you connect independant gdb instances. This is the most reliable method of debugging multicore
-embedded devices using gdb.</p>
+                  <table>
 
-<p><code class="highlighter-rouge">pyocd gdbserver</code> automatically creates one <code class="highlighter-rouge">GDBServer</code> instance per core. The first core is given the
-user-specified port number. Additional cores have port numbers incremented from there.</p>
+<tr><th>Variable</th><th>Description</th></tr>
 
-<p>To prevent reset requests from multiple connected gdb instances causing havoc, secondary cores have
-their default reset type set to core-only reset (VECTRESET), which will fall back to an emulated
-reset for non-v7-M architectures. This feature can be disabled by setting the
-<code class="highlighter-rouge">enable_multicore_debug</code> session option to false.</p>
+<tr><td>
+<a if="pyocd_project_dir"><p><code>PYOCD_PROJECT_DIR</code></p></a>
+</td><td>
+<p>Sets the path to pyOCD's project directory. This variable acts as a fallback if the <code>project_dir</code>
+session option is not specified.</p>
+</td></tr>
 
-<p>To debug a multicore device, run <code class="highlighter-rouge">pyocd gdbserver</code> as usual. This will connect to the device, detect
-the cores, and create the gdb server instances on separate ports. Next, start up two gdb instances
-and connect to the two gdb server ports. For instance, on a dual core device if you pass 3333 for
-the port, connect to port 3333 for the first core and port 3334 for the second core.</p>
+<tr><td>
+<a if="pyocd_usb_backend"><p><code>PYOCD_USB_BACKEND</code></p></a>
+</td><td>
+<p>This variable overrides the default selection of the USB backend for CMSIS-DAP v1 probes. The accepted
+values are <code>hidapiusb</code>, <code>pyusb</code>, and <code>pywinusb</code>. An empty value is the same as
+unset. CMSIS-DAP v2 probes are unaffected by the environment variable; pyusb is always used.</p>
+<p>Forcing the USB backend is really only useful on Windows, because both <code>hidapiusb</code> and
+<code>pywinusb</code> backends are available. Note that pyOCD only installs the <code>hidapiusb</code> backend
+by default.</p>
+</td></tr>
 
-<p>On many devices, secondary cores are by default held in reset until released by the primary core.
-Because gdb does not have a concept of a core held in reset, pyOCD will report a core held in reset
-by telling gdb that there is a single thread with the name “Reset”. This is visible if you run the
-show threads gdb command, and will appear in the Eclipe Debug view’s list of threads. All register
-values will be reported as 0 until the core is released from reset.</p>
+<tr><td>
+<a if="pyocd_history"><p><code>PYOCD_HISTORY</code></p></a>
+</td><td>
+<p>Path to the <code>pyocd commander</code> command history file. The default is <code>~/.pyocd_history</code>.</p>
+</td></tr>
 
-<p>Usually you want to have the primary core load code for the secondary core, so configure the second
-core’s gdb to not load any code to the target. This is highly device-specific, though, and may
-depend on whether the secondary core’s code is running out of flash or RAM.</p>
+<tr><td>
+<a if="pyocd_history_length"><p><code>PYOCD_HISTORY_LENGTH</code></p></a>
+</td><td>
+<p>Maximum number of entries in the command history file. Set to -1 for unlimited. Default is 1000.</p>
+</td></tr>
+
+</table>
 
 
 

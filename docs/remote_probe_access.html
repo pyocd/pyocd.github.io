@@ -120,6 +120,12 @@
           <li class="sidebar-item level-1">
             <a href="/docs/multicore_debug.html" class="sidebar-link ">Multicore debug</a>
             </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/semihosting.html" class="sidebar-link ">Semihosting</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
+            </li>
           </ul>
     <h5 class="sidebar-header level-1">Reference</h5>
     <ul class="list-unstyled level-1">
@@ -131,6 +137,9 @@
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/command_reference.html" class="sidebar-link ">Command reference</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/env_vars.html" class="sidebar-link ">Environment variables</a>
             </li>
           </ul>
     <h5 class="sidebar-header level-1">Python API</h5>
@@ -367,5 +376,10 @@ for more information about target types.</p>
 if ($('#toc').children().length < 1) {
   $('#toc-div').hide()
 }
+
+// Insert icons for alerts.
+$(".alert-warning").prepend("<div class=\"alert-icon\"><i class=\"bi bi-exclamation-triangle\"></i></div>")
+$(".alert-info").prepend("<div class=\"alert-icon\"><i class=\"bi bi-info-circle\"></i></div>")
+$(".alert-success").prepend("<div class=\"alert-icon\"><i class=\"bi bi-check-circle\"></i></div>")
 </script>
 </html>

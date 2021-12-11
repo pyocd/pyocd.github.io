@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>Multicore debug &mdash; pyOCD</title>
+  <title>SWO/SWV &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -118,13 +118,13 @@
             <a href="/docs/security.html" class="sidebar-link ">Security and protection</a>
             </li>
           <li class="sidebar-item level-1">
-            <p class="sidebar-item-selected">Multicore debug</p>
+            <a href="/docs/multicore_debug.html" class="sidebar-link ">Multicore debug</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/semihosting.html" class="sidebar-link ">Semihosting</a>
             </li>
           <li class="sidebar-item level-1">
-            <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
+            <p class="sidebar-item-selected">SWO/SWV</p>
             </li>
           </ul>
     <h5 class="sidebar-header level-1">Reference</h5>
@@ -195,7 +195,7 @@
               <div class="row">
                 <div class="container docs-content">
                   
-                  <h1 class="mb-4 mt-0">Multicore debug</h1>
+                  <h1 class="mb-4 mt-0">SWO/SWV</h1>
                   
 
                   <!-- floating table of contents -->
@@ -203,36 +203,128 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#swo-support">SWO support</a></li>
+<li class="toc-entry toc-h3"><a href="#configuration">Configuration</a></li>
+<li class="toc-entry toc-h3"><a href="#session-options">Session options</a></li>
 </ul>
                     </div>
                   </div>
 
-                  <p>pyOCD supports debugging multicore devices. It does this by serving one gdb server per core, to which
-you connect independant gdb instances. This is the most reliable method of debugging multicore
-embedded devices using gdb.</p>
+                  <p>The Arm Cortex-M and CoreSight architectures support a single-wire trace output called Serial Wire Output (SWO).
+This SWO trace feature can be used for everything from printf debugging to PC-sampling based profiling and various
+performance measurements.</p>
 
-<p><code class="highlighter-rouge">pyocd gdbserver</code> automatically creates one <code class="highlighter-rouge">GDBServer</code> instance per core. The first core is given the
-user-specified port number. Additional cores have port numbers incremented from there.</p>
+<p>SWO supports two wire protocols, asynchronous UART and Manchester encoding, although in practise UART is used almost
+exclusively. (SWO is also available as a standalone CoreSight component, but this is relatively rare.)</p>
 
-<p>To prevent reset requests from multiple connected gdb instances causing havoc, secondary cores have
-their default reset type set to core-only reset (VECTRESET), which will fall back to an emulated
-reset for non-v7-M architectures. This feature can be disabled by setting the
-<code class="highlighter-rouge">enable_multicore_debug</code> session option to false.</p>
+<p>The Arm Cortex-M DWT and ITM core peripherals generate packets that can be output over SWO when a configurable set of
+events occur. The combination of DWT/ITM packets transmitted via SWO is called the Serial Wire Viewer (SWV). A common
+use case for SWV is printf-style log output, so much so that “SWV” has more or less come to mean exactly that.</p>
 
-<p>To debug a multicore device, run <code class="highlighter-rouge">pyocd gdbserver</code> as usual. This will connect to the device, detect
-the cores, and create the gdb server instances on separate ports. Next, start up two gdb instances
-and connect to the two gdb server ports. For instance, on a dual core device if you pass 3333 for
-the port, connect to port 3333 for the first core and port 3334 for the second core.</p>
+<p>The major features are:</p>
 
-<p>On many devices, secondary cores are by default held in reset until released by the primary core.
-Because gdb does not have a concept of a core held in reset, pyOCD will report a core held in reset
-by telling gdb that there is a single thread with the name “Reset”. This is visible if you run the
-show threads gdb command, and will appear in the Eclipe Debug view’s list of threads. All register
-values will be reported as 0 until the core is released from reset.</p>
+<ul>
+  <li>The gdbserver supports SWV printf-style log output to console or telnet, muxed with semihosting stdout.</li>
+  <li>Raw SWO data can be served through a TCP port while the gdbserver is running, allowing other tools such as
+  <a href="https://github.com/orbcode/orbuculum">Orbuculum</a> to process it.</li>
+  <li>The Python API has a set of classes for building a trace event data flow graph.</li>
+</ul>
 
-<p>Usually you want to have the primary core load code for the secondary core, so configure the second
-core’s gdb to not load any code to the target. This is highly device-specific, though, and may
-depend on whether the secondary core’s code is running out of flash or RAM.</p>
+<h3 id="swo-support">SWO support</h3>
+
+<p>PyOCD supports SWO and SWV for those debug probes that support it. This includes CMSIS-DAP, J-Link, and STLink.</p>
+
+<p>Be aware that even if a probe type supports SWO, the MCU (and its CPU) must also support SWO, and the board must route
+the SWO signal from the MCU to the debug header. In a surprising number of cases, even for silicon vendor evaluation
+kits, the probe and MCU support it but the signal simply wasn’t routed.</p>
+
+<p>Not all versions of the Arm M-profile architecture support SWO. The Arm v7-M and Arm v8-M Mainline architectures do
+support SWO, while the Arm v6-M and Arm v8-M Baseline, architectures do not.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Core</th>
+      <th>Architecture</th>
+      <th>Supports SWO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cortex-M0</td>
+      <td>v6-M</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Cortex-M0+</td>
+      <td>v6-M</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Cortex-M1</td>
+      <td>v6-M</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Cortex-M3</td>
+      <td>v7-M</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Cortex-M4</td>
+      <td>v7-M</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Cortex-M7</td>
+      <td>v7-M</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Cortex-M23</td>
+      <td>v8.0-M Baseline</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Cortex-M33</td>
+      <td>v8.0-M Mainline</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Cortex-M55</td>
+      <td>v8.1-M Mainline</td>
+      <td>✓</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>If <code class="highlighter-rouge">enable_swv</code> is true, pyOCD will set up ITM and TPIU to output ITM stimulus ports over SWO at the specified baud
+rate.  Currently, <a href="/docs/semihosting.html">semihosting</a> must also be enabled for SWV to work, so the
+<code class="highlighter-rouge">enable_semihosting</code> option must be on. A thread reads the data from the probe in the background and parses it.</p>
+
+<p>The SWV stream from ITM port 0 will be output to the semihosting console (see the <a href="/docs/semihosting.html#routing">Routing</a> section of the <a href="/docs/semihosting.html">semihosting documentation</a>), which is either the telnet
+server or stdout depending on the <code class="highlighter-rouge">semihost_console_type</code> option.</p>
+
+<p>An example of running the gdbserver with SWV output is:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyocd gdb -S -Oenable_swv=1 -Oswv_system_clock=80000000 -Osemihost_console_type=console
+</code></pre></div></div>
+
+<p>This will turn on semihosting and SWV with the default 1 MHz baud rate, an 80 MHz system clock, and output to stdout.</p>
+
+<h3 id="session-options">Session options</h3>
+
+<p>Several session options are used to control and configure SWV:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">enable_swv</code> - Flag to enable SWV output.</li>
+  <li><code class="highlighter-rouge">swv_clock</code> - Optional baud rate for SWO, which defaults to 1 MHz if not set.</li>
+  <li><code class="highlighter-rouge">swv_system_clock</code> - Required system clock frequency. Used to compute TPIU baud rate divider.</li>
+  <li><code class="highlighter-rouge">swv_raw_enable</code> - Enable flag for the raw SWV stream server.</li>
+  <li><code class="highlighter-rouge">swv_raw_port</code> - TCP port number for the raw SWV stream server. The default port is 3443, which is the default port for the Orbuculum client.</li>
+</ul>
 
 
 
