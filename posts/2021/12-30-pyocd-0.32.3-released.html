@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>News and blog posts &mdash; pyOCD</title>
+  <title>pyOCD 0.32.3 released &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -75,32 +75,52 @@
       <div class="container flex-grow-1">
         <div class="row">
           <main role="main" class="content-scroll p-3 p-md-4">
-            <div class="mt-4 mb-5">
-<h3>News and blog posts</h3>
+            <p>&larr; <a href="/posts/">View all posts</a></p>
+
+<h1><a href="/posts/2021/12-30-pyocd-0.32.3-released.html">pyOCD 0.32.3 released</a></h1>
+
+<div class="post-header">
+<p class="text-muted border-bottom">
+  <strong>Dec 30, 2021</strong>
+  <br/>Chris Reed
+  
+</p>
 </div>
+
+<p>PyOCD version 0.32.3 has just been released and is available from PyPI. This is a bug fix release with a number of
+fixes, a few more noticeable and some quite small.</p>
+
+<p>The two most important fixes are for J-Link and STLink probes. SWO was completely broken for J-Link probes. Combined
+with another included fix, SWO/SWV should be in a much better operating state. For STLink, one of the lesser common USB
+product IDs, 0x3752, an STLinkV2 “No MSD” variant, had a typo and therefore probes with that firmware variant would be
+ignored by pyOCD.</p>
+
+<p>Another notable fix is the correction of a recent regression in the optimized flash programming, aka “smart flash”,
+feature. This feature scans and compares flash pages on the target with those to be programmed so it can skip
+erasing and programming unchanged pages. The regression caused all pages to be considered changed, thus removing any
+potential improvement.</p>
+
+<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.32.3">v0.32.3 on GitHub</a> <br />
+<a href="https://pypi.org/project/pyocd/0.32.3/">v0.32.3 on PyPI</a></p>
+
+<hr />
+
 <ul>
-  
-    <li>
-      <a href="/posts/2021/12-30-pyocd-0.32.3-released.html"><strong>30 Dec 2021</strong> pyOCD 0.32.3 released</a>
-      <div><p>PyOCD version 0.32.3 is now available.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/11-04-tf-m_tech_forum_presentation.html"><strong>04 Nov 2021</strong> TF-M Technical Forum presentation</a>
-      <div><p>"Introduction to pyOCD" presentation at the TF-M Technical Forum.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/10-18-pyocd-0.32.1-released.html"><strong>18 Oct 2021</strong> pyOCD 0.32.1 released</a>
-      <div><p>Python 3.10 wheels and several bug fixes.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/10-03-welcome-to-pyocd.html"><strong>03 Oct 2021</strong> Welcome</a>
-      <div><p>The pyOCD website is now online, along with new community resources.</p></div>
-    </li>
-  
+  <li>J-Link: Fix SWO that was completely broken due to an invalid attribute name.</li>
+  <li>STLink: Fix typo in USB PID map that caused probes with PID 0x3752 to be ignored.</li>
+  <li>NXP i.MX RT family: Fix log exception if the vector table can’t be determined.</li>
+  <li>SWO: Fix invalid reference to <code class="highlighter-rouge">collections.Iterable</code>.</li>
+  <li>Flash: Fix flash unmodified page detection regression, causing optimized flash programming to not work.</li>
+  <li>Commander: Correct alignment of ASCII column in a hex dump with ragged end.</li>
+  <li>CoreSight: Fix printing of negative addresses ROM table in certain cases.</li>
+  <li>CoreSight: Power down DP only if resuming on disconnect.</li>
+  <li>gdbserver: Return T response containing no register values if reading registers fails, perhaps if the core failed to halt.</li>
+  <li>Package metadata: Correct URLs and classifiers.</li>
 </ul>
+
+<p>Full Changelog: <a href="https://github.com/pyocd/pyOCD/compare/v0.32.2...v0.32.3">v0.32.2…v0.32.3</a></p>
+
+
 
           </main>
         </div>
