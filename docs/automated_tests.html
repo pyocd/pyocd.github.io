@@ -205,6 +205,7 @@
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#unit-tests">Unit tests</a></li>
 <li class="toc-entry toc-h2"><a href="#functional-tests">Functional tests</a></li>
+<li class="toc-entry toc-h2"><a href="#azure-pipelines">Azure Pipelines</a></li>
 <li class="toc-entry toc-h2"><a href="#testing-with-tox">Testing with tox</a></li>
 </ul>
                     </div>
@@ -244,18 +245,37 @@ systems to test prior to creating pull requests.</p>
 <ul>
   <li><code class="highlighter-rouge">basic_test.py</code>: a simple test that checks a range of basic functionality, from flash programming to accessing memory and core registers.</li>
   <li><code class="highlighter-rouge">blank_test.py</code>: tests ability to connect to devices with with blank flash. (Not run by <code class="highlighter-rouge">automated_test.py</code>.)</li>
+  <li><code class="highlighter-rouge">commander_test.py</code>: tests the <code class="highlighter-rouge">pyocd commander</code> functionality.</li>
+  <li><code class="highlighter-rouge">commands_test.py</code>: tests commands supported by commander and gdb monitor commands.</li>
+  <li><code class="highlighter-rouge">concurrency_test.py</code>: verify multiple threads can simultaneously access a debug probe, specifically for memory
+  transfers.</li>
   <li><code class="highlighter-rouge">connect_test.py</code>: tests all combinations of the halt on connect and disconnect resume options.</li>
   <li><code class="highlighter-rouge">cortex_test.py</code>: validates CPU control operations and memory accesses.</li>
   <li><code class="highlighter-rouge">debug_context_test.py</code>: tests some <code class="highlighter-rouge">DebugContext</code> classes.</li>
-  <li><code class="highlighter-rouge">flash_test.py</code>: comprehensive test of flash programming.</li>
   <li><code class="highlighter-rouge">flash_loader_test.py</code>: test the classes in the <code class="highlighter-rouge">pyocd.flash.loader</code> module.</li>
-  <li><code class="highlighter-rouge">gdb_server_json_test.py</code>: validates the JSON output from pyocd-gdbserver used by tools like the GNU MCU Eclipse pyOCD plugin.</li>
+  <li><code class="highlighter-rouge">flash_test.py</code>: comprehensive test of flash programming.</li>
+  <li><code class="highlighter-rouge">import_all.py</code>: imports all pyocd modules. (Not run by <code class="highlighter-rouge">automated_test.py</code>.)</li>
   <li><code class="highlighter-rouge">gdb_test.py</code>: tests the gdbserver by running a script in a gdb process. Note that on Windows,
   the 32-bit Python 2.7 must be installed for the Python-enabled gdb to work properly and for
   this test to pass.</li>
+  <li><code class="highlighter-rouge">json_lists_test.py</code>: validates the JSON output from <code class="highlighter-rouge">pyocd json</code>.</li>
   <li><code class="highlighter-rouge">parallel_test.py</code>: checks for issues with accessing debug probes from multiple processes and threads simultaneously. (Not run by <code class="highlighter-rouge">automated_test.py</code>.)</li>
+  <li><code class="highlighter-rouge">probeserver_test.py</code>: verify remote probe server and client.</li>
   <li><code class="highlighter-rouge">speed_test.py</code>: performance test for memory reads and writes.</li>
+  <li><code class="highlighter-rouge">user_script_test.py</code>: verify loading of user scripts.</li>
 </ul>
+
+<h2 id="azure-pipelines">Azure Pipelines</h2>
+
+<p>PyOCD uses Azure Pipelines to run the CI tests for commits and pull requests. The pipeline runs the functional tests on
+a set of test machines, called self-hosted test agents in Azure Pipelines parlance. There is one each of Mac, Linux, and
+Windows test agents.</p>
+
+<p>The complete results from pipeline runs are <a href="https://dev.azure.com/pyocd/pyocd/_build?definitionId=1&amp;_a=summary">publicly
+accessible</a>.</p>
+
+<p>For pull requests, a pyOCD team member or collaborator must manually initiate the pipeline run by entering a special
+comment of the form “/azp run” or “/AzurePipelines run”.</p>
 
 <h2 id="testing-with-tox">Testing with tox</h2>
 

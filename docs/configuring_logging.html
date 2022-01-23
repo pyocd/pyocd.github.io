@@ -206,6 +206,7 @@
 <li class="toc-entry toc-h2"><a href="#overview">Overview</a></li>
 <li class="toc-entry toc-h2"><a href="#log-levels">Log levels</a></li>
 <li class="toc-entry toc-h2"><a href="#basic-control">Basic control</a></li>
+<li class="toc-entry toc-h2"><a href="#color-logging">Color logging</a></li>
 <li class="toc-entry toc-h2"><a href="#loggers">Loggers</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#trace-loggers">Trace loggers</a></li>
@@ -290,6 +291,10 @@ to set log levels, both globally and with precise control.</p>
       <td>WARNING</td>
     </tr>
     <tr>
+      <td><code class="highlighter-rouge">rtt</code></td>
+      <td>INFO</td>
+    </tr>
+    <tr>
       <td><code class="highlighter-rouge">server</code></td>
       <td>INFO</td>
     </tr>
@@ -302,6 +307,17 @@ to set log levels, both globally and with precise control.</p>
 over logging. These arguments can be listed multiple times. Each use increases or decreases the
 logging verbosity level. For example, a single <code class="highlighter-rouge">--verbose</code> moves <code class="highlighter-rouge">pyocd flash</code> from the default
 level of WARNING to INFO.</p>
+
+<h2 id="color-logging">Color logging</h2>
+
+<p>By default, log output to a tty is colorised. Control over colorised log output is possible two ways.</p>
+
+<p>The command-line <code class="highlighter-rouge">--color</code> argument accepts an optional parameter that must be one of <code class="highlighter-rouge">auto</code>, <code class="highlighter-rouge">always</code>, or <code class="highlighter-rouge">never</code>.
+The default is <code class="highlighter-rouge">auto</code>, which will enable color only when outputting to a tty.</p>
+
+<p>Another option for controlling color output is the <code class="highlighter-rouge">PYOCD_COLOR</code> environment variable. It should be set to one of the
+same values supported by <code class="highlighter-rouge">--color</code>. This environment variable changes the default color output setting, and is
+overridden by <code class="highlighter-rouge">--color</code> on the command line.</p>
 
 <h2 id="loggers">Loggers</h2>
 
@@ -316,7 +332,7 @@ its package structure.</p>
 <h3 id="trace-loggers">Trace loggers</h3>
 
 <p>Certain modules define additional sub-module loggers that output debug trace logs. These loggers always have the
-suffix “.trace” and are set to critical log level by default.</p>
+suffix “.trace” and are disabled by default. This ensures the trace messages won’t be seen unless explicitly enabled by the <code class="highlighter-rouge">--log-level</code> / <code class="highlighter-rouge">-L</code> argument described in the following section.</p>
 
 <p>Currently defined trace loggers:</p>
 
@@ -355,6 +371,22 @@ suffix “.trace” and are set to critical log level by default.</p>
     <tr>
       <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.dap_access_cmsis_dap.trace</code></td>
       <td>CMSIS-DAP packet building</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.interface.hidapi_backend.trace</code></td>
+      <td>CMSIS-DAP v1 hidapi backend USB transfers</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.interface.pyusb_backend.trace</code></td>
+      <td>CMSIS-DAP v1 pyusb backend USB transfers</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.interface.pyusb_v2_backend.trace</code></td>
+      <td>CMSIS-DAP v2 pyusb backend USB transfers</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.interface.pywinusb_backend.trace</code></td>
+      <td>CMSIS-DAP v1 pywinusb backend USB transfers</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">pyocd.probe.stlink.usb.trace</code></td>

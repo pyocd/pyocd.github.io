@@ -203,7 +203,6 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#libusb-installation">libusb installation</a></li>
 <li class="toc-entry toc-h2"><a href="#udev-rules-on-linux">udev rules on Linux</a></li>
 <li class="toc-entry toc-h2"><a href="#target-support">Target support</a></li>
 </ul>
@@ -256,24 +255,6 @@ local to a specific project working set.</li>
 <p>(Note: Installing by running <code class="highlighter-rouge">setup.py</code> directly is deprecated since pyOCD migrated to PEP 517 based packaging.
 In many cases it will not work at all. Installing with pip or another standards-compliant tool is the only
 supported method.)</p>
-
-<h2 id="libusb-installation">libusb installation</h2>
-
-<p><a href="https://github.com/pyusb/pyusb">pyusb</a> and its backend library <a href="https://libusb.info/">libusb</a> are
-dependencies on all supported operating systems. pyusb is a regular Python package and will be
-installed along with pyOCD. However, libusb is a binary shared library that does not get installed
-automatically via pip dependency management.</p>
-
-<p>How to install libusb depends on your OS:</p>
-
-<ul>
-  <li>macOS: use Homebrew: <code class="highlighter-rouge">brew install libusb</code></li>
-  <li>Linux: should already be installed.</li>
-  <li>Windows: download libusb from <a href="https://libusb.info/">libusb.info</a> and place the .dll file in your Python
-installation folder next to python.exe. Make sure to use the same 32- or 64-bit architecture as
-your Python installation. The latest release is <a href="https://github.com/libusb/libusb/releases">available on GitHub</a>;
-download the .7z archive under Assets. Use the library from the VS2019 folder in the archive.</li>
-</ul>
 
 <h2 id="udev-rules-on-linux">udev rules on Linux</h2>
 

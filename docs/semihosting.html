@@ -292,13 +292,15 @@ appropriate system’s root filesystem.</p>
 
 <h3 id="building-into-firmware">Building into firmware</h3>
 
-<p>The blog articles listed earlier have details of how to include semihosting support when linking firmware with gcc
-and newlib. These are the steps in short:</p>
+<p>These are the steps, in short, for how to include semihosting support when linking firmware with gcc
+and newlib.</p>
 
 <ul>
   <li>On the linker command line, add <code class="highlighter-rouge">--specs=rdimon.specs</code> and ensure <code class="highlighter-rouge">-nostartfiles</code> is not present.</li>
   <li>Call <code class="highlighter-rouge">initialise_monitor_handles()</code> from your firmware before using semihosting.</li>
 </ul>
+
+<p>The C runtime stdio will now be connected with semihosting.</p>
 
 <p>This small example shows how to init and use semihosting from gcc.</p>
 
@@ -315,7 +317,7 @@ and newlib. These are the steps in short:</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>These blog articles are also very helpful for gcc:</p>
+<p>These blog articles are also very helpful guides for using semihosting with gcc:</p>
 
 <ul>
   <li><a href="https://interrupt.memfault.com/blog/arm-semihosting">Introduction to ARM Semihosting</a> is an excellent

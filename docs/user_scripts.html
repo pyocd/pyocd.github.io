@@ -205,8 +205,29 @@
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
 <li class="toc-entry toc-h2"><a href="#examples">Examples</a></li>
+<li class="toc-entry toc-h2"><a href="#user-defined-commands">User-defined commands</a></li>
 <li class="toc-entry toc-h2"><a href="#script-globals">Script globals</a></li>
-<li class="toc-entry toc-h2"><a href="#script-functions">Script functions</a></li>
+<li class="toc-entry toc-h2"><a href="#delegate-functions">Delegate functions</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#will_connect">will_connect</a></li>
+<li class="toc-entry toc-h3"><a href="#did_connect">did_connect</a></li>
+<li class="toc-entry toc-h3"><a href="#will_init_target">will_init_target</a></li>
+<li class="toc-entry toc-h3"><a href="#did_init_target">did_init_target</a></li>
+<li class="toc-entry toc-h3"><a href="#will_start_debug_core">will_start_debug_core</a></li>
+<li class="toc-entry toc-h3"><a href="#did_start_debug_core">did_start_debug_core</a></li>
+<li class="toc-entry toc-h3"><a href="#will_stop_debug_core">will_stop_debug_core</a></li>
+<li class="toc-entry toc-h3"><a href="#did_stop_debug_core">did_stop_debug_core</a></li>
+<li class="toc-entry toc-h3"><a href="#will_disconnect">will_disconnect</a></li>
+<li class="toc-entry toc-h3"><a href="#did_disconnect">did_disconnect</a></li>
+<li class="toc-entry toc-h3"><a href="#will_reset">will_reset</a></li>
+<li class="toc-entry toc-h3"><a href="#did_reset">did_reset</a></li>
+<li class="toc-entry toc-h3"><a href="#set_reset_catch">set_reset_catch</a></li>
+<li class="toc-entry toc-h3"><a href="#clear_reset_catch">clear_reset_catch</a></li>
+<li class="toc-entry toc-h3"><a href="#mass_erase">mass_erase</a></li>
+<li class="toc-entry toc-h3"><a href="#trace_start">trace_start</a></li>
+<li class="toc-entry toc-h3"><a href="#trace_stop">trace_stop</a></li>
+</ul>
+</li>
 </ul>
                     </div>
                   </div>
@@ -224,12 +245,6 @@ automatically detect it and load it as a user script. If you prefer another name
 line argument. If a relative path is set either with the option or command line, it will be searched
 for in the project directory.</p>
 
-<p>The arguments for hook functions defined in user scripts are the same arguments accepted by delegate
-methods. However, all arguments to user script functions are optional. If provided, the argument
-names must match the specification. But you can specify arguments in any order, and exclude any or
-all arguments if they are not needed. In fact, most arguments are not required because the same
-objects are available as script globals, for instance <code class="highlighter-rouge">board</code> and <code class="highlighter-rouge">target</code>.</p>
-
 <h2 id="examples">Examples</h2>
 
 <p>This example user script shows how to add a new memory region.</p>
@@ -238,11 +253,11 @@ objects are available as script globals, for instance <code class="highlighter-r
 </span>
 <span class="k">def</span> <span class="nf">will_connect</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
     <span class="c1"># Create the new ROM region for the FICR.
-</span>    <span class="n">ficr</span> <span class="o">=</span> <span class="n">pyocd</span><span class="p">.</span><span class="n">core</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">RomRegion</span><span class="p">(</span>
-                                        <span class="n">name</span><span class="o">=</span><span class="s">"ficr"</span><span class="p">,</span>
-                                        <span class="n">start</span><span class="o">=</span><span class="mh">0x10000000</span><span class="p">,</span>
-                                        <span class="n">length</span><span class="o">=</span><span class="mh">0x460</span>
-                                        <span class="p">)</span>
+</span>    <span class="n">ficr</span> <span class="o">=</span> <span class="n">RomRegion</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s">"ficr"</span><span class="p">,</span>
+                <span class="n">start</span><span class="o">=</span><span class="mh">0x10000000</span><span class="p">,</span>
+                <span class="n">length</span><span class="o">=</span><span class="mh">0x460</span>
+                <span class="p">)</span>
 
     <span class="c1"># Add the FICR region to the memory map.
 </span>    <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">add_region</span><span class="p">(</span><span class="n">ficr</span><span class="p">)</span>
@@ -261,18 +276,62 @@ objects are available as script globals, for instance <code class="highlighter-r
 </span>    <span class="n">extFlash</span><span class="p">.</span><span class="n">flm</span> <span class="o">=</span> <span class="s">"MIMXRT105x_QuadSPI_4KB_SEC.FLM"</span>
 </code></pre></div></div>
 
-<p>This example demonstrates setting the DBGMCU_CR register on reset for STM32 devices.</p>
+<p>This example demonstrates setting the DBGMCU_CR register after connecting for STM32 devices.</p>
 
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This example applies to the ST STM32L0x1 devicess.
 </span>
 <span class="n">DBG_CR</span> <span class="o">=</span> <span class="mh">0x40015804</span>
 
-<span class="k">def</span> <span class="nf">did_reset</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">did_connect</span><span class="p">():</span>
     <span class="c1"># Set STANDBY, STOP, and SLEEP bits all to 1.
 </span>    <span class="n">target</span><span class="p">.</span><span class="n">write32</span><span class="p">(</span><span class="n">DBG_CR</span><span class="p">,</span> <span class="mh">0x7</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Another common use for a script is to initialize external memory such as SDRAM.</p>
+
+<h2 id="user-defined-commands">User-defined commands</h2>
+
+<p>New commands accessible from the commander subcommand or gdbserver monitor commands can be easily created in a user
+script.</p>
+
+<p>User defined commands are created by using the <code class="highlighter-rouge">@command()</code> decorator on a function. The name of the new command can
+either be the same as the name of the decorated function, or can be set explicitly with a <code class="highlighter-rouge">name</code> (or first positional)
+argument to the decorator. For instance, either <code class="highlighter-rouge">@command('mycmd')</code> or <code class="highlighter-rouge">@command(name='anothercmd')</code>. Note that the
+decorator requires parentheses (it must be called as a function) even if there are no parameters.</p>
+
+<p>Parameters for the new command are automatically determined using introspection and type annotations. Arguments for
+parameters of these types are converted to the appropriate type before the function is called as a command.</p>
+
+<p>Supported parameter types:</p>
+<ul>
+  <li><code class="highlighter-rouge">int</code></li>
+  <li><code class="highlighter-rouge">float</code></li>
+  <li><code class="highlighter-rouge">str</code></li>
+  <li>Variable arguments, e.g. <code class="highlighter-rouge">*args</code>.</li>
+</ul>
+
+<p>Keyword parameters are not allowed.</p>
+
+<p>An <code class="highlighter-rouge">int</code> parameter is converted using the same method as for other pyOCD commands. Hexadecimal and binary numbers are
+allowed, digits can be separated by underscores, and so on. For variable arguments, type annotations are ignored and the
+tuple passed to the function will contain strings as entered in the command invocation.</p>
+
+<p>The decorated function remains accessible as a regular function in the user script namespace, and is therefore callable
+from other functions within the user script. This is true even if the function definition is not compatible with the
+command decorator, for instance if it has invalid parameter types.</p>
+
+<p>Help for the new command can be specified by passing a <code class="highlighter-rouge">help</code> argument to the <code class="highlighter-rouge">@command</code> decorator.</p>
+
+<p>Example:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s">"Decode and print the first few vectors"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">vectable</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">vecs</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_memory_block32</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Initial SP:     </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"ResetHandler:   </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"NMI:            </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HardFault:      </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
 
 <h2 id="script-globals">Script globals</h2>
 
@@ -308,8 +367,16 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
       <td>Enumeration of breakpoint types.</td>
     </tr>
     <tr>
+      <td><code class="highlighter-rouge">command</code></td>
+      <td>Decorator for defining new commands. See <a href="#user_defined_commands">user-defined commands</a> for details.</td>
+    </tr>
+    <tr>
       <td><code class="highlighter-rouge">DeviceRegion</code></td>
       <td>Device-type memory region class.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">debug</code></td>
+      <td>Log a debug message.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">dp</code></td>
@@ -326,6 +393,14 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
     <tr>
       <td><code class="highlighter-rouge">exceptions</code></td>
       <td>Module containing the exception classes.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">error</code></td>
+      <td>Output an error log.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">info</code></td>
+      <td>Output an info-level log message.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">FileProgrammer</code></td>
@@ -420,154 +495,229 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
       <td>Namespace class containing bit mask constants for vector catch options.</td>
     </tr>
     <tr>
+      <td><code class="highlighter-rouge">warning</code></td>
+      <td>Log a warning.</td>
+    </tr>
+    <tr>
       <td><code class="highlighter-rouge">WatchpointType</code></td>
       <td>Enumeration of watchpoint types.</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="script-functions">Script functions</h2>
+<h2 id="delegate-functions">Delegate functions</h2>
 
-<p>This section documents all functions that user scripts can provide to modify pyOCD’s behaviour.</p>
+<p>This section documents all functions that user scripts can provide to modify pyOCD’s behaviour. Some are simply
+notifications, while others allow for overriding of default behaviour. Collectively, these are called delegate functions.</p>
 
-<ul>
-  <li>
-    <p><code class="highlighter-rouge">will_connect(board)</code><br />
-  Pre-init hook for the board.</p>
+<p>All parameters of script delegate functions are optional. Parameters can be declared in any order, and that are not
+needed can be excluded. In fact, most parameters are not necessary because the same objects are available as script
+globals, for instance <code class="highlighter-rouge">session</code> and <code class="highlighter-rouge">target</code>.</p>
 
-    <p><em>board</em> - A <code class="highlighter-rouge">Board</code> instance that is about to be initialized.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">did_connect(board)</code><br />
-  Post-initialization hook for the board.</p>
+<p>Those parameters that are present must have names matching the specification below, and there must not be unspecified,
+required parameters (those without a default value). (Extra optional parameters are allowed but will never be passed any
+value other than the default, unless you call the function yourself from within the script.)</p>
 
-    <p><em>board</em> - A <code class="highlighter-rouge">Board</code> instance.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">will_init_target(target, init_sequence)</code><br />
-  Hook to review and modify init call sequence prior to execution.</p>
+<h3 id="will_connect">will_connect</h3>
 
-    <p><em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object about to be initialized.<br />
-  <em>init_sequence</em> - The <code class="highlighter-rouge">CallSequence</code> that will be invoked. Because call sequences are
-      mutable, this parameter can be modified before return to change the init calls.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">did_init_target(target)</code><br />
-  Post-initialization hook.</p>
+<p>Pre-init notification for the board.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_connect(board: Board) -&gt; None
+</code></pre></div></div>
 
-    <p><em>target</em> - Either a <code class="highlighter-rouge">CoreSightTarget</code> or <code class="highlighter-rouge">CortexM</code> object.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">will_start_debug_core(core)</code><br />
-  Hook to enable debug for the given core.</p>
+<p><strong>Parameters</strong> <br />
+<em>board</em> - A <code class="highlighter-rouge">Board</code> instance that is about to be initialized. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
 
-    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object about to be initialized.<br />
-  <strong>Result</strong> - <em>True</em> Do not perform the normal procedure to start core debug. <br />
-      <em>False/None</em> Continue with normal behaviour.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">did_start_debug_core(core)</code><br />
-  Post-initialization hook.</p>
+<h3 id="did_connect">did_connect</h3>
 
-    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">will_stop_debug_core(core)</code><br />
-  Pre-cleanup hook for the core.</p>
+<p>Post-initialization notification for the board.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_connect(board: Board) -&gt; None
+</code></pre></div></div>
 
-    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object.<br />
-  <strong>Result</strong> - <em>True</em> Do not perform the normal procedure to disable core debug. <br />
-      <em>False/None</em> Continue with normal behaviour.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">did_stop_debug_core(core)</code><br />
-  Post-cleanup hook for the core.</p>
+<p><strong>Parameters</strong> <br />
+<em>board</em> - A <code class="highlighter-rouge">Board</code> instance. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
 
-    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> object.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">will_disconnect(target, resume)</code><br />
-  Pre-disconnect hook.</p>
+<h3 id="will_init_target">will_init_target</h3>
 
-    <p><em>target</em> - Either a <code class="highlighter-rouge">CoreSightTarget</code> or <code class="highlighter-rouge">CortexM</code> object.<br />
-  <em>resume</em> - The value of the <code class="highlighter-rouge">disconnect_on_resume</code> option.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">did_disconnect(target, resume)</code><br />
-  Post-disconnect hook.</p>
+<p>Hook to review and modify init call sequence prior to execution.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_init_target(target: SoCTarget, init_sequence: CallSequence) -&gt; None
+</code></pre></div></div>
 
-    <p><em>target</em> - Either a <code class="highlighter-rouge">CoreSightTarget</code> or <code class="highlighter-rouge">CortexM</code> object.<br />
-  <em>resume</em> - The value of the <code class="highlighter-rouge">disconnect_on_resume</code> option.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">will_reset(core, reset_type)</code><br />
-  Pre-reset hook.</p>
+<p><strong>Parameters</strong> <br />
+<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object about to be initialized. <br />
+<em>init_sequence</em> - The <code class="highlighter-rouge">CallSequence</code> that will be invoked. Because call sequences are
+  mutable, this parameter can be modified before return to change the init calls. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
 
-    <p><em>core</em> - A CortexM instance.<br />
-  <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
-  <strong>Result</strong> - <em>True</em> The hook performed the reset.  <br />
-  <em>False/None</em> Caller should perform the normal
-      reset procedure.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">did_reset(core, reset_type)</code><br />
-  Post-reset hook.</p>
+<h3 id="did_init_target">did_init_target</h3>
 
-    <p><em>core</em> - A CortexM instance.<br />
-  <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">set_reset_catch(core, reset_type)</code><br />
-  Hook to prepare target for halting on reset.</p>
+<p>Post-initialization notification.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_init_target(target: SoCTarget) -&gt; None
+</code></pre></div></div>
 
-    <p><em>core</em> - A CortexM instance.<br />
-  <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
-  <strong>Result</strong> - <em>True</em> This hook handled setting up reset catch, caller should do nothing. <br />
-              <em>False/None</em> Perform the default reset catch set using vector catch.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">clear_reset_catch(core, reset_type)</code><br />
-  Hook to clean up target after a reset and halt.</p>
+<p><strong>Parameters</strong> <br />
+<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
 
-    <p><em>core</em> - A <code class="highlighter-rouge">CortexM</code> instance.<br />
-  <em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations.<br />
-  <strong>Result</strong> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">mass_erase(target)</code><br />
-  Hook to override mass erase.</p>
+<h3 id="will_start_debug_core">will_start_debug_core</h3>
 
-    <p><em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object.<br />
-  <strong>Result</strong> - <em>True</em> Indicate that mass erase was performed by the hook. <br />
-              <em>False/None</em> Mass erase was not overridden and the caller should proceed with the
-                  standard mass erase procedure.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">trace_start(self, target, mode)</code><br />
-  Hook to prepare for tracing the target.</p>
+<p>Hook to enable debug for the given core.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_start_debug_core(core: CoreTarget) -&gt; Optional[bool]
+</code></pre></div></div>
 
-    <p><em>target</em> - A CoreSightTarget object.<br />
-  <em>mode</em> - The trace mode. Currently always 0 to indicate SWO.<br />
-  <em>Result</em> - Ignored.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">trace_stop(self, target, mode)</code><br />
-  Hook to clean up after tracing the target.</p>
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object about to be initialized. <br />
+<strong>Result</strong> <br />
+<em>True</em> Do not perform the normal procedure to start core debug. <br />
+<em>False/None</em> Continue with normal behaviour.</p>
 
-    <p><em>target</em> - A CoreSightTarget object.<br />
-  <em>mode</em> - The trace mode. Currently always 0 to indicate SWO.<br />
-  <em>Result</em> - Ignored.</p>
-  </li>
-</ul>
+<h3 id="did_start_debug_core">did_start_debug_core</h3>
+
+<p>Post-initialization hook.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_start_debug_core(core: CoreTarget) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="will_stop_debug_core">will_stop_debug_core</h3>
+
+<p>Pre-cleanup hook for the core.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_stop_debug_core(core: CoreTarget) -&gt; Optional[bool]
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object. <br />
+<strong>Result</strong> <br />
+<em>True</em> Do not perform the normal procedure to disable core debug. <br />
+<em>False/None</em> Continue with normal behaviour.</p>
+
+<h3 id="did_stop_debug_core">did_stop_debug_core</h3>
+
+<p>Post-cleanup notification for the core.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_stop_debug_core(core: CoreTarget) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="will_disconnect">will_disconnect</h3>
+
+<p>Pre-disconnect notification.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_disconnect(target: SoCTarget, resume: bool) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
+<em>resume</em> - The value of the <code class="highlighter-rouge">disconnect_on_resume</code> option. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="did_disconnect">did_disconnect</h3>
+
+<p>Post-disconnect notification.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_disconnect(target: SoCTarget, resume: bool) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
+<em>resume</em> - The value of the <code class="highlighter-rouge">disconnect_on_resume</code> option. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="will_reset">will_reset</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_reset(core: CoreTarget, reset_type: Target.ResetType) -&gt; Optional[bool]
+</code></pre></div></div>
+<p>Pre-reset hook.</p>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> instance. <br />
+<em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations. <br />
+<strong>Result</strong> <br />
+<em>True</em> The hook performed the reset.  <br />
+<em>False/None</em> Caller should perform the normal reset procedure.</p>
+
+<h3 id="did_reset">did_reset</h3>
+
+<p>Post-reset notification.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_reset(core: CoreTarget, reset_type: Target.ResetType) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> instance. <br />
+<em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="set_reset_catch">set_reset_catch</h3>
+
+<p>Hook to prepare target for halting on reset.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set_reset_catch(core: CoreTarget, reset_type: Target.ResetType) -&gt; Optional[bool]
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> instance. <br />
+<em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations. <br />
+<strong>Result</strong> <br />
+<em>True</em> This hook handled setting up reset catch, caller should do nothing. <br />
+<em>False/None</em> Perform the default reset catch set using vector catch.</p>
+
+<h3 id="clear_reset_catch">clear_reset_catch</h3>
+
+<p>Hook to clean up target after a reset and halt.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>clear_reset_catch(core: CoreTarget, reset_type: Target.ResetType) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> instance. <br />
+<em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="mass_erase">mass_erase</h3>
+
+<p>Hook to override mass erase.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mass_erase(target: SoCTarget) -&gt; Optional[bool]
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
+<strong>Result</strong> <br />
+<em>True</em> Indicate that mass erase was performed by the hook. <br />
+<em>False/None</em> Mass erase was not overridden and the caller should proceed with the standard mass erase procedure.</p>
+
+<h3 id="trace_start">trace_start</h3>
+
+<p>Notification to prepare for tracing the target.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trace_start(target: SoCTarget, mode: int) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object. <br />
+<em>mode</em> - The trace mode. Currently always 0 to indicate SWO. <br />
+<em>Result</em> - Ignored.</p>
+
+<h3 id="trace_stop">trace_stop</h3>
+
+<p>Notification to clean up after tracing the target.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trace_stop(target: SoCTarget, mode: int) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object. <br />
+<em>mode</em> - The trace mode. Currently always 0 to indicate SWO. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
 
 
                 </div>

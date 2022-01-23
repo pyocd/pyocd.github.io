@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>Contents &mdash; pyOCD</title>
+  <title>Target family usage notes &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -195,7 +195,7 @@
               <div class="row">
                 <div class="container docs-content">
                   
-                  <h1 class="mb-4 mt-0">Contents</h1>
+                  <h1 class="mb-4 mt-0">Target family usage notes</h1>
                   
 
                   <!-- floating table of contents -->
@@ -203,82 +203,69 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#table-of-contents">Table of Contents</a>
+<li class="toc-entry toc-h2"><a href="#nordic-semiconductor">Nordic Semiconductor</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#user-documentation">User documentation</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#topics">Topics</a></li>
-<li class="toc-entry toc-h4"><a href="#reference">Reference</a></li>
-<li class="toc-entry toc-h4"><a href="#python-api">Python API</a></li>
-<li class="toc-entry toc-h4"><a href="#miscellaneous">Miscellaneous</a></li>
+<li class="toc-entry toc-h3"><a href="#nrf51-family">nRF51 family</a></li>
+<li class="toc-entry toc-h3"><a href="#nrf52-family">nRF52 family</a></li>
+<li class="toc-entry toc-h3"><a href="#softdevice">SoftDevice</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#developer-documentation">Developer documentation</a>
+<li class="toc-entry toc-h2"><a href="#nxp">NXP</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#how-tos">How-tos</a></li>
-<li class="toc-entry toc-h4"><a href="#architecture-and-design">Architecture and Design</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h3"><a href="#kinetis-family">Kinetis family</a></li>
 </ul>
 </li>
 </ul>
                     </div>
                   </div>
 
-                  <h2 id="table-of-contents">Table of Contents</h2>
+                  <p>This section documents usage notes for certain target types.</p>
 
-<h3 id="user-documentation">User documentation</h3>
+<h2 id="nordic-semiconductor">Nordic Semiconductor</h2>
 
-<h4 id="topics">Topics</h4>
+<h3 id="nrf51-family">nRF51 family</h3>
 
-<ul>
-  <li><a href="terminology.md">Terminology</a></li>
-  <li><a href="target_support.md">Target support</a></li>
-  <li><a href="configuration.md">Configuration</a></li>
-  <li><a href="user_scripts.md">User scripts</a></li>
-  <li><a href="remote_probe_access.md">Remote probe access</a></li>
-  <li><a href="configuring_logging.md">Configuring logging</a></li>
-  <li><a href="multicore_debug.md">Debugging multicore devices</a></li>
-  <li><a href="security.md">Target security features</a></li>
-</ul>
+<p>See <a href="#softdevice">SoftDevice</a> for notes about handling firmware containing SoftDevice images.</p>
 
-<h4 id="reference">Reference</h4>
+<h3 id="nrf52-family">nRF52 family</h3>
 
-<ul>
-  <li><a href="options.md">Session options reference</a></li>
-  <li><a href="command_reference.md">Command reference</a></li>
-</ul>
+<p>See <a href="#softdevice">SoftDevice</a> for notes about handling firmware containing SoftDevice images.</p>
 
-<h4 id="python-api">Python API</h4>
+<p>Unlocking of flash security, also called APPROTECT, is supported. For more, see the
+<a href="/docs/security.html">security and protection</a> documentation.</p>
 
-<ul>
-  <li><a href="python_api.md">Introduction to the pyOCD Python API</a></li>
-  <li><a href="api_examples.md">Python API examples</a></li>
-</ul>
+<h3 id="softdevice">SoftDevice</h3>
 
-<h4 id="miscellaneous">Miscellaneous</h4>
+<p>The nRF51 and nRF52 series have support for so-called “SoftDevice” firmware, which implements Nordic’s Bluetooth LE or
+other wireless protocol API. When firmware containing a SoftDevice is loaded, the SoftDevice region of flash is locked.
+In order to reprogram the flash sectors containing the SoftDevice image, a mass erase must first be performed. This can
+potentially cause issues with flash programming if one is not aware of this requirement.</p>
 
-<ul>
-  <li><a href="installing_on_non_x86.md">Installing on non-x86 platforms</a></li>
-</ul>
+<p>For a development workflow with firmware using a SoftDevice, no extra steps are required.</p>
 
-<h3 id="developer-documentation">Developer documentation</h3>
+<p>PyOCD will by default scan flash sectors when programming flash in order to only erase and program sectors whose
+contents are changing. Since normally the SoftDevice sectors do not change during development, pyOCD will skip over
+these sectors.</p>
 
-<h4 id="how-tos">How-tos</h4>
+<p>In addition, a chip erased performed with a SoftDevice in flash will erase only the non-SoftDevice sectors. For example,
+running <code class="highlighter-rouge">pyocd erase --chip</code> on such a device will leave the SoftDevice intact and erase all other sectors.</p>
 
-<ul>
-  <li><a href="developers_guide.md">Developers’ guide</a></li>
-  <li><a href="adding_new_targets.md">How to add new targets</a></li>
-  <li><a href="how_to_build.md">Building a standalone gdb server executable</a></li>
-  <li><a href="automated_tests.md">Running the automated tests</a></li>
-</ul>
+<p>However, any case where the SoftDevice sectors are being erased requires a prior mass erase. This includes
+changing the SoftDevice variant or version, as well as switching to firmware that doesn’t include a SoftDevice.
+Mass erase is a separate operation. It mostly functions like a chip erase, but can also be used to
+<a href="/docs/security.html">unlock</a> devices that have APPROTECT enabled.</p>
 
-<h4 id="architecture-and-design">Architecture and Design</h4>
+<p>To perform a mass erase:</p>
 
-<ul>
-  <li><a href="architecture.md">Architecture overview</a></li>
-  <li><a href="remote_probe_protocol.md">Remote probe protocol</a></li>
-</ul>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyocd erase --mass
+</code></pre></div></div>
+
+<h2 id="nxp">NXP</h2>
+
+<h3 id="kinetis-family">Kinetis family</h3>
+
+<p>Unlocking of flash security is supported for all Kinetis targets. For more, see the
+<a href="/docs/security.html">security and protection</a> documentation.</p>
 
 
 

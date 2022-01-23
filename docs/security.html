@@ -261,7 +261,9 @@ automatically unlock the target.</p>
 performing a mass erase of all device memory. For those pyOCD targets with support for security
 features, pyOCD can perform this unlock procedure for you.</p>
 
-<p><em><strong>WARNING:</strong> Unlocking a locked device will erase all data on the chip!</em></p>
+<div class="alert alert-warning">
+Unlocking a locked device will erase all data on the chip!
+</div>
 
 <p>You can add the option <code class="highlighter-rouge">auto_unlock</code> to your <a href="/docs/configuration.html">configuration</a>:</p>
 

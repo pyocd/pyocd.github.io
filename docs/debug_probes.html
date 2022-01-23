@@ -212,12 +212,19 @@
 <li class="toc-entry toc-h3"><a href="#cmsis-dap">CMSIS-DAP</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#session-options">Session options</a></li>
+<li class="toc-entry toc-h4"><a href="#microchip-edbg">Microchip EDBG</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#stlink">STLink</a></li>
+<li class="toc-entry toc-h3"><a href="#stlink">STLink</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#stlinkv3-swdjtag-frequencies">STLinkV3 SWD/JTAG frequencies</a></li>
+<li class="toc-entry toc-h4"><a href="#session-options-1">Session options</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h3"><a href="#j-link">J-Link</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#session-options-1">Session options</a></li>
+<li class="toc-entry toc-h4"><a href="#serial-numbers">Serial numbers</a></li>
+<li class="toc-entry toc-h4"><a href="#session-options-2">Session options</a></li>
 </ul>
 </li>
 </ul>
@@ -358,17 +365,21 @@ pyOCD will exit with an error instead.</p>
 
 <h3 id="cmsis-dap">CMSIS-DAP</h3>
 
-<p>There are two major versions of CMSIS-DAP, which use different USB classes:</p>
+<p>CMSIS-DAP is a debug probe protocol designed by Arm and released as open source as part of the CMSIS project.
+There are two major versions of CMSIS-DAP, which use different USB classes:</p>
 
 <ul>
-  <li>v1: USB HID. This version is slower than v2. Still the most common version.</li>
-  <li>v2: USB vendor-specific using bulk pipes. Higher performance than v1. WinUSB-enabled to allow driverless usage on Windows 8 and above. Can be used with Windows 7 only if a driver is installed with a tool such as Zadig.</li>
+  <li>v1: USB HID. This version is slower than v2. Still the most commonly seen version, although it is now deprecated by
+  Arm.</li>
+  <li>v2: USB vendor-specific using bulk pipes, permitting higher performance than v1. WinUSB-enabled to allow driverless
+  usage on Windows 8 and above. (Can be used with Windows 7 if device installation settings are set to automatically
+  download and install drivers for new devices from the Internet.)</li>
 </ul>
 
-<p>These are several commercial probes using the CMSIS-DAP protocol:</p>
+<p>These are some of the commercial probes by silicon vendors using the CMSIS-DAP protocol, both standalone and on-board:</p>
 
 <ul>
-  <li>Microchip EDBG/nEDBG</li>
+  <li>Microchip EDBG and variants</li>
   <li>Microchip Atmel-ICE</li>
   <li>Cypress KitProg3</li>
   <li>Cypress MiniProg4</li>
@@ -379,10 +390,12 @@ pyOCD will exit with an error instead.</p>
   <li>NXP OpenSDA</li>
 </ul>
 
-<p>In addition, there are numerous other commercial and open source debug probes based on CMSIS-DAP.</p>
+<p>In addition, there are numerous other commercial and open source debug probes utilising the CMSIS-DAP protocol.</p>
 
-<p>PyOCD supports automatic target type identification for debug probes built with the
+<p>PyOCD supports automatic target type identification for debug probes built with the widely used
 <a href="https://github.com/ARMmbed/DAPLink">DAPLink</a> firmware.</p>
+
+<p><a href="https://daplink.io/">DAPLink firmware updates</a></p>
 
 <h4 id="session-options">Session options</h4>
 
@@ -393,6 +406,11 @@ pyOCD will exit with an error instead.</p>
   time. This is useful on some systems where USB is problematic, in particular virtual machines.</li>
 </ul>
 
+<h4 id="microchip-edbg">Microchip EDBG</h4>
+
+<p>The Microchip (previously Atmel) EDBG probe firmware, at the time of this writing, provides a CMSIS-DAP v1 interface.
+On macOS, reading command responses always times out. The probe works on other OSes, however.</p>
+
 <h3 id="stlink">STLink</h3>
 
 <div class="alert alert-warning">
@@ -400,7 +418,7 @@ Recent STLink firmware versions will only allow access to STM32 targets. If you 
 from a silicon vendor other than ST Micro, please use a different debug probe.
 </div>
 
-<p>No host resident drivers need to be installed to use STLink probes; only libusb is required. (This may not be true for Windows 7, but has not been verified.)</p>
+<p>No host resident drivers need to be installed to use STLink probes; only libusb is required.</p>
 
 <p>The minimum supported STLink firmware version is V2J24, or any V3 version. However, upgrading to the latest version
 is strongly recommended. Numerous bugs have been fixed, and new commands added for feature and performance improvements.</p>
@@ -416,6 +434,65 @@ is strongly recommended. Numerous bugs have been fixed, and new commands added f
 
 <p>PyOCD supports automatic target type identification for on-board STLink probes that report a board ID.</p>
 
+<h4 id="stlinkv3-swdjtag-frequencies">STLinkV3 SWD/JTAG frequencies</h4>
+
+<p>The STLinkV3 has an internal clock frequency control for its HCLK prescaler that allows access to different SWD/JTAG
+frequencies. The prescaler can be set from pyOCD with the <code class="highlighter-rouge">stlink.v3_prescaler</code> session option to 1, 2, or 4. In
+addition to changing the available SWD/JTAG frequencies, modifying the prescaler also affects UART baud rates and
+frequencies of the serial I/O bridge interfaces.</p>
+
+<p>These are the SWD/JTAG frequencies available with different values of <code class="highlighter-rouge">stlink.v3_prescaler</code>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>prescaler=1 (default)</th>
+      <th>prescaler=2</th>
+      <th>prescaler=4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>24.0 MHz</td>
+      <td>12.0 MHz</td>
+      <td>6.0 MHz</td>
+    </tr>
+    <tr>
+      <td>8.0 MHz</td>
+      <td>4.0 MHz</td>
+      <td>2.0 MHz</td>
+    </tr>
+    <tr>
+      <td>3.3 MHz</td>
+      <td>1.6 MHz</td>
+      <td>850 kHz</td>
+    </tr>
+    <tr>
+      <td>1.0 MHz</td>
+      <td>1.0 MHz</td>
+      <td>520 kHz</td>
+    </tr>
+    <tr>
+      <td>200 kHz</td>
+      <td>200 kHz</td>
+      <td>200 kHz</td>
+    </tr>
+    <tr>
+      <td>50 kHz</td>
+      <td>50 kHz</td>
+      <td>50 kHz</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="session-options-1">Session options</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">stlink.v3_prescaler</code> (int, must be 1, 2, or 4, default 1)
+  Configures the HCLK prescaler of an STLinkV3 to modify the range of available SWD/JTAG frequencies, as described
+  above. Affects available frequencies of other peripherals, such as UART, as well.</li>
+</ul>
+
 <h3 id="j-link">J-Link</h3>
 
 <p>To use a Segger J-Link probe, the driver package must be installed. Segger makes drivers available for Linux, macOS,
@@ -430,7 +507,12 @@ software directly (or compared to CMSIS-DAP). This is because pyOCD uses the low
 which are inherently slower than higher level commands (which are less flexible and more difficult and complex to
 integrate).</p>
 
-<h4 id="session-options-1">Session options</h4>
+<h4 id="serial-numbers">Serial numbers</h4>
+
+<p>The USB serial number for J-Link probes will have leading zeroes. However, the J-Link driver and applications do not
+use leading zeroes. PyOCD also does not use leading zeroes, as it interfaces with the J-Link through its driver.</p>
+
+<h4 id="session-options-2">Session options</h4>
 
 <ul>
   <li><code class="highlighter-rouge">jlink.device</code> (str, no default)
