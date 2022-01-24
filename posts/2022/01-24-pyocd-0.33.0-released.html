@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>pyOCD 0.33.0 released &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark py-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container flex-grow-1">
+        <div class="row">
+          <main role="main" class="content-scroll p-3 p-md-4">
+            <p>&larr; <a href="/posts/">View all posts</a></p>
+
+<h1><a href="/posts/2022/01-24-pyocd-0.33.0-released.html">pyOCD 0.33.0 released</a></h1>
+
+<div class="post-header">
+<p class="text-muted border-bottom">
+  <strong>Jan 24, 2022</strong>
+  <br/>Chris Reed
+  
+</p>
+</div>
+
+<p>Version 0.33.0 of pyOCD has just been released and is available from PyPI. It’s been several months since a
+feature release, and this one includes some nice additions. A large number of smaller changes and bug fixes have also
+been included in this release. The complete list is shown below.</p>
+
+<p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+</code></pre></div></div>
+
+<p>The most exciting addition is an <code class="highlighter-rouge">rtt</code> subcommand that adds support for Segger RTT. This is just the start of more RTT
+and trace related features. The new subcommand streams RTT output from the target to the console, and vice versa for
+input from the console. The best part is that it works with all debug probes, not just the J-Link. (But note that it
+doesn’t yet take advantage of the J-Link’s built-in RTT support.)</p>
+
+<p>The <code class="highlighter-rouge">commander</code> subcommand and user scripts have some additions, as well. Command files can be run using the new
+<code class="highlighter-rouge">-x</code> / <code class="highlighter-rouge">--execute</code> argument. Multiple command file arguments are allowed, and can be mixed with <code class="highlighter-rouge">-c</code> / <code class="highlighter-rouge">--command</code>
+arguments. Pass a filename of “-“ to execute commands from stdin.</p>
+
+<p>It is now possible to create custom commands in the <a href="/docs/user_scripts.html">user script</a> using the
+<code class="highlighter-rouge">@command</code> decorator. User-defined commands are accessible both the <code class="highlighter-rouge">commander</code> subcommand and gdbserver
+monitor commands (basically anywhere you can run commands). Here’s a simple example that prints the first
+four vectors from a Cortex-M NVIC vector table.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s">"Decode and print the first few NVIC vectors"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">vectable</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">vecs</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_memory_block32</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Initial SP:     </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"ResetHandler:   </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"NMI:            </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HardFault:      </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>It demonstrates how command function arguments are automatically parsed and converted. PyOCD sees the single <code class="highlighter-rouge">base</code>
+argument with an <code class="highlighter-rouge">int</code> type annotation, and thus will configure the command with one argument converted to an int.
+The <a href="/docs/user_scripts.html#user-defined-commands">user-defined commands documentation</a> has all the details.</p>
+
+<p>Aside from the above features, you will immediately notice that log output is colourised and the formatting simplified.
+The <code class="highlighter-rouge">--color</code> argument and the <code class="highlighter-rouge">PYOCD_COLOR</code> environment variable give you direct control if you wish to change the
+default.</p>
+
+<p>Finally, it’s worth mentioning that the new CI system is up and running. Every commit and pull request will be
+tested on a set of boards on macOS, Linux, and Windows 10. Arm have graciously provided resources for the test
+servers and boards. Azure Pipelines manages the test runs. The best thing about using Azure Pipelines is that all test
+results are <a href="https://dev.azure.com/pyocd/pyocd/_build?definitionId=1&amp;_a=summary">publicly accessible</a>!</p>
+
+<p>Thanks again to all the contributors who helped make this release possible! ❤️</p>
+
+<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.33.0">v0.33.0 on GitHub</a> <br />
+<a href="https://pypi.org/project/pyocd/0.33.0/">v0.33.0 on PyPI</a></p>
+
+<hr />
+
+<h2 id="additions">Additions</h2>
+
+<ul>
+  <li>Basic SEGGER RTT read/write support with an <code class="highlighter-rouge">rtt</code> subcommand. This subcommand streams stdio from/to the target. It works with all debug probe types, not only J-Link. (Thanks @mikisama, @ccattuto)</li>
+  <li>There is no longer a need to install libusb separately when installing pyocd. The <a href="https://github.com/pyocd/libusb-package">libusb-package</a> Python package was created so that an up to date libusb library can be automatically installed along with pyocd on all OSes.</li>
+  <li>Log output is now colorized by default when outputting to a tty. The <code class="highlighter-rouge">--color</code> command line argument controls this feature. Also simplified the log output formatting so it is easier to read.</li>
+  <li>Commander: Add <code class="highlighter-rouge">-x</code>/<code class="highlighter-rouge">--execute</code> argument to run commands from a file. Multiple command files can be run and mixed with <code class="highlighter-rouge">-c</code> commands.</li>
+  <li>Commander: Add <code class="highlighter-rouge">-i</code>/<code class="highlighter-rouge">--interactive</code> to stay in REPL after running commands from either a file or command line.</li>
+  <li>Commander: Introduce the <code class="highlighter-rouge">@command</code> decorator that can be used in user scripts to create user-defined commands, accessible from Commander and as gdbserver monitor commands. See <a href="https://pyocd.io/docs/user_scripts.html#user-defined-commands">the documentation</a> for details.</li>
+</ul>
+
+<h2 id="boards-and-targets">Boards and targets</h2>
+
+<ul>
+  <li>Add Maxim MAX32660 target and MAX32660EVSYS board. (Thanks @ozersa)</li>
+  <li>Correct RAM size of Maxim MAX32630 to 512 KiB.</li>
+  <li>Add several NXP board IDs: FRDM-K32L3A6, TWR-KM35Z75M, MIMXRT1160-EVK, FRDM-KW38, USB-KW38, KW38-ER-RD.</li>
+  <li>Add micro:bit v2 board IDs. (Thanks @mbrossard)</li>
+  <li>NXP LPC55xx family: re-unlock debug access after reset. (Thanks @LeBlue)</li>
+</ul>
+
+<h2 id="changes-and-fixes">Changes and fixes</h2>
+
+<ul>
+  <li>Cortex-M: Fix regression with writing CFBP and xPSR subregisters (CONTROL, FAULTMASK, BASEPRI, PRIMASK, and xPSR variants).</li>
+  <li>Gdbserver: While the target is running (<code class="highlighter-rouge">continue</code> command in gdb), retry reading target status within a timeout after the first fault on such a check. This is intended to primarily help with firmware putting the core to sleep. The <code class="highlighter-rouge">debug.status_fault_retry_timeout</code> session option controls the timeout; set it to 0 to disable this experimental feature.</li>
+  <li>Commander: Fix broken Python (“$”) and system (“!”) commands in certain cases.</li>
+  <li>Commander: The shell-like lexer for commands has been replaced with a custom lexer that is simpler and more predictable. It breaks words on all non-alphanumeric characters except dash (for instance, “mem-ap” is considered one word). Single and double quoted values with backslash-escapes are supported.</li>
+  <li>Commander: If a user script has been loaded, Python ‘$’ commands share the user script’s namespace.</li>
+  <li>Commands: Add <code class="highlighter-rouge">flushprobe</code> command that ensures all outstanding transfers on the probe have been completed.</li>
+  <li>Commands: Fix <code class="highlighter-rouge">reg</code> output so it is properly redirected when called as a gdbserver monitor command.</li>
+  <li>Commands: <code class="highlighter-rouge">reg</code> and <code class="highlighter-rouge">wreg' improvements. </code>-p<code class="highlighter-rouge"> option to force lookup as peripheral register. </code>reg<code class="highlighter-rouge"> will print any number of registers. Add </code>rr<code class="highlighter-rouge"> and </code>wr` aliases.</li>
+  <li>User scripts: <code class="highlighter-rouge">print()</code> calls from user scripts get routed through any output direction, for example, such that the output will appear in the gdb console when a user-defined command is called as a gdbserver monitor command.</li>
+  <li>Flash: Change default value of <code class="highlighter-rouge">keep_unwritten</code> session option to false.</li>
+  <li>CMSIS-DAP: Better handling of protocol versions.</li>
+  <li>CMSIS-DAP: All USB backends have a USB packet trace logger.</li>
+  <li>CMSIS-DAP: Add <code class="highlighter-rouge">cmsis_dap.prefer_v1</code> session option that forces pyocd to use the CMSIS-DAP v1 interface on a debug probe that provides both v1 and v2. (Naturally, the default is to choose v2, since it is faster.) This is intended primarily for testing.</li>
+  <li>CMSIS-DAP: Introduced timeouts for USB reads.</li>
+  <li>CMSIS-DAP: Limit number of outstanding command packets to 30 on macOS using hidapi for CMSIS-DAP v1. This fixes a failure that occurred when certain memory transfers due to an in-built limit on the queue size in the macOS version of hidapi.</li>
+  <li>CMSIS-DAP: Update list of known CMSIS-DAP probes; correspondingly update udev rules.</li>
+  <li>STLink: use <code class="highlighter-rouge">JTAG_GET_BOARD_IDENTIFIERS</code> command to read board ID faster than extracting it from the “mbed.htm” file on the MSD volume. Requires V2J36 or V3J6 firmware versions.</li>
+  <li>STLink: Setting the SWD frequency on an STLinkV3 was completely broken, and is now fixed.</li>
+  <li>STLink: Add <code class="highlighter-rouge">stlink.v3_prescaler</code> session option to control the internal HCLK prescaler on the probe, which affects the set of available SWD/JTAG and other I/O frequencies.</li>
+  <li>Probe server: Fix race causing server to terminate immediately is certain rare cases.</li>
+  <li>Probe server: Improve connect/disconnect log messages.</li>
+  <li>Session options: Probe-specific options in a config file takes precedence over global options.</li>
+  <li>Session options: A warning is logged if a multiple probe-specific option sections in a config file match the active debug probe’s UID.</li>
+  <li>Session: Change the working directory to the project directory on session creation.</li>
+  <li>Gdbserver: Cleanup and fix connection disconnect code. This changes behaviour if the gdb <code class="highlighter-rouge">disconnect</code> command is used so that the <code class="highlighter-rouge">persist</code> option is honoured (<code class="highlighter-rouge">disconnect</code> previously would never cause the gdbserver to stop). (Thanks @claymation)</li>
+  <li>Gdbserver: <code class="highlighter-rouge">exit</code> monitor command that will shut down all gdbservers and quit pyocd.</li>
+  <li>Gdbserver: Handle connection aborted and reset errors more cleanly.</li>
+  <li>Gdbserver: Better logging of RTOS discovery issues, and only one log message is output when attempting to load RTOS plugins, in addition to a message on successful load.</li>
+  <li>CoreSight DAP: Unlock probe on error. (Thanks @claymation)</li>
+  <li>CoreSight: Don’t read CoreSight registers for non-CoreSight components. (Thanks @j4cbo)</li>
+  <li>CoreSight: Set <code class="highlighter-rouge">CSW.DBGSWEN</code> for CSSoC-400 APB-AP to resolve an issue that caused <code class="highlighter-rouge">DBGMCU</code> (and other) peripherals to be inaccessible on certain STM32 devices, and likely similar issues on other devices.</li>
+  <li>Dependencies: Switch from naturalsort to natsort. (Thanks @dvzrv)</li>
+</ul>
+
+<p><a href="https://github.com/pyocd/pyOCD/compare/v0.32.3...v0.33.0"><strong>View Full Changelog</strong></a></p>
+
+
+          </main>
+        </div>
+      </div>
+    
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>
