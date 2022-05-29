@@ -218,6 +218,11 @@
 <li class="toc-entry toc-h3"><a href="#kinetis-family">Kinetis family</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#hdsc">HDSC</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#hc32l110">HC32L110</a></li>
+</ul>
+</li>
 </ul>
                     </div>
                   </div>
@@ -270,6 +275,12 @@ Mass erase is a separate operation. It mostly functions like a chip erase, but c
 <p>Unlocking of flash security is supported for all Kinetis targets. For more, see the
 <a href="/docs/security.html">security and protection</a> documentation.</p>
 
+<h2 id="hdsc">HDSC</h2>
+
+<h3 id="hc32l110">HC32L110</h3>
+<p>The documentation for this chip states that no external pull-up resistors are required on the SWD lines due to the internal pull-up
+hardware. Testing has found this to be largely inaccurate. Most debug probes will require an external 4.7k&amp;ohm; pull-up resistor 
+between Ports P27/P31 and V+.</p>
 
 
                 </div>
