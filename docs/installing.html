@@ -206,54 +206,76 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#pe-micro-probe-support">PE Micro probe support</a></li>
+<li class="toc-entry toc-h3"><a href="#permissions-issues">Permissions issues</a></li>
+<li class="toc-entry toc-h3"><a href="#non-x86-systems">Non-x86 systems</a></li>
+<li class="toc-entry toc-h3"><a href="#development-versions">Development versions</a></li>
 <li class="toc-entry toc-h2"><a href="#udev-rules-on-linux">udev rules on Linux</a></li>
 <li class="toc-entry toc-h2"><a href="#target-support">Target support</a></li>
 </ul>
                     </div>
                   </div>
 
-                  <p>PyOCD requires <a href="https://python.org/">Python</a> 3.6 or later, and a recent version of <a href="https://libusb.info/">libusb</a>. It runs on macOS,
+                  <p>PyOCD requires <a href="https://python.org/">Python</a> 3.6 or later. It runs on macOS,
 Linux, FreeBSD, and Windows platforms.</p>
-
-<p>The latest stable version of pyOCD may be installed or upgraded via <a href="https://pip.pypa.io/en/stable/index.html">pip</a>
-as follows:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -mpip install -U pyocd
-</code></pre></div></div>
-
-<p><em>Note: depending on your system, you may need to use <code class="highlighter-rouge">python</code> instead of <code class="highlighter-rouge">python3</code>.</em></p>
 
 <p>The latest pyOCD package is available <a href="https://pypi.python.org/pypi/pyOCD/">on PyPI</a>. The
 <a href="https://github.com/pyocd/pyOCD/releases">GitHub releases</a> page details changes between versions.</p>
 
-<p>To install the latest prerelease version from the HEAD of the <code class="highlighter-rouge">develop</code> branch, you can do
-the following:</p>
+<p>The latest stable version of pyOCD may be installed or upgraded via <a href="https://pip.pypa.io/en/stable/index.html">pip</a>
+as follows:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -mpip install --pre -U git+https://github.com/pyocd/pyOCD.git@develop
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -m pip install -U pyocd
 </code></pre></div></div>
 
-<p>You can also install directly from the source by cloning the git repository and running:</p>
+<p><em>Note: depending on your system, you may need to use <code class="highlighter-rouge">python</code> instead of <code class="highlighter-rouge">python3</code>.</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -mpip install .
-</code></pre></div></div>
+<p>We also recommend using <a href="https://pypa.github.io/pipx/">pipx</a> as an excellent method to install pyOCD in an isolated
+virtual Python environment.</p>
 
-<p>See the <a href="/docs/developers_guide.html">developer’s guide</a> for more about setting up a development
-environment for pyOCD.</p>
+<h3 id="pe-micro-probe-support">PE Micro probe support</h3>
+
+<p>Support for Cyclone and/or Multilink debug probes by <a href="https://pemicro.com/">PE Micro</a> is available in a probe
+driver plug-in that is a separate package from pyOCD. There are two ways to install the PE Micro probe plug-in.
+Either substitute <code class="highlighter-rouge">pyocd[pemicro]</code> for <code class="highlighter-rouge">pyocd</code> in the commands above, or separately install <code class="highlighter-rouge">pyocd-pemicro</code>
+using pip.</p>
+
+<h3 id="permissions-issues">Permissions issues</h3>
 
 <p>Note that, depending on your operating system, you may run into permissions issues running these commands.
 You have a few options here:</p>
 
 <ol>
-  <li>Under Linux, run with <code class="highlighter-rouge">sudo -H</code> to install pyOCD and dependencies globally. On macOS, installing with sudo
- should never be required, although sometimes permissions can become modified such that installing without
- using sudo fails.</li>
-  <li>Specify the <code class="highlighter-rouge">--user</code> option to install local to your user account.</li>
+  <li>Install with <a href="https://pypa.github.io/pipx/">pipx</a>.</li>
   <li>Run the command in a <a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>
 local to a specific project working set.</li>
+  <li>Under Linux, run with <code class="highlighter-rouge">sudo -H</code> to install pyOCD and dependencies globally. On macOS, installing with sudo
+ should never be required, although sometimes permissions/corrupted can become modified such that installing without
+ using sudo fails.</li>
+  <li>Specify the <code class="highlighter-rouge">--user</code> option to install local to your user account.</li>
 </ol>
+
+<h3 id="non-x86-systems">Non-x86 systems</h3>
 
 <p>For notes about installing and using on non-x86 systems such as Raspberry Pi, see the
 <a href="/docs/installing_on_non_x86.html">relevant documentation</a>.</p>
+
+<h3 id="development-versions">Development versions</h3>
+
+<p>To install the latest prerelease version from the HEAD of the <code class="highlighter-rouge">develop</code> branch, you can do
+the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -m pip install --pre -U git+https://github.com/pyocd/pyOCD.git@develop
+</code></pre></div></div>
+
+<p>You can also install directly from the source by cloning the <a href="https://github.com/pyocd/pyOCD">git repository</a> and
+running this command from the working copy root directory:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 -m pip install .
+</code></pre></div></div>
+
+<p>See the <a href="/docs/developers_guide.html">developer’s guide</a> for more about setting up a development
+environment for pyOCD.</p>
 
 <p>(Note: Installing by running <code class="highlighter-rouge">setup.py</code> directly is deprecated since pyOCD migrated to PEP 517 based packaging.
 In many cases it will not work at all. Installing with pip or another standards-compliant tool is the only

@@ -218,6 +218,7 @@
 <li class="toc-entry toc-h4"><a href="#microchip-edbg">Microchip EDBG</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#pe-micro-cyclone-and-multilink">PE Micro Cyclone and Multilink</a></li>
 <li class="toc-entry toc-h3"><a href="#stlink">STLink</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#stlinkv3-swdjtag-frequencies">STLinkV3 SWD/JTAG frequencies</a></li>
@@ -265,10 +266,6 @@ these types of debug probes:</p>
       <td><a href="http://www.keil.com/pack/doc/CMSIS/DAP/html/index.html">CMSIS-DAP</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pemicro</code></td>
-      <td><a href="https://pemicro.com/">PE Micro</a> Cyclone and Multilink</td>
-    </tr>
-    <tr>
       <td><code class="highlighter-rouge">picoprobe</code></td>
       <td>Raspberry Pi <a href="https://github.com/raspberrypi/picoprobe">Picoprobe</a></td>
     </tr>
@@ -283,6 +280,26 @@ these types of debug probes:</p>
     <tr>
       <td><code class="highlighter-rouge">remote</code></td>
       <td>pyOCD <a href="/docs/remote_probe_access.html">remote debug probe client</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Additional debug probe plugins are available as Python packages through <a href="https://pypi.python.org">PyPI</a>, and
+can be installed with pip:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Plug-in Name</th>
+      <th>Package</th>
+      <th>Debug Probe Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">pemicro</code></td>
+      <td>pyocd-pemicro</td>
+      <td><a href="https://pemicro.com/">PE Micro</a> Cyclone and Multilink.</td>
     </tr>
   </tbody>
 </table>
@@ -306,6 +323,7 @@ serial number.</p>
 <p>Debug probes that support automatic target type reporting:</p>
 
 <ul>
+  <li>CMSIS-DAP probes supporting v2.1 of the protocol and reporting target type info</li>
   <li>CMSIS-DAP probes based on the DAPLink firmware</li>
   <li>STLinkV2-1 and STLinkV3</li>
 </ul>
@@ -314,28 +332,46 @@ serial number.</p>
 
 <p>To view the connected probes and their unique IDs, run <code class="highlighter-rouge">pyocd list</code>. This command will produce output looking like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #   Probe                             Unique ID
-------------------------------------------------------------------------------------------
-  0   Arm LPC55xx DAPLink CMSIS-DAP     000000803f7099a85fdf51158d5dfcaa6102ef474c504355
-  1   Arm Musca-B1 [musca_b1]           500700001c16fcd400000000000000000000000097969902
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #   Probe/Board                       Unique ID                                          Target
+--------------------------------------------------------------------------------------------------------------------
+  0   Arm DAPLink CMSIS-DAP             02400b0129164e4500440012706e0007f301000097969900   ✔︎ k64f
+      NXP                               FRDM-K64F
+
+  1   STLINK-V3                         002500074741500420383733                           ✖︎ stm32u585aiix
+      B-U585I-IOT02A
+
+  2   STM32 STLink                      066EFF555051897267233656                           ✔︎ stm32l475xg
+      DISCO-L475VG-IOT01A
+
+  3   Segger J-Link OB-K22-NordicSemi   960177309                                          n/a
 </code></pre></div></div>
 
-<p>For those debug probes that support automatic target type reporting, the default target type is visible in brackets
-next to the probe’s name. In addition, the name of the board is printed instead of the type of debug probe. This can be
-seen in the example output above for the “Arm Musca-B1” board, which has a default target type of <code class="highlighter-rouge">musca_b1</code>.</p>
+<p>The output is divided into columns for the probe number, probe name, unique ID, and default target type name.
+Probes that have additional board identification will have a second row with the board name and possibly board
+vendor.</p>
 
-<p>If no target type appears in brackets, as can be seen above for the “Arm LPC55xx DAPLink CMSIS-DAP” probe (because it
-is a standalone probe), it means the debug probe does not report the type of its connected target. In this
-case, the target type must be manually specified either on the command line with the <code class="highlighter-rouge">-t</code> / <code class="highlighter-rouge">--target</code>
-argument, or by setting the <code class="highlighter-rouge">target_override</code> session option (possibly in a config file).</p>
+<p>The “Target” column shows the debug probe’s default target type for debug probes that support automatic target
+type reporting. Whether that target type is installed and available for use is shown by a check or “X” mark
+before the target type name (and in different colours, if colour output is enabled). If an “X” mark is
+displayed, see the <a href="/docs/target_support.html">target support documentation</a> for information about
+how you can install that the target type.</p>
 
-<p>Note that the printed list includes only those probes that pyOCD can actively query for, which currently means only USB
-based probes.</p>
+<p>For debug probes that do not support automatic target type reporting, the Target column will simply display
+“n/a”. This can be seen above for the “Segger J-Link OB-K22-NordicSemi” probe. The target type must be
+specified manually in such cases, otherwise full functionality, such as flash programming, will not be
+available.</p>
+
+<p>In any case, whether required because the probe doesn’t have a default, or to override the default, the target
+type can be specified either on the command line with the <code class="highlighter-rouge">-t</code> / <code class="highlighter-rouge">--target</code> argument, or by setting the
+<code class="highlighter-rouge">target_override</code> session option (e.g., in a <a href="/docs/configuration.html#config_file">config file</a>).</p>
+
+<p>Note that the printed list includes only those probes that pyOCD can actively query for, which currently means
+only USB based probes.</p>
 
 <h2 id="selecting-the-debug-probe">Selecting the debug probe</h2>
 
-<p>All of the pyOCD subcommands that communicate with a target require the user to either implicitly or explicitly
-specify a debug probe.</p>
+<p>All of the pyOCD subcommands that communicate with a target require the user to either implicitly or
+explicitly specify a debug probe.</p>
 
 <p>There are three ways the debug probe is selected:</p>
 
@@ -398,7 +434,8 @@ There are two major versions of CMSIS-DAP, which use different USB classes:</p>
 <p>PyOCD supports automatic target type identification for debug probes built with the widely used
 <a href="https://github.com/ARMmbed/DAPLink">DAPLink</a> firmware.</p>
 
-<p><a href="https://daplink.io/">DAPLink firmware updates</a></p>
+<p>DAPLink firmware updates are available on the <a href="https://daplink.io/">daplink.io</a> site and on the project’s
+<a href="https://github.com/ARMmbed/DAPLink/releases">releases page</a> on GitHub.</p>
 
 <h4 id="session-options">Session options</h4>
 
@@ -414,6 +451,24 @@ There are two major versions of CMSIS-DAP, which use different USB classes:</p>
 <p>The Microchip (previously Atmel) EDBG probe firmware, at the time of this writing, provides a CMSIS-DAP v1 interface.
 On macOS, reading command responses always times out. The probe works on other OSes, however.</p>
 
+<h3 id="pe-micro-cyclone-and-multilink">PE Micro Cyclone and Multilink</h3>
+
+<p>The Cyclone and Multilink debug probes from PE Micro are supported through the use of a separate probe driver
+plugin called <code class="highlighter-rouge">pyocd-pemicro</code>. This plugin can be installed at any time using <code class="highlighter-rouge">pip</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install pyocd-pemicro
+</code></pre></div></div>
+
+<p>It can also be installed at the same time as pyOCD by adding the <code class="highlighter-rouge">pemicro</code> install extra:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install pyocd[pemicro]
+</code></pre></div></div>
+
+<p>Once the PE Micro probe driver is installed, Cyclone and Multilink probes connected by USB will immediately
+be available for use.</p>
+
+<p>Currently, PE Micro probes connected via the network are not accessible.</p>
+
 <h3 id="stlink">STLink</h3>
 
 <div class="alert alert-warning">
@@ -427,13 +482,16 @@ from a silicon vendor other than ST Micro, please use a different debug probe.
 is strongly recommended. Numerous bugs have been fixed, and new commands added for feature and performance improvements.</p>
 
 <ul>
-  <li>V2J26: Adds 16-bit transfer support. If not supported, pyOCD will fall back to 8-bit transfers—it is possible this
+  <li>V2J26: Adds 16-bit transfer support. If not supported, pyOCD will fall back to 8-bit transfers. It is possible this
   will produce unexpected behaviour if used to access Device memory (e.g. memory mapped registers).</li>
   <li>V2J28: Minimum version for multicore target support.</li>
-  <li>V2J32/V3J6: Allows access to banked DP registers. Usually not needed.</li>
+  <li>V2J32/V3J2: Allows access to banked DP registers. Usually not needed.</li>
+  <li>V2J32/V3J2: Supports setting the AHB and AXI transfer attributes. See
+  <a href="/docs/command_reference.html#hnonsec"><code class="highlighter-rouge">set hnonsec</code></a> and
+  <a href="/docs/command_reference.html#hprot"><code class="highlighter-rouge">set hprot</code></a>.</li>
 </ul>
 
-<p><a href="https://www.st.com/en/development-tools/stsw-link007.html">Firmware updates</a></p>
+<p><a href="https://www.st.com/en/development-tools/stsw-link007.html">STLink firmware updates on www.st.com</a>.</p>
 
 <p>PyOCD supports automatic target type identification for on-board STLink probes that report a board ID.</p>
 
@@ -501,7 +559,7 @@ frequencies of the serial I/O bridge interfaces.</p>
 <p>To use a Segger J-Link probe, the driver package must be installed. Segger makes drivers available for Linux, macOS,
 and Windows.</p>
 
-<p><a href="https://www.segger.com/downloads/jlink/">Firmware and driver installer and updates</a></p>
+<p><a href="https://www.segger.com/downloads/jlink/">J-Link firmware and driver installer and updates on www.segger.com</a></p>
 
 <p>On macOS, you can install the <code class="highlighter-rouge">segger-jlink</code> cask with Homebrew to get managed driver updates.</p>
 

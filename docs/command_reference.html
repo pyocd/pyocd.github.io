@@ -208,7 +208,7 @@
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#all-commands">All commands</a></li>
 <li class="toc-entry toc-h2"><a href="#all-values">All values</a></li>
-<li class="toc-entry toc-h2"><a href="#commands">Commands</a>
+<li class="toc-entry toc-h2"><a href="#command-details">Command details</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#breakpoints">Breakpoints</a>
 <ul>
@@ -255,6 +255,11 @@
 <li class="toc-entry toc-h5"><a href="#unlock">unlock</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#gdbserver">Gdbserver</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#exit-1">exit</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h3"><a href="#general">General</a>
 <ul>
 <li class="toc-entry toc-h5"><a href="#help">help</a></li>
@@ -280,7 +285,7 @@
 <li class="toc-entry toc-h5"><a href="#write8">write8</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#openocd_compatibility">Openocd_compatibility</a>
+<li class="toc-entry toc-h3"><a href="#openocd-compatibility">Openocd compatibility</a>
 <ul>
 <li class="toc-entry toc-h5"><a href="#init">init</a></li>
 </ul>
@@ -303,7 +308,7 @@
 </li>
 <li class="toc-entry toc-h3"><a href="#servers">Servers</a>
 <ul>
-<li class="toc-entry toc-h5"><a href="#gdbserver">gdbserver</a></li>
+<li class="toc-entry toc-h5"><a href="#gdbserver-1">gdbserver</a></li>
 <li class="toc-entry toc-h5"><a href="#probeserver">probeserver</a></li>
 </ul>
 </li>
@@ -329,6 +334,29 @@
 <li class="toc-entry toc-h5"><a href="#show">show</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#value-details">Value details</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#aps">aps</a></li>
+<li class="toc-entry toc-h5"><a href="#cores">cores</a></li>
+<li class="toc-entry toc-h5"><a href="#fault">fault</a></li>
+<li class="toc-entry toc-h5"><a href="#frequency">frequency</a></li>
+<li class="toc-entry toc-h5"><a href="#graph">graph</a></li>
+<li class="toc-entry toc-h5"><a href="#hnonsec">hnonsec</a></li>
+<li class="toc-entry toc-h5"><a href="#hprot">hprot</a></li>
+<li class="toc-entry toc-h5"><a href="#locked">locked</a></li>
+<li class="toc-entry toc-h5"><a href="#log">log</a></li>
+<li class="toc-entry toc-h5"><a href="#map">map</a></li>
+<li class="toc-entry toc-h5"><a href="#mem-ap">mem-ap</a></li>
+<li class="toc-entry toc-h5"><a href="#nreset">nreset</a></li>
+<li class="toc-entry toc-h5"><a href="#option">option</a></li>
+<li class="toc-entry toc-h5"><a href="#peripherals">peripherals</a></li>
+<li class="toc-entry toc-h5"><a href="#probe-uid">probe-uid</a></li>
+<li class="toc-entry toc-h5"><a href="#register-groups">register-groups</a></li>
+<li class="toc-entry toc-h5"><a href="#step-into-interrupts">step-into-interrupts</a></li>
+<li class="toc-entry toc-h5"><a href="#target-1">target</a></li>
+<li class="toc-entry toc-h5"><a href="#vector-catch">vector-catch</a></li>
 </ul>
 </li>
 </ul>
@@ -391,9 +419,9 @@ Remove a breakpoint.
 <tr><td>
 <a href="#rmwatch"><tt>rmwatch</tt></a>
 </td><td>
-ADDR
+ADDR [r|w|rw] [1|2|4]
 </td><td>
-Remove a watchpoint.
+Remove watchpoint(s).
 </td></tr>
 
 <tr><td>
@@ -537,6 +565,15 @@ Reset the target, optionally specifying the reset type.
 Unlock security on the target.
 </td></tr>
 
+<tr><td colspan="3"><b>Gdbserver</b></td></tr>
+
+<tr><td>
+<a href="#exit"><tt>exit</tt></a>
+</td><td>
+</td><td>
+Terminate running gdbservers in this session.
+</td></tr>
+
 <tr><td colspan="3"><b>General</b></td></tr>
 
 <tr><td>
@@ -587,7 +624,7 @@ Fill a range of memory with a pattern.
 <tr><td>
 <a href="#find"><tt>find</tt></a>
 </td><td>
-ADDR LEN BYTE+
+[-n] ADDR LEN BYTE+
 </td><td>
 Search for a value in memory within the given address range.
 </td></tr>
@@ -693,7 +730,6 @@ Write 8-bit bytes to memory.
 <tr><td>
 <a href="#init"><tt>init</tt></a>
 </td><td>
-init
 </td><td>
 Ignored; for OpenOCD compatibility.
 </td></tr>
@@ -869,15 +905,16 @@ Print the target object graph.
 </td><td>
 read-write
 </td><td>
-The current HNONSEC value used by the selected MEM-AP.
+The current HNONSEC attribute value used by the selected MEM-AP.
 </td></tr>
 
 <tr><td>
-<a href="#hprot"><tt>hprot</tt></a>
+<a href="#hprot"><tt>hprot</tt></a>,
+<a href="#hprot"><tt>memap_attr</tt></a>
 </td><td>
 read-write
 </td><td>
-The current HPROT value used by the selected MEM-AP.
+The current memory transfer attributes value used by the selected MEM-AP.
 </td></tr>
 
 <tr><td>
@@ -982,38 +1019,38 @@ Show current vector catch settings.
 
 </table>
 
-<h2 id="commands">Commands</h2>
+<h2 id="command-details">Command details</h2>
 
 <h3 id="breakpoints">Breakpoints</h3>
 
 <h5 id="break"><code class="highlighter-rouge">break</code></h5>
 
-<p><strong>Usage</strong>: ADDR <br />
+<p><strong>Usage</strong>: break ADDR <br />
 Set a breakpoint address.</p>
 
 <h5 id="lsbreak"><code class="highlighter-rouge">lsbreak</code></h5>
 
-<p><strong>Usage</strong>:  <br />
+<p><strong>Usage</strong>: lsbreak  <br />
 List breakpoints.</p>
 
 <h5 id="lswatch"><code class="highlighter-rouge">lswatch</code></h5>
 
-<p><strong>Usage</strong>:  <br />
+<p><strong>Usage</strong>: lswatch  <br />
 List watchpoints.</p>
 
 <h5 id="rmbreak"><code class="highlighter-rouge">rmbreak</code></h5>
 
-<p><strong>Usage</strong>: ADDR <br />
+<p><strong>Usage</strong>: rmbreak ADDR <br />
 Remove a breakpoint.</p>
 
 <h5 id="rmwatch"><code class="highlighter-rouge">rmwatch</code></h5>
 
-<p><strong>Usage</strong>: ADDR <br />
-Remove a watchpoint.</p>
+<p><strong>Usage</strong>: rmwatch ADDR [r|w|rw] [1|2|4] <br />
+Remove watchpoint(s). Access type and size are optional. All watchpoints matching the specified parameters will be removed.</p>
 
 <h5 id="watch"><code class="highlighter-rouge">watch</code></h5>
 
-<p><strong>Usage</strong>: ADDR [r|w|rw] [1|2|4] <br />
+<p><strong>Usage</strong>: watch ADDR [r|w|rw] [1|2|4] <br />
 Set a watchpoint address, and optional access type (default rw) and size (4).</p>
 
 <h3 id="bringup">Bringup</h3>
@@ -1021,17 +1058,17 @@ Set a watchpoint address, and optional access type (default rw) and size (4).</p
 
 <h5 id="initdp"><code class="highlighter-rouge">initdp</code></h5>
 
-<p><strong>Usage</strong>:  <br />
+<p><strong>Usage</strong>: initdp  <br />
 Init DP and power up debug.</p>
 
 <h5 id="makeap"><code class="highlighter-rouge">makeap</code></h5>
 
-<p><strong>Usage</strong>: APSEL <br />
+<p><strong>Usage</strong>: makeap APSEL <br />
 Creates a new AP object for the given APSEL. The type of AP, MEM-AP or generic, is autodetected.</p>
 
 <h5 id="reinit"><code class="highlighter-rouge">reinit</code></h5>
 
-<p><strong>Usage</strong>:  <br />
+<p><strong>Usage</strong>: reinit  <br />
 Reinitialize the target object.</p>
 
 <h3 id="commander">Commander</h3>
@@ -1039,12 +1076,12 @@ Reinitialize the target object.</p>
 <h5 id="exit"><code class="highlighter-rouge">exit</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">quit</code> <br />
-<strong>Usage</strong>:  <br />
+<strong>Usage</strong>: exit  <br />
 Quit pyocd commander.</p>
 
 <h5 id="list"><code class="highlighter-rouge">list</code></h5>
 
-<p><strong>Usage</strong>:  <br />
+<p><strong>Usage</strong>: list  <br />
 Show available targets.</p>
 
 <h3 id="core">Core</h3>
@@ -1052,24 +1089,24 @@ Show available targets.</p>
 <h5 id="continue"><code class="highlighter-rouge">continue</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">c</code>, <code class="highlighter-rouge">go</code>, <code class="highlighter-rouge">g</code> <br />
-<strong>Usage</strong>:  <br />
+<strong>Usage</strong>: continue  <br />
 Resume execution of the target. The target’s state is read back after resuming. If the target is not running, then it’s state is reported. For instance, if the target is halted immediately after resuming, a debug event such as a breakpoint most likely occurred.</p>
 
 <h5 id="core-1"><code class="highlighter-rouge">core</code></h5>
 
-<p><strong>Usage</strong>: [NUM] <br />
+<p><strong>Usage</strong>: core [NUM] <br />
 Select CPU core by number or print selected core.</p>
 
 <h5 id="halt"><code class="highlighter-rouge">halt</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">h</code> <br />
-<strong>Usage</strong>:  <br />
+<strong>Usage</strong>: halt  <br />
 Halt the target.</p>
 
 <h5 id="step"><code class="highlighter-rouge">step</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">s</code> <br />
-<strong>Usage</strong>: [COUNT] <br />
+<strong>Usage</strong>: step [COUNT] <br />
 Step one or more instructions.</p>
 
 <h3 id="dap">Dap</h3>
@@ -1077,45 +1114,52 @@ Step one or more instructions.</p>
 <h5 id="readap"><code class="highlighter-rouge">readap</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">rap</code> <br />
-<strong>Usage</strong>: [APSEL] ADDR <br />
+<strong>Usage</strong>: readap [APSEL] ADDR <br />
 Read AP register.</p>
 
 <h5 id="readdp"><code class="highlighter-rouge">readdp</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">rdp</code> <br />
-<strong>Usage</strong>: ADDR <br />
+<strong>Usage</strong>: readdp ADDR <br />
 Read DP register.</p>
 
 <h5 id="writeap"><code class="highlighter-rouge">writeap</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">wap</code> <br />
-<strong>Usage</strong>: [APSEL] ADDR DATA <br />
+<strong>Usage</strong>: writeap [APSEL] ADDR DATA <br />
 Write AP register.</p>
 
 <h5 id="writedp"><code class="highlighter-rouge">writedp</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">wdp</code> <br />
-<strong>Usage</strong>: ADDR DATA <br />
+<strong>Usage</strong>: writedp ADDR DATA <br />
 Write DP register.</p>
 
 <h3 id="device">Device</h3>
 
 <h5 id="reset"><code class="highlighter-rouge">reset</code></h5>
 
-<p><strong>Usage</strong>: [halt|-halt|-h] [TYPE] <br />
+<p><strong>Usage</strong>: reset [halt|-halt|-h] [TYPE] <br />
 Reset the target, optionally specifying the reset type. The reset type must be one of ‘default’, ‘hw’, ‘sw’, ‘hardware’, ‘software’, ‘sw_sysresetreq’, ‘sw_vectreset’, ‘sw_emulated’, ‘sysresetreq’, ‘vectreset’, or ‘emulated’.</p>
 
 <h5 id="unlock"><code class="highlighter-rouge">unlock</code></h5>
 
-<p><strong>Usage</strong>:  <br />
+<p><strong>Usage</strong>: unlock  <br />
 Unlock security on the target.</p>
+
+<h3 id="gdbserver">Gdbserver</h3>
+
+<h5 id="exit-1"><code class="highlighter-rouge">exit</code></h5>
+
+<p><strong>Usage</strong>: exit  <br />
+Terminate running gdbservers in this session. For the pyocd gdbserver subcommand, terminating gdbservers will cause the process to exit. The effect when the gdbserver(s) are running in a different environment depends on that program. Note that gdb will still believe the connection to be valid after this command completes, so executing the ‘disconnect’ command is a necessity.</p>
 
 <h3 id="general">General</h3>
 
 <h5 id="help"><code class="highlighter-rouge">help</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">?</code> <br />
-<strong>Usage</strong>: [CMD] <br />
+<strong>Usage</strong>: help [CMD] <br />
 Show help for commands.</p>
 
 <h3 id="memory">Memory</h3>
@@ -1123,105 +1167,105 @@ Show help for commands.</p>
 <h5 id="compare"><code class="highlighter-rouge">compare</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">cmp</code> <br />
-<strong>Usage</strong>: ADDR [LEN] FILENAME <br />
+<strong>Usage</strong>: compare ADDR [LEN] FILENAME <br />
 Compare a memory range against a binary file. If the length is not provided, then the length of the file is used.</p>
 
 <h5 id="disasm"><code class="highlighter-rouge">disasm</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">d</code> <br />
-<strong>Usage</strong>: [-c/–center] ADDR [LEN] <br />
-Disassemble instructions at an address. Only available if the capstone library is installed. To install capstone, run ‘pip install capstone’.</p>
+<strong>Usage</strong>: disasm [-c/–center] ADDR [LEN] <br />
+Disassemble instructions at an address. The length argument is in bytes and is optional, with a default of 6. If the -c option is used, the disassembly is centered on the given address. Otherwise the disassembly begins at the given address.</p>
 
 <h5 id="erase"><code class="highlighter-rouge">erase</code></h5>
 
-<p><strong>Usage</strong>: [ADDR] [COUNT] <br />
+<p><strong>Usage</strong>: erase [ADDR] [COUNT] <br />
 Erase all internal flash or a range of sectors.</p>
 
 <h5 id="fill"><code class="highlighter-rouge">fill</code></h5>
 
-<p><strong>Usage</strong>: [SIZE] ADDR LEN PATTERN <br />
+<p><strong>Usage</strong>: fill [SIZE] ADDR LEN PATTERN <br />
 Fill a range of memory with a pattern. The optional SIZE parameter must be one of 8, 16, or 32. If not provided, the size is determined by the pattern value’s most significant set bit. Only RAM regions may be filled.</p>
 
 <h5 id="find"><code class="highlighter-rouge">find</code></h5>
 
-<p><strong>Usage</strong>: ADDR LEN BYTE+ <br />
-Search for a value in memory within the given address range. A pattern of any number of bytes can be searched for. Each BYTE parameter must be an 8-bit value.</p>
+<p><strong>Usage</strong>: find [-n] ADDR LEN BYTE+ <br />
+Search for a value in memory within the given address range. A pattern of any number of bytes can be searched for. Each BYTE parameter must be an 8-bit value. If the -n argument is passed, the search is negated and looks for the first set of bytes that does not match the provided values.</p>
 
 <h5 id="load"><code class="highlighter-rouge">load</code></h5>
 
-<p><strong>Usage</strong>: FILENAME [ADDR] <br />
+<p><strong>Usage</strong>: load FILENAME [ADDR] <br />
 Load a binary, hex, or elf file with optional base address.</p>
 
 <h5 id="loadmem"><code class="highlighter-rouge">loadmem</code></h5>
 
-<p><strong>Usage</strong>: ADDR FILENAME <br />
+<p><strong>Usage</strong>: loadmem ADDR FILENAME <br />
 Load a binary file to an address in memory (RAM or flash). This command is deprecated in favour of the more flexible ‘load’.</p>
 
 <h5 id="read16"><code class="highlighter-rouge">read16</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">rh</code> <br />
-<strong>Usage</strong>: ADDR [LEN] <br />
+<strong>Usage</strong>: read16 ADDR [LEN] <br />
 Read 16-bit halfwords. Optional length parameter is the number of bytes (not half-words) to read. It must be divisible by 2. If the length is not provided, one halfword is read. The address may be unaligned.</p>
 
 <h5 id="read32"><code class="highlighter-rouge">read32</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">rw</code> <br />
-<strong>Usage</strong>: ADDR [LEN] <br />
+<strong>Usage</strong>: read32 ADDR [LEN] <br />
 Read 32-bit words. Optional length parameter is the number of bytes (not words) to read. It must be divisible by 4. If the length is not provided, one word is read. The address may be unaligned.</p>
 
 <h5 id="read64"><code class="highlighter-rouge">read64</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">rd</code> <br />
-<strong>Usage</strong>: ADDR [LEN] <br />
+<strong>Usage</strong>: read64 ADDR [LEN] <br />
 Read 64-bit words. Optional length parameter is the number of bytes (not double-words!) to read. It must be divisible by 8. If the length is not provided, one word is read. The address may be unaligned.</p>
 
 <h5 id="read8"><code class="highlighter-rouge">read8</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">rb</code> <br />
-<strong>Usage</strong>: ADDR [LEN] <br />
+<strong>Usage</strong>: read8 ADDR [LEN] <br />
 Read 8-bit bytes. Optional length parameter is the number of bytes to read. If the length is not provided, one byte is read.</p>
 
 <h5 id="savemem"><code class="highlighter-rouge">savemem</code></h5>
 
-<p><strong>Usage</strong>: ADDR LEN FILENAME <br />
+<p><strong>Usage</strong>: savemem ADDR LEN FILENAME <br />
 Save a range of memory to a binary file.</p>
 
 <h5 id="write16"><code class="highlighter-rouge">write16</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">wh</code> <br />
-<strong>Usage</strong>: ADDR DATA+ <br />
+<strong>Usage</strong>: write16 ADDR DATA+ <br />
 Write 16-bit halfwords to memory. The data arguments are 16-bit halfwords in big-endian format and are written as little-endian. The address may be unaligned. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
 
 <h5 id="write32"><code class="highlighter-rouge">write32</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">ww</code> <br />
-<strong>Usage</strong>: ADDR DATA+ <br />
+<strong>Usage</strong>: write32 ADDR DATA+ <br />
 Write 32-bit words to memory. The data arguments are 32-bit words in big-endian format and are written as little-endian. The address may be unaligned. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
 
 <h5 id="write64"><code class="highlighter-rouge">write64</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">wd</code> <br />
-<strong>Usage</strong>: ADDR DATA… <br />
+<strong>Usage</strong>: write64 ADDR DATA… <br />
 Write 64-bit double-words to memory. The data arguments are 64-bit words in big-endian format and are written as little-endian. The address may be unaligned. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
 
 <h5 id="write8"><code class="highlighter-rouge">write8</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">wb</code> <br />
-<strong>Usage</strong>: ADDR DATA+ <br />
+<strong>Usage</strong>: write8 ADDR DATA+ <br />
 Write 8-bit bytes to memory. The data arguments are 8-bit bytes. Can write to both RAM and flash. Flash writes are subject to minimum write size and alignment, and the flash page must have been previously erased.</p>
 
-<h3 id="openocd_compatibility">Openocd_compatibility</h3>
+<h3 id="openocd-compatibility">Openocd compatibility</h3>
 
 <h5 id="init"><code class="highlighter-rouge">init</code></h5>
 
-<p><strong>Usage</strong>: init <br />
+<p><strong>Usage</strong>: init  <br />
 Ignored; for OpenOCD compatibility.</p>
 
 <h3 id="probe">Probe</h3>
 
 <h5 id="flushprobe"><code class="highlighter-rouge">flushprobe</code></h5>
 
-<p><strong>Usage</strong>:  <br />
+<p><strong>Usage</strong>: flushprobe  <br />
 Ensure all debug probe requests have been completed.</p>
 
 <h3 id="registers">Registers</h3>
@@ -1229,32 +1273,32 @@ Ensure all debug probe requests have been completed.</p>
 <h5 id="reg"><code class="highlighter-rouge">reg</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">rr</code> <br />
-<strong>Usage</strong>: [-p] [-f] [REG…] <br />
+<strong>Usage</strong>: reg [-p] [-f] [REG…] <br />
 Print core or peripheral register(s). If no arguments are provided, the ‘general’ core register group will be printed. Either a core register name, the name of a peripheral, or a peripheral.register can be provided. When a peripheral name is provided without a register, all registers in the peripheral will be printed. The -p option forces evaluating the register name as a peripheral register name. If the -f option is passed, then individual fields of peripheral registers will be printed in addition to the full value.</p>
 
 <h5 id="wreg"><code class="highlighter-rouge">wreg</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">wr</code> <br />
-<strong>Usage</strong>: [-r] [-p] [-f] REG VALUE <br />
+<strong>Usage</strong>: wreg [-r] [-p] [-f] REG VALUE <br />
 Set the value of a core or peripheral register. The REG parameter must be a core register name or a peripheral.register. When a peripheral register is written, if the -r option is passed then it is read back and the updated value printed. The -p option forces evaluating the register name as a peripheral register name. If the -f option is passed, then individual fields of peripheral registers will be printed in addition to the full value.</p>
 
 <h3 id="semihosting">Semihosting</h3>
 
 <h5 id="arm"><code class="highlighter-rouge">arm</code></h5>
 
-<p><strong>Usage</strong>: semihosting {enable,disable} <br />
+<p><strong>Usage</strong>: arm semihosting {enable,disable} <br />
 Enable or disable semihosting. Provided for compatibility with OpenOCD. The same functionality can be achieved by setting the ‘enable_semihosting’ session option.</p>
 
 <h3 id="servers">Servers</h3>
 
-<h5 id="gdbserver"><code class="highlighter-rouge">gdbserver</code></h5>
+<h5 id="gdbserver-1"><code class="highlighter-rouge">gdbserver</code></h5>
 
-<p><strong>Usage</strong>: {start,stop,status} <br />
+<p><strong>Usage</strong>: gdbserver {start,stop,status} <br />
 Control the gdbserver for the selected core. The action argument should be either ‘start’, ‘stop’, or ‘status’. Use the ‘gdbserver_port’ and ‘telnet_port’ session options to control the ports the gdbserver uses.</p>
 
 <h5 id="probeserver"><code class="highlighter-rouge">probeserver</code></h5>
 
-<p><strong>Usage</strong>: {start,stop,status} <br />
+<p><strong>Usage</strong>: probeserver {start,stop,status} <br />
 Control the debug probe server. The action argument should be either ‘start’, ‘stop’, or ‘status. Use the ‘probeserver.port’ option to control the TCP port the server uses.</p>
 
 <h3 id="symbols">Symbols</h3>
@@ -1262,12 +1306,12 @@ Control the debug probe server. The action argument should be either ‘start’
 
 <h5 id="symbol"><code class="highlighter-rouge">symbol</code></h5>
 
-<p><strong>Usage</strong>: NAME <br />
+<p><strong>Usage</strong>: symbol NAME <br />
 Show a symbol’s value. An ELF file must have been specified with the –elf option.</p>
 
 <h5 id="where"><code class="highlighter-rouge">where</code></h5>
 
-<p><strong>Usage</strong>: [ADDR] <br />
+<p><strong>Usage</strong>: where [ADDR] <br />
 Show symbol, file, and line for address. The symbol name, source file path, and line number are displayed for the specified address. If no address is given then current PC is used. An ELF file must have been specified with the –elf option.</p>
 
 <h3 id="target">Target</h3>
@@ -1275,28 +1319,151 @@ Show symbol, file, and line for address. The symbol name, source file path, and 
 <h5 id="status"><code class="highlighter-rouge">status</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">st</code> <br />
-<strong>Usage</strong>:  <br />
+<strong>Usage</strong>: status  <br />
 Show the target’s current state.</p>
 
 <h3 id="threads">Threads</h3>
 
 <h5 id="threads-1"><code class="highlighter-rouge">threads</code></h5>
 
-<p><strong>Usage</strong>: {flush,enable,disable,status} <br />
+<p><strong>Usage</strong>: threads {flush,enable,disable,status} <br />
 Control thread awareness.</p>
 
 <h3 id="values">Values</h3>
 
 <h5 id="set"><code class="highlighter-rouge">set</code></h5>
 
-<p><strong>Usage</strong>: NAME VALUE <br />
+<p><strong>Usage</strong>: set NAME VALUE <br />
 Set a value.</p>
 
 <h5 id="show"><code class="highlighter-rouge">show</code></h5>
 
-<p><strong>Usage</strong>: NAME <br />
+<p><strong>Usage</strong>: show NAME <br />
 Display a value.</p>
 
+<h2 id="value-details">Value details</h2>
+
+<h5 id="aps"><code class="highlighter-rouge">aps</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show aps <br />
+List discovered Access Ports.</p>
+
+<h5 id="cores"><code class="highlighter-rouge">cores</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show cores <br />
+Information about CPU cores in the target.</p>
+
+<h5 id="fault"><code class="highlighter-rouge">fault</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show fault <br />
+Fault status information. By default, only asserted fields are shown. Add -a to command to show all fields.</p>
+
+<h5 id="frequency"><code class="highlighter-rouge">frequency</code></h5>
+
+<p><strong>Access</strong>: write-only <br />
+<strong>Usage</strong>: set frequency VALUE <br />
+Set SWD or JTAG clock frequency in Hertz. A case-insensitive metric scale suffix of either ‘k’ or ‘m’ is allowed, as well as a trailing “Hz”. There must be no space between the frequency and the suffix. For example, “2.5MHz” sets the clock to 2.5 MHz.</p>
+
+<h5 id="graph"><code class="highlighter-rouge">graph</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show graph <br />
+Print the target object graph.</p>
+
+<h5 id="hnonsec"><code class="highlighter-rouge">hnonsec</code></h5>
+
+<p><strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show hnonsec, set hnonsec VALUE <br />
+The current HNONSEC attribute value used by the selected MEM-AP. This value controls whether memory transactions are secure or nonsecure. The value is an integer, either 0 or secure or 1 for nonsecure.</p>
+
+<h5 id="hprot"><code class="highlighter-rouge">hprot</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">memap_attr</code> <br />
+<strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show hprot, set hprot VALUE <br />
+The current memory transfer attributes value used by the selected MEM-AP. This integer value controls attributes of memory transfers. It is a direct mapping of the AHB
+or AXI attribute settings, depending on the type of MEM-AP. For AHB-APs, the value is HPROT[4:0].
+For AXI-APs, the value is {AxPROT[2:0}, AxCACHE[3:0]}, e.g. AxPROT in bits 6-4 and AxCACHE in
+its 3-0. Not all MEM-AP implementations support all attributes. See the Arm Technical Reference
+Manual for your device’s MEM-AP for details.</p>
+
+<h5 id="locked"><code class="highlighter-rouge">locked</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show locked <br />
+Report whether the target is locked.</p>
+
+<h5 id="log"><code class="highlighter-rouge">log</code></h5>
+
+<p><strong>Access</strong>: write-only <br />
+<strong>Usage</strong>: set log VALUE <br />
+Set log level to one of ‘debug’, ‘info’, ‘warning’, ‘error’, ‘critical’. If pyocd module names are provided as arguments after the log level then only those modules will have their log level changed.</p>
+
+<h5 id="map"><code class="highlighter-rouge">map</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show map <br />
+Target memory map.</p>
+
+<h5 id="mem-ap"><code class="highlighter-rouge">mem-ap</code></h5>
+
+<p><strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show mem-ap, set mem-ap VALUE <br />
+The currently selected MEM-AP used for memory read/write commands. When the selected core is changed by the ‘core’ command, the selected MEM-AP is changed to match. This overrides a user-selected MEM-AP if different from the AP for the newly selected core.</p>
+
+<h5 id="nreset"><code class="highlighter-rouge">nreset</code></h5>
+
+<p><strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show nreset, set nreset VALUE <br />
+Current nRESET signal state. Accepts a value of 0 or 1.</p>
+
+<h5 id="option"><code class="highlighter-rouge">option</code></h5>
+
+<p><strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show option, set option VALUE <br />
+The current value of one or more session options. When setting, each argument should follow the form “NAME[=VALUE]”.</p>
+
+<h5 id="peripherals"><code class="highlighter-rouge">peripherals</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show peripherals <br />
+List of target peripheral instances.</p>
+
+<h5 id="probe-uid"><code class="highlighter-rouge">probe-uid</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">uid</code> <br />
+<strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show probe-uid <br />
+Target’s unique ID.</p>
+
+<h5 id="register-groups"><code class="highlighter-rouge">register-groups</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show register-groups <br />
+Display available register groups for the selected core.</p>
+
+<h5 id="step-into-interrupts"><code class="highlighter-rouge">step-into-interrupts</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">si</code> <br />
+<strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show step-into-interrupts, set step-into-interrupts VALUE <br />
+Display whether interrupts are enabled when single stepping. Set to 1 to enable.</p>
+
+<h5 id="target-1"><code class="highlighter-rouge">target</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show target <br />
+General target information.</p>
+
+<h5 id="vector-catch"><code class="highlighter-rouge">vector-catch</code></h5>
+
+<p><strong>Aliases</strong>: <code class="highlighter-rouge">vc</code> <br />
+<strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show vector-catch, set vector-catch VALUE <br />
+Show current vector catch settings. When setting, the alue is a concatenation of one letter per enabled source in any order, or ‘all’ or ‘none’. (h=hard fault, b=bus fault, m=mem fault, i=irq err, s=state err, c=check err, p=nocp, r=reset, a=all, n=none).</p>
 
 
                 </div>

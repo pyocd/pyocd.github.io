@@ -209,7 +209,12 @@
 <li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
 <li class="toc-entry toc-h2"><a href="#examples">Examples</a></li>
 <li class="toc-entry toc-h2"><a href="#user-defined-commands">User-defined commands</a></li>
-<li class="toc-entry toc-h2"><a href="#script-globals">Script globals</a></li>
+<li class="toc-entry toc-h2"><a href="#script-globals">Script globals</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#objects-and-functions">Objects and functions</a></li>
+<li class="toc-entry toc-h3"><a href="#modules-and-classes">Modules and classes</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#delegate-functions">Delegate functions</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#will_connect">will_connect</a></li>
@@ -217,8 +222,10 @@
 <li class="toc-entry toc-h3"><a href="#will_init_target">will_init_target</a></li>
 <li class="toc-entry toc-h3"><a href="#did_init_target">did_init_target</a></li>
 <li class="toc-entry toc-h3"><a href="#will_start_debug_core">will_start_debug_core</a></li>
+<li class="toc-entry toc-h3"><a href="#start_debug_core">start_debug_core</a></li>
 <li class="toc-entry toc-h3"><a href="#did_start_debug_core">did_start_debug_core</a></li>
 <li class="toc-entry toc-h3"><a href="#will_stop_debug_core">will_stop_debug_core</a></li>
+<li class="toc-entry toc-h3"><a href="#stop_debug_core">stop_debug_core</a></li>
 <li class="toc-entry toc-h3"><a href="#did_stop_debug_core">did_stop_debug_core</a></li>
 <li class="toc-entry toc-h3"><a href="#will_disconnect">will_disconnect</a></li>
 <li class="toc-entry toc-h3"><a href="#did_disconnect">did_disconnect</a></li>
@@ -244,9 +251,9 @@ completely override the default behaviour.</p>
 
 <p>If a file named <code class="highlighter-rouge">pyocd_user.py</code> or <code class="highlighter-rouge">.pyocd_user.py</code> is placed in the project directory, pyOCD will
 automatically detect it and load it as a user script. If you prefer another name, you can set the
-<code class="highlighter-rouge">user_script</code> option. Another alternative is to provide the filename using the <code class="highlighter-rouge">--script</code> command
-line argument. If a relative path is set either with the option or command line, it will be searched
-for in the project directory.</p>
+<code class="highlighter-rouge">user_script</code> session option, for example in a <a href="/docs/configuration.html">config file</a>, or
+by passing the <code class="highlighter-rouge">--script=&lt;path&gt;</code> command line argument. If a relative path is set either with the
+option or command line, it will be searched for in the project directory.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -330,16 +337,20 @@ command decorator, for instance if it has invalid parameter types.</p>
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s">"Decode and print the first few vectors"</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">vectable</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="n">vecs</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_memory_block32</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Initial SP:     </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"ResetHandler:   </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"NMI:            </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HardFault:      </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Initial SP:     </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"ResetHandler:   </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"NMI:            </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HardFault:      </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="script-globals">Script globals</h2>
 
 <p>A number of useful symbols are made available in the global namespace of user scripts. These include
 both target related objects, as well as parts of the pyOCD Python API.</p>
+
+<p>The usual Python builtins are available.</p>
+
+<h3 id="objects-and-functions">Objects and functions</h3>
 
 <table>
   <thead>
@@ -350,14 +361,6 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">__file__</code></td>
-      <td>Path to the user script.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__name__</code></td>
-      <td>Module name of the user script.</td>
-    </tr>
-    <tr>
       <td><code class="highlighter-rouge">aps</code></td>
       <td>Dictionary of CoreSight Access Port (AP) objects. The keys are the APSEL value.</td>
     </tr>
@@ -366,16 +369,8 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
       <td>The <code class="highlighter-rouge">Board</code> object.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">BreakpointType</code></td>
-      <td>Enumeration of breakpoint types.</td>
-    </tr>
-    <tr>
       <td><code class="highlighter-rouge">command</code></td>
       <td>Decorator for defining new commands. See <a href="#user_defined_commands">user-defined commands</a> for details.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">DeviceRegion</code></td>
-      <td>Device-type memory region class.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">debug</code></td>
@@ -384,6 +379,59 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
     <tr>
       <td><code class="highlighter-rouge">dp</code></td>
       <td>The CoreSight Debug Port (DP) object.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">error</code></td>
+      <td>Output an error log.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">info</code></td>
+      <td>Output an info-level log message.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">LOG</code></td>
+      <td><code class="highlighter-rouge">Logger</code> object for the user script.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">options</code></td>
+      <td>The session options dictionary.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">probe</code></td>
+      <td>The connected debug probe object.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">session</code></td>
+      <td>The session object, which is the root of the connection object graph.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">target</code></td>
+      <td>The <code class="highlighter-rouge">CoreSightTarget</code> or subclass instance representing the MCU.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">warning</code></td>
+      <td>Log a warning.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="modules-and-classes">Modules and classes</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">BreakpointType</code></td>
+      <td>Enumeration of breakpoint types.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">DeviceRegion</code></td>
+      <td>Device-type memory region class.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">Error</code></td>
@@ -398,14 +446,6 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
       <td>Module containing the exception classes.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">error</code></td>
-      <td>Output an error log.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">info</code></td>
-      <td>Output an info-level log message.</td>
-    </tr>
-    <tr>
       <td><code class="highlighter-rouge">FileProgrammer</code></td>
       <td>Utility class to program files to target flash.</td>
     </tr>
@@ -415,7 +455,7 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">FlashLoader</code></td>
-      <td>Utility class to program raw binary data to target flash.</td>
+      <td>Utility class to program raw binary data to target memory. Deprecated, use <code class="highlighter-rouge">MemoryLoader</code> instead.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">FlashRegion</code></td>
@@ -426,8 +466,8 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
       <td>Enumeration of halt reasons.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">LOG</code></td>
-      <td><code class="highlighter-rouge">Logger</code> object for the user script.</td>
+      <td><code class="highlighter-rouge">MemoryLoader</code></td>
+      <td>Utility class to program raw binary data to target memory.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">MemoryMap</code></td>
@@ -438,16 +478,8 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
       <td>Memory region type enumeration.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">options</code></td>
-      <td>The session options dictionary.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">probe</code></td>
-      <td>The connected debug probe object.</td>
-    </tr>
-    <tr>
       <td><code class="highlighter-rouge">pyocd</code></td>
-      <td>The root pyOCD package.</td>
+      <td>The root pyOCD module.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">RamRegion</code></td>
@@ -470,20 +502,12 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
       <td>Enumeration of core security states.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">session</code></td>
-      <td>The session object, which is the root of the connection object graph.</td>
-    </tr>
-    <tr>
       <td><code class="highlighter-rouge">State</code></td>
       <td>Enumeration of target state.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">Target</code></td>
-      <td>Base class, mostly useful for numerous constants that are defined within the class.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">target</code></td>
-      <td>The <code class="highlighter-rouge">CoreSightTarget</code> or subclass instance representing the MCU.</td>
+      <td>Base target class.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">TransferError</code></td>
@@ -491,15 +515,11 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">TransferFaultError</code></td>
-      <td>Exception subclass of <code class="highlighter-rouge">TransferError</code> for bus faults.</td>
+      <td>Exception subclass of <code class="highlighter-rouge">TransferError</code> for memory transfer faults.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">VectorCatch</code></td>
       <td>Namespace class containing bit mask constants for vector catch options.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">warning</code></td>
-      <td>Log a warning.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">WatchpointType</code></td>
@@ -513,13 +533,14 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
 <p>This section documents all functions that user scripts can provide to modify pyOCD’s behaviour. Some are simply
 notifications, while others allow for overriding of default behaviour. Collectively, these are called delegate functions.</p>
 
-<p>All parameters of script delegate functions are optional. Parameters can be declared in any order, and that are not
-needed can be excluded. In fact, most parameters are not necessary because the same objects are available as script
-globals, for instance <code class="highlighter-rouge">session</code> and <code class="highlighter-rouge">target</code>.</p>
+<p>All parameters of user script delegate functions are optional. Parameters can be declared in any order, and
+those that are not needed can be excluded. In fact, most parameters are not necessary because the same objects
+are available as <a href="#script_globals">script globals</a>, for instance <code class="highlighter-rouge">session</code> and <code class="highlighter-rouge">target</code>.</p>
 
-<p>Those parameters that are present must have names matching the specification below, and there must not be unspecified,
-required parameters (those without a default value). (Extra optional parameters are allowed but will never be passed any
-value other than the default, unless you call the function yourself from within the script.)</p>
+<p>Those parameters that are present must have names matching the specification below, and there must not be
+additional unspecified, required parameters (those without a default value). Extra optional parameters are
+allowed but will never be passed any value other than the default, unless you call the function yourself from
+within the script.</p>
 
 <h3 id="will_connect">will_connect</h3>
 
@@ -569,8 +590,24 @@ Ignored.</p>
 
 <h3 id="will_start_debug_core">will_start_debug_core</h3>
 
+<p>Notification hook for before core debug is enabled.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_start_debug_core(core: CoreTarget) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object about to be initialized. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<p>This hook is called during connection, prior to any register accesses being performed on the
+indicated core (aside from the CoreSight peripheral ID registers that were read to identify
+the core’s presence during discovery).</p>
+
+<h3 id="start_debug_core">start_debug_core</h3>
+
 <p>Hook to enable debug for the given core.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_start_debug_core(core: CoreTarget) -&gt; Optional[bool]
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start_debug_core(core: CoreTarget) -&gt; Optional[bool]
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
@@ -581,7 +618,7 @@ Ignored.</p>
 
 <h3 id="did_start_debug_core">did_start_debug_core</h3>
 
-<p>Post-initialization hook.</p>
+<p>Notification hook that core debug has been enabled.</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_start_debug_core(core: CoreTarget) -&gt; None
 </code></pre></div></div>
 
@@ -590,10 +627,24 @@ Ignored.</p>
 <strong>Result</strong> <br />
 Ignored.</p>
 
+<p>This hook method is called once a debug has been enabled for a core, and it has been fully
+identified.</p>
+
 <h3 id="will_stop_debug_core">will_stop_debug_core</h3>
 
-<p>Pre-cleanup hook for the core.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_stop_debug_core(core: CoreTarget) -&gt; Optional[bool]
+<p>Pre core disconnect notification hook for the core.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_stop_debug_core(core: CoreTarget) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="stop_debug_core">stop_debug_core</h3>
+
+<p>Core debug disable hook.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stop_debug_core(core: CoreTarget) -&gt; Optional[bool]
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
@@ -604,7 +655,7 @@ Ignored.</p>
 
 <h3 id="did_stop_debug_core">did_stop_debug_core</h3>
 
-<p>Post-cleanup notification for the core.</p>
+<p>Post core disconnect notification hook for the core.</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_stop_debug_core(core: CoreTarget) -&gt; None
 </code></pre></div></div>
 
