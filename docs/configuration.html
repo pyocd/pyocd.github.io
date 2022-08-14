@@ -153,11 +153,14 @@
           <li class="sidebar-item level-1">
             <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
             </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
+            </li>
           </ul>
     <h5 class="sidebar-header level-1">Developers</h5>
     <ul class="list-unstyled level-1">
     <li class="sidebar-item level-1">
-            <a href="/docs/developers_guide.html" class="sidebar-link ">Developers' guide</a>
+            <a href="/docs/developers_guide.html" class="sidebar-link ">Developers’ guide</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/adding_new_targets.html" class="sidebar-link ">Adding a new built-in target</a>
@@ -172,6 +175,9 @@
         <ul class="list-unstyled level-2">
         <li class="sidebar-item level-2">
               <a href="/docs/architecture.html" class="sidebar-link ">Architecture</a>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/developer/board_ids.html" class="sidebar-link ">Board IDs</a>
               </li>
             <li class="sidebar-item level-2">
               <a href="/docs/remote_probe_protocol.html" class="sidebar-link ">Remote probe protocol</a>
@@ -218,25 +224,24 @@
 <h2 id="introduction">Introduction</h2>
 
 <p>pyOCD allows you to control many aspects of its behaviour by setting
-<a href="/docs/options.html">session options</a>. There are multiple ways to set these options.</p>
+<em>session options</em>. There are multiple ways to set these options.</p>
 
 <ul>
   <li>Many of the most commonly used session options have dedicated command line arguments.</li>
   <li>Options can be placed in a YAML config file.</li>
   <li>Arbitrary options can be set individually with the <tt>-O<i>option</i>=<i>value</i></tt> command line argument.</li>
-  <li>If you are using the Python API, you may pass any option values directly
-  to the <code class="highlighter-rouge">ConnectHelper</code> methods or <code class="highlighter-rouge">Session</code> constructor as keyword arguments. You can also
-  pass a dictionary for the <code class="highlighter-rouge">options</code> parameter of these methods.</li>
+  <li>If you are using the Python API, see the <a href="/docs/api/using_session_options.html">session options developer documentation</a> for information about using session options.</li>
 </ul>
 
 <p>The priorities of the different session option sources, from highest to lowest:</p>
 
 <ol>
-  <li>Keyword arguments to the <code class="highlighter-rouge">Session</code> constructor. Applies to most command-line arguments.</li>
-  <li><em>options</em> parameter to constructor. Applies to <code class="highlighter-rouge">-O</code> command-line arguments.</li>
+  <li>Dedicated command-line arguments.</li>
+  <li><code class="highlighter-rouge">-O</code> command-line arguments.</li>
   <li>Probe-specific options from a config file.</li>
-  <li>General options from a config file.</li>
-  <li><em>option_defaults</em> parameter to constructor. Used only in rare cases.</li>
+  <li>Global options from a config file.</li>
+  <li>Changes to an option’s default value. Used only in rare cases for certain subcommands.</li>
+  <li>The option’s default value.</li>
 </ol>
 
 <div class="alert alert-info">

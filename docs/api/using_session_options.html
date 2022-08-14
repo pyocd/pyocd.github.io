@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>Installing on non-x86 platforms &mdash; pyOCD</title>
+  <title>Using session options &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -85,7 +85,7 @@
             <a href="/docs/installing.html" class="sidebar-link ">Installing</a>
             </li>
           <li class="sidebar-item level-1">
-            <p class="sidebar-item-selected">Installing on non-x86 platforms</p>
+            <a href="/docs/installing_on_non_x86.html" class="sidebar-link ">Installing on non-x86 platforms</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/gdb_setup.html" class="sidebar-link ">GDB setup</a>
@@ -154,7 +154,7 @@
             <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
             </li>
           <li class="sidebar-item level-1">
-            <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
+            <p class="sidebar-item-selected">Using session options</p>
             </li>
           </ul>
     <h5 class="sidebar-header level-1">Developers</h5>
@@ -204,7 +204,7 @@
               <div class="row">
                 <div class="container docs-content">
                   
-                  <h1 class="mb-4 mt-0">Installing on non-x86 platforms</h1>
+                  <h1 class="mb-4 mt-0">Using session options</h1>
                   
 
                   <!-- floating table of contents -->
@@ -212,63 +212,82 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#cmsis-pack-manager">cmsis-pack-manager</a></li>
-<li class="toc-entry toc-h2"><a href="#usb-interfaces">USB interfaces</a></li>
+<li class="toc-entry toc-h2"><a href="#accessing-options">Accessing options</a></li>
+<li class="toc-entry toc-h2"><a href="#priority-layers">Priority layers</a></li>
+<li class="toc-entry toc-h2"><a href="#how-options-are-configured">How options are configured</a></li>
+<li class="toc-entry toc-h2"><a href="#name-and-value-modifications">Name and value modifications</a></li>
+<li class="toc-entry toc-h2"><a href="#adding-new-options">Adding new options</a></li>
 </ul>
                     </div>
                   </div>
 
-                  <p>pyOCD itself is pure Python and should run on any platform with a modern Python installation.
-However, it has several dependencies with binary backends that cause trouble on non-x86 platforms or
-alternative operating systems (i.e., not macOS, Linux, or Windows). The most common “non-standard”
-system that users would like to run pyOCD on is the Raspberry Pi, as well as similar, Arm-based
-single-board computers.</p>
+                  <p>Session options are used to configure pyOCD. The <a href="/docs/configuration.html">configuration</a> documentation has user level documentation of how to set session options. For a full list of built-in options see the <a href="/docs/options.html">session options reference</a>.</p>
 
-<h2 id="cmsis-pack-manager">cmsis-pack-manager</h2>
+<h2 id="accessing-options">Accessing options</h2>
 
-<p>The main dependency that causes trouble is
-<a href="https://github.com/pyocd/cmsis-pack-manager/">cmsis-pack-manager</a>. It has a backend written in
-the Rust language to greatly improve performance. Unfortunately, wheels are not available for
-non-x86 systems. And, worse, the Rust compiler runs out of memory and dies when attempting to build
-on small platforms such as the Raspberry Pi. (Cross-compilation may be an option but has not been
-sufficiently investigated.)</p>
+<p>Options are quite easy to use from within Python code. The <code class="highlighter-rouge">Session</code> object has an <code class="highlighter-rouge">options</code> property which returns a dict-like <code class="highlighter-rouge">OptionsManager</code> object that is used to access options for that session. The <code class="highlighter-rouge">OptionsManager</code> object supports either slicing or <code class="highlighter-rouge">.get()</code>/<code class="highlighter-rouge">.set()</code> methods for reading and writing options.</p>
 
-<p>The good news is that cmsis-pack-manager is optional for pyOCD. Although it is listed as a required
-dependency in <code class="highlighter-rouge">setup.py</code> (so the vast majority of users benefit from it), pyOCD can run without it
-with minimal loss of functionality. The <code class="highlighter-rouge">pack</code> subcommand is disabled, which removes automatic
-CMSIS-Pack download and management. But you can still use CMSIS-Packs manually with the <code class="highlighter-rouge">--pack</code>
-option, as described in <a href="/docs/target_support.html">Target support</a>.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Reading an option from the session using two techniques.
+</span><span class="n">value</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">[</span><span class="s">'reset_type'</span><span class="p">]</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'reset_type'</span><span class="p">)</span>
 
-<p>To install pyOCD on such a system, you need to use the <code class="highlighter-rouge">pip install --no-deps</code> option. This will
-install the core pyOCD package only, so all additional requirements must be manually installed.
-You can either run <code class="highlighter-rouge">pip install</code> with an explicit list of the requirements from <code class="highlighter-rouge">setup.py</code>, or
-copy those requirements to a requirements text file and run <code class="highlighter-rouge">pip install -r reqs.txt</code>. Of course,
-be sure to exclude cmsis-pack-manager! (The requirements are not listed here lest they get out of
-sync with <code class="highlighter-rouge">setup.py</code>.)</p>
+<span class="c1"># Changing the value of an option
+</span><span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">[</span><span class="s">'reset_type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'system'</span>
+<span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'reset_type'</span><span class="p">)</span> <span class="o">=</span> <span class="s">'system'</span>
+</code></pre></div></div>
 
-<p>Once pyOCD is successfully installed, you will need to run it as a module using the <code class="highlighter-rouge">python</code>
-executable as <code class="highlighter-rouge">python -mpyocd</code> rather than running the <code class="highlighter-rouge">pyocd</code> executable directly. This is because
-the <code class="highlighter-rouge">pyocd</code> executable, which is auto-generated by the install process, verifies dependencies and
-will error out due to the missing cmsis-pack-manager. But when run through <code class="highlighter-rouge">python</code>, dependencies
-are not checked and pyOCD can handle the lack of cmsis-pack-manager gracefully.</p>
+<h2 id="priority-layers">Priority layers</h2>
 
-<h2 id="usb-interfaces">USB interfaces</h2>
+<p>Session options have a priority based on their source. The <code class="highlighter-rouge">OptionsManager</code> class implements these priorities as an ordered sequence of layers from front (high priority) to back (low priority). Each layer is a dict of option name to value. There is also an implicit lowest-priority layer from which default values specified in the option definition are derived.</p>
 
-<p>The other dependencies that might be problematic are those for USB communications. pyOCD uses
-three USB libraries:</p>
+<p>The priorities of the different sources, from front to back:</p>
+
+<ol>
+  <li>Keyword arguments to the <code class="highlighter-rouge">Session</code> constructor. Applies to most command-line arguments.</li>
+  <li><em>options</em> parameter to <code class="highlighter-rouge">Session</code> constructor. Applies to <code class="highlighter-rouge">-O</code> command-line arguments.</li>
+  <li>Probe-specific options from a config file.</li>
+  <li>Global options from a config file.</li>
+  <li><em>option_defaults</em> parameter to <code class="highlighter-rouge">Session</code> constructor. Used only in rare cases by subcommands to change the default value of options.</li>
+  <li>Default values from option definitions.</li>
+</ol>
+
+<p>The <code class="highlighter-rouge">.set()</code> method simply modifies the value of the highest priority (aka front) copy of the option. Additional layers can be added to the front or back using the <code class="highlighter-rouge">.add_front()</code> and <code class="highlighter-rouge">.add_back()</code> methods. These methods take a dict of new option values.</p>
+
+<h2 id="how-options-are-configured">How options are configured</h2>
+
+<p>Loading of options from YAML files is handled automatically when the <code class="highlighter-rouge">Session</code> object is created. Probe-specific options are automatically set, too.</p>
+
+<p>Options set through command line arguments, both dedicated arguments and <code class="highlighter-rouge">-O</code>, are passed into the <code class="highlighter-rouge">Session</code> constructor and added as their own layer. The <code class="highlighter-rouge">ConnectHelper</code> methods that are most often used to create sessions will pass through options related arguments to <code class="highlighter-rouge">Session</code>.</p>
+
+<h2 id="name-and-value-modifications">Name and value modifications</h2>
+
+<p>Several changes are applied to option names and values when they are set. First, the names are normalised.</p>
+
+<ol>
+  <li>Convert all occurrences of double-underscores to a dot, e.g., <code class="highlighter-rouge">__</code> changes to a <code class="highlighter-rouge">.</code> character. Doing this makes it possible to set options with dots in the name using keyword arguments.</li>
+  <li>Change to lower case.</li>
+</ol>
+
+<p>Then, any option set with a value of <code class="highlighter-rouge">None</code> is ignored. In that case, the option’s value from a lower priority layer will take precedence.</p>
+
+<h2 id="adding-new-options">Adding new options</h2>
+
+<p>Session options are defined by an instance of <code class="highlighter-rouge">OptionInfo</code> (from <code class="highlighter-rouge">pyocd.core.options</code>) that specifies the name, type(s), default value, and a help string. At runtime, the complete set of options is in the <code class="highlighter-rouge">pyocd.core.options.OPTIONS_INFO</code> dict. Be sure to define any new options so they’re documented and get a default and help text.</p>
+
+<p>For example, this is the definition of the <code class="highlighter-rouge">frequency</code> option:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">OptionInfo</span><span class="p">(</span><span class="s">'frequency'</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="s">"SWD/JTAG frequency in Hertz."</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>There are several places to define a new option.</p>
 
 <ul>
-  <li>pyusb and libusb: CMSIS-DAPv1 on Linux, CMSIS-DAPv2 and STLink on all OSes</li>
-  <li>hidapi: CMSIS-DAPv1 on macOS</li>
-  <li>pywinusb: CMSIS-DAPv1 on Windows</li>
+  <li>Global and gdb server options should be added to the <code class="highlighter-rouge">BUILTIN_OPTIONS</code> list in <code class="highlighter-rouge">pyocd/core/options.py</code></li>
+  <li>Plugins can return a list of <code class="highlighter-rouge">OptionInfo</code> objects from the <code class="highlighter-rouge">.options</code> property of the <code class="highlighter-rouge">Plugin</code> subclass.</li>
+  <li>Python scripts, including <a href="/docs/user_scripts.html">user scripts</a>, can add new option definitions by calling <code class="highlighter-rouge">add_option_set()</code> (from <code class="highlighter-rouge">pyocd.core.options</code>) and passing a list of <code class="highlighter-rouge">OptionInfo</code> objects.</li>
 </ul>
 
-<p>Thankfully, libusb is provided by default on most Linux systems, including Raspberry Pi and similar
-platforms. So on almost all platforms, USB is not a real problem.</p>
-
-<p>If you are using an alternative OS, you may have trouble finding a functional USB library. In this
-case, the options would be to port libusb and/or hidapi to your OS, or even to extend pyOCD with
-support for another USB interface package.</p>
+<p>Supported types for options are <em>bool</em>, <em>int</em>, <em>float</em>, and <em>str</em>. An option that allows multiple types is specified with a tuple of those types. The <code class="highlighter-rouge">convert_session_options()</code> function from <code class="highlighter-rouge">pyocd.utility.cmdline</code> will convert the <em>bool</em>, <em>int</em>, and <em>float</em> options from a string value. However, there is not automatic type conversion when setting options directly on the <code class="highlighter-rouge">OptionsManager</code>.</p>
 
 
 

@@ -153,11 +153,14 @@
           <li class="sidebar-item level-1">
             <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
             </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
+            </li>
           </ul>
     <h5 class="sidebar-header level-1">Developers</h5>
     <ul class="list-unstyled level-1">
     <li class="sidebar-item level-1">
-            <a href="/docs/developers_guide.html" class="sidebar-link ">Developers' guide</a>
+            <a href="/docs/developers_guide.html" class="sidebar-link ">Developers’ guide</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/adding_new_targets.html" class="sidebar-link ">Adding a new built-in target</a>
@@ -172,6 +175,9 @@
         <ul class="list-unstyled level-2">
         <li class="sidebar-item level-2">
               <p class="sidebar-item-selected">Architecture</p>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/developer/board_ids.html" class="sidebar-link ">Board IDs</a>
               </li>
             <li class="sidebar-item level-2">
               <a href="/docs/remote_probe_protocol.html" class="sidebar-link ">Remote probe protocol</a>
@@ -210,7 +216,6 @@
 <li class="toc-entry toc-h2"><a href="#targets-and-boards">Targets and boards</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#target-support">Target support</a></li>
-<li class="toc-entry toc-h4"><a href="#board-information">Board information</a></li>
 </ul>
 </li>
 </ul>
@@ -223,24 +228,7 @@
 that a user of the Python API will interact with. The connections in the diagram represent
 composition, not inheritance.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>              Session
-                 |
-                 |----------------\
-                 |                |
-               Board          DebugProbe
-                 |
-           CoreSightTarget
-                 |
-                 |----------------\
-                 |                |
-             CortexM[]        DebugPort
-                 |                |
-             MemoryMap       AccessPort[]
-                 |
-           MemoryRegion[]
-                 |
-               Flash
-</code></pre></div></div>
+<p><img src="resources/internal_architecture.svg" alt="" /></p>
 
 <p>The root of the runtime object graph is a <code class="highlighter-rouge">Session</code> object. This object holds references to the debug
 probe and the board. It is also responsible for managing per-session options that control
@@ -271,14 +259,6 @@ otherwise the base <code class="highlighter-rouge">Flash</code> class is automat
 are set on flash memory regions when they are created in the memory map. Some device families have
 family subclasses under <code class="highlighter-rouge">pyocd/target/family</code>.</p>
 
-<h4 id="board-information">Board information</h4>
-
-<p>pyOCD can automatically identify a board and its target type using the board information.
-The board information is stored in the <code class="highlighter-rouge">BOARD_ID_TO_INFO</code> dictionary in <code class="highlighter-rouge">pyocd/board/board_ids.py</code>.
-This dictionary maps a 4-character board ID to a board name, target type, and test firmware binary.
-The board ID is generally the same as the board’s Mbed platform ID, though non-Mbed boards that use
-<a href="https://github.com/ARMmbed/DAPLink">Arm DAPLink</a> firmware also have board IDs allocated from
-the same namespace.</p>
 
 
                 </div>
