@@ -216,6 +216,7 @@
 <li class="toc-entry toc-h2"><a href="#functional-tests">Functional tests</a></li>
 <li class="toc-entry toc-h2"><a href="#azure-pipelines">Azure Pipelines</a></li>
 <li class="toc-entry toc-h2"><a href="#testing-with-tox">Testing with tox</a></li>
+<li class="toc-entry toc-h2"><a href="#test-setup">Test Setup</a></li>
 </ul>
                     </div>
                   </div>
@@ -296,6 +297,20 @@ pyOCD developer virtual environment.</p>
 repo. It will create new virtual environments for each Python version and run <code class="highlighter-rouge">automated_test.py</code>.</p>
 
 <p>Currently only the functions tests are included in the tox configuration.</p>
+
+<h2 id="test-setup">Test Setup</h2>
+
+<p>To make the tests pick the correct setup, a <a href="configuration.md"><code class="highlighter-rouge">pyocd.yaml</code> configuration file</a> has to be used.
+For functional testing the file should contain a reference to a <code class="highlighter-rouge">test_binary</code> from <code class="highlighter-rouge">test/data/binaries</code>.</p>
+
+<p>Example config file:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">probes</span><span class="pi">:</span>
+  <span class="na">E6614103E7176A23</span><span class="pi">:</span> <span class="c1"># Probe's unique ID.</span>
+    <span class="na">target_override</span><span class="pi">:</span>  <span class="s">nrf52</span>
+    <span class="na">test_binary</span><span class="pi">:</span>      <span class="s">l1_nrf52840-dk.bin</span>
+    <span class="na">frequency</span><span class="pi">:</span>        <span class="m">6000000</span>
+</code></pre></div></div>
 
 
                 </div>
