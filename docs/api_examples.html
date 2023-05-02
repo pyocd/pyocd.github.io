@@ -212,18 +212,20 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h3"><a href="#hello-world-example-code">Hello World example code</a></li>
-<li class="toc-entry toc-h3"><a href="#elf-files-and-breakpoints">ELF files and breakpoints</a></li>
+<li class="toc-entry toc-h2"><a href="#hello-world-example-code">Hello World example code</a></li>
+<li class="toc-entry toc-h2"><a href="#elf-files-and-breakpoints">ELF files and breakpoints</a></li>
 <li class="toc-entry toc-h2"><a href="#alternative-ways-to-create-a-session">Alternative ways to create a session</a></li>
+<li class="toc-entry toc-h2"><a href="#semihosting">Semihosting</a></li>
 </ul>
                     </div>
                   </div>
 
-                  <h3 id="hello-world-example-code">Hello World example code</h3>
+                  <h2 id="hello-world-example-code">Hello World example code</h2>
 
 <p>This example shows basic connection, loading a firmware binary, and some simple target control.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pyocd.core.helpers</span> <span class="kn">import</span> <span class="n">ConnectHelper</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python3
+</span><span class="kn">from</span> <span class="nn">pyocd.core.helpers</span> <span class="kn">import</span> <span class="n">ConnectHelper</span>
 <span class="kn">from</span> <span class="nn">pyocd.flash.file_programmer</span> <span class="kn">import</span> <span class="n">FileProgrammer</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -238,10 +240,9 @@
     <span class="c1"># Load firmware into device.
 </span>    <span class="n">FileProgrammer</span><span class="p">(</span><span class="n">session</span><span class="p">).</span><span class="n">program</span><span class="p">(</span><span class="s">"my_firmware.bin"</span><span class="p">)</span>
 
-    <span class="c1"># Reset, run.
+    <span class="c1"># Reset
 </span>    <span class="n">target</span><span class="p">.</span><span class="n">reset_and_halt</span><span class="p">()</span>
-    <span class="n">target</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
-
+    
     <span class="c1"># Read some registers.
 </span>    <span class="k">print</span><span class="p">(</span><span class="s">"pc: 0x%X"</span> <span class="o">%</span> <span class="n">target</span><span class="p">.</span><span class="n">read_core_register</span><span class="p">(</span><span class="s">"pc"</span><span class="p">))</span>
 
@@ -249,21 +250,22 @@
     <span class="k">print</span><span class="p">(</span><span class="s">"pc: 0x%X"</span> <span class="o">%</span> <span class="n">target</span><span class="p">.</span><span class="n">read_core_register</span><span class="p">(</span><span class="s">"pc"</span><span class="p">))</span>
 
     <span class="n">target</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
     <span class="n">target</span><span class="p">.</span><span class="n">halt</span><span class="p">()</span>
     <span class="k">print</span><span class="p">(</span><span class="s">"pc: 0x%X"</span> <span class="o">%</span> <span class="n">target</span><span class="p">.</span><span class="n">read_core_register</span><span class="p">(</span><span class="s">"pc"</span><span class="p">))</span>
 
     <span class="n">target</span><span class="p">.</span><span class="n">reset_and_halt</span><span class="p">()</span>
 
     <span class="k">print</span><span class="p">(</span><span class="s">"pc: 0x%X"</span> <span class="o">%</span> <span class="n">target</span><span class="p">.</span><span class="n">read_core_register</span><span class="p">(</span><span class="s">"pc"</span><span class="p">))</span>
-
 </code></pre></div></div>
 
-<h3 id="elf-files-and-breakpoints">ELF files and breakpoints</h3>
+<h2 id="elf-files-and-breakpoints">ELF files and breakpoints</h2>
 
 <p>Expanding on the above example, this code demonstrates reading a symbol address from an ELF file
 and setting a breakpoint. Then the target is reset and run until the breakpoint is hit.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pyocd.core.helpers</span> <span class="kn">import</span> <span class="n">ConnectHelper</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python3
+</span><span class="kn">from</span> <span class="nn">pyocd.core.helpers</span> <span class="kn">import</span> <span class="n">ConnectHelper</span>
 <span class="kn">from</span> <span class="nn">pyocd.core.target</span> <span class="kn">import</span> <span class="n">Target</span>
 <span class="kn">from</span> <span class="nn">pyocd.debug.elf.symbols</span> <span class="kn">import</span> <span class="n">ELFSymbolProvider</span>
 
@@ -293,8 +295,8 @@ and setting a breakpoint. Then the target is reset and run until the breakpoint 
 </span>    <span class="n">pc</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_core_register</span><span class="p">(</span><span class="s">"pc"</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">"pc: 0x%X"</span> <span class="o">%</span> <span class="n">pc</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="n">pc</span> <span class="o">==</span> <span class="n">addr</span>
-
+    <span class="k">assert</span> <span class="n">pc</span> <span class="o">==</span> <span class="n">addr</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0x01</span>                         <span class="c1"># mask off LSB
+</span>
     <span class="c1"># Remove breakpoint.
 </span>    <span class="n">target</span><span class="p">.</span><span class="n">remove_breakpoint</span><span class="p">()</span>
 </code></pre></div></div>
@@ -351,6 +353,112 @@ manual opening so you could, perhaps, further configure the session before it is
     <span class="c1"># ... control the target
 </span></code></pre></div></div>
 
+<p>Selecting a probe and configuring the target connection is done as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Connect to the target with some options.
+</span><span class="n">session</span> <span class="o">=</span> <span class="n">ConnectHelper</span><span class="p">.</span><span class="n">session_with_chosen_probe</span><span class="p">(</span><span class="n">unique_id</span> <span class="o">=</span> <span class="s">"E6616407E3646B29"</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">"frequency"</span><span class="p">:</span> <span class="mi">4000000</span><span class="p">,</span> <span class="s">"target_override"</span><span class="p">:</span> <span class="s">"nrf52840"</span><span class="p">})</span>
+
+<span class="k">with</span> <span class="n">session</span><span class="p">:</span>
+    <span class="c1"># ...
+</span></code></pre></div></div>
+
+<p>More options can be found <a href="options.md">here</a>.</p>
+
+<h2 id="semihosting">Semihosting</h2>
+
+<p>For in-target tests it is sometimes convenient to use semihosting, e.g. write coverage data into the hosts file system.
+To execute semihosting requests a <code class="highlighter-rouge">wait_for_halt()</code> function must be implemented.  If writing the profile data is
+explicitly done at end of <code class="highlighter-rouge">main()</code>, a breakpoint on return is also helpful.  Implementation could be like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python3
+</span><span class="kn">from</span> <span class="nn">pyocd.core.helpers</span> <span class="kn">import</span> <span class="n">ConnectHelper</span>
+<span class="kn">from</span> <span class="nn">pyocd.core.target</span> <span class="kn">import</span> <span class="n">Target</span>
+<span class="kn">from</span> <span class="nn">pyocd.debug.elf.symbols</span> <span class="kn">import</span> <span class="n">ELFSymbolProvider</span>
+<span class="kn">from</span> <span class="nn">pyocd.flash.file_programmer</span> <span class="kn">import</span> <span class="n">FileProgrammer</span>
+<span class="kn">from</span> <span class="nn">pyocd.debug</span> <span class="kn">import</span> <span class="n">semihost</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="p">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="p">.</span><span class="n">INFO</span><span class="p">)</span>
+
+
+<span class="n">image_name</span> <span class="o">=</span> <span class="s">"profiling.elf"</span>
+
+
+<span class="k">def</span> <span class="nf">wait_for_halt</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">semihost</span><span class="p">):</span>
+    <span class="n">go_on</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">while</span> <span class="n">go_on</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">get_state</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">Target</span><span class="p">.</span><span class="n">State</span><span class="p">.</span><span class="n">HALTED</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Handle semihosting
+</span>                <span class="n">go_on</span> <span class="o">=</span> <span class="n">semihost</span><span class="p">.</span><span class="n">check_and_handle_semihost_request</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">go_on</span><span class="p">:</span>
+                    <span class="c1"># target was halted due to semihosting request
+</span>                    <span class="n">target</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+            <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">"semihost exception/resume------"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">traceback</span><span class="p">.</span><span class="n">format_exc</span><span class="p">())</span>
+                <span class="n">target</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+                <span class="n">go_on</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+    
+<span class="n">session</span> <span class="o">=</span> <span class="n">ConnectHelper</span><span class="p">.</span><span class="n">session_with_chosen_probe</span><span class="p">(</span><span class="n">unique_id</span> <span class="o">=</span> <span class="s">"E6616407E3646B29"</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">"frequency"</span><span class="p">:</span> <span class="mi">4000000</span><span class="p">,</span> 
+                                                                                             <span class="s">"target_override"</span><span class="p">:</span> <span class="s">"nrf52840"</span><span class="p">,</span>
+                                                                                             <span class="s">"enable_semihosting"</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                                                                                             <span class="s">"semihost_use_syscalls"</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
+
+<span class="k">with</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">target</span>
+    <span class="n">target_context</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">get_target_context</span><span class="p">()</span>
+    <span class="n">semihost_io_handler</span> <span class="o">=</span> <span class="n">semihost</span><span class="p">.</span><span class="n">InternalSemihostIOHandler</span><span class="p">()</span>
+    <span class="n">semihost</span> <span class="o">=</span> <span class="n">semihost</span><span class="p">.</span><span class="n">SemihostAgent</span><span class="p">(</span><span class="n">target_context</span><span class="p">,</span> <span class="n">io_handler</span><span class="o">=</span><span class="n">semihost_io_handler</span><span class="p">,</span> <span class="n">console</span><span class="o">=</span><span class="n">semihost_io_handler</span><span class="p">)</span>
+
+    <span class="c1"># Load firmware into device.
+</span>    <span class="n">FileProgrammer</span><span class="p">(</span><span class="n">session</span><span class="p">).</span><span class="n">program</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+    
+    <span class="c1"># Set ELF file on target.
+</span>    <span class="n">target</span><span class="p">.</span><span class="n">elf</span> <span class="o">=</span> <span class="n">image_name</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="n">ELFSymbolProvider</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">elf</span><span class="p">)</span>
+    
+    <span class="c1"># Look up address of main().
+</span>    <span class="n">addr</span> <span class="o">=</span> <span class="n">provider</span><span class="p">.</span><span class="n">get_symbol_value</span><span class="p">(</span><span class="s">"main"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"main() address: 0x%X"</span> <span class="o">%</span> <span class="n">addr</span><span class="p">)</span>
+
+    <span class="c1"># Set breakpoint.
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"set breakpoint to entry of main()"</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">.</span><span class="n">set_breakpoint</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+
+    <span class="n">target</span><span class="p">.</span><span class="n">reset_and_halt</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"execute"</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+
+    <span class="c1"># Wait until breakpoint is hit.
+</span>    <span class="n">wait_for_halt</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">semihost</span><span class="p">)</span>
+
+    <span class="c1"># Print PC.
+</span>    <span class="n">pc</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_core_register</span><span class="p">(</span><span class="s">"pc"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"  pc: 0x%X"</span> <span class="o">%</span> <span class="n">pc</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">pc</span> <span class="o">==</span> <span class="n">addr</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0x01</span>                    <span class="c1"># mask off LSB
+</span>    <span class="n">target</span><span class="p">.</span><span class="n">remove_breakpoint</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+
+    <span class="c1"># set breakpoint to return address and execute til there
+</span>    <span class="n">lr</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_core_register</span><span class="p">(</span><span class="s">"lr"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"  lr: 0x%X (return address)"</span> <span class="o">%</span> <span class="n">lr</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"set breakpoint to return of main()"</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">.</span><span class="n">set_breakpoint</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"execute"</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+    <span class="n">wait_for_halt</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">semihost</span><span class="p">)</span>
+
+    <span class="n">pc</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_core_register</span><span class="p">(</span><span class="s">"pc"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"  pc: 0x%X"</span> <span class="o">%</span> <span class="n">pc</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">pc</span> <span class="o">==</span> <span class="n">lr</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0x01</span>                      <span class="c1"># mask off LSB
+</span>    <span class="n">target</span><span class="p">.</span><span class="n">remove_breakpoint</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+</code></pre></div></div>
 
 
                 </div>
