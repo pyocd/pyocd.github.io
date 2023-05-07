@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>Open-CMSIS-Pack support &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark py-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4">
+    <h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/installing.html" class="sidebar-link ">Installing</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/installing_on_non_x86.html" class="sidebar-link ">Installing on non-x86 platforms</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/gdb_setup.html" class="sidebar-link ">GDB setup</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">User documentation</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/target_support.html" class="sidebar-link ">Target support</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/debug_probes.html" class="sidebar-link ">Debug probes</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuration.html" class="sidebar-link ">Configuration</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/user_scripts.html" class="sidebar-link ">User scripts</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/remote_probe_access.html" class="sidebar-link ">Remote probe access</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuring_logging.html" class="sidebar-link ">Configuring logging</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/security.html" class="sidebar-link ">Security and protection</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/multicore_debug.html" class="sidebar-link ">Multicore debug</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/semihosting.html" class="sidebar-link ">Semihosting</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/terminology.html" class="sidebar-link ">Terminology</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/builtin-targets.html" class="sidebar-link ">Built-in targets</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/options.html" class="sidebar-link ">Session options list</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/command_reference.html" class="sidebar-link ">Command reference</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/env_vars.html" class="sidebar-link ">Environment variables</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/python_api.html" class="sidebar-link ">Introduction to the API</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/developers_guide.html" class="sidebar-link ">Developers’ guide</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/adding_new_targets.html" class="sidebar-link ">Adding a new built-in target</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/automated_tests.html" class="sidebar-link ">Automated tests</a>
+            </li>
+          <li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2">
+        <li class="sidebar-item level-2">
+              <a href="/docs/architecture.html" class="sidebar-link ">Architecture</a>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/developer/board_ids.html" class="sidebar-link ">Board IDs</a>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/remote_probe_protocol.html" class="sidebar-link ">Remote probe protocol</a>
+              </li>
+            </ul>
+        </li></ul>
+    </div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">Open-CMSIS-Pack support</h1>
+                  
+
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">On this page</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#memory-regions">Memory regions</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#flash-algorithms">Flash algorithms</a></li>
+<li class="toc-entry toc-h3"><a href="#limitations">Limitations</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#debug-description">Debug description</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#reset-types">Reset types</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#debug-access-sequences">Debug access sequences</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#debug-variables">Debug variables</a></li>
+<li class="toc-entry toc-h3"><a href="#disabling-debug-sequences">Disabling debug sequences</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#packdebug_sequencesenable">pack.debug_sequences.enable</a></li>
+<li class="toc-entry toc-h4"><a href="#packdebug_sequencesdisabled_sequences">pack.debug_sequences.disabled_sequences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#pyocds-debug-sequence-implementation">PyOCD’s debug sequence implementation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#cpu-specific-debugport-sequences">CPU-specific DebugPort sequences</a></li>
+<li class="toc-entry toc-h3"><a href="#custom-default-reset-sequences">Custom default reset sequences</a></li>
+<li class="toc-entry toc-h3"><a href="#debug-sequences-and-delegate-functions">Debug sequences and delegate functions</a></li>
+<li class="toc-entry toc-h3"><a href="#supported-debug-sequences">Supported debug sequences</a></li>
+</ul>
+</li>
+</ul>
+                    </div>
+                  </div>
+
+                  <p>PyOCD uses device descriptions from <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html">Open-CMSIS-Pack</a> Device Family Packs (DFPs) as a primary method for supporting target types. See the <a href="/docs/target_support.html">target support documentation</a> for how to install and select target types from DFPs.</p>
+
+<p>There are three main components to DFP device descriptions used by pyOCD:</p>
+
+<ul>
+  <li>Memory regions</li>
+  <li>Debug description</li>
+  <li>Debug access sequences</li>
+</ul>
+
+<h2 id="memory-regions">Memory regions</h2>
+
+<p>A Device Family Pack lists memory regions and contains the algorithms used to program flash memories.</p>
+
+<h3 id="flash-algorithms">Flash algorithms</h3>
+
+<p>DFPs can specify whether a flash algorithm is default, that is, whether it should be used without user intervention. Some DFPs use the default flag to include more than one flash algorithm for a given memory region, usually multiple part numbers for external memories such as Quad or Octal SPI flash. PyOCD honours this flag, and only loads flash algorithms marked as default. It currently does not have a standard way to list and enable non-default flash algorithms. If required, a <a href="/docs/user_scripts.html">user script</a> can be used to add additional flash algorithms manually extracted from the DFP.</p>
+
+<h3 id="limitations">Limitations</h3>
+
+<ul>
+  <li>DFPs can specify a memory region or flash algorithm to apply only to a specific CPU. However, pyOCD currently only supports a single system memory map for all CPUs. This can result in issues if conflicting or overlapping memory regions are defined for more than one CPU.</li>
+  <li>PyOCD always runs flash algorithms from the first CPU, even if the DFP says the algorithm should apply to another CPU. On certain devices, this can result in the algorithm failing to run correctly.</li>
+  <li>Flash algorithms are handled as a separate list in CMSIS-Packs, while in pyOCD the flash algorithms are associated with flash memory regions. If a DFP defines multiple algorithms with address ranges corresponding to a single region, only the first listed algorithm will be used. (At the time of this writing, there are no known DFPs with such a configuration.)</li>
+</ul>
+
+<h2 id="debug-description">Debug description</h2>
+
+<p>A Device Family Pack contains a <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/debug_description.html">description</a> of the device’s debug architecture. In pyOCD, this is used primarily to support debug access sequences. For its own use, pyOCD automatically discovers the device’s debug architecture via the Arm CoreSight discovery process (e.g., reading ROM tables) since this is usually more reliable and also works for devices without debug descriptions.</p>
+
+<h3 id="reset-types">Reset types</h3>
+
+<p>The debug description can set a target’s default reset type and disable certain reset types.</p>
+
+<h2 id="debug-access-sequences">Debug access sequences</h2>
+
+<p>Debug access sequences, simply called “debug sequences” below, contain a set of instructions to tell the debugger how to perform different debug related activities such as connect, reset, configuring the device for trace, and so on. Silicon vendors can provide debug sequences for cases where their device has special control requirements or nonstandard behaviours. Many devices do not need debug sequences, and they are entirely optional.</p>
+
+<p>A set of standard debug sequences is defined by the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec">Open-CMSIS-Pack</a> specification to be executed by the debugger when performing certain activities. Some of these standard sequences have pre-defined behaviour performed by the debugger if the DFP does not override that sequence. Others sequences exist only to allow the DFP to insert custom actions.</p>
+
+<p>In addition to the standard debug sequences, a DFP can define its own custom sequences. These can be called like subroutines by other sequences.</p>
+
+<p>Any debug sequence can be customised per CPU core.</p>
+
+<h3 id="debug-variables">Debug variables</h3>
+
+<p>Debug sequences frequently make use of configurable variables called debug variables, or debugvars for short. Depending on the debug sequence, these variables can be modified to change the values written into registers, adjust timeouts, or for other, similar purposes. In other debuggers such as Keil MDK, debugvars are read from a <code class="highlighter-rouge">.dbgconf</code> file. In pyOCD, this is handled through the <code class="highlighter-rouge">pack.debug_sequences.debugvars</code> session option described below.</p>
+
+<p>The <code class="highlighter-rouge">pack.debug_sequences.debugvars</code> session option must be set to a string containing C-style variable assignment statements. C-compatible integer expressions are allowed, and can refer to previously defined variables. Only those debug variables whose value is being changed need to be assigned a value; others will retain their default value. This option is one that you’d normally set in a yaml config file rather than the command line.</p>
+
+<p>All debugvars defined by the CMSIS-Pack and their configured value are logged (at the Info log level) during target connection.</p>
+
+<p>This is an example of output for an ST Microelectronics STM32H750 MCU (target type name <code class="highlighter-rouge">stm32h750ibtx</code>) from the Keil.STM32H7_DFP pack:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0001360 I debugvar 'DbgMCU_APB1L_Fz1' = 0xffffffff (4294967295) [pack_target]
+0001360 I debugvar 'DbgMCU_APB2_Fz1' = 0xffffffff (4294967295) [pack_target]
+0001360 I debugvar 'DbgMCU_APB3_Fz1' = 0xffffffff (4294967295) [pack_target]
+0001360 I debugvar 'DbgMCU_APB4_Fz1' = 0xffffffff (4294967295) [pack_target]
+0001361 I debugvar 'DbgMCU_CR' = 0x7 (7) [pack_target]
+0001361 I debugvar 'TraceClk_Pin' = 0x40002 (262146) [pack_target]
+0001361 I debugvar 'TraceD0_Pin' = 0x40003 (262147) [pack_target]
+0001361 I debugvar 'TraceD1_Pin' = 0x40004 (262148) [pack_target]
+0001361 I debugvar 'TraceD2_Pin' = 0x40005 (262149) [pack_target]
+0001361 I debugvar 'TraceD3_Pin' = 0x40006 (262150) [pack_target]
+</code></pre></div></div>
+
+<p>To override some <code class="highlighter-rouge">DBGMCU</code> register values configured by the above target, this could be added to the <code class="highlighter-rouge">pyocd.yaml</code> <a href="/docs/configuration.html">configuration file</a>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">pack.debug_sequences.debugvars</span><span class="pi">:</span> <span class="pi">|</span>
+  <span class="s">DbgMCU_APB1L_Fz1 = 0xffffffff;</span>
+  <span class="s">DbgMCU_APB2_Fz1 = 0xffffffff;</span>
+  <span class="s">DbgMCU_APB3_Fz1 = 0xffffffff;</span>
+  <span class="s">DbgMCU_APB4_Fz1 = 0xffffffff;</span>
+</code></pre></div></div>
+
+<p>If the <code class="highlighter-rouge">pack.debug_sequences.debugvars</code> session option is modified during a connection, the new debugvar values will be used for any further debug sequence invocations. However, changes to a configuration file on disk will not be reloaded at runtime.</p>
+
+<h3 id="disabling-debug-sequences">Disabling debug sequences</h3>
+
+<p>Like any software, DFPs and any contained debug sequences can have bugs. There may also be other cases where disabling a debug sequence is useful. PyOCD can be configured to disable debug sequences either as a whole or individually by using the following session options.</p>
+
+<h4 id="packdebug_sequencesenable"><code class="highlighter-rouge">pack.debug_sequences.enable</code></h4>
+
+<p>This boolean session option globally controls debug sequence support. It defaults to True; setting to False will disable running of all debug sequences defined by the DFP for the chosen target.</p>
+
+<h4 id="packdebug_sequencesdisabled_sequences"><code class="highlighter-rouge">pack.debug_sequences.disabled_sequences</code></h4>
+
+<p>If specific debug sequences need to be disabled, they can be specified with this option. From the command line, the value must be a comma-separated list of sequence names. When set in a YAML config file, the value must be a YAML list of sequence names (instead of a single comma-separated string value).</p>
+
+<p>Disabled sequences can be restricted to a given core by appending a colon and processor name to the sequence’s name (e.g., “ResetProcessor:cm4”).</p>
+
+<p>Only top-level sequences can be disabled individually. If a debug sequence is called from another sequence it will always be executed even if listed in this option.</p>
+
+<h2 id="pyocds-debug-sequence-implementation">PyOCD’s debug sequence implementation</h2>
+
+<p>This section documents details of the debug sequence engine provided by pyOCD, supported features, and any notable differences with other debuggers (primarily Keil MDK, which provided the first implementation and against which Packs are generally most thoroughly tested by their authors).</p>
+
+<h3 id="cpu-specific-debugport-sequences">CPU-specific DebugPort sequences</h3>
+
+<p>Like all other debug sequences, <code class="highlighter-rouge">DebugPortSetup</code>, <code class="highlighter-rouge">DebugPortStart</code>, and <code class="highlighter-rouge">DebugPortStop</code> can be customised per CPU core. If a DFP has multiple CPU-specific instances of these sequences, they may behave differently in pyOCD than other debuggers. Many debuggers only “connect” to a single CPU chosen by the user when debugging or running a project. PyOCD is somewhat different in that it connects to the device as a whole, and then debugs a chosen core after the connection is established (which more closely reflects the hardware situation).</p>
+
+<h3 id="custom-default-reset-sequences">Custom default reset sequences</h3>
+
+<p>The DFP specification allows the definition of custom (nonstandard) reset sequences, and these can be selected as the default reset sequence for a core. The purpose of this is to keep the standard sequences unmodified and available for user selection. Because pyOCD does not currently support a custom reset type, this DFP feature is not supported. A custom default reset sequence will be replaced with <code class="highlighter-rouge">ResetSystem</code> and the custom behaviour not performed.</p>
+
+<h3 id="debug-sequences-and-delegate-functions">Debug sequences and delegate functions</h3>
+
+<p>Effectively, debug sequences are handled as pre-defined <a href="/docs/user_scripts.html#delegate-functions">delegate functions</a>. For most standard debug sequence, there is a corresponding delegate function. This means that a delegate function in a user script (or delegate class, if using the Python API) will override the corresponding debug sequence provided by the target’s DFP.</p>
+
+<h3 id="supported-debug-sequences">Supported debug sequences</h3>
+
+<p>The following standard debug sequences are supported and will by called by pyOCD. The corresponding delegate function is listed for each.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sequence name</th>
+      <th>Delegate function</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">DebugPortSetup</code></td>
+      <td>-</td>
+      <td>SWJ-DP switch; reading <code class="highlighter-rouge">DPIDR</code>; writing <code class="highlighter-rouge">TARGETSEL</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">DebugPortStart</code></td>
+      <td>-</td>
+      <td>Connect to the target debug port and power it up.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">DebugPortStop</code></td>
+      <td>-</td>
+      <td>Power down and disconnect from target debug port.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">DebugDeviceUnlock</code></td>
+      <td><code class="highlighter-rouge">unlock_device</code></td>
+      <td>Ensure the device is accessible.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">DebugCoreStart</code></td>
+      <td><code class="highlighter-rouge">start_debug_core</code></td>
+      <td>Initialize core debug.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">DebugCoreStop</code></td>
+      <td><code class="highlighter-rouge">stop_debug_core</code></td>
+      <td>Uninitialized core debug.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetSystem</code></td>
+      <td><code class="highlighter-rouge">will_reset</code></td>
+      <td>System-wide reset without debug domain via software mechanisms.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetProcessor</code></td>
+      <td><code class="highlighter-rouge">will_reset</code></td>
+      <td>Local processor reset without peripherals and debug domains.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetHardware</code></td>
+      <td><code class="highlighter-rouge">will_reset</code></td>
+      <td>System-wide reset without debug domain via the dedicated debugger reset line, e.g. nRST.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetCatchSet</code></td>
+      <td><code class="highlighter-rouge">set_reset_catch</code></td>
+      <td>Configure the vector catch to stop code execution after the reset.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetCatchClear</code></td>
+      <td><code class="highlighter-rouge">clear_reset_catch</code></td>
+      <td>Free hardware resources allocated by <code class="highlighter-rouge">ResetCatchSet</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">TraceStart</code></td>
+      <td><code class="highlighter-rouge">trace_start</code></td>
+      <td>Enable target trace capture.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">TraceStop</code></td>
+      <td><code class="highlighter-rouge">trace_stop</code></td>
+      <td>Disable target trace capture.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Standard debug sequences not currently supported:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sequence name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">DebugCodeMemRemap</code></td>
+      <td>Remap memory to execution location.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetHardwareAssert</code></td>
+      <td>Assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetHardwareDeassert</code></td>
+      <td>De-assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashInit</code></td>
+      <td>Flash programming</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashUninit</code></td>
+      <td>Flash programming</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashEraseSector</code></td>
+      <td>Flash programming</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashEraseChip</code></td>
+      <td>Flash programming</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashEraseDone</code></td>
+      <td>Flash programming</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashProgramPage</code></td>
+      <td>Flash programming</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashProgramDone</code></td>
+      <td>Flash programming</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">RecoverySupportStart</code></td>
+      <td>Before step or run command to support recovery from a lost target connection.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">RecoverySupportStop</code></td>
+      <td>After step or run command in context of the <code class="highlighter-rouge">RecoverySupportStart</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">RecoveryAcknowledge</code></td>
+      <td>Debugger acknowledge after recovering from a lost target connection.</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+                </div>
+              </div>
+            </main>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021-2022 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+
+// Insert icons for alerts.
+$(".alert-warning").prepend("<div class=\"alert-icon\"><i class=\"bi bi-exclamation-triangle\"></i></div>")
+$(".alert-info").prepend("<div class=\"alert-icon\"><i class=\"bi bi-info-circle\"></i></div>")
+$(".alert-success").prepend("<div class=\"alert-icon\"><i class=\"bi bi-check-circle\"></i></div>")
+</script>
+</html>

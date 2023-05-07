@@ -307,6 +307,11 @@
 <li class="toc-entry toc-h5"><a href="#wreg">wreg</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#rtt">Rtt</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#rtt-1">rtt</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h3"><a href="#semihosting">Semihosting</a>
 <ul>
 <li class="toc-entry toc-h5"><a href="#arm">arm</a></li>
@@ -334,6 +339,11 @@
 <li class="toc-entry toc-h5"><a href="#threads-1">threads</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#utility">Utility</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#sleep">sleep</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h3"><a href="#values">Values</a>
 <ul>
 <li class="toc-entry toc-h5"><a href="#set">set</a></li>
@@ -344,8 +354,10 @@
 </li>
 <li class="toc-entry toc-h2"><a href="#value-details">Value details</a>
 <ul>
+<li class="toc-entry toc-h5"><a href="#accessible-pins">accessible-pins</a></li>
 <li class="toc-entry toc-h5"><a href="#aps">aps</a></li>
 <li class="toc-entry toc-h5"><a href="#cores">cores</a></li>
+<li class="toc-entry toc-h5"><a href="#debug-sequences">debug-sequences</a></li>
 <li class="toc-entry toc-h5"><a href="#fault">fault</a></li>
 <li class="toc-entry toc-h5"><a href="#frequency">frequency</a></li>
 <li class="toc-entry toc-h5"><a href="#graph">graph</a></li>
@@ -358,8 +370,10 @@
 <li class="toc-entry toc-h5"><a href="#nreset">nreset</a></li>
 <li class="toc-entry toc-h5"><a href="#option">option</a></li>
 <li class="toc-entry toc-h5"><a href="#peripherals">peripherals</a></li>
+<li class="toc-entry toc-h5"><a href="#pins">pins</a></li>
 <li class="toc-entry toc-h5"><a href="#probe-uid">probe-uid</a></li>
 <li class="toc-entry toc-h5"><a href="#register-groups">register-groups</a></li>
+<li class="toc-entry toc-h5"><a href="#reset-type">reset-type</a></li>
 <li class="toc-entry toc-h5"><a href="#step-into-interrupts">step-into-interrupts</a></li>
 <li class="toc-entry toc-h5"><a href="#target-1">target</a></li>
 <li class="toc-entry toc-h5"><a href="#vector-catch">vector-catch</a></li>
@@ -382,7 +396,10 @@ that ambiguous because it matches multiple commands, an error will be reported s
 command names. In addition, commonly used commands often have a short alias. The alias takes
 precedence even when it is a prefix of multiple other commands.</p>
 
-<!-- Maintainer note: the following is auto-generated. Edit the command INFO source material. -->
+<!--
+Maintainer note: the following is auto-generated. Edit the command class INFO dict source material,
+then run ./scripts/generate_command_help.py.
+-->
 
 <h2 id="all-commands">All commands</h2>
 
@@ -494,9 +511,9 @@ Resume execution of the target.
 <tr><td>
 <a href="#core"><tt>core</tt></a>
 </td><td>
-[NUM]
+[NUMBER | NAME]
 </td><td>
-Select CPU core by number or print selected core.
+Select CPU core by number or name, or print selected core.
 </td></tr>
 
 <tr><td>
@@ -561,7 +578,7 @@ Write DP register.
 </td><td>
 [halt|-halt|-h] [TYPE]
 </td><td>
-Reset the target, optionally specifying the reset type.
+Reset the target, optionally with halt and/or specifying the reset type.
 </td></tr>
 
 <tr><td>
@@ -769,6 +786,16 @@ Print core or peripheral register(s).
 Set the value of a core or peripheral register.
 </td></tr>
 
+<tr><td colspan="3"><b>Rtt</b></td></tr>
+
+<tr><td>
+<a href="#rtt"><tt>rtt</tt></a>
+</td><td>
+rtt {setup,start,stop,channels,server}
+</td><td>
+Control SEGGER RTT compatible interface.
+</td></tr>
+
 <tr><td colspan="3"><b>Semihosting</b></td></tr>
 
 <tr><td>
@@ -835,6 +862,16 @@ Show the target's current state.
 Control thread awareness.
 </td></tr>
 
+<tr><td colspan="3"><b>Utility</b></td></tr>
+
+<tr><td>
+<a href="#sleep"><tt>sleep</tt></a>
+</td><td>
+MILLISECONDS
+</td><td>
+Sleep for a number of milliseconds before continuing.
+</td></tr>
+
 <tr><td colspan="3"><b>Values</b></td></tr>
 
 <tr><td>
@@ -867,6 +904,14 @@ command can be read, written, or both.</p>
 <tr><th>Value</th><th>Access</th><th>Description</th></tr>
 
 <tr><td>
+<a href="#accessible-pins"><tt>accessible-pins</tt></a>
+</td><td>
+read-write
+</td><td>
+Display which debug probe pins can be read and written with the 'pins' value.
+</td></tr>
+
+<tr><td>
 <a href="#aps"><tt>aps</tt></a>
 </td><td>
 read-only
@@ -880,6 +925,14 @@ List discovered Access Ports.
 read-only
 </td><td>
 Information about CPU cores in the target.
+</td></tr>
+
+<tr><td>
+<a href="#debug-sequences"><tt>debug-sequences</tt></a>
+</td><td>
+read-only
+</td><td>
+Show the available debug sequences from the target's DFP.
 </td></tr>
 
 <tr><td>
@@ -980,6 +1033,14 @@ List of target peripheral instances.
 </td></tr>
 
 <tr><td>
+<a href="#pins"><tt>pins</tt></a>
+</td><td>
+read-write
+</td><td>
+Current debug probe protocol I/O pin states.
+</td></tr>
+
+<tr><td>
 <a href="#probe-uid"><tt>probe-uid</tt></a>,
 <a href="#probe-uid"><tt>uid</tt></a>
 </td><td>
@@ -994,6 +1055,14 @@ Target's unique ID.
 read-only
 </td><td>
 Display available register groups for the selected core.
+</td></tr>
+
+<tr><td>
+<a href="#reset-type"><tt>reset-type</tt></a>
+</td><td>
+read-write
+</td><td>
+Show reset configuration and all available reset types for each core. Set current reset type.
 </td></tr>
 
 <tr><td>
@@ -1100,8 +1169,8 @@ Resume execution of the target. The target’s state is read back after resuming
 
 <h5 id="core-1"><code class="highlighter-rouge">core</code></h5>
 
-<p><strong>Usage</strong>: core [NUM] <br />
-Select CPU core by number or print selected core.</p>
+<p><strong>Usage</strong>: core [NUMBER | NAME] <br />
+Select CPU core by number or name, or print selected core.</p>
 
 <h5 id="halt"><code class="highlighter-rouge">halt</code></h5>
 
@@ -1146,7 +1215,7 @@ Write DP register.</p>
 <h5 id="reset"><code class="highlighter-rouge">reset</code></h5>
 
 <p><strong>Usage</strong>: reset [halt|-halt|-h] [TYPE] <br />
-Reset the target, optionally specifying the reset type. The reset type must be one of ‘default’, ‘hw’, ‘sw’, ‘hardware’, ‘software’, ‘sw_sysresetreq’, ‘sw_vectreset’, ‘sw_emulated’, ‘sysresetreq’, ‘vectreset’, or ‘emulated’.</p>
+Reset the target, optionally with halt and/or specifying the reset type. The reset type must be one of ‘default’, ‘hw’, ‘sw’, ‘hardware’, ‘software’, ‘system’, ‘core’, ‘emulated’, ‘sw_system’, ‘sw_core’, ‘sw_sysresetreq’, ‘sw_vectreset’, ‘sw_emulated’, ‘sysresetreq’, or ‘vectreset’.</p>
 
 <h5 id="unlock"><code class="highlighter-rouge">unlock</code></h5>
 
@@ -1288,6 +1357,13 @@ Print core or peripheral register(s). If no arguments are provided, the ‘gener
 <strong>Usage</strong>: wreg [-r] [-p] [-f] REG VALUE <br />
 Set the value of a core or peripheral register. The REG parameter must be a core register name or a peripheral.register. When a peripheral register is written, if the -r option is passed then it is read back and the updated value printed. The -p option forces evaluating the register name as a peripheral register name. If the -f option is passed, then individual fields of peripheral registers will be printed in addition to the full value.</p>
 
+<h3 id="rtt">Rtt</h3>
+
+<h5 id="rtt-1"><code class="highlighter-rouge">rtt</code></h5>
+
+<p><strong>Usage</strong>: rtt rtt {setup,start,stop,channels,server} <br />
+Control SEGGER RTT compatible interface.</p>
+
 <h3 id="semihosting">Semihosting</h3>
 
 <h5 id="arm"><code class="highlighter-rouge">arm</code></h5>
@@ -1335,6 +1411,13 @@ Show the target’s current state.</p>
 <p><strong>Usage</strong>: threads {flush,enable,disable,status} <br />
 Control thread awareness.</p>
 
+<h3 id="utility">Utility</h3>
+
+<h5 id="sleep"><code class="highlighter-rouge">sleep</code></h5>
+
+<p><strong>Usage</strong>: sleep MILLISECONDS <br />
+Sleep for a number of milliseconds before continuing.</p>
+
 <h3 id="values">Values</h3>
 
 <h5 id="set"><code class="highlighter-rouge">set</code></h5>
@@ -1349,6 +1432,12 @@ Display a value.</p>
 
 <h2 id="value-details">Value details</h2>
 
+<h5 id="accessible-pins"><code class="highlighter-rouge">accessible-pins</code></h5>
+
+<p><strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show accessible-pins, set accessible-pins VALUE <br />
+Display which debug probe pins can be read and written with the ‘pins’ value.</p>
+
 <h5 id="aps"><code class="highlighter-rouge">aps</code></h5>
 
 <p><strong>Access</strong>: read-only <br />
@@ -1360,6 +1449,12 @@ List discovered Access Ports.</p>
 <p><strong>Access</strong>: read-only <br />
 <strong>Usage</strong>: show cores <br />
 Information about CPU cores in the target.</p>
+
+<h5 id="debug-sequences"><code class="highlighter-rouge">debug-sequences</code></h5>
+
+<p><strong>Access</strong>: read-only <br />
+<strong>Usage</strong>: show debug-sequences <br />
+Show the available debug sequences from the target’s DFP. Only available for CMSIS-Pack based targets.</p>
 
 <h5 id="fault"><code class="highlighter-rouge">fault</code></h5>
 
@@ -1438,6 +1533,12 @@ The current value of one or more session options. When setting, each argument sh
 <strong>Usage</strong>: show peripherals <br />
 List of target peripheral instances.</p>
 
+<h5 id="pins"><code class="highlighter-rouge">pins</code></h5>
+
+<p><strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show pins, set pins VALUE <br />
+Current debug probe protocol I/O pin states. The pins value is a mask containing the state of all accessible protocol pins. See the <code class="highlighter-rouge">accessible-pins</code> value for protocol pins that can be read and written by the connected debug probe.</p>
+
 <h5 id="probe-uid"><code class="highlighter-rouge">probe-uid</code></h5>
 
 <p><strong>Aliases</strong>: <code class="highlighter-rouge">uid</code> <br />
@@ -1450,6 +1551,12 @@ Target’s unique ID.</p>
 <p><strong>Access</strong>: read-only <br />
 <strong>Usage</strong>: show register-groups <br />
 Display available register groups for the selected core.</p>
+
+<h5 id="reset-type"><code class="highlighter-rouge">reset-type</code></h5>
+
+<p><strong>Access</strong>: read-write <br />
+<strong>Usage</strong>: show reset-type, set reset-type VALUE <br />
+Show reset configuration and all available reset types for each core. Set current reset type.</p>
 
 <h5 id="step-into-interrupts"><code class="highlighter-rouge">step-into-interrupts</code></h5>
 

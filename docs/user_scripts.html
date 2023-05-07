@@ -227,6 +227,7 @@
 <li class="toc-entry toc-h3"><a href="#did_connect">did_connect</a></li>
 <li class="toc-entry toc-h3"><a href="#will_init_target">will_init_target</a></li>
 <li class="toc-entry toc-h3"><a href="#did_init_target">did_init_target</a></li>
+<li class="toc-entry toc-h3"><a href="#unlock_device">unlock_device</a></li>
 <li class="toc-entry toc-h3"><a href="#will_start_debug_core">will_start_debug_core</a></li>
 <li class="toc-entry toc-h3"><a href="#start_debug_core">start_debug_core</a></li>
 <li class="toc-entry toc-h3"><a href="#did_start_debug_core">did_start_debug_core</a></li>
@@ -548,6 +549,8 @@ additional unspecified, required parameters (those without a default value). Ext
 allowed but will never be passed any value other than the default, unless you call the function yourself from
 within the script.</p>
 
+<p><em>Note:</em> Delegate functions override CMSIS-Pack debug sequences. See the <a href="/docs/open_cmsis_pack_support.html#debug-access-sequences">debug sequence documentation</a> for more details.</p>
+
 <h3 id="will_connect">will_connect</h3>
 
 <p>Pre-init notification for the board.</p>
@@ -593,6 +596,24 @@ Ignored.</p>
 <em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
+
+<h3 id="unlock_device">unlock_device</h3>
+
+<p>Hook to perform any required unlock sequence.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unlock_device(target: SoCTarget) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<p>Called after the DP is initialised but prior to discovery. This hook delegate can be used to unlock debug
+access to the target. It can also be used to perform other pre-discovery actions.</p>
+
+<p>Note that because this hoook is called prior to discovery, APs and cores are not yet created. This means
+that any register accesses must be performed through the DP’s methods. (However, it’s possible to create
+a temporary instance of ‘AccessPort’ or one of its subclasses, such as <code class="highlighter-rouge">MEM_AP</code>.)</p>
 
 <h3 id="will_start_debug_core">will_start_debug_core</h3>
 
@@ -658,6 +679,10 @@ Ignored.</p>
 <strong>Result</strong> <br />
 <em>True</em> Do not perform the normal procedure to disable core debug. <br />
 <em>False/None</em> Continue with normal behaviour.</p>
+
+<p>This delegate is only called if resuming the core on disconnect, e.g. the <code class="highlighter-rouge">resume_on_disconnect</code> session
+option is True. Therefore, the delegate should ensure that the core has properly resumed execution if it
+returns True.</p>
 
 <h3 id="did_stop_debug_core">did_stop_debug_core</h3>
 
