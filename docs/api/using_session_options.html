@@ -127,6 +127,9 @@
             <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
             </li>
           <li class="sidebar-item level-1">
+            <a href="/docs/memory_attributes.html" class="sidebar-link ">Memory transfer attributes</a>
+            </li>
+          <li class="sidebar-item level-1">
             <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
             </li>
           </ul>
@@ -155,6 +158,9 @@
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api/architecture.html" class="sidebar-link ">Architecture</a>
             </li>
           <li class="sidebar-item level-1">
             <p class="sidebar-item-selected">Using session options</p>
@@ -239,14 +245,16 @@
 <span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'reset_type'</span><span class="p">)</span> <span class="o">=</span> <span class="s">'system'</span>
 </code></pre></div></div>
 
+<p>Note that <code class="highlighter-rouge">.get()</code> does not take an optional second parameter for a default value if the session option is unset. Instead, this default value is determined from the session option’s definition.</p>
+
 <h2 id="priority-layers">Priority layers</h2>
 
-<p>Session options have a priority based on their source. The <code class="highlighter-rouge">OptionsManager</code> class implements these priorities as an ordered sequence of layers from front (high priority) to back (low priority). Each layer is a dict of option name to value. There is also an implicit lowest-priority layer from which default values specified in the option definition are derived.</p>
+<p>Session options have a priority based on their source. The <code class="highlighter-rouge">OptionsManager</code> class implements these priorities as an ordered sequence of layers from front (high priority) to back (low priority). Each layer is a dict of option name to value. There is also an implicit lowest-priority layer derived from default values specified in the option definitions.</p>
 
 <p>The priorities of the different sources, from front to back:</p>
 
 <ol>
-  <li>Keyword arguments to the <code class="highlighter-rouge">Session</code> constructor. Applies to most command-line arguments.</li>
+  <li>Keyword arguments to the <code class="highlighter-rouge">Session</code> constructor. Applies to most dedicated command-line arguments.</li>
   <li><em>options</em> parameter to <code class="highlighter-rouge">Session</code> constructor. Applies to <code class="highlighter-rouge">-O</code> command-line arguments.</li>
   <li>Probe-specific options from a config file.</li>
   <li>Global options from a config file.</li>

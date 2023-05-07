@@ -127,6 +127,9 @@
             <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
             </li>
           <li class="sidebar-item level-1">
+            <a href="/docs/memory_attributes.html" class="sidebar-link ">Memory transfer attributes</a>
+            </li>
+          <li class="sidebar-item level-1">
             <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
             </li>
           </ul>
@@ -155,6 +158,9 @@
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api/architecture.html" class="sidebar-link ">Architecture</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
@@ -239,7 +245,7 @@ dependencies for the current platform by following the detailed steps below.</p>
 <p>Install the necessary tools listed below. Skip any step where a compatible tool already exists.</p>
 
 <ul>
-  <li><a href="https://www.python.org/downloads/">Install Python</a> version 3.6.0 or above. Add to PATH.
+  <li><a href="https://www.python.org/downloads/">Install Python</a> version 3.7.0 or above. Add to PATH.
     <ul>
       <li>Note that on Windows, the 32-bit Python 2.7 must be installed for the Python-enabled <code class="highlighter-rouge">arm-none-eabi-gdb-py</code> to
  work properly and for the <code class="highlighter-rouge">test/gdb_test.py</code> functional test to pass.</li>
@@ -298,15 +304,11 @@ way to engage with the community and maintainers.</p>
 
 <p><strong>Step 5.</strong> Test</p>
 
+<p>See the <a href="/docs/automated_tests.html">automated test documentation</a> for an introduction to available tests and related scripts.</p>
+
 <p>To run the unit tests, you can execute the following.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pytest
-</code></pre></div></div>
-
-<p>To get code coverage results, do the following:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pytest --cov-report=html --cov=pyocd
-$ open htmlcov/index.html
 </code></pre></div></div>
 
 <p>The automated test suite also needs to be run:</p>

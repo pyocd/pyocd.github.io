@@ -127,6 +127,9 @@
             <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
             </li>
           <li class="sidebar-item level-1">
+            <a href="/docs/memory_attributes.html" class="sidebar-link ">Memory transfer attributes</a>
+            </li>
+          <li class="sidebar-item level-1">
             <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
             </li>
           </ul>
@@ -155,6 +158,9 @@
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api/architecture.html" class="sidebar-link ">Architecture</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
@@ -216,6 +222,7 @@
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h3"><a href="#pe-micro-probe-support">PE Micro probe support</a></li>
+<li class="toc-entry toc-h3"><a href="#segger-j-link-probe-support">Segger J-Link probe support</a></li>
 <li class="toc-entry toc-h3"><a href="#permissions-issues">Permissions issues</a></li>
 <li class="toc-entry toc-h3"><a href="#non-x86-systems">Non-x86 systems</a></li>
 <li class="toc-entry toc-h3"><a href="#development-versions">Development versions</a></li>
@@ -225,7 +232,7 @@
                     </div>
                   </div>
 
-                  <p>PyOCD requires <a href="https://python.org/">Python</a> 3.6 or later. It runs on macOS,
+                  <p>PyOCD requires <a href="https://python.org/">Python</a> 3.7 or later. It runs on macOS,
 Linux, FreeBSD, and Windows platforms.</p>
 
 <p>The latest pyOCD package is available <a href="https://pypi.python.org/pypi/pyOCD/">on PyPI</a>. The
@@ -248,6 +255,10 @@ virtual Python environment.</p>
 driver plug-in that is a separate package from pyOCD. There are two ways to install the PE Micro probe plug-in.
 Either substitute <code class="highlighter-rouge">pyocd[pemicro]</code> for <code class="highlighter-rouge">pyocd</code> in the commands above, or separately install <code class="highlighter-rouge">pyocd-pemicro</code>
 using pip.</p>
+
+<h3 id="segger-j-link-probe-support">Segger J-Link probe support</h3>
+
+<p>To access Segger J-Link debug probes, first install the <a href="https://www.segger.com/downloads/jlink/">J-Link driver package</a>.</p>
 
 <h3 id="permissions-issues">Permissions issues</h3>
 

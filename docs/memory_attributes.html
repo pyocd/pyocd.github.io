@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>Target family usage notes &mdash; pyOCD</title>
+  <title>Memory transfer attributes &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -127,10 +127,10 @@
             <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
             </li>
           <li class="sidebar-item level-1">
-            <a href="/docs/memory_attributes.html" class="sidebar-link ">Memory transfer attributes</a>
+            <p class="sidebar-item-selected">Memory transfer attributes</p>
             </li>
           <li class="sidebar-item level-1">
-            <p class="sidebar-item-selected">Target family usage notes</p>
+            <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
             </li>
           </ul>
     <h5 class="sidebar-header level-1">Reference</h5>
@@ -213,7 +213,7 @@
               <div class="row">
                 <div class="container docs-content">
                   
-                  <h1 class="mb-4 mt-0">Target family usage notes</h1>
+                  <h1 class="mb-4 mt-0">Memory transfer attributes</h1>
                   
 
                   <!-- floating table of contents -->
@@ -221,81 +221,97 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#nordic-semiconductor">Nordic Semiconductor</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#nrf51-family">nRF51 family</a></li>
-<li class="toc-entry toc-h3"><a href="#nrf52-family">nRF52 family</a></li>
-<li class="toc-entry toc-h3"><a href="#softdevice">SoftDevice</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#nxp">NXP</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#kinetis-family">Kinetis family</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#hdsc">HDSC</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#hc32l110">HC32L110</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h2"><a href="#memory-transfer-attributes">Memory transfer attributes</a></li>
+<li class="toc-entry toc-h2"><a href="#controlling-attributes">Controlling attributes</a></li>
 </ul>
                     </div>
                   </div>
 
-                  <p>This section documents usage notes for certain target types.</p>
+                  <p>By default, pyOCD (and most other debuggers) will show the current memory contents regardless of the presence of a data and/or instruction cache. Yet, sometimes it is desirable to view the cache contents in the debugger. That is, to see the CPU’s view of memory through the cache. Other memory transfer attributes can also be useful to control is certain, complex debugging scenarios.</p>
 
-<h2 id="nordic-semiconductor">Nordic Semiconductor</h2>
+<h2 id="memory-transfer-attributes">Memory transfer attributes</h2>
 
-<h3 id="nrf51-family">nRF51 family</h3>
+<p>For Arm devices, the MEM-AP used to perform memory transfers is responsible for specifying what attributes are set when the transfer is performed. The AHB and AXI bus protocol standards define the set of possible transfer attributes. Then, which attributes are actually implemented varies greatly depending on the CPU type and MEM-AP type and variant.</p>
 
-<p>See <a href="#softdevice">SoftDevice</a> for notes about handling firmware containing SoftDevice images.</p>
+<p>The AHB-AP HPROT bits used with Cortex-M devices are shown here. “HPROT” is the name of the AHB protocol bus that carries the attributes along with the memory transfer request.</p>
 
-<h3 id="nrf52-family">nRF52 family</h3>
+<table>
+  <thead>
+    <tr>
+      <th>HPROT</th>
+      <th>(1) Enabled</th>
+      <th>(0) Disabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">HPROT[0]</code></td>
+      <td>data access</td>
+      <td>instr fetch</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">HPROT[1]</code></td>
+      <td>privileged</td>
+      <td>user</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">HPROT[2]</code></td>
+      <td>bufferable</td>
+      <td>non bufferable</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">HPROT[3]</code></td>
+      <td>cacheable/modifable</td>
+      <td>non cacheable</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">HPROT[4]</code></td>
+      <td>lookup in cache</td>
+      <td>no cache</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">HPROT[5]</code></td>
+      <td>allocate in cache</td>
+      <td>no allocate in cache</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">HPROT[6]</code></td>
+      <td>shareable</td>
+      <td>non shareable</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>See <a href="#softdevice">SoftDevice</a> for notes about handling firmware containing SoftDevice images.</p>
+<p>Not all bits are implemented on all core/MEM-AP variants; each MEM-AP version implements slightly different sets of these options. For instance, the standard CM3 and CM4 MEM-AP only implements <code class="highlighter-rouge">HPROT[1]</code> (privileged/user). Check the documentation for your target and CPU(s) to verify available attributes.</p>
 
-<p>Unlocking of flash security, also called APPROTECT, is supported. For more, see the
-<a href="/docs/security.html">security and protection</a> documentation.</p>
+<p>AXI-AP attributes are much more complex and are not documented here.</p>
 
-<h3 id="softdevice">SoftDevice</h3>
+<p>Note that Cortex-M7 and other M-profile cores that use an AXI bus use an AHB-AP as the debugger interface, so the table above still applies. The core converts AHB attributes to AXI attributes internally if the debugger’s memory transfer request needs to be sent on the downstream AXI bus.</p>
 
-<p>The nRF51 and nRF52 series have support for so-called “SoftDevice” firmware, which implements Nordic’s Bluetooth LE or
-other wireless protocol API. When firmware containing a SoftDevice is loaded, the SoftDevice region of flash is locked.
-In order to reprogram the flash sectors containing the SoftDevice image, a mass erase must first be performed. This can
-potentially cause issues with flash programming if one is not aware of this requirement.</p>
+<h2 id="controlling-attributes">Controlling attributes</h2>
 
-<p>For a development workflow with firmware using a SoftDevice, no extra steps are required.</p>
+<p>In pyOCD, the HPROT value for memory transactions is set using the <code class="highlighter-rouge">set hprot &lt;value&gt;</code> command, and <code class="highlighter-rouge">show hprot</code> to view the current setting. These modify/view the currently selected MEM-AP (<code class="highlighter-rouge">set/show mem-ap</code>), which is independent of the gdbserver’s core (not something to worry about if you are only debugging core #0).</p>
 
-<p>PyOCD will by default scan flash sectors when programming flash in order to only erase and program sectors whose
-contents are changing. Since normally the SoftDevice sectors do not change during development, pyOCD will skip over
-these sectors.</p>
+<p>As a reminder, these commands can be executed from gdb by prefixing them with the gdb <code class="highlighter-rouge">monitor</code> command. For example, to enable cacheable transfers from gdb, you’d run <code class="highlighter-rouge">monitor set hprot 0xb</code>. This can be placed in a connect script if you want cacheable transfers all the time.</p>
 
-<p>In addition, a chip erased performed with a SoftDevice in flash will erase only the non-SoftDevice sectors. For example,
-running <code class="highlighter-rouge">pyocd erase --chip</code> on such a device will leave the SoftDevice intact and erase all other sectors.</p>
+<p>To configure the used attributes in a pyOCD <a href="/docs/user_scripts.html">user script</a>, a snippet such as this is can be used:</p>
 
-<p>However, any case where the SoftDevice sectors are being erased requires a prior mass erase. This includes
-changing the SoftDevice variant or version, as well as switching to firmware that doesn’t include a SoftDevice.
-Mass erase is a separate operation. It mostly functions like a chip erase, but can also be used to
-<a href="/docs/security.html">unlock</a> devices that have APPROTECT enabled.</p>
-
-<p>To perform a mass erase:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyocd erase --mass
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">did_connect</span><span class="p">():</span>
+    <span class="n">target</span><span class="p">.</span><span class="n">aps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hprot</span> <span class="o">=</span> <span class="mh">0xb</span>
 </code></pre></div></div>
 
-<h2 id="nxp">NXP</h2>
+<p>And if using pyOCD via a Python script, mirror the statement inside <code class="highlighter-rouge">did_connect()</code> above using your target object.</p>
 
-<h3 id="kinetis-family">Kinetis family</h3>
+<table>
+  <tbody>
+    <tr>
+      <td>In the above commands, 0xb == data (hprot[0])</td>
+      <td>privileged (hprot[1])</td>
+      <td>cacheable (hprot[3]).</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>Unlocking of flash security is supported for all Kinetis targets. For more, see the
-<a href="/docs/security.html">security and protection</a> documentation.</p>
-
-<h2 id="hdsc">HDSC</h2>
-
-<h3 id="hc32l110">HC32L110</h3>
-<p>The documentation for this chip states that no external pull-up resistors are required on the SWD lines due to the internal pull-up
-hardware. Testing has found this to be largely inaccurate. Most debug probes will require an external 4.7k&amp;ohm; pull-up resistor 
-between Ports P27/P31 and V+.</p>
 
 
                 </div>

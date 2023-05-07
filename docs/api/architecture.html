@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>Target family usage notes &mdash; pyOCD</title>
+  <title>Architecture &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -130,7 +130,7 @@
             <a href="/docs/memory_attributes.html" class="sidebar-link ">Memory transfer attributes</a>
             </li>
           <li class="sidebar-item level-1">
-            <p class="sidebar-item-selected">Target family usage notes</p>
+            <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
             </li>
           </ul>
     <h5 class="sidebar-header level-1">Reference</h5>
@@ -160,7 +160,7 @@
             <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
             </li>
           <li class="sidebar-item level-1">
-            <a href="/docs/api/architecture.html" class="sidebar-link ">Architecture</a>
+            <p class="sidebar-item-selected">Architecture</p>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
@@ -213,7 +213,7 @@
               <div class="row">
                 <div class="container docs-content">
                   
-                  <h1 class="mb-4 mt-0">Target family usage notes</h1>
+                  <h1 class="mb-4 mt-0">Architecture</h1>
                   
 
                   <!-- floating table of contents -->
@@ -221,81 +221,137 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#nordic-semiconductor">Nordic Semiconductor</a>
+<li class="toc-entry toc-h2"><a href="#high-level-structure">High level structure</a></li>
+<li class="toc-entry toc-h2"><a href="#top-level-objects">Top level objects</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#nrf51-family">nRF51 family</a></li>
-<li class="toc-entry toc-h3"><a href="#nrf52-family">nRF52 family</a></li>
-<li class="toc-entry toc-h3"><a href="#softdevice">SoftDevice</a></li>
+<li class="toc-entry toc-h3"><a href="#session">Session</a></li>
+<li class="toc-entry toc-h3"><a href="#debugprobe">DebugProbe</a></li>
+<li class="toc-entry toc-h3"><a href="#target">Target</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#nxp">NXP</a>
+<li class="toc-entry toc-h2"><a href="#target-classes">Target classes</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#kinetis-family">Kinetis family</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#hdsc">HDSC</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#hc32l110">HC32L110</a></li>
+<li class="toc-entry toc-h3"><a href="#soctarget">SoCTarget</a></li>
+<li class="toc-entry toc-h3"><a href="#coretarget">CoreTarget</a></li>
+<li class="toc-entry toc-h3"><a href="#coresighttarget">CoreSightTarget</a></li>
+<li class="toc-entry toc-h3"><a href="#cortexm">CortexM</a></li>
 </ul>
 </li>
 </ul>
                     </div>
                   </div>
 
-                  <p>This section documents usage notes for certain target types.</p>
+                  <h2 id="high-level-structure">High level structure</h2>
 
-<h2 id="nordic-semiconductor">Nordic Semiconductor</h2>
+<p>The session and connection to the target and all aspects of the target are representated in pyOCD with a graph of objects constructed at runtime. The diagram below shows an overview of this object graph, focusing on objects that a user of the Python API will interact with.</p>
 
-<h3 id="nrf51-family">nRF51 family</h3>
+<p><img src="../resources/high_level_architecture.svg" alt="" /></p>
 
-<p>See <a href="#softdevice">SoftDevice</a> for notes about handling firmware containing SoftDevice images.</p>
+<p>The connections in the diagram represent composition.</p>
 
-<h3 id="nrf52-family">nRF52 family</h3>
+<p>The root of the runtime object graph is a <code class="highlighter-rouge">Session</code> object. This object holds references to the debug probe and the board. Through the board object, the entire object graph is accessible. It is also responsible for managing per-session options that control various features and settings.</p>
 
-<p>See <a href="#softdevice">SoftDevice</a> for notes about handling firmware containing SoftDevice images.</p>
+<p>As shown in the diagram, the object graph mirrors the physical structure: board, SoC, and cores. There are many more objects connected with the ones shown here. The Arm ADI debug port (DP) and access ports (APs), other CoreSight components, the memory map, and so on.</p>
 
-<p>Unlocking of flash security, also called APPROTECT, is supported. For more, see the
-<a href="/docs/security.html">security and protection</a> documentation.</p>
+<h2 id="top-level-objects">Top level objects</h2>
 
-<h3 id="softdevice">SoftDevice</h3>
+<h3 id="session"><code class="highlighter-rouge">Session</code></h3>
 
-<p>The nRF51 and nRF52 series have support for so-called “SoftDevice” firmware, which implements Nordic’s Bluetooth LE or
-other wireless protocol API. When firmware containing a SoftDevice is loaded, the SoftDevice region of flash is locked.
-In order to reprogram the flash sectors containing the SoftDevice image, a mass erase must first be performed. This can
-potentially cause issues with flash programming if one is not aware of this requirement.</p>
+<ul>
+  <li>In <code class="highlighter-rouge">pyocd.core.session</code>.</li>
+  <li>Represents a target connection through a debug probe.</li>
+  <li>Root of object graph.</li>
+  <li>Owns the <code class="highlighter-rouge">Board</code> instance, and through that the <code class="highlighter-rouge">SoCTarget</code> instance.</li>
+  <li>Manages session options, user script, and project file access.</li>
+</ul>
 
-<p>For a development workflow with firmware using a SoftDevice, no extra steps are required.</p>
+<h3 id="debugprobe"><code class="highlighter-rouge">DebugProbe</code></h3>
 
-<p>PyOCD will by default scan flash sectors when programming flash in order to only erase and program sectors whose
-contents are changing. Since normally the SoftDevice sectors do not change during development, pyOCD will skip over
-these sectors.</p>
+<ul>
+  <li>In <code class="highlighter-rouge">pyocd.probe.DebugProbe</code>.</li>
+  <li>Manages connection to probe.</li>
+  <li>Abstracts target control actions.</li>
+  <li>Concrete subclasses implement a debug probe’s protocol.</li>
+  <li>Returns available instances of a debug probe type. For instance, for listing available probes.</li>
+  <li>Can be used alone (without <code class="highlighter-rouge">Target</code>) for some use cases.</li>
+  <li>Each subclass is a plug-in.</li>
+  <li>Concrete classes include
+    <ul>
+      <li><code class="highlighter-rouge">CMSISDAPProbe</code></li>
+      <li><code class="highlighter-rouge">STLinkProbe</code></li>
+      <li>and more</li>
+    </ul>
+  </li>
+</ul>
 
-<p>In addition, a chip erased performed with a SoftDevice in flash will erase only the non-SoftDevice sectors. For example,
-running <code class="highlighter-rouge">pyocd erase --chip</code> on such a device will leave the SoftDevice intact and erase all other sectors.</p>
+<h3 id="target"><code class="highlighter-rouge">Target</code></h3>
 
-<p>However, any case where the SoftDevice sectors are being erased requires a prior mass erase. This includes
-changing the SoftDevice variant or version, as well as switching to firmware that doesn’t include a SoftDevice.
-Mass erase is a separate operation. It mostly functions like a chip erase, but can also be used to
-<a href="/docs/security.html">unlock</a> devices that have APPROTECT enabled.</p>
+<ul>
+  <li>In <code class="highlighter-rouge">pyocd.core.target</code>.</li>
+  <li>Defines the abstract API primarily used by scripts.</li>
+  <li>Superclass for both SoC and core classes.</li>
+  <li>Functionality includes
+    <ul>
+      <li>Memory transfers</li>
+      <li>Core register access</li>
+      <li>Reset</li>
+      <li>Run control (halt/step/resume)</li>
+      <li>Breakpoints/watchpoints</li>
+      <li>Misc status</li>
+    </ul>
+  </li>
+  <li>Defines some enumerations used in many places, such as <code class="highlighter-rouge">Target.ResetType</code> and <code class="highlighter-rouge">Target.State</code>.</li>
+  <li>Concrete classes include
+    <ul>
+      <li><code class="highlighter-rouge">CoreSightTarget</code></li>
+      <li><code class="highlighter-rouge">CortexM</code></li>
+    </ul>
+  </li>
+</ul>
 
-<p>To perform a mass erase:</p>
+<h2 id="target-classes">Target classes</h2>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyocd erase --mass
-</code></pre></div></div>
+<p>These classes are all either direct or indirect subclasses of <code class="highlighter-rouge">Target</code>.</p>
 
-<h2 id="nxp">NXP</h2>
+<h3 id="soctarget"><code class="highlighter-rouge">SoCTarget</code></h3>
 
-<h3 id="kinetis-family">Kinetis family</h3>
+<ul>
+  <li>In <code class="highlighter-rouge">pyocd.core.soc_target</code>.</li>
+  <li>Abstract class for the SoC.</li>
+  <li>Runs init sequence created by subclass.</li>
+  <li>Owns all cores, accessible through the <code class="highlighter-rouge">.cores</code> dict property.</li>
+  <li>Has a notion of a <em>selected core</em>.</li>
+  <li>Proxies Target methods to the selected core, which makes single-core MCUs transparent.</li>
+</ul>
 
-<p>Unlocking of flash security is supported for all Kinetis targets. For more, see the
-<a href="/docs/security.html">security and protection</a> documentation.</p>
+<h3 id="coretarget"><code class="highlighter-rouge">CoreTarget</code></h3>
 
-<h2 id="hdsc">HDSC</h2>
+<ul>
+  <li>In <code class="highlighter-rouge">pyocd.core.core_target</code>.</li>
+  <li>Abstract class for a processor core.</li>
+  <li>Used as a common, architecture-independent superclass for core target classes.</li>
+  <li>Doesn’t provide much additional functionality on its own.</li>
+</ul>
 
-<h3 id="hc32l110">HC32L110</h3>
-<p>The documentation for this chip states that no external pull-up resistors are required on the SWD lines due to the internal pull-up
-hardware. Testing has found this to be largely inaccurate. Most debug probes will require an external 4.7k&amp;ohm; pull-up resistor 
-between Ports P27/P31 and V+.</p>
+<h3 id="coresighttarget"><code class="highlighter-rouge">CoreSightTarget</code></h3>
+
+<ul>
+  <li>In <code class="highlighter-rouge">pyocd.coresight.coresight_target</code>.</li>
+  <li>Concrete SoC class for Arm CoreSight based devices (subclass of <code class="highlighter-rouge">SoCTarget</code>).</li>
+  <li>Used for generic Arm targets such as the <code class="highlighter-rouge">cortex_m</code> target type.</li>
+  <li>Integrates CoreSight discovery into init sequence.</li>
+  <li>Owns the DP and APs.</li>
+</ul>
+
+<h3 id="cortexm"><code class="highlighter-rouge">CortexM</code></h3>
+
+<ul>
+  <li>In <code class="highlighter-rouge">pyocd.coresight.cortex_m</code>.</li>
+  <li>Concrete CPU-level target for Arm M-profile cores, subclass of <code class="highlighter-rouge">CoreTarget</code>.</li>
+  <li>Implements most of the <code class="highlighter-rouge">Target</code> methods.</li>
+  <li>Determines CPU type and supported extensions (FPU, etc) by reading ID registers.</li>
+</ul>
+
 
 
                 </div>
