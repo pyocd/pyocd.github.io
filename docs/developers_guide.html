@@ -91,7 +91,7 @@
             <a href="/docs/gdb_setup.html" class="sidebar-link ">GDB setup</a>
             </li>
           </ul>
-    <h5 class="sidebar-header level-1">User documentation</h5>
+    <h5 class="sidebar-header level-1">User guide</h5>
     <ul class="list-unstyled level-1">
     <li class="sidebar-item level-1">
             <a href="/docs/target_support.html" class="sidebar-link ">Target support</a>
@@ -104,6 +104,9 @@
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/open_cmsis_pack_support.html" class="sidebar-link ">Open-CMSIS-Pack support</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/gdbserver.html" class="sidebar-link ">gdb remote server</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/user_scripts.html" class="sidebar-link ">User scripts</a>
@@ -132,6 +135,9 @@
           <li class="sidebar-item level-1">
             <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
             </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/faq.html" class="sidebar-link ">FAQ</a>
+            </li>
           </ul>
     <h5 class="sidebar-header level-1">Reference</h5>
     <ul class="list-unstyled level-1">
@@ -154,13 +160,13 @@
     <h5 class="sidebar-header level-1">Python API</h5>
     <ul class="list-unstyled level-1">
     <li class="sidebar-item level-1">
+            <a href="/docs/api/architecture.html" class="sidebar-link ">Architecture</a>
+            </li>
+          <li class="sidebar-item level-1">
             <a href="/docs/python_api.html" class="sidebar-link ">Introduction to the API</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
-            </li>
-          <li class="sidebar-item level-1">
-            <a href="/docs/api/architecture.html" class="sidebar-link ">Architecture</a>
             </li>
           <li class="sidebar-item level-1">
             <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
@@ -224,6 +230,11 @@
 <li class="toc-entry toc-h2"><a href="#setup">Setup</a></li>
 <li class="toc-entry toc-h2"><a href="#steps">Steps</a></li>
 <li class="toc-entry toc-h2"><a href="#branch-configuration-policy">Branch configuration policy</a></li>
+<li class="toc-entry toc-h2"><a href="#debugging-pyocd">Debugging pyOCD</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#vs-code">VS Code</a></li>
+</ul>
+</li>
 </ul>
                     </div>
                   </div>
@@ -287,7 +298,7 @@ the following.</p>
 
 <p>Because the <code class="highlighter-rouge">develop</code> branch doesn’t have version tags except older tags from the <code class="highlighter-rouge">develop</code> branch point,
 the version number of pyOCD might be significantly out of date. If this is an issue, you can override the
-version by setting the <code class="highlighter-rouge">SETUPTOOLS_SCM_PRETEND_VERSION</code> environmment variable to the desired version number
+version by setting the <code class="highlighter-rouge">SETUPTOOLS_SCM_PRETEND_VERSION</code> environment variable to the desired version number
 (without a “v” prefix).</p>
 
 <p><strong>Step 4.</strong> Develop</p>
@@ -350,6 +361,74 @@ which branch to target.</p>
 <p>If you have any questions about how best to submit changes or the branch policy, please ask in the
 <a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Slack</a> workspace or
 <a href="https://github.com/pyocd/pyOCD/discussions">GitHub Discussions</a>. We’ll be happy to help.</p>
+
+<h2 id="debugging-pyocd">Debugging pyOCD</h2>
+
+<h3 id="vs-code">VS Code</h3>
+
+<p>Debugging pyOCD launched by VS Code is straightforward, and is much like debugging any package.</p>
+
+<ol>
+  <li>
+    <p>First, set up the pyOCD development and virtualenv as described above.</p>
+  </li>
+  <li>
+    <p>Set up the launch config as follows.</p>
+
+    <ul>
+      <li>
+        <p>Set <code class="highlighter-rouge">pythonPath</code> to the python executable in the virtualenv.</p>
+      </li>
+      <li>
+        <p>Set <code class="highlighter-rouge">module</code> to <code class="highlighter-rouge">pyocd.__main__</code>, to debug pyOCD entry point as a module. This works better than trying to debug the script <code class="highlighter-rouge">.../pyocd/__main__.py</code> as it ensures the relative module references inside pyOCD work correctly..</p>
+      </li>
+    </ul>
+
+    <p>For instance, here is a VS Code launch config for pyOCD’s gdbserver:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> {
+     "name": "pyocd gdbserver",
+     "type": "python",
+     "request": "launch",
+     "module": "pyocd.__main__",
+     "console": "integratedTerminal",
+     "stopOnEntry": true,
+     "pythonPath": "/Users/username/projects/pyOCD/venv/bin/python3",
+     "showReturnValue": true,
+     "args": ["gdb", "-v"]
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>It’s also possible to debug pyOCD remotely. This is useful either for cases where it is launched by another tool and you cannot directly control the command line , or is on another machine.</p>
+
+<p>For remote debug, use a launch config like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    {
+        "name": "Python: Attach using port",
+        "type": "python",
+        "request": "attach",
+        "port": 5678,
+    }
+</code></pre></div></div>
+
+<p>If the pyOCD process is on another machine, add a <code class="highlighter-rouge">host</code> key to the launch config with the host name. (This defaults to localhost.)</p>
+
+<p>Install <a href="https://github.com/microsoft/debugpy/">debugpy</a> with pip into your virtual environment.</p>
+
+<p>To remotely debug pyOCD from the command line, run it with the <code class="highlighter-rouge">debugpy</code> module. For instance, <code class="highlighter-rouge">python -m debugpy --listen 5678 -m pyocd gdb -v</code>. Additionally, <code class="highlighter-rouge">--wait-for-client</code> can be added after the port number to wait for the debug client to connect before running pyOCD.</p>
+
+<p>If you don’t control pyOCD’s launch, then <code class="highlighter-rouge">debugpy</code> can be called directly from pyOCD’s code. Add the following code to pyocd. Inside <code class="highlighter-rouge">pyocd.__main__.PyOCDTool.run()</code> is a good location, though it can be done at module level in <code class="highlighter-rouge">__main__.py</code>.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">debugpy</span>
+<span class="n">debugpy</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5678</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>To pause pyOCD’s execution and wait for the debug client to connect, add this line as well:</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">debugpy</span><span class="p">.</span><span class="n">wait_for_client</span><span class="p">()</span>
+</code></pre></div></div>
+
 
 
                 </div>

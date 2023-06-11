@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>Board IDs &mdash; pyOCD</title>
+  <title>FAQ &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -136,7 +136,7 @@
             <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
             </li>
           <li class="sidebar-item level-1">
-            <a href="/docs/faq.html" class="sidebar-link ">FAQ</a>
+            <p class="sidebar-item-selected">FAQ</p>
             </li>
           </ul>
     <h5 class="sidebar-header level-1">Reference</h5>
@@ -192,7 +192,7 @@
               <a href="/docs/architecture.html" class="sidebar-link ">Architecture</a>
               </li>
             <li class="sidebar-item level-2">
-              <p class="sidebar-item-selected">Board IDs</p>
+              <a href="/docs/developer/board_ids.html" class="sidebar-link ">Board IDs</a>
               </li>
             <li class="sidebar-item level-2">
               <a href="/docs/remote_probe_protocol.html" class="sidebar-link ">Remote probe protocol</a>
@@ -219,7 +219,7 @@
               <div class="row">
                 <div class="container docs-content">
                   
-                  <h1 class="mb-4 mt-0">Board IDs</h1>
+                  <h1 class="mb-4 mt-0">FAQ</h1>
                   
 
                   <!-- floating table of contents -->
@@ -227,85 +227,39 @@
                     <div class="sidebar docs-sidebar-2 p-4">
                         <h5 class="sidebar-header">On this page</h5>
                         <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-<li class="toc-entry toc-h2"><a href="#definition">Definition</a></li>
-<li class="toc-entry toc-h2"><a href="#lists">Lists</a></li>
-<li class="toc-entry toc-h2"><a href="#getting-a-new-id">Getting a new ID</a></li>
-<li class="toc-entry toc-h2"><a href="#moving-forward">Moving forward</a></li>
+<li class="toc-entry toc-h3"><a href="#common-issues">Common issues</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#debug-probe-is-not-available">Debug probe is not available</a></li>
+<li class="toc-entry toc-h5"><a href="#getting-no-ack-errors-when-attempting-to-connect">Getting “No ACK” errors when attempting to connect</a></li>
+</ul>
+</li>
 </ul>
                     </div>
                   </div>
 
-                  <div class="alert alert-warning">
-New CMSIS-DAP firmware releases should use the CMSIS-DAP v2.1 board and target identification features
-rather than board IDs.
-</div>
+                  <h3 id="common-issues">Common issues</h3>
 
-<p>This page documents the board IDs reported by certain <a href="/docs/debug_probes.html">debug probes</a> with which pyOCD can automatically identify a board and its target type.</p>
+<h5 id="debug-probe-is-not-available">Debug probe is not available</h5>
 
-<h2 id="introduction">Introduction</h2>
-
-<p>Board IDs originally come from Mbed OS and the Mbed Enabled program. (PyOCD was originally an <a href="https://mbed.com">Arm Mbed</a> project. It is now an independent project and no longer part of Mbed or owned by Arm.)</p>
-
-<h2 id="definition">Definition</h2>
-
-<p>A board ID is a 4-character code that uniquely identifies a board. It also identifies an Mbed platform: the same ID is used for both (which is actually a problem for some use cases).</p>
-
-<p>Board ID definition:</p>
 <ul>
-  <li>4-character code.
-    <ul>
-      <li>Board IDs currently are all hex numeric, but it’s actually a string.</li>
-      <li>There may be problems raised in some components if you tried to use a non-hex char.</li>
-    </ul>
-  </li>
-  <li>First 2 characters identify the vendor.
-    <ul>
-      <li>There are multiple cases of boards from different vendors being incorrectly allocated in another vendor’s namespace, so this cannot solely be relied upon. It’s only really useful for grouping of IDs.</li>
-    </ul>
-  </li>
-  <li>Reserved values::
-    <ul>
-      <li>“C0xx” is reserved for “community” boards, i.e. open source hardware and non-commercial projects.</li>
-      <li>“D0xx” is reserved for boards that are not also Mbed platforms, mostly DAPLink firmware.</li>
-      <li>“0000” is reserved to mean “no on-board target”. That is, the debug probe is standalone must be connected to the target with a cable.</li>
-    </ul>
-  </li>
+  <li>Linux: Make sure udev is configured correctly to allow access to USB debug probes. PyOCD includes a set of predefined <a href="https://github.com/pyocd/pyOCD/tree/main/udev">udev config files</a> for common probe. Alternatively, you can run pyocd using sudo, but this is strongly recommended against.</li>
+  <li>MacOS: Make sure another process hasn’t taken ownership of the USB device.</li>
 </ul>
 
-<p>Currently these debug probe firmware support board IDs:</p>
+<h5 id="getting-no-ack-errors-when-attempting-to-connect">Getting “No ACK” errors when attempting to connect</h5>
+
 <ul>
-  <li><a href="https://daplink.io/">DAPLink</a>, via the first 4 chars of the USB serial number</li>
-  <li>STLinkV2-1 and V3, via an <code class="highlighter-rouge">.htm</code> file on the associated USB mass storage volume and an STLink protocol command.</li>
+  <li>A “No ACK” error means the target is not responding at all to SWD/JTAG transfers. This can be for a few reasons:
+    <ul>
+      <li>The target is not powered on. Either the board isn’t power up or the target is in a deep sleep mode.</li>
+      <li>The SWD/JTAG pins haved been pinmuxed to different peripherals.</li>
+      <li>The SWD or JTAG wire protocol being used isn’t supported by the device.</li>
+      <li>A target-specific reason, such as a proprietary connection procedure that hasn’t been performed.</li>
+    </ul>
+  </li>
+  <li>The method to gain debug control of a powered down or sleeping device is target dependent. However, it generally involves first waking the device, then halting the CPU before the resident firmware can place the device in a low power state. For many MCUs, these steps can be accomplished by telling pyOCD to connect while the reset pin is held asserted, eg connecting under reset. To use this mode, pass <code class="highlighter-rouge">--connect=under-reset</code>. On certain devices this won’t work because the reset pin performs a cold reset that also resets debug logic. For these devices, please refer to the vendor’s reference manual or programming manual.</li>
+  <li>A similar method to waking a sleeping device is needed to gain control of a device whose firmware changes the SWD/JTAG pinmux after it starts running. Connecting under reset also works in this case, if the device support it.</li>
 </ul>
-
-<h2 id="lists">Lists</h2>
-
-<p>The <code class="highlighter-rouge">BOARD_ID_TO_INFO</code> dict in pyOCD’s <a href="https://github.com/pyocd/pyOCD/blob/main/pyocd/board/board_ids.py"><code class="highlighter-rouge">board_ids.py</code></a> source file contains a list of board IDs known to pyOCD, with some extra data such as target type and test firmware file name. This is not a comprehensive list of board IDs, however.</p>
-
-<p>You can see the full list of public Mbed platforms at <a href="https://os.mbed.com/api/v3/platforms/">https://os.mbed.com/api/v3/platforms/</a>. The <code class="highlighter-rouge">productcode</code> key is the board ID. This list only reports boards that are Mbed platforms. Any non-Mbed-enabled boards with an allocated board ID are marked as hidden (because this database is also used to generate the <a href="https://os.mbed.com/platforms/">Mbed platforms</a> web site), and thus will not be visible through this API. Be aware that the page take a <em>long</em> time to fully load. A tool like <code class="highlighter-rouge">curl</code> may be used to download the page as JSON instead.</p>
-
-<h2 id="getting-a-new-id">Getting a new ID</h2>
-
-<p>There are two ways to get new board IDs:</p>
-
-<ol>
-  <li>
-    <p>Post a request to the #daplink channel on the <a href="https://pyocd.slack.com/">pyOCD Slack workspace</a> (<a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Join</a>). We can allocate you a 0xDxxx board ID.</p>
-  </li>
-  <li>
-    <p>For new Mbed OS platforms, request a new board ID by filling out the form here: <a href="https://os.mbed.com/request-board-id">https://os.mbed.com/request-board-id</a></p>
-  </li>
-</ol>
-
-<h2 id="moving-forward">Moving forward</h2>
-
-<p>Version 2.1 of the <a href="https://arm-software.github.io/CMSIS_5/DAP/html/index.html">CMSIS-DAP</a> specification adds support for new <a href="https://arm-software.github.io/CMSIS_5/DAP/html/group__DAP__Info.html">DAP_Info</a> selectors that identify the board and target. The values returned by these selectors are required to match board and target identifiers in CMSIS-Packs.</p>
-
-<p>PyOCD supports the new CMSIS-DAP v2.1 info selectors and will use them in preference to a board ID if available. This works with any debug probe firmware compatible with CMSIS-DAP. Thus, any new CMSIS-DAP firmware projects should support v2.1 and the new DAP_Info selectors rather than implementing board IDs.</p>
-
-<p>The DAPLink open source CMSIS-DAP firmware has support for the v2.1 identifiers. We recommend using these identifiers rather than a board ID for any new DAPLink based firmware.</p>
-
 
 
                 </div>

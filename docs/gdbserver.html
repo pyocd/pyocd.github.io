@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>gdb remote server &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark py-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container-fluid flex-grow-1 p-0">
+        <div class="row">
+          <div class="col-md-3 col-sm-0 d-sm-none d-md-block p-0">
+            
+
+<div class="sidebar docs-sidebar-1" id="sidebar1">
+  <div class="p-4">
+    <h5 class="sidebar-header level-1">Getting started</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/installing.html" class="sidebar-link ">Installing</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/installing_on_non_x86.html" class="sidebar-link ">Installing on non-x86 platforms</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/gdb_setup.html" class="sidebar-link ">GDB setup</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">User guide</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/target_support.html" class="sidebar-link ">Target support</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/debug_probes.html" class="sidebar-link ">Debug probes</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuration.html" class="sidebar-link ">Configuration</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/open_cmsis_pack_support.html" class="sidebar-link ">Open-CMSIS-Pack support</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <p class="sidebar-item-selected">gdb remote server</p>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/user_scripts.html" class="sidebar-link ">User scripts</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/remote_probe_access.html" class="sidebar-link ">Remote probe access</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/configuring_logging.html" class="sidebar-link ">Configuring logging</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/security.html" class="sidebar-link ">Security and protection</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/multicore_debug.html" class="sidebar-link ">Multicore debug</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/semihosting.html" class="sidebar-link ">Semihosting</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/swo_swv.html" class="sidebar-link ">SWO/SWV</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/memory_attributes.html" class="sidebar-link ">Memory transfer attributes</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/target_family_notes.html" class="sidebar-link ">Target family usage notes</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/faq.html" class="sidebar-link ">FAQ</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Reference</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/terminology.html" class="sidebar-link ">Terminology</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/builtin-targets.html" class="sidebar-link ">Built-in targets</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/options.html" class="sidebar-link ">Session options list</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/command_reference.html" class="sidebar-link ">Command reference</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/env_vars.html" class="sidebar-link ">Environment variables</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Python API</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/api/architecture.html" class="sidebar-link ">Architecture</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/python_api.html" class="sidebar-link ">Introduction to the API</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api_examples.html" class="sidebar-link ">Python API examples</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/api/using_session_options.html" class="sidebar-link ">Using session options</a>
+            </li>
+          </ul>
+    <h5 class="sidebar-header level-1">Developers</h5>
+    <ul class="list-unstyled level-1">
+    <li class="sidebar-item level-1">
+            <a href="/docs/developers_guide.html" class="sidebar-link ">Developers’ guide</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/adding_new_targets.html" class="sidebar-link ">Adding a new built-in target</a>
+            </li>
+          <li class="sidebar-item level-1">
+            <a href="/docs/automated_tests.html" class="sidebar-link ">Automated tests</a>
+            </li>
+          <li>
+        <p class="sidebar-header level-2">
+          Internal design
+        </p>
+        <ul class="list-unstyled level-2">
+        <li class="sidebar-item level-2">
+              <a href="/docs/architecture.html" class="sidebar-link ">Architecture</a>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/developer/board_ids.html" class="sidebar-link ">Board IDs</a>
+              </li>
+            <li class="sidebar-item level-2">
+              <a href="/docs/remote_probe_protocol.html" class="sidebar-link ">Remote probe protocol</a>
+              </li>
+            </ul>
+        </li></ul>
+    </div>
+</div>
+
+          </div>
+          <div class="col-md-9 col-sm-12 p-0">
+            <main role="main" class="content-scroll p-4" data-spy="scroll" data-target="#components-nav" data-offset="0">
+
+              
+
+              
+              <div class="row">
+                <div class="d-sm-block d-md-none">
+                  <p class=""><b>&larr;</b> <a href="/docs/index">Documentation index</a></p>
+                </div>
+              </div>
+              
+
+              <div class="row">
+                <div class="container docs-content">
+                  
+                  <h1 class="mb-4 mt-0">gdb remote server</h1>
+                  
+
+                  <!-- floating table of contents -->
+                  <div class="col-lg-4 col-md-3 float-md-end ms-md-3 mb-sm-3" id="toc-div">
+                    <div class="sidebar docs-sidebar-2 p-4">
+                        <h5 class="sidebar-header">On this page</h5>
+                        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#running-the-gdbserver">Running the gdbserver</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#multicore-targets">Multicore targets</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#connecting-from-gdb">Connecting from gdb</a></li>
+<li class="toc-entry toc-h2"><a href="#gdbserver-exit">Gdbserver exit</a></li>
+<li class="toc-entry toc-h2"><a href="#useful-commands">Useful commands</a></li>
+<li class="toc-entry toc-h2"><a href="#monitor-commands">Monitor commands</a></li>
+<li class="toc-entry toc-h2"><a href="#semihosting-and-rtt">Semihosting and RTT</a></li>
+<li class="toc-entry toc-h2"><a href="#caching">Caching</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#reading-memory-from-the-elf">Reading memory from the ELF</a></li>
+<li class="toc-entry toc-h3"><a href="#memory-and-register-cache">Memory and register cache</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#rtos-thread-awareness">RTOS thread awareness</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#viewing-and-selecting-threads">Viewing and selecting threads</a></li>
+<li class="toc-entry toc-h3"><a href="#thread-reporting">Thread reporting</a></li>
+<li class="toc-entry toc-h3"><a href="#rtos-notes">RTOS notes</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#zephyr-rtos">Zephyr RTOS</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#handler-mode-thread">Handler mode thread</a></li>
+</ul>
+</li>
+</ul>
+                    </div>
+                  </div>
+
+                  <p>The <code class="highlighter-rouge">pyocd gdbserver</code> subcommand runs a gdb remote serial protocol (RSP) server that allows gdb to debug embedded targets.</p>
+
+<p>To run a debug session, the pyOCD gdbserver needs to first be started. Then gdb connects to pyOCD and debugging can begin.</p>
+
+<h2 id="running-the-gdbserver">Running the gdbserver</h2>
+
+<p>The usual way to start the gdbserver is by running <code class="highlighter-rouge">pyocd gdbserver</code> (or <code class="highlighter-rouge">pyocd gdb</code>) on the command line. The gdbserver will remain available as long as the <code class="highlighter-rouge">pyocd</code> process is running.</p>
+
+<p>If using an IDE like Microsoft Visual Studio Code or Eclipse Embedded with plugins that support pyOCD, the gdbserver will automatically be started when you launch a debug session. Alternatively, the plugin can be configured to connect to an already-running gdbserver.</p>
+
+<p>From the commander, a gdbserver can be run with the <a href="/docs/command_reference.html#gdbserver-1"><code class="highlighter-rouge">gdbserver</code> command</a>.</p>
+
+<p>The default gdbserver TCP/IP port number is 333. This can be changed using the <code class="highlighter-rouge">-p</code> / <code class="highlighter-rouge">--port</code> or the <code class="highlighter-rouge">gdbserver_port</code> session option.</p>
+
+<h3 id="multicore-targets">Multicore targets</h3>
+
+<p>pyOCD always runs separate gdbservers for each core on multicore devices. This requires separate gdb instances and debug sessions for the cores being debugged, but is the most reliable method since gdb doesn’t support heterogenous multicore.</p>
+
+<p>By default, a gdbserver is started for all cores on the target. This can be changed using the <code class="highlighter-rouge">--core</code> argument, which takes a comma-separated list of core numbers.</p>
+
+<p>The TCP/IP port numbers for each core’s gdbserver are determined by adding the core number to the base port number (see above). For a dual core device, core 0 uses the default base port of 3333, and core 1 uses port 3334.</p>
+
+<p>See the <a href="/docs/multicore_debug.html">multicore debug documentation</a> for more information about multicore targets.</p>
+
+<h2 id="connecting-from-gdb">Connecting from gdb</h2>
+
+<p>To connect gdb to pyOCD’s gdbserver, use the <code class="highlighter-rouge">target remote &lt;host&gt;:&lt;port&gt;</code> command. These take the server’s host name and port number separated by a colon as an argument. For a server running on the same host as gdb, using the default pyOCD port (see above for how to change it), this will be <code class="highlighter-rouge">target remote localhost:3333</code>.</p>
+
+<p>PyOCD also support extended remote mode. In this case, the connect command is <code class="highlighter-rouge">target extended-remote &lt;host&gt;:&lt;port&gt;</code>. Extended remote mode allows using the gdb <code class="highlighter-rouge">disconnect</code> command to disconnect from pyOCD while keeping the gdbserver running.</p>
+
+<p>After connecting gdb, perform the following steps to program updated firmware and run the new code.</p>
+
+<ol>
+  <li>
+    <p>Program firmware using the <code class="highlighter-rouge">load</code> command.</p>
+  </li>
+  <li>
+    <p>Reset the target and halt with <code class="highlighter-rouge">monitor reset halt</code>. This halts the core at the first instruction.</p>
+  </li>
+  <li>
+    <p>Set breakpoints and resume, or use a command line <code class="highlighter-rouge">until main</code> to run to the first line of <code class="highlighter-rouge">main()</code>.</p>
+  </li>
+</ol>
+
+<h2 id="gdbserver-exit">Gdbserver exit</h2>
+
+<p>The pyOCD gdbserver process will normally exit automatically when gdb detaches using any of the <code class="highlighter-rouge">detach</code>, <code class="highlighter-rouge">kill</code>, or <code class="highlighter-rouge">disconnect</code> commands. This can be changed with the <code class="highlighter-rouge">--persist</code> argument or <code class="highlighter-rouge">persist</code> session option, so that the gdbserver always remains running until terminated directly (by Control-C or equivalent signal).</p>
+
+<p>When gdb connects in extended remote mode, the gdb <code class="highlighter-rouge">disconnect</code> command will detach gdb but keep the gdbserver running even if persist isn’t enabled.</p>
+
+<h2 id="useful-commands">Useful commands</h2>
+
+<p>Gdb by default restricts memory accesses to regions defined in the target memory map provided by pyOCD. This has the unhappy side effect of preventing access to peripheral registers or other Device memory, since the memory maps do not include those regions.</p>
+
+<p>To work around this, disable gbd’s <code class="highlighter-rouge">mem inaccessible-by-default</code> setting.</p>
+
+<p>This line can be added into your <code class="highlighter-rouge">.gdbinit</code> file:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) set mem inaccessible-by-default off
+</code></pre></div></div>
+
+<p>It can also be useful to add an alias to make monitor commands (below) easier to access:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) alias m = monitor
+</code></pre></div></div>
+
+<p>To catch crashes and unexpected exceptions, use <a href="/docs/command_reference.html#vector-catch"><code class="highlighter-rouge">set vector-catch</code></a> to enable the M-profile vector catch feature:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor set vector-catch all
+</code></pre></div></div>
+
+<p>If the core halts in an exception handler, use <a href="/docs/command_reference.html#fault"><code class="highlighter-rouge">show fault</code></a> to print out the M-profile fault syndrome registers.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor show fault
+</code></pre></div></div>
+
+<p>For most targets, peripheral registers can be accessed using pyOCD’s <a href="/docs/command_reference.html#reg"><code class="highlighter-rouge">reg</code></a> and <a href="/docs/command_reference.html#wreg"><code class="highlighter-rouge">wreg</code></a> commands.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor reg TIM21.PSC
+</code></pre></div></div>
+
+<p>Enabling access to all memory as described above is required for this to work.</p>
+
+<h2 id="monitor-commands">Monitor commands</h2>
+
+<p>Commands can be sent directly to pyOCD using the gdb <code class="highlighter-rouge">monitor</code> command. Any output from pyOCD is returned through gdb and printed on the console. This is effectively the same as running the <code class="highlighter-rouge">pyocd commander</code> subcommand. All <a href="/docs/command_reference.html">pyOCD commands</a> are available.</p>
+
+<p>pyOCD initial selects the core controlled by the gdbserver as the target for monitor commands. Similarly, the selected AP is initially set to the gdbserver’s core’s MEM-AP. PyOCD’s <a href="/docs/command_reference.html#core-1"><code class="highlighter-rouge">core</code> command</a> can be used to select a different core. This might be useful in order to release a secondary core from reset before starting to debug it, although a <a href="/docs/user_scripts.html">user script</a> could be a better choice.</p>
+
+<h2 id="semihosting-and-rtt">Semihosting and RTT</h2>
+
+<p>The gdbserver supports <a href="/docs/semihosting.html">semihosting</a>, SEGGER RTT, and <a href="/docs/swo_swv.html">Arm SWV</a>.</p>
+
+<h2 id="caching">Caching</h2>
+
+<p>Several forms of caching are supported to improve performance when communicating with gdb.</p>
+
+<p>Note that these caches are currently only used with gdb, not for pyOCD’s commander interface or the <code class="highlighter-rouge">Target</code> Python API. (But they will be used for the <code class="highlighter-rouge">DebugContext</code> objects return from <code class="highlighter-rouge">SoCTarget.get_target_context()</code>, if that is used through the Python API.)</p>
+
+<h3 id="reading-memory-from-the-elf">Reading memory from the ELF</h3>
+
+<p>If provided the firmware’s ELF executable file with the <code class="highlighter-rouge">--elf</code> argument, pyOCD will read target memory contents present in the ELF from that file instead of reading from the target via SWD/JTAG. This can be faster, especially with slower debug probe connections or wire protocol speeds.</p>
+
+<p>The <code class="highlighter-rouge">cache.read_code_from_elf</code> session option (bool) controls whether this feature is enabled. It’s turned on by default, but of course requires the ELF to be passed to pyOCD. (Unfortunately, there is no way to access the executable through gdb.)</p>
+
+<h3 id="memory-and-register-cache">Memory and register cache</h3>
+
+<p>Caches for target memory and core register values are present and enabled by default. Both caches are invalidated every time the core is resumed or stepped.</p>
+
+<p>The memory cache will cache any memory region marked as cacheable (all are by default). To disable caching for a memory region, a user script can be used to set its <code class="highlighter-rouge">is_cacheable</code> property to False.</p>
+
+<p>For example, to disable caching of the “iram” region:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">will_connect</span><span class="p">():</span>
+    <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">get_first_matching_region</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"iram"</span><span class="p">).</span><span class="n">is_cacheable</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<p>(Use the <code class="highlighter-rouge">show map</code> command to see the list of memory regions.)</p>
+
+<p>These session options allow control over the memory and register caches. Both are enabled by default.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">cache.enable_memory</code> (bool)</li>
+  <li><code class="highlighter-rouge">cache.enable_register</code> (bool)</li>
+</ul>
+
+<h2 id="rtos-thread-awareness">RTOS thread awareness</h2>
+
+<p>The gdbserver supports thread awareness for several RTOSes. Additional RTOS support can be added with plugins.</p>
+
+<p>When gdb connects, pyOCD will attempt to enable thread awareness. By default, all available RTOS plugins are queried. When the first one is successfully enabled, the process stops. If the <code class="highlighter-rouge">rtos.name</code> session option is set to the name of an RTOS plugin, only that one will be queried. To completely disable thread awareness, set the <code class="highlighter-rouge">rtos.enable</code> session option to false.</p>
+
+<p>Builtin RTOS plugins are shown in the following table.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>RTOS Plugin Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>argon</td>
+      <td>Argon RTOS</td>
+    </tr>
+    <tr>
+      <td>freertos</td>
+      <td>FreeRTOS</td>
+    </tr>
+    <tr>
+      <td>rtx5</td>
+      <td>RTX5</td>
+    </tr>
+    <tr>
+      <td>threadx</td>
+      <td>ThreadX</td>
+    </tr>
+    <tr>
+      <td>zephyr</td>
+      <td>Zephyr</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="viewing-and-selecting-threads">Viewing and selecting threads</h3>
+
+<p>Within gdb, the set of current threads can be printed with <code class="highlighter-rouge">info threads</code>. gdb assigns each thread a unique integer identifier used to reference the thread in other commands.</p>
+
+<p>This example shows a gdb thread listing for a Zephyr RTOS program.</p>
+
+<div class="highlight"><pre class="highlight"><code>  Id   Target Id                                            Frame
+* 3    Thread 536871784 "idle" (Running; Priority 15)       <span style="color: yellow">arch_cpu_idle</span> ()
+    at <span style="color: green">/Users/creed/projects/zephyrproject/zephyr/arch/arm/core/aarch32/cpu_idle.S</span>:126
+  4    Thread 536871584 "uart_out_id" (Pending; Priority 7) <span style="color: yellow">arch_swap</span> (<span style="color: cyan">key</span>=0)
+    at <span style="color: green">/Users/creed/projects/zephyrproject/zephyr/arch/arm/core/aarch32/swap.c</span>:53
+  5    Thread 536871416 "blink1_id" (Suspended; Priority 7) <span style="color: yellow">arch_swap</span> (<span style="color: cyan">key=key@entry</span>=0)
+    at <span style="color: green">/Users/creed/projects/zephyrproject/zephyr/arch/arm/core/aarch32/swap.c</span>:53
+  6    Thread 536871248 "blink0_id" (Suspended; Priority 7) <span style="color: yellow">arch_swap</span> (<span style="color: cyan">key=key@entry</span>=0)
+    at <span style="color: green">/Users/creed/projects/zephyrproject/zephyr/arch/arm/core/aarch32/swap.c</span>:53
+  7    Thread 536872152 "sysworkq" (Pending; Priority -1)   <span style="color: yellow">arch_swap</span> (<span style="color: cyan">key</span>=0)
+    at <span style="color: green">/Users/creed/projects/zephyrproject/zephyr/arch/arm/core/aarch32/swap.c</span>:53
+</code></pre></div>
+
+<p>Note how the thread name is shown in quotes, and thread state and priority are shown in parentheses. The actual description of threads is specific to each RTOS plugin.</p>
+
+<p>The <code class="highlighter-rouge">thread</code> command takes a gdb thread ID to switches between threads; after switching, <code class="highlighter-rouge">backtrace</code> will show the selected thread’s state.</p>
+
+<h3 id="thread-reporting">Thread reporting</h3>
+
+<p>There can be issues caused by a mismatch between the target’s current memory contents and the expected location of RTOS related symbols. For instance, if a new version of firmware is being debugged but the target’s flash has not been reprogrammed yet, or if there is stale data in RAM. If this happens, an out of date or corrupt view of the RTOS state could be reported.</p>
+
+<p>To prevent this from happening, pyOCD will disable reporting threads to gdb (and reading the RTOS data from target memory) until the first time the target is resumed after any of these events:</p>
+<ul>
+  <li>gdb connects to pyOCD</li>
+  <li>Target reset</li>
+  <li>Flash is reprogrammed using gdb commands</li>
+</ul>
+
+<p>Note that a single instruction step will not enable thread reporting. A full resume is required. Gdb will see the list of threads when the target halts after the first resume, eg which a breakpoint is hit or the target is manually halted.</p>
+
+<p>The actual behaviour depends on the plugin, so there is some slight variation between RTOSes. But the general sequence applies.</p>
+
+<p>This logic not perfect, so there is a <a href="/docs/command_reference.html#threads-1"><code class="highlighter-rouge">threads</code> command</a> that provides manual control. It takes an argument with one of these actions:</p>
+<ul>
+  <li><code class="highlighter-rouge">status</code>: Show whether thread reporting is enabled.</li>
+  <li><code class="highlighter-rouge">enable</code>: Enable thread reporting.</li>
+  <li><code class="highlighter-rouge">disable</code>: Disallow thread reporting.</li>
+  <li><code class="highlighter-rouge">flush</code>: Forcibly invalidate the threads list.</li>
+</ul>
+
+<p>If <code class="highlighter-rouge">threads</code> is executed and an RTOS plugin has not successfully loaded, it will print “Threads are unavailable”.</p>
+
+<p>After thread reporting is enabled or disabled manually, you must step or resume in gdb to force gdb to refresh its view of threads. (There is no flush or invalidate for threads in gdb.)</p>
+
+<p>When thread reporting is disabled, gdb will see a single thread just like when no RTOS plugin is loaded.</p>
+
+<h3 id="rtos-notes">RTOS notes</h3>
+
+<p>These sections document specific features or requirements for using thread awareness with different RTOSes.</p>
+
+<h4 id="zephyr-rtos">Zephyr RTOS</h4>
+
+<p>To enable thread awareness, the <code class="highlighter-rouge">CONFIG_DEBUG_THREAD_INFO</code> Kconfig setting must be enabled.</p>
+
+<h3 id="handler-mode-thread">Handler mode thread</h3>
+
+<p>The RTOS plugins will report an artificial thread when an M-profile core is in Handler mode, eg in an exception or interrupt handler. This lets you view the state of the exception handler separately from RTOS threads.</p>
+
+
+
+                </div>
+              </div>
+            </main>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021-2023 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+
+      <a href="#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+
+<script>
+// Hide the page's floating TOC if there are no sections.
+if ($('#toc').children().length < 1) {
+  $('#toc-div').hide()
+}
+
+// Insert icons for alerts.
+$(".alert-warning").prepend("<div class=\"alert-icon\"><i class=\"bi bi-exclamation-triangle\"></i></div>")
+$(".alert-info").prepend("<div class=\"alert-icon\"><i class=\"bi bi-info-circle\"></i></div>")
+$(".alert-success").prepend("<div class=\"alert-icon\"><i class=\"bi bi-check-circle\"></i></div>")
+</script>
+</html>
