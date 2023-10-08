@@ -251,7 +251,7 @@
 </li>
 <li class="toc-entry toc-h2"><a href="#pyocds-debug-sequence-implementation">PyOCD’s debug sequence implementation</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#cpu-specific-debugport-sequences">CPU-specific DebugPort sequences</a></li>
+<li class="toc-entry toc-h3"><a href="#core-specific-sequences">Core-specific sequences</a></li>
 <li class="toc-entry toc-h3"><a href="#custom-default-reset-sequences">Custom default reset sequences</a></li>
 <li class="toc-entry toc-h3"><a href="#debug-sequences-and-delegate-functions">Debug sequences and delegate functions</a></li>
 <li class="toc-entry toc-h3"><a href="#supported-debug-sequences">Supported debug sequences</a></li>
@@ -358,9 +358,15 @@
 
 <p>This section documents details of the debug sequence engine provided by pyOCD, supported features, and any notable differences with other debuggers (primarily Keil MDK, which provided the first implementation and against which Packs are generally most thoroughly tested by their authors).</p>
 
-<h3 id="cpu-specific-debugport-sequences">CPU-specific DebugPort sequences</h3>
+<h3 id="core-specific-sequences">Core-specific sequences</h3>
 
-<p>Like all other debug sequences, <code class="highlighter-rouge">DebugPortSetup</code>, <code class="highlighter-rouge">DebugPortStart</code>, and <code class="highlighter-rouge">DebugPortStop</code> can be customised per CPU core. If a DFP has multiple CPU-specific instances of these sequences, they may behave differently in pyOCD than other debuggers. Many debuggers only “connect” to a single CPU chosen by the user when debugging or running a project. PyOCD is somewhat different in that it connects to the device as a whole, and then debugs a chosen core after the connection is established (which more closely reflects the hardware situation).</p>
+<p>The DFP debug sequence architecture is currently based on the fact that most debuggers only “connect” to a single CPU core chosen by the user when debugging or running a project. All debug sequences can be customised per core, and there can be separate sequences for each core.</p>
+
+<p>PyOCD is somewhat different in that it connects to the device as a whole, and then debugs one or more cores after the connection is established. This more closely reflects the hardware situation.</p>
+
+<p>This primarily impacts the <code class="highlighter-rouge">DebugPortSetup</code>, <code class="highlighter-rouge">DebugPortStart</code>, <code class="highlighter-rouge">DebugPortStop</code>, and <code class="highlighter-rouge">DebugDeviceUnlock</code> debug sequences that affect the entire SoC. These relate to the connect procedure for the Arm ADI DP (Debug Port) used for SWD/JTAG communications. While most sequences can be run separately for each core, these are run only once per target connection. The core-specific variant that is selected can affect the rest of the debugging session. (Technically, this is also true for debuggers that are presented as debugging a single core, in cases where a second instance of that debugger can be started to debug another core. But, the way it’s presented to the user is different.)</p>
+
+<p>The <code class="highlighter-rouge">primary_core</code> session option is used to select which core-specific version of the <code class="highlighter-rouge">DebugPort*</code>/<code class="highlighter-rouge">DebugDeviceUnlock</code> sequences is run during the target connection process. For all other sequences, the core-specific version that is run depends on which core is performing the action.</p>
 
 <h3 id="custom-default-reset-sequences">Custom default reset sequences</h3>
 

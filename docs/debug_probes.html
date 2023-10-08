@@ -239,6 +239,7 @@
 <li class="toc-entry toc-h4"><a href="#microchip-edbg">Microchip EDBG</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#ti-xds110">TI XDS110</a></li>
 <li class="toc-entry toc-h3"><a href="#pe-micro-cyclone-and-multilink">PE Micro Cyclone and Multilink</a></li>
 <li class="toc-entry toc-h3"><a href="#stlink">STLink</a>
 <ul>
@@ -474,6 +475,10 @@ There are two major versions of CMSIS-DAP, which use different USB classes:</p>
 
 <p>The Microchip (previously Atmel) EDBG probe firmware, at the time of this writing, provides a CMSIS-DAP v1 interface.
 On macOS, reading command responses always times out. The probe works on other OSes, however.</p>
+
+<h3 id="ti-xds110">TI XDS110</h3>
+
+<p>XDS110 firmware version 03.00.00.25 is known to have an issue when using multiple outstanding packets (the default setting). To work around this, set the <code class="highlighter-rouge">cmsis_dap.limit_packets</code> session option, e.g. <code class="highlighter-rouge">-Ocmsis_dap.limit_packets=1</code> on the command line. Earlier firmware versions most likely exhibit the issue; it is unknown whether it is fixed in more recent versions.</p>
 
 <h3 id="pe-micro-cyclone-and-multilink">PE Micro Cyclone and Multilink</h3>
 
