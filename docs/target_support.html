@@ -242,6 +242,7 @@
 <ul>
 <li class="toc-entry toc-h4"><a href="#managed-packs">Managed packs</a></li>
 <li class="toc-entry toc-h4"><a href="#manual-pack-usage">Manual pack usage</a></li>
+<li class="toc-entry toc-h4"><a href="#cmsis-toolbox-run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a></li>
 </ul>
 </li>
 </ul>
@@ -453,6 +454,22 @@ a pack, change the extension to .zip and extract.</p>
 of the pack using the <code class="highlighter-rouge">--pack</code> argument, as above. This is very useful for cases such as development or
 debugging of a pack, or for working with other CMSIS-Pack managers that store packs in decompressed form.</p>
 
+<h4 id="cmsis-toolbox-run-and-debug-management">CMSIS-Toolbox Run and Debug Management</h4>
+
+<p>Run and Debug Management is a part of the <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox">CMSIS-Toolbox</a> build
+information files when working with CSolution projects. Each <code class="highlighter-rouge">*.cbuild-run.yml</code> file contains relevant run and
+debug information for a single <code class="highlighter-rouge">target-type</code> defined in a CSolution project. The tool gathers and filters the
+target information from the BSP and DFP.</p>
+
+<p>To use the <code class="highlighter-rouge">cbuild-run</code> target information in PyOCD, pass the <code class="highlighter-rouge">--cbuild-run</code> option followed by the path to
+desired <code class="highlighter-rouge">*.cbuild-run.yml</code> file. The target information is not cached in PyOCD, which means the command-line
+option should always be passed when launching the debugger.</p>
+
+<p>Because a single <code class="highlighter-rouge">target-type</code> is described in the YAML file, the <code class="highlighter-rouge">--target</code>
+command-line argument is not needed, as the target is automatically selected.</p>
+
+<p>More information on CMSIS-Toolbox and the CSolution project format for Run and Debug Management can be found in the
+<a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Documentation</a>.</p>
 
 
                 </div>
