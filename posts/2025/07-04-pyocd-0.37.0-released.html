@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>pyOCD 0.32.1 released &mdash; pyOCD</title>
+  <title>pyOCD 0.37.0 released &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -77,78 +77,132 @@
           <main role="main" class="content-scroll p-3 p-md-4">
             <p>&larr; <a href="/posts/">View all posts</a></p>
 
-<h1><a href="/posts/2021/10-18-pyocd-0.32.1-released.html">pyOCD 0.32.1 released</a></h1>
+<h1><a href="/posts/2025/07-04-pyocd-0.37.0-released.html">pyOCD 0.37.0 released</a></h1>
 
 <div class="post-header">
 <p class="text-muted border-bottom">
-  <strong>Oct 18, 2021</strong>
-  <br/>Chris Reed
+  <strong>Jul 4, 2025</strong>
+  <br/>Teo Mahnic
   
 </p>
 </div>
 
-<p>I’m happy to announce that pyOCD version 0.32.1 has been released. This is a small bug fix release that
-primarily is intended to add Python 3.10 support through the release of Python 3.10 wheels. We also
-released cmsis-pack-manager version 0.4.0 with pre-built wheels for Python 3.10.</p>
+<p>Version 0.37.0 of pyOCD has just been released and is available from PyPI. It’s been several months since a feature
+release, and this one includes a major new addition. Some smaller changes and bug fixes have also been
+included in this release. The complete list is shown below.</p>
 
-<p>One noteworthy change is for J-Link support. Previously, pyOCD would always “connect” the J-Link (versus only
-opening it) using a default device name of “Cortex-M4”. If the target’s CPU didn’t match, the J-Link driver
-would log a warning and carry on just fine. The warning was normally invisible to pyOCD users unless debug
-logging is turned on for the <code class="highlighter-rouge">pyocd.probes.jlink_probe.trace</code> logger, so it wasn’t much of an issue.</p>
+<p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
 
-<p>In fact, connecting is unnecessary for the low-level CoreSight operations that pyOCD uses. The J-Link only
-needs to be opened and CoreSight configured. So now pyOCD will only connect the J-Link if the
-<code class="highlighter-rouge">jlink.device</code> session option is set to a valid J-Link device name. Currently, the benefit of setting this
-is minimal since pyOCD has its own target support. In the future, this option may be required to enable
-J-Link’s fast memory transfers.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+</code></pre></div></div>
 
-<p>In addition the J-Link probe plug-in now supports a <code class="highlighter-rouge">jlink.non_interactive</code> session option to place the
-J-Link driver in non-interactive mode and prevent dialogs from being presented requiring user action. It
-is enabled by default.</p>
+<p>This release marks a significant milestone by introducing a built-in support for <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a>,
+enabling a standardized, YAML-driven workflow for specifying debug targets. By passing the new <code class="highlighter-rouge">--cbuild-run</code>
+command-line option followed by the path to a <code class="highlighter-rouge">*.cbuild-run.yml</code> file, the following is imported directly into the
+active debug session:</p>
+<ul>
+  <li>target selection,</li>
+  <li>flash algorithms,</li>
+  <li>memory layout description,</li>
+  <li>device debug topology,</li>
+  <li>debug sequences</li>
+</ul>
 
-<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.32.1">v0.32.1 on GitHub</a> <br />
-<a href="https://pypi.org/project/pyocd/0.32.1/">v0.32.1 on PyPI</a></p>
+<p>Because each YAML file fully describes a single target type, explicit use of <code class="highlighter-rouge">--target</code> is no longer required.
+This implementation integrates seamlessly with <a href="https://marketplace.visualstudio.com/items?itemName=Arm.vscode-cmsis-debugger">Arm CMSIS Debugger</a>
+extension for VS Code, streamlining end-to-end debug setup for CMSIS-Pack based projects.</p>
+
+<p>Thanks again to all the contributors who helped make this release possible! ❤️</p>
+
+<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.37.0">v0.37.0 on GitHub</a> <br />
+<a href="https://pypi.org/project/pyocd/0.37.0">v0.37.0 on PyPI</a></p>
 
 <hr />
 
-<h3 id="additions">Additions</h3>
+<h2 id="important-note">Important note</h2>
+<p>With this release, Python 3.7 is no longer supported. The minimum Python version is now 3.8.0.</p>
 
+<h2 id="improvements">Improvements</h2>
 <ul>
-  <li>Explicit Python 3.10 support and 3.10 wheels.</li>
-  <li>JLinkProbe: added <code class="highlighter-rouge">jlink.non_interactive</code> option.</li>
+  <li><a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a> integration:
+    <ul>
+      <li>add a <code class="highlighter-rouge">--cbuild-run</code> option across subcommands</li>
+      <li>select target based on <code class="highlighter-rouge">cbuild-run</code></li>
+      <li>debugger-clock setting from <code class="highlighter-rouge">cbuild-run</code></li>
+      <li>default memory map</li>
+      <li>primary-core and GDB server port selection based on <code class="highlighter-rouge">cbuild-run</code></li>
+    </ul>
+  </li>
+  <li>GDB server:
+    <ul>
+      <li>add option for stetting soft breakpoints as hard</li>
+      <li>add option for resetting and running the target without halting</li>
+      <li>stricter <code class="highlighter-rouge">qC</code> command handling (@tlyu)</li>
+    </ul>
+  </li>
+  <li>Coresight:
+    <ul>
+      <li>add <code class="highlighter-rouge">apid</code> handling</li>
+      <li>add AP CSW register SPROT bit handling</li>
+      <li>fix offset for APv2 in discovery step</li>
+    </ul>
+  </li>
+  <li>Loader: generate reset when loading to RAM</li>
+  <li>RTOS: add hint for Zephyr’s thread info configuration</li>
+  <li>RTT: allow no down-channels (@laurensmiers)</li>
+  <li>Debug sequence: increase robustness</li>
+  <li>Memory map: add <code class="highlighter-rouge">pname</code> based filtering</li>
+  <li>Probe: filter out Cypress KitProg3 bridge</li>
 </ul>
 
-<h3 id="targets">Targets</h3>
-
+<h2 id="fixes">Fixes</h2>
 <ul>
-  <li>Update flash algo for <code class="highlighter-rouge">lpc55s36</code>. (thanks @Hoohaha!)</li>
+  <li>Fix progress bar reprinting the same value when no progress is made</li>
+  <li>Typing: fix typing of chip_erase from bool to str (@NilsIrl)</li>
+  <li>pytest: use assert_not_called instead of not_called</li>
+  <li>target: disable reads of erased sectors if Verify function is provided in the algorithm</li>
+  <li>flash:
+    <ul>
+      <li>disable builder double buffering by default</li>
+      <li>write XPSR register on init on Cortex-M devices</li>
+    </ul>
+  </li>
 </ul>
 
-<h3 id="fixes">Fixes</h3>
-
+<h2 id="targets">Targets</h2>
 <ul>
-  <li>Session options: correctly handle session options with float values from the command line.</li>
-  <li>Board: log description of exception during uninit.</li>
-  <li>JLinkProbe: only connect if <code class="highlighter-rouge">jlink.device</code> is set.</li>
-  <li>CortexM: fixed missing format args for warnings from post reset checks.</li>
-  <li>Packs: correct which vendor is output for find and show.</li>
+  <li>Add MPS2 AN521 target</li>
+  <li>Add Ambiq Apollo3 target and NM180410 board (@joshua-nmi)</li>
+  <li>Add RP2350 target (@konkers)</li>
+  <li>Add nRF54L15 target (@maxd-nordic)</li>
+  <li>Add STM32H750 target (@nattgris)</li>
+  <li>Add HC32F115/155/334/467/472 targets (@wuze)</li>
+  <li>Update HC32F448/45x/460/4A0(2) targets (@wuze)</li>
+  <li>Fix sector size and RDP check on STM32H743 and H723 (@nattgris)</li>
 </ul>
 
-<h3 id="packaging">Packaging</h3>
-
+<h2 id="other">Other</h2>
 <ul>
-  <li>Packaging: dependency version bumps and classifier update. This fixes the issue with a pyyaml version conflict.</li>
-  <li>Packaging: bump cmsis-pack-manager to v0.4.0 release.</li>
+  <li>Docs:
+    <ul>
+      <li>fix incorrect documentation for default GDB server port (@FredeHoey)</li>
+      <li>document <code class="highlighter-rouge">cbuild-run</code> support</li>
+      <li>enhance load subcommand guidance</li>
+    </ul>
+  </li>
+  <li>CI:
+    <ul>
+      <li>drop Python 3.7 and add 3.12 and 3.13</li>
+      <li>update upload-artifact following deprecation</li>
+      <li>update CodeQL workflow</li>
+      <li>add workflow for generating standalone binaries using PyInstaller</li>
+    </ul>
+  </li>
+  <li>Session: add missing return in UserScriptFunctionProxy</li>
+  <li>Optional use of libusb-package with fallback to pyusb (@dvzrv)</li>
 </ul>
 
-<h3 id="ci">CI</h3>
-
-<ul>
-  <li>Workflows: add Python 3.10 to basic test.</li>
-</ul>
-
-<p><a href="https://github.com/pyocd/pyOCD/compare/v0.32.0...v0.32.1"><strong>Full Changelog</strong></a></p>
-
+<p><a href="https://github.com/pyocd/pyOCD/compare/v0.36.0...v0.37.0"><strong>View Full Changelog</strong></a></p>
 
 
           </main>
