@@ -314,7 +314,7 @@ and setting a breakpoint. Then the target is reset and run until the breakpoint 
     <span class="k">assert</span> <span class="n">pc</span> <span class="o">==</span> <span class="n">addr</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0x01</span>                         <span class="c1"># mask off LSB
 </span>
     <span class="c1"># Remove breakpoint.
-</span>    <span class="n">target</span><span class="p">.</span><span class="n">remove_breakpoint</span><span class="p">()</span>
+</span>    <span class="n">target</span><span class="p">.</span><span class="n">remove_breakpoint</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Note that you currently need to manually remove a breakpoint in order to step or run over it.</p>
