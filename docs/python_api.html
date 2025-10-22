@@ -330,19 +330,26 @@ to software but may be set to hardware.</li>
 <p>The <code class="highlighter-rouge">reset_type</code> parameter on the <code class="highlighter-rouge">Target</code> reset methods can be set to one of the <code class="highlighter-rouge">Target.ResetType</code>
 enums:</p>
 <ul>
-  <li><code class="highlighter-rouge">ResetType.HW</code>: Hardware reset using the nRESET signal.</li>
-  <li><code class="highlighter-rouge">ResetType.SW</code>: Uses the core’s default software reset method.</li>
-  <li><code class="highlighter-rouge">ResetType.SW_SYSRESETREQ</code>: Software reset using SYSRESETREQ, which usually resets the entire system
+  <li><code class="highlighter-rouge">ResetType.DEFAULT</code>: Uses the core’s default reset method. For pack targets <code class="highlighter-rouge">defaultResetSequence</code> is used.
+For internal targets, the default is mapped to <code class="highlighter-rouge">ResetType.SYSTEM</code>, unless <code class="highlighter-rouge">default_reset_type</code>
+property is explicitly set.</li>
+  <li><code class="highlighter-rouge">ResetType.HARDWARE</code>: Execute <code class="highlighter-rouge">ResetHardware</code> debug sequence for pack targets, if the sequence doesn’t exist,
+hardware reset using the nSRST signal is used. The same mapping applies for internal targets.</li>
+  <li><code class="highlighter-rouge">ResetType.SYSTEM</code>: Execute <code class="highlighter-rouge">ResetSystem</code> debug sequence for pack targets, if the sequence doesn’t exist,
+software reset using SYSRESETREQ is used. The same mapping applies for internal targets.</li>
+  <li><code class="highlighter-rouge">ResetType.CORE</code>: Execute <code class="highlighter-rouge">ResetProcessor</code> debug sequence for pack targets, if the sequence doesn’t exist,
+software reset using VECTRESET is used. The same mapping applies for internal targets.</li>
+  <li><code class="highlighter-rouge">ResetType.NSRST</code>: Hardware reset using the nSRST signal.</li>
+  <li><code class="highlighter-rouge">ResetType.SYSRESETREQ</code>: Software reset using SYSRESETREQ, which usually resets the entire system
 on most MCUs.</li>
-  <li><code class="highlighter-rouge">ResetType.SW_VECTRESET</code>: Software reset using VECTRESET, only available on v7-M targets. This
-resets only the core itself. If requested on non-v7-M targets, it will fall back to <code class="highlighter-rouge">SW_EMULATED</code>.</li>
-  <li><code class="highlighter-rouge">ResetType.SW_EMULATED</code>: Restores the core to reset conditions by writing registers. However, this
+  <li><code class="highlighter-rouge">ResetType.VECTRESET</code>: Software reset using VECTRESET, only available on v7-M targets. This
+resets only the core itself. If requested on non-v7-M targets, it will fall back to <code class="highlighter-rouge">ResetType.EMULATED</code>.</li>
+  <li><code class="highlighter-rouge">ResetType.EMULATED</code>: Restores the core to reset conditions by writing registers. However, this
 will not trigger a reset vector catch.</li>
 </ul>
 
-<p>The <code class="highlighter-rouge">CortexM</code> objects have <code class="highlighter-rouge">default_reset_type</code> and <code class="highlighter-rouge">default_software_reset_type</code> properties that
-let you control the overall default reset type (any one of the <code class="highlighter-rouge">ResetType</code> enums), as well as the
-default if <code class="highlighter-rouge">ResetType.SW</code> is selected, respectively.</p>
+<p>The <code class="highlighter-rouge">CortexM</code> objects have a <code class="highlighter-rouge">default_reset_type</code> property that lets you control the overall default reset type.
+Property value can be any one of the <code class="highlighter-rouge">ResetType</code> enums.</p>
 
 <p>Another option for performing a halting reset is by setting vector catch with the target’s <code class="highlighter-rouge">set_vector_catch()</code>
 method, then using a normal reset. This has the benefit of always halting at reset, if you leave the
@@ -379,7 +386,6 @@ most interesting places to look at are:</p>
   memory region, call <code class="highlighter-rouge">target.memory_map.get_boot_memory()</code>. The <code class="highlighter-rouge">flash</code> attribute of this region
   then returns the boot flash memory’s @ref pyocd.flash.flash.Flash “Flash” instance.</li>
 </ul>
-
 
 
                 </div>
