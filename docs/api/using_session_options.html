@@ -262,6 +262,7 @@
 <ol>
   <li>Keyword arguments to the <code class="highlighter-rouge">Session</code> constructor. Applies to most dedicated command-line arguments.</li>
   <li><em>options</em> parameter to <code class="highlighter-rouge">Session</code> constructor. Applies to <code class="highlighter-rouge">-O</code> command-line arguments.</li>
+  <li>Options set by CMSIS-Toolbox Run and Debug Management (<code class="highlighter-rouge">cbuild-run</code>)</li>
   <li>Probe-specific options from a config file.</li>
   <li>Global options from a config file.</li>
   <li><em>option_defaults</em> parameter to <code class="highlighter-rouge">Session</code> constructor. Used only in rare cases by subcommands to change the default value of options.</li>
@@ -305,7 +306,6 @@
 </ul>
 
 <p>Supported types for options are <em>bool</em>, <em>int</em>, <em>float</em>, and <em>str</em>. An option that allows multiple types is specified with a tuple of those types. The <code class="highlighter-rouge">convert_session_options()</code> function from <code class="highlighter-rouge">pyocd.utility.cmdline</code> will convert the <em>bool</em>, <em>int</em>, and <em>float</em> options from a string value. However, there is not automatic type conversion when setting options directly on the <code class="highlighter-rouge">OptionsManager</code>.</p>
-
 
 
                 </div>
