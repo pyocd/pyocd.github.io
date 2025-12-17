@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>pyOCD 0.42.0 released &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark py-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container flex-grow-1">
+        <div class="row">
+          <main role="main" class="content-scroll p-3 p-md-4">
+            <p>&larr; <a href="/posts/">View all posts</a></p>
+
+<h1><a href="/posts/2025/12-16-pyocd-0.42.0-released.html">pyOCD 0.42.0 released</a></h1>
+
+<div class="post-header">
+<p class="text-muted border-bottom">
+  <strong>Dec 16, 2025</strong>
+  <br/>Teo Mahnic
+  
+</p>
+</div>
+
+<p>Version 0.42.0 of pyOCD has been released and is available from PyPI. This release introduces a new subcommand,
+a number of improvements and bug fixes. The complete list is shown below.</p>
+
+<p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+</code></pre></div></div>
+
+<p>The latest pyOCD release focuses on strengthening automation workflows, led by the introduction of the new
+<code class="highlighter-rouge">run</code> subcommand. This command enables time-limited or EOT-terminated execution, making it well suited for
+CI/CD environments that require deterministic behavior. It provides unified access to semihosting and SWV
+streams, offering consistent console output and optional input handling during automated runs.</p>
+
+<p>A new standard I/O routing layer refines how output is managed across cores. The framework consolidates
+routing logic and supports console, telnet, file, and disabled modes, creating a uniform mechanism that
+simplifies multi-core scenarios.</p>
+
+<p>Integration with <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a>
+has also been strengthened. Configuration from <code class="highlighter-rouge">*.cbuild-run.yml</code> files now occupies a lower priority tier,
+sitting beneath command-line arguments and general session options to preserve explicit user intent.</p>
+
+<p>Additional improvements include new flash programming options, relaxed flash algorithm requirements,
+updated Zephyr RTOS thread state definitions, and expanded architecture support - most notably
+Cortex-M52 and Star-MC3 devices.</p>
+
+<p>Thanks again to all the contributors who helped make this release possible! ❤️</p>
+
+<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.42.0">v0.42.0 on GitHub</a> <br />
+<a href="https://pypi.org/project/pyocd/0.42.0">v0.42.0 on PyPI</a></p>
+
+<hr />
+
+<h2 id="new-features">New Features</h2>
+<ul>
+  <li><code class="highlighter-rouge">run</code> subcommand:
+    <ul>
+      <li>Introduce a new <code class="highlighter-rouge">run</code> subcommand capable of running targets until a time limit or EOT (suited for CI/CD workflows)</li>
+      <li>Supports semihosting console output/input and SWV output</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="improvements">Improvements</h2>
+<ul>
+  <li>Standard I/O routing:
+    <ul>
+      <li>Add new abstraction layer to unify STDIO routing for each core</li>
+      <li>Routing support for <code class="highlighter-rouge">console</code>, <code class="highlighter-rouge">telnet</code>, <code class="highlighter-rouge">file</code> and <code class="highlighter-rouge">off</code>
+        <blockquote>
+          <p>Note: Currently only output is supported</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a> integration:
+    <ul>
+      <li>Add configuration layer in session options, which sits below command line arguments</li>
+      <li>Disable <code class="highlighter-rouge">*.cbuild-run.yml</code> processing if the <code class="highlighter-rouge">target_override</code> option is set</li>
+      <li>Improve port assignment logic for multi-core GDBServer and telnet configurations</li>
+      <li>Add processing for <code class="highlighter-rouge">connect</code> mode configuration</li>
+      <li>Add processing for <code class="highlighter-rouge">pre-reset</code> and <code class="highlighter-rouge">post-reset</code> options in <code class="highlighter-rouge">load-setup</code> configuration</li>
+      <li>Improve error messages for missing or invalid <code class="highlighter-rouge">*.cbuild-run.yml</code> file</li>
+      <li>Improve checking for required files
+        <ul>
+          <li>Raise a warning instead of an error for missing SVD files</li>
+          <li>Load SVD files only when available and when used by the subcommand</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Flash programming:
+    <ul>
+      <li>Add new session options for configuring <code class="highlighter-rouge">pre-reset</code> and <code class="highlighter-rouge">post-reset</code> type in <code class="highlighter-rouge">load</code> subcommand</li>
+      <li>Relax flash algorithm requirement to require only RO section</li>
+    </ul>
+  </li>
+  <li>RTOS:
+    <ul>
+      <li>Update Zephyr thread state definitions to match modern versions (@mathieuchopstm)</li>
+    </ul>
+  </li>
+  <li>CoreSight and Cortex-M:
+    <ul>
+      <li>Add support for Cortex-M52 and Star-MC3 based devices (@Liu-Gu)</li>
+      <li>Skip adding cores not described in the debug topology while retaining direct AP access</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="fixes">Fixes</h2>
+<ul>
+  <li>Cortex-M:
+    <ul>
+      <li>Fix incorrect reset type used in the fallback mechanism when the requested DebugSequence doesn’t exist</li>
+    </ul>
+  </li>
+  <li>CMSIS-DAP:
+    <ul>
+      <li>Fix HID report sizing logic across platforms</li>
+    </ul>
+  </li>
+  <li>CMSIS-Packs:
+    <ul>
+      <li>Correct path normalization inside pack archives to support <code class="highlighter-rouge">..</code> in file paths (@xoriath)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="other">Other</h2>
+<ul>
+  <li>Minor documentation updates related to session option usage</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@Liu-Gu made their first contribution in https://github.com/pyocd/pyOCD/pull/1852</li>
+  <li>@mathieuchopstm made their first contribution in https://github.com/pyocd/pyOCD/pull/1823</li>
+  <li>@xoriath made their first contribution in https://github.com/pyocd/pyOCD/pull/1867</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/pyocd/pyOCD/compare/v0.41.0…v0.42.0</p>
+
+
+          </main>
+        </div>
+      </div>
+    
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021-2025 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>
