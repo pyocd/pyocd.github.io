@@ -307,8 +307,8 @@ layout should look like:</p>
         <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|----------------|-------------|------------|-----|-----------------|-----------------|
 |  load_address  | static_base | &lt;&lt; (stack) | ... | page_buffers[0] | page_buffers[1] |
 |----------------|-------------|------------|-----|-----------------|-----------------|
-^                                           ^     ^
-RAM start            begin_stack (grows down)     also begin_data
+^                                           ^
+RAM start            begin_stack (grows down)
 </code></pre></div>        </div>
 
         <p>Each of the addresses in the <code class="highlighter-rouge">page_buffers</code> list points to a buffer of the maximum page
