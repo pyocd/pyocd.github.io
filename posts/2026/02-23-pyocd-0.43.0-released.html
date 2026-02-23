@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>pyOCD 0.42.0 released &mdash; pyOCD</title>
+  <title>pyOCD 0.43.0 released &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -77,45 +77,47 @@
           <main role="main" class="content-scroll p-3 p-md-4">
             <p>&larr; <a href="/posts/">View all posts</a></p>
 
-<h1><a href="/posts/2025/12-16-pyocd-0.42.0-released.html">pyOCD 0.42.0 released</a></h1>
+<h1><a href="/posts/2026/02-23-pyocd-0.43.0-released.html">pyOCD 0.43.0 released</a></h1>
 
 <div class="post-header">
 <p class="text-muted border-bottom">
-  <strong>Dec 16, 2025</strong>
+  <strong>Feb 23, 2026</strong>
   <br/>Teo Mahnic
   
 </p>
 </div>
 
-<p>Version 0.42.0 of pyOCD has been released and is available from PyPI. This release introduces a new subcommand,
-a number of improvements and bug fixes. The complete list is shown below.</p>
+<p>pyOCD v0.43.0 has been released and is available from PyPI. This version includes several improvements and bug fixes.
+The complete list of changes is provided below</p>
 
 <p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
 </code></pre></div></div>
 
-<p>The latest pyOCD release focuses on strengthening automation workflows, led by the introduction of the new
-<code class="highlighter-rouge">run</code> subcommand. This command enables time-limited or EOT-terminated execution, making it well suited for
-CI/CD environments that require deterministic behavior. It provides unified access to semihosting and SWV
-streams, offering consistent console output and optional input handling during automated runs.</p>
+<p>A major enhancement in this version is the extension of the <code class="highlighter-rouge">run</code> subcommand to support SEGGER’s <a href="https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer/">Real-Time Transfer (RTT)</a>
+and <a href="https://www.segger.com/products/development-tools/systemview/">SystemView</a>. RTT channels can now be configured
+individually through <code class="highlighter-rouge">*.cbuild-run.yml</code>, enabling flexible routing of target communication. Channels may operate as
+standard I/O bridges, forwarding target output to the console while relaying user input back to the device, or as
+Telnet endpoints, where a dedicated TCP server bridges a remote client directly to a selected RTT channel.
+For trace-oriented workflows, specific channels can be configured for SystemView capture, allowing trace data to be
+written to a file for post-run analysis.</p>
 
-<p>A new standard I/O routing layer refines how output is managed across cores. The framework consolidates
-routing logic and supports console, telnet, file, and disabled modes, creating a uniform mechanism that
-simplifies multi-core scenarios.</p>
+<p>SystemView integration includes automatic handling of start and stop commands, streamlining trace capture without
+manual synchronization. The generated <code class="highlighter-rouge">*.SVDat</code> files can be opened directly in SEGGER’s SystemView tool,
+tool for inspection and analysis.</p>
 
-<p>Integration with <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a>
-has also been strengthened. Configuration from <code class="highlighter-rouge">*.cbuild-run.yml</code> files now occupies a lower priority tier,
-sitting beneath command-line arguments and general session options to preserve explicit user intent.</p>
+<p>Double buffering has been re-enabled for internal targets, with <code class="highlighter-rouge">STM32H7xx</code> devices excluded due to known issues.
+Internal flash algorithms have been unified around the <code class="highlighter-rouge">page_buffers</code> mechanism, and legacy template elements have
+been removed to simplify maintenance and ensure consistent behavior across targets.</p>
 
-<p>Additional improvements include new flash programming options, relaxed flash algorithm requirements,
-updated Zephyr RTOS thread state definitions, and expanded architecture support - most notably
-Cortex-M52 and Star-MC3 devices.</p>
+<p>Improvements also include better log messages in GDB Server, when client disconnects from the server and non-blocking
+reading of the STDIO console.</p>
 
 <p>Thanks again to all the contributors who helped make this release possible! ❤️</p>
 
-<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.42.0">v0.42.0 on GitHub</a> <br />
-<a href="https://pypi.org/project/pyocd/0.42.0">v0.42.0 on PyPI</a></p>
+<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.43.0">v0.43.0 on GitHub</a> <br />
+<a href="https://pypi.org/project/pyocd/0.43.0">v0.43.0 on PyPI</a></p>
 
 <hr />
 
@@ -123,91 +125,93 @@ Cortex-M52 and Star-MC3 devices.</p>
 <ul>
   <li><code class="highlighter-rouge">run</code> subcommand:
     <ul>
-      <li>Introduce a new <code class="highlighter-rouge">run</code> subcommand capable of running targets until a time limit or EOT (suited for CI/CD workflows)</li>
-      <li>Supports semihosting console output/input and SWV output</li>
+      <li>Add support for SEGGER’s <a href="https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer/">RTT</a> and <a href="https://www.segger.com/products/development-tools/systemview/">SystemView</a> (configured via <code class="highlighter-rouge">*.cbuild-run.yml</code>)</li>
+      <li>Support per-channel RTT configuration with the following modes:
+        <ul>
+          <li>Standard I/O: All data received from the target on this channel will be printed to the <code class="highlighter-rouge">sdtout</code>, and all user input from the <code class="highlighter-rouge">stdin</code> will be sent to the target</li>
+          <li>Telnet: A Telnet server is started on the specified port, creating a bridge between the TCP connection and the corresponding RTT channel</li>
+          <li>SystemView: Capture the trace data from the specified RTT channel and save it to a user-defined file</li>
+        </ul>
+      </li>
+      <li>SystemView integration:
+        <ul>
+          <li>Support for automatic start and stop command handling</li>
+          <li>Captured trace data (<code class="highlighter-rouge">*.SVDat</code> file) can be directly opened using SEGGER’s SystemView analysis tool</li>
+        </ul>
+      </li>
     </ul>
   </li>
 </ul>
 
 <h2 id="improvements">Improvements</h2>
 <ul>
-  <li>Standard I/O routing:
-    <ul>
-      <li>Add new abstraction layer to unify STDIO routing for each core</li>
-      <li>Routing support for <code class="highlighter-rouge">console</code>, <code class="highlighter-rouge">telnet</code>, <code class="highlighter-rouge">file</code> and <code class="highlighter-rouge">off</code>
-        <blockquote>
-          <p>Note: Currently only output is supported</p>
-        </blockquote>
-      </li>
-    </ul>
-  </li>
-  <li><a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a> integration:
-    <ul>
-      <li>Add configuration layer in session options, which sits below command line arguments</li>
-      <li>Disable <code class="highlighter-rouge">*.cbuild-run.yml</code> processing if the <code class="highlighter-rouge">target_override</code> option is set</li>
-      <li>Improve port assignment logic for multi-core GDBServer and telnet configurations</li>
-      <li>Add processing for <code class="highlighter-rouge">connect</code> mode configuration</li>
-      <li>Add processing for <code class="highlighter-rouge">pre-reset</code> and <code class="highlighter-rouge">post-reset</code> options in <code class="highlighter-rouge">load-setup</code> configuration</li>
-      <li>Improve error messages for missing or invalid <code class="highlighter-rouge">*.cbuild-run.yml</code> file</li>
-      <li>Improve checking for required files
-        <ul>
-          <li>Raise a warning instead of an error for missing SVD files</li>
-          <li>Load SVD files only when available and when used by the subcommand</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
   <li>Flash programming:
     <ul>
-      <li>Add new session options for configuring <code class="highlighter-rouge">pre-reset</code> and <code class="highlighter-rouge">post-reset</code> type in <code class="highlighter-rouge">load</code> subcommand</li>
-      <li>Relax flash algorithm requirement to require only RO section</li>
+      <li>Re-enable double buffering mechanism for internal targets, except STM32H7xx (known to have issues)</li>
+      <li>Migrate all internal target support to use <code class="highlighter-rouge">page_buffers</code> instead of <code class="highlighter-rouge">begin_data</code> in flash algorithms</li>
+      <li>Remove <code class="highlighter-rouge">begin_data</code> from the algorithm template</li>
     </ul>
   </li>
-  <li>RTOS:
+  <li>GDB Server:
     <ul>
-      <li>Update Zephyr thread state definitions to match modern versions (@mathieuchopstm)</li>
+      <li>Improve log message when client gets disconnected from the server</li>
     </ul>
   </li>
-  <li>CoreSight and Cortex-M:
+  <li>Standard I/O:
     <ul>
-      <li>Add support for Cortex-M52 and Star-MC3 based devices (@Liu-Gu)</li>
-      <li>Skip adding cores not described in the debug topology while retaining direct AP access</li>
+      <li>Enable non-blocking read of the STDIO console</li>
+    </ul>
+  </li>
+  <li>CMSIS-DAP v2:
+    <ul>
+      <li>Send ZLP instead of a dummy byte to terminate OUT transfer</li>
+    </ul>
+  </li>
+  <li>CoreSight:
+    <ul>
+      <li>Always unlock ITM (do not check SLI and SLK bits in LSR register)
+        <blockquote>
+          <p><a href="https://developer.arm.com/documentation/SDEN1068427/0110/?lang=en">Cortex-M7 (AT610) and Cortex-M7 with FPU (AT611) Software Developer Errata Notice</a><br />
+513195: Lock Status Indication incorrectly reads as one</p>
+        </blockquote>
+      </li>
     </ul>
   </li>
 </ul>
 
 <h2 id="fixes">Fixes</h2>
 <ul>
-  <li>Cortex-M:
+  <li>Flash programming:
     <ul>
-      <li>Fix incorrect reset type used in the fallback mechanism when the requested DebugSequence doesn’t exist</li>
-    </ul>
-  </li>
-  <li>CMSIS-DAP:
-    <ul>
-      <li>Fix HID report sizing logic across platforms</li>
+      <li>Fix LPC4088 flash algorithm <code class="highlighter-rouge">page_size</code></li>
     </ul>
   </li>
   <li>CMSIS-Packs:
     <ul>
-      <li>Correct path normalization inside pack archives to support <code class="highlighter-rouge">..</code> in file paths (@xoriath)</li>
+      <li>Fix raised exception on <code class="highlighter-rouge">filename</code> property access when using extracted packs (@timll-mchp)</li>
+    </ul>
+  </li>
+  <li>RTT:
+    <ul>
+      <li>Fix retrieval of available/free bytes for up/down channels</li>
+      <li>Fix <code class="highlighter-rouge">control-block</code> not found when the first character of the <code class="highlighter-rouge">control-block ID</code> was not present in the read memory (@HaoYDai)</li>
     </ul>
   </li>
 </ul>
 
 <h2 id="other">Other</h2>
 <ul>
-  <li>Minor documentation updates related to session option usage</li>
+  <li>CI: add nightly workflow that builds PyInstaller artifacts from the <code class="highlighter-rouge">develop</code> branch</li>
 </ul>
 
 <h2 id="new-contributors">New Contributors</h2>
 <ul>
-  <li>@Liu-Gu made their first contribution in https://github.com/pyocd/pyOCD/pull/1852</li>
-  <li>@mathieuchopstm made their first contribution in https://github.com/pyocd/pyOCD/pull/1823</li>
-  <li>@xoriath made their first contribution in https://github.com/pyocd/pyOCD/pull/1867</li>
+  <li>@MiloradCvjetkovic made their first contribution in https://github.com/pyocd/pyOCD/pull/1882</li>
+  <li>@timll-mchp made their first contribution in https://github.com/pyocd/pyOCD/pull/1901</li>
+  <li>@HaoYDai made their first contribution in https://github.com/pyocd/pyOCD/pull/1730</li>
 </ul>
 
-<p><strong>Full Changelog</strong>: https://github.com/pyocd/pyOCD/compare/v0.41.0…v0.42.0</p>
+<p><strong>Full Changelog</strong>: https://github.com/pyocd/pyOCD/compare/v0.42.0…v0.43.0</p>
 
 
           </main>
