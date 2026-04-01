@@ -299,7 +299,7 @@
 
 <p>Debug access sequences, simply called “debug sequences” below, contain a set of instructions to tell the debugger how to perform different debug related activities such as connect, reset, configuring the device for trace, and so on. Silicon vendors can provide debug sequences for cases where their device has special control requirements or nonstandard behaviours. Many devices do not need debug sequences, and they are entirely optional.</p>
 
-<p>A set of standard debug sequences is defined by the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec">Open-CMSIS-Pack</a> specification to be executed by the debugger when performing certain activities. Some of these standard sequences have pre-defined behaviour performed by the debugger if the DFP does not override that sequence. Others sequences exist only to allow the DFP to insert custom actions.</p>
+<p>A set of standard debug sequences is defined by the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec">Open-CMSIS-Pack</a> specification to be executed by the debugger when performing certain activities. Some of these standard sequences have pre-defined behavior performed by the debugger if the DFP does not override that sequence. Others sequences exist only to allow the DFP to insert custom actions.</p>
 
 <p>In addition to the standard debug sequences, a DFP can define its own custom sequences. These can be called like subroutines by other sequences.</p>
 
@@ -360,7 +360,7 @@
 
 <h3 id="core-specific-sequences">Core-specific sequences</h3>
 
-<p>The DFP debug sequence architecture is currently based on the fact that most debuggers only “connect” to a single CPU core chosen by the user when debugging or running a project. All debug sequences can be customised per core, and there can be separate sequences for each core.</p>
+<p>The DFP debug sequence architecture is currently based on the fact that most debuggers only “connect” to a single CPU core chosen by the user when debugging or running a project. All debug sequences can be customized per core, and there can be separate sequences for each core.</p>
 
 <p>PyOCD is somewhat different in that it connects to the device as a whole, and then debugs one or more cores after the connection is established. This more closely reflects the hardware situation.</p>
 
@@ -370,7 +370,7 @@
 
 <h3 id="custom-default-reset-sequences">Custom default reset sequences</h3>
 
-<p>The DFP specification allows the definition of custom (nonstandard) reset sequences, and these can be selected as the default reset sequence for a core. The purpose of this is to keep the standard sequences unmodified and available for user selection. Because pyOCD does not currently support a custom reset type, this DFP feature is not supported. A custom default reset sequence will be replaced with <code class="highlighter-rouge">ResetSystem</code> and the custom behaviour not performed.</p>
+<p>The DFP specification allows the definition of custom (nonstandard) reset sequences, and these can be selected as the default reset sequence for a core. The purpose of this is to keep the standard sequences unmodified and available for user selection. Because pyOCD does not currently support a custom reset type, this DFP feature is not supported. A custom default reset sequence will be replaced with <code class="highlighter-rouge">ResetSystem</code> and the custom behavior not performed.</p>
 
 <h3 id="debug-sequences-and-delegate-functions">Debug sequences and delegate functions</h3>
 
@@ -420,6 +420,11 @@
       <td>Uninitialized core debug.</td>
     </tr>
     <tr>
+      <td><code class="highlighter-rouge">DebugCodeMemRemap</code></td>
+      <td>-</td>
+      <td>Remap memory to execution location. Executed before verifying memory content after flash programming. This is required to replicate a memory remap of a device bootloader (that is not executed during debug connection).</td>
+    </tr>
+    <tr>
       <td><code class="highlighter-rouge">ResetSystem</code></td>
       <td><code class="highlighter-rouge">will_reset</code></td>
       <td>System-wide reset without debug domain via software mechanisms.</td>
@@ -435,6 +440,16 @@
       <td>System-wide reset without debug domain via the dedicated debugger reset line, e.g. nRST.</td>
     </tr>
     <tr>
+      <td><code class="highlighter-rouge">ResetHardwareAssert</code></td>
+      <td>-</td>
+      <td>Assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ResetHardwareDeassert</code></td>
+      <td>-</td>
+      <td>De-assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.</td>
+    </tr>
+    <tr>
       <td><code class="highlighter-rouge">ResetCatchSet</code></td>
       <td><code class="highlighter-rouge">set_reset_catch</code></td>
       <td>Configure the vector catch to stop code execution after the reset.</td>
@@ -443,6 +458,41 @@
       <td><code class="highlighter-rouge">ResetCatchClear</code></td>
       <td><code class="highlighter-rouge">clear_reset_catch</code></td>
       <td>Free hardware resources allocated by <code class="highlighter-rouge">ResetCatchSet</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashInit</code></td>
+      <td>-</td>
+      <td>Executed before starting a flash operation.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashUninit</code></td>
+      <td>-</td>
+      <td>Executed after a flash operation finished.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashEraseSector</code></td>
+      <td>-</td>
+      <td>Executed to erase a flash memory sector.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashEraseChip</code></td>
+      <td>-</td>
+      <td>Executed to erase all on-chip flash memory with target device specific erase technology.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashEraseDone</code></td>
+      <td>-</td>
+      <td>Executed after all flash memory erase operations are finished.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashProgramPage</code></td>
+      <td>-</td>
+      <td>Executed to program a single flash page.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">FlashProgramDone</code></td>
+      <td>-</td>
+      <td>Executed after all flash programming operations are finished.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">TraceStart</code></td>
@@ -468,46 +518,6 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">DebugCodeMemRemap</code></td>
-      <td>Remap memory to execution location.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">ResetHardwareAssert</code></td>
-      <td>Assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">ResetHardwareDeassert</code></td>
-      <td>De-assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">FlashInit</code></td>
-      <td>Flash programming</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">FlashUninit</code></td>
-      <td>Flash programming</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">FlashEraseSector</code></td>
-      <td>Flash programming</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">FlashEraseChip</code></td>
-      <td>Flash programming</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">FlashEraseDone</code></td>
-      <td>Flash programming</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">FlashProgramPage</code></td>
-      <td>Flash programming</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">FlashProgramDone</code></td>
-      <td>Flash programming</td>
-    </tr>
-    <tr>
       <td><code class="highlighter-rouge">RecoverySupportStart</code></td>
       <td>Before step or run command to support recovery from a lost target connection.</td>
     </tr>
@@ -521,7 +531,6 @@
     </tr>
   </tbody>
 </table>
-
 
 
                 </div>
