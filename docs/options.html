@@ -230,6 +230,11 @@
 <li class="toc-entry toc-h2"><a href="#general-options">General options</a></li>
 <li class="toc-entry toc-h2"><a href="#extended-options-with-multicore-support">Extended options with multicore support</a></li>
 <li class="toc-entry toc-h2"><a href="#rtt-and-systemview-options">RTT and SystemView options</a></li>
+<li class="toc-entry toc-h2"><a href="#gdb-server-options">GDB server options</a></li>
+<li class="toc-entry toc-h2"><a href="#cmsis-dap-probe-options">CMSIS-DAP probe options</a></li>
+<li class="toc-entry toc-h2"><a href="#j-link-probe-options">J-Link probe options</a></li>
+<li class="toc-entry toc-h2"><a href="#picoprobe-options">Picoprobe options</a></li>
+<li class="toc-entry toc-h2"><a href="#stlink-options">STLink options</a></li>
 </ul>
                     </div>
                   </div>
@@ -779,8 +784,7 @@ assigned to <tt>core0</tt> and <tt>mytarget_cm0.out</tt> is assigned to <tt>core
 <tr><td>rtt</td>
 <td>YAML Node</td>
 <td><i>No default</i></td>
-<td><p>Configuration for <a href="https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer/">SEGGER RTT</a>
-</p>
+<td><p>Configuration for <a href="https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer/">SEGGER RTT</a></p>
 <pre>
 rtt:
   - pname:         # [optional] Processor identifier (required for multicore devices).
@@ -810,7 +814,8 @@ rtt:
       - number: 0
         mode: stdio
       - number: 1
-        mode: systemview</pre></li>
+        mode: systemview
+</pre></li></ul></td></tr>
 
 <tr><td>systemview_file</td>
 <td>str</td>
@@ -827,11 +832,11 @@ rtt:
 <td>True</td>
 <td>Whether to automatically stop SystemView recording.</td></tr>
 
-&lt;/table&gt;
+</table>
 
-## GDB server options
+<h2 id="gdb-server-options">GDB server options</h2>
 
-These session options are currently only applied when running the GDB server.
+<p>These session options are currently only applied when running the GDB server.</p>
 
 <table>
 
@@ -997,9 +1002,9 @@ presentation in gdb.
 
 </table>
 
-## CMSIS-DAP probe options
+<h2 id="cmsis-dap-probe-options">CMSIS-DAP probe options</h2>
 
-These session options are available when the CMSIS-DAP debug probe plugin is active.
+<p>These session options are available when the CMSIS-DAP debug probe plugin is active.</p>
 
 <table>
 
@@ -1023,9 +1028,9 @@ where USB is problematic, in particular virtual machines.
 
 </table>
 
-## J-Link probe options
+<h2 id="j-link-probe-options">J-Link probe options</h2>
 
-These session options are available when the SEGGER J-Link debug probe plugin is active.
+<p>These session options are available when the SEGGER J-Link debug probe plugin is active.</p>
 
 <table>
 
@@ -1062,9 +1067,9 @@ Default is True.
 
 </table>
 
-## Picoprobe options
+<h2 id="picoprobe-options">Picoprobe options</h2>
 
-These session options are available when the Picoprobe debug probe plugin is active.
+<p>These session options are available when the Picoprobe debug probe plugin is active.</p>
 
 <table>
 
@@ -1080,9 +1085,9 @@ Default is False, so possible WAIT or FAULT SWD acknowledges and protocol errors
 
 </table>
 
-## STLink options
+<h2 id="stlink-options">STLink options</h2>
 
-These session options are available when the STLink debug probe plugin is active.
+<p>These session options are available when the STLink debug probe plugin is active.</p>
 
 <table>
 
@@ -1097,7 +1102,6 @@ The value must be one of 1=high performance (default), 2=normal, or 4=low power.
 </td></tr>
 
 </table>
-</ul></td></tr></table>
 
 
                 </div>
