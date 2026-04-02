@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/styles/main.css">
 
-  <title>News and blog posts &mdash; pyOCD</title>
+  <title>pyOCD 0.44.0 released &mdash; pyOCD</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
@@ -75,62 +75,121 @@
       <div class="container flex-grow-1">
         <div class="row">
           <main role="main" class="content-scroll p-3 p-md-4">
-            <div class="mt-4 mb-5">
-<h3>News and blog posts</h3>
+            <p>&larr; <a href="/posts/">View all posts</a></p>
+
+<h1><a href="/posts/2026/04-01-pyocd-0.44.0-released.html">pyOCD 0.44.0 released</a></h1>
+
+<div class="post-header">
+<p class="text-muted border-bottom">
+  <strong>Apr 1, 2026</strong>
+  <br/>Teo Mahnic
+  
+</p>
 </div>
+
+<p>pyOCD v0.44.0 has been released and is available from PyPI. This version includes several improvements and bug fixes.
+The complete list of changes is provided below</p>
+
+<p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+</code></pre></div></div>
+
+<p>This version introduces support for default debug sequences as defined in the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/debug_description.html#default_sequences">Open-CMSIS-Pack specification</a>,
+improving consistency and standards alignment. It adds missing debug sequence support for flash programming and holding
+hardware reset. It also changes the flash programming strategy for programming multiple flash memories to a single
+erase-program sequence, spanning all targeted memory regions.</p>
+
+<p>The RTT support has also been updated with renamed channel mode <code class="highlighter-rouge">server</code> (previously <code class="highlighter-rouge">telnet</code>) and improved robustness,
+flexibility, and transfer speed. Another new feature is the SystemView Server mode for the <code class="highlighter-rouge">run</code> subcommand, which
+allows using SEGGER’s SystemView Recorder via IP (TCP/IP connection).</p>
+
+<p>Thanks again to all the contributors who helped make this release possible! ❤️</p>
+
+<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.44.0">v0.44.0 on GitHub</a> <br />
+<a href="https://pypi.org/project/pyocd/0.44.0">v0.44.0 on PyPI</a></p>
+
+<hr />
+
+<h2 id="new-features">New Features</h2>
 <ul>
-  
-    <li>
-      <a href="/posts/2026/04-01-pyocd-0.44.0-released.html"><strong>01 Apr 2026</strong> pyOCD 0.44.0 released</a>
-      <div><p>Introducing default debug sequences and flash programming support via debug sequences</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2026/02-23-pyocd-0.43.0-released.html"><strong>23 Feb 2026</strong> pyOCD 0.43.0 released</a>
-      <div><p>Introducing SEGGER RTT and SystemView support in the `run` subcommand, with flexible channel configuration.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2025/12-16-pyocd-0.42.0-released.html"><strong>16 Dec 2025</strong> pyOCD 0.42.0 released</a>
-      <div><p>Introducing a new `run` subcommand capable of running targets until a time limit or EOT.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2025/10-24-pyocd-0.40.0-released.html"><strong>24 Oct 2025</strong> pyOCD 0.40.0 released</a>
-      <div><p>Introducing support for multiple concurrent GDB client connections to the same GDB server.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2025/07-04-pyocd-0.37.0-released.html"><strong>04 Jul 2025</strong> pyOCD 0.37.0 released</a>
-      <div><p>Introducing support for CMSIS-Toolbox Run and Debug Management.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2022/01-24-pyocd-0.33.0-released.html"><strong>24 Jan 2022</strong> pyOCD 0.33.0 released</a>
-      <div><p>RTT, user-defined commands, color logging, and plenty of bug fixes.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/12-30-pyocd-0.32.3-released.html"><strong>30 Dec 2021</strong> pyOCD 0.32.3 released</a>
-      <div><p>PyOCD version 0.32.3 is now available.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/11-04-tf-m_tech_forum_presentation.html"><strong>04 Nov 2021</strong> TF-M Technical Forum presentation</a>
-      <div><p>"Introduction to pyOCD" presentation at the TF-M Technical Forum.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/10-18-pyocd-0.32.1-released.html"><strong>18 Oct 2021</strong> pyOCD 0.32.1 released</a>
-      <div><p>Python 3.10 wheels and several bug fixes.</p></div>
-    </li>
-  
-    <li>
-      <a href="/posts/2021/10-03-welcome-to-pyocd.html"><strong>03 Oct 2021</strong> Welcome</a>
-      <div><p>The pyOCD website is now online, along with new community resources.</p></div>
-    </li>
-  
+  <li>Debug sequences:
+    <ul>
+      <li>Use default debug sequences as defined in the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/debug_description.html#autotoc_md2">Open-CMSIS-Pack specification</a></li>
+      <li>Support debug sequences for hardware reset: <code class="highlighter-rouge">ResetHardwareAssert</code> and <code class="highlighter-rouge">ResetHardwareDeassert</code></li>
+      <li>Support debug sequences for flash programming: <code class="highlighter-rouge">FlashInit</code>, <code class="highlighter-rouge">FlashUninit</code>, <code class="highlighter-rouge">FlashEraseChip</code>, <code class="highlighter-rouge">FlashEraseSector</code>, <code class="highlighter-rouge">FlashEraseDone</code>, <code class="highlighter-rouge">FlashProgramPage</code>, <code class="highlighter-rouge">FlashProgramDone</code>, and <code class="highlighter-rouge">DebugCodeMemRemap</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">run</code> subcommand:
+    <ul>
+      <li>Add SystemView Server mode to support SEGGER’s SystemView Recorder via IP (TCP/IP connection)</li>
+    </ul>
+  </li>
 </ul>
+
+<h2 id="improvements">Improvements</h2>
+<ul>
+  <li>RTT:
+    <ul>
+      <li>Improve robustness and tolerate unexpected target halts</li>
+      <li>More flexible configuration</li>
+      <li>Increase transfer speed</li>
+      <li>Improve log messages</li>
+    </ul>
+  </li>
+  <li>SystemView:
+    <ul>
+      <li>Improve log messages</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="changes">Changes</h2>
+<ul>
+  <li>Flash programming:
+    <ul>
+      <li>Split flash programming into separate erase and program operations</li>
+    </ul>
+  </li>
+  <li>RTT Configuration:
+    <ul>
+      <li>Rename channel mode <code class="highlighter-rouge">telnet</code> to <code class="highlighter-rouge">server</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="fixes">Fixes</h2>
+<ul>
+  <li>GDB Server:
+    <ul>
+      <li>Fix thread information on subsequent client connection</li>
+    </ul>
+  </li>
+  <li>Debug sequences:
+    <ul>
+      <li>Support inline control flow statements (<code class="highlighter-rouge">if</code>, <code class="highlighter-rouge">while</code>)</li>
+      <li>Fix predefined debug access variable contents for <code class="highlighter-rouge">__protocol</code> and <code class="highlighter-rouge">__connection</code></li>
+    </ul>
+  </li>
+  <li>Cortex-M:
+    <ul>
+      <li>Restrict PACBTI and PMU extension detection to Armv8.1-M targets</li>
+    </ul>
+  </li>
+  <li>CoreSight:
+    <ul>
+      <li>Restore CSW value after pre-discovery</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="targets">Targets</h2>
+<ul>
+  <li>Add nRF54LM20A target (@StarSphere-1024)</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/pyocd/pyOCD/compare/v0.43.1…v0.44.0</p>
+
 
           </main>
         </div>
