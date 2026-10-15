@@ -289,7 +289,7 @@ features, pyOCD can perform this unlock procedure for you.</p>
 Unlocking a locked device will erase all data on the chip!
 </div>
 
-<p>You can add the option <code class="highlighter-rouge">auto_unlock</code> to your <a href="/docs/configuration.html">configuration</a>:</p>
+<p>You can add the option <code class="language-plaintext highlighter-rouge">auto_unlock</code> to your <a href="/docs/configuration.html">configuration</a>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>venv<span class="o">)</span> ~/devel/contrib/pyocd<span class="nv">$ </span>pyocd commander <span class="nt">--target</span> nrf52 <span class="nt">-O</span> auto_unlock
 0000264:WARNING:target_nRF52:NRF52832 APPROTECT enabled: will try to unlock via mass erase
@@ -297,13 +297,13 @@ Connected to NRF52832 <span class="o">[</span>Halted]: I3FSNZOV
 <span class="o">&gt;&gt;&gt;</span>
 </code></pre></div></div>
 
-<p>Note that the default for <code class="highlighter-rouge">auto_unlock</code> is True. Only in pyOCD Commander is this default changed,
+<p>Note that the default for <code class="language-plaintext highlighter-rouge">auto_unlock</code> is True. Only in pyOCD Commander is this default changed,
 because of how Commander is intended to be used for low-level interaction and inspection of the
 target.</p>
 
 <p>You can also do this interactively with pyOCD Commander:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(venv) $ pyocd commander --target nrf52840 -N
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(venv) $ pyocd commander --target nrf52840 -N
 &gt;&gt;&gt; initdp
 &gt;&gt;&gt; makeap 1
 &gt;&gt;&gt; status
@@ -323,22 +323,22 @@ Core 0 status:  Halted
 <h2 id="unsupported-targets">Unsupported targets</h2>
 
 <p>If pyOCD doesn’t support the security features of your MCU, you can still likely access them with
-pyOCD Commander with the <code class="highlighter-rouge">no-init</code> option. A common pattern is that the security function locks out
+pyOCD Commander with the <code class="language-plaintext highlighter-rouge">no-init</code> option. A common pattern is that the security function locks out
 the fully-functional AHB-AP, but leaves a second, proprietary AP unlocked. The second AP usually has
 very few functions, mostly related to management (reset) or erase/unlock of the chip. Another method
 used by some device families is to use only the standard AHB-AP, but when the device is locked the
 accessible address range is limited to a small handful of registers.</p>
 
-<p>Starting pyOCD Commander in <code class="highlighter-rouge">--no-init</code> mode is intended to help in these situations. It intentionally doesn’t attempt
+<p>Starting pyOCD Commander in <code class="language-plaintext highlighter-rouge">--no-init</code> mode is intended to help in these situations. It intentionally doesn’t attempt
 to interact with the target on startup. Without initialization, most commands will not work. You’ll need to do some
 manual initialization.</p>
 
-<p>The usefulness of <code class="highlighter-rouge">--no-init</code> mode is that it allows Commander to start when initialization would
+<p>The usefulness of <code class="language-plaintext highlighter-rouge">--no-init</code> mode is that it allows Commander to start when initialization would
 normally fail due to missing support for the target or security features of the MCU.</p>
 
 <h3 id="useful-options">Useful Options</h3>
 
-<p>Once you’ve started Commander <code class="highlighter-rouge">--no-init</code>, the following commands are most useful.</p>
+<p>Once you’ve started Commander <code class="language-plaintext highlighter-rouge">--no-init</code>, the following commands are most useful.</p>
 
 <dl>
 <dt><em>initdp</em></dt>
@@ -368,21 +368,21 @@ Commander in normal mode (without `--no-init`)</dd>
 
 <h3 id="example">Example</h3>
 
-<p>Let’s pretend the nRF52 family is unsupported. Here’s an example session where we’ll use <code class="highlighter-rouge">no-init</code> mode to manually
+<p>Let’s pretend the nRF52 family is unsupported. Here’s an example session where we’ll use <code class="language-plaintext highlighter-rouge">no-init</code> mode to manually
 unlock the target:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(venv) nock@nocko-wired:~/devel/contrib/pyocd$ pyocd commander -N
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(venv) nock@nocko-wired:~/devel/contrib/pyocd$ pyocd commander -N
 0000136:WARNING:board:Generic 'cortex_m' target type is selected; is this intentional? You will be able to debug but not program flash. To set the target type use the '--target' argument or 'target_override' option. Use 'pyocd list --targets' to see available targets types.
 &gt;&gt;&gt; initdp
 </code></pre></div></div>
-<p>We use <code class="highlighter-rouge">initdp</code> to initialize the <em>Debug Port</em> and power on the on-chip debug hardware.</p>
+<p>We use <code class="language-plaintext highlighter-rouge">initdp</code> to initialize the <em>Debug Port</em> and power on the on-chip debug hardware.</p>
 
 <p>The <a href="https://infocenter.nordicsemi.com/pdf/nRF52832_PS_v1.1.pdf">nRF52 Product Specification</a> says that the chip has a
 proprietary <em>CTRL-AP</em> at index 1 that supports a few operations even if the main AP is locked.</p>
 
-<p>Let’s let pyOCD know about it with <code class="highlighter-rouge">makeap</code>:</p>
+<p>Let’s let pyOCD know about it with <code class="language-plaintext highlighter-rouge">makeap</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; makeap 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; makeap 1
 AP#1 IDR = 0x02880000
 </code></pre></div></div>
 
@@ -403,36 +403,36 @@ will read 0.</dd>
 <dd>If this register is 0, then APPROTECT is enabled (chip is locked), if 1 the chip is unlocked</dd>
 </dl>
 
-<p>We can read the register value with <code class="highlighter-rouge">readap</code> and write a new value with <code class="highlighter-rouge">writeap</code>. Let’s see if the chip is locked by
+<p>We can read the register value with <code class="language-plaintext highlighter-rouge">readap</code> and write a new value with <code class="language-plaintext highlighter-rouge">writeap</code>. Let’s see if the chip is locked by
 reading <em>APPROTECTSTATUS</em> on AP #1:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x00C
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x00C
 AP register 0x100000c = 0x00000000
 </code></pre></div></div>
 
 <p>This chip is locked! Let’s unlock it. We need to write a 1 to <em>ERASEALL</em> (on AP #1) to start the mass erase:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; writeap 1 0x004 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; writeap 1 0x004 1
 </code></pre></div></div>
 
 <p>Let’s see if it has finished, by reading <em>ERASEALLSTATUS</em>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x008
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x008
 AP register 0x1000008 = 0x00000001
 &gt;&gt;&gt; readap 1 0x008
 AP register 0x1000008 = 0x00000000
 </code></pre></div></div>
 
-<p>After the first <code class="highlighter-rouge">readap</code> it was still erasing, but by the time the second <code class="highlighter-rouge">readap</code> was issued it was complete.
+<p>After the first <code class="language-plaintext highlighter-rouge">readap</code> it was still erasing, but by the time the second <code class="language-plaintext highlighter-rouge">readap</code> was issued it was complete.
 Let’s check the security status by reading <em>APPROTECTSTATUS</em> again:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x00C
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; readap 1 0x00C
 AP register 0x100000c = 0x00000001
 </code></pre></div></div>
 
-<p>It’s unlocked! Let’s check the <code class="highlighter-rouge">status</code>:</p>
+<p>It’s unlocked! Let’s check the <code class="language-plaintext highlighter-rouge">status</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; status
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; status
 Security:       Unlocked
 &gt;&gt;&gt; reinit
 &gt;&gt;&gt; status
@@ -442,7 +442,7 @@ Core 0 status:  Halted
 </code></pre></div></div>
 
 <p>The security was unlocked, but there are no cores (many commands like halt, reset, and so on need a core). It doesn’t exist
-since we started Commander in <code class="highlighter-rouge">no-init</code> mode. Running <code class="highlighter-rouge">reinit</code> from the CLI finishes the initialization that’s
+since we started Commander in <code class="language-plaintext highlighter-rouge">no-init</code> mode. Running <code class="language-plaintext highlighter-rouge">reinit</code> from the CLI finishes the initialization that’s
 possible now that the chip is unlocked.</p>
 
 

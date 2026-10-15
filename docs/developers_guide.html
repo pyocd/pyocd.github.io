@@ -249,7 +249,7 @@ contributing guide</a> before beginning any development on pyOCD or related proj
 <h2 id="setup">Setup</h2>
 
 <p>PyOCD developers are strongly recommended to setup a working environment using either
-<a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> or the built-in <code class="highlighter-rouge">venv</code> module (only use of <code class="highlighter-rouge">venv</code> is shown
+<a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> or the built-in <code class="language-plaintext highlighter-rouge">venv</code> module (only use of <code class="language-plaintext highlighter-rouge">venv</code> is shown
 below, but the two are equivalent). After cloning the code, you can setup a virtualenv and install the pyOCD
 dependencies for the current platform by following the detailed steps below.</p>
 
@@ -258,20 +258,20 @@ dependencies for the current platform by following the detailed steps below.</p>
 <ul>
   <li><a href="https://www.python.org/downloads/">Install Python</a> version 3.9.0 or above. Add to PATH.
     <ul>
-      <li>Note that on Windows, the 32-bit Python 2.7 must be installed for the Python-enabled <code class="highlighter-rouge">arm-none-eabi-gdb-py</code> to
- work properly and for the <code class="highlighter-rouge">test/gdb_test.py</code> functional test to pass.</li>
+      <li>Note that on Windows, the 32-bit Python 2.7 must be installed for the Python-enabled <code class="language-plaintext highlighter-rouge">arm-none-eabi-gdb-py</code> to
+ work properly and for the <code class="language-plaintext highlighter-rouge">test/gdb_test.py</code> functional test to pass.</li>
     </ul>
   </li>
   <li><a href="https://git-scm.com/downloads">Install Git</a>. Add to PATH.</li>
   <li><a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm">Install GNU Arm Embedded toolchain</a>.
-  This provides <code class="highlighter-rouge">arm-none-eabi-gdb</code> used for testing the gdbserver. Add to PATH.</li>
+  This provides <code class="language-plaintext highlighter-rouge">arm-none-eabi-gdb</code> used for testing the gdbserver. Add to PATH.</li>
 </ul>
 
 <h2 id="steps">Steps</h2>
 
 <p><strong>Step 1.</strong> Get the sources and create a virtual environment</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/pyocd/pyOCD
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/pyocd/pyOCD
 $ cd pyOCD
 $ python3 -m venv venv
 </code></pre></div></div>
@@ -282,23 +282,23 @@ $ python3 -m venv venv
 the following.</p>
 
 <p>Linux or Mac:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ source venv/bin/activate
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ source venv/bin/activate
 </code></pre></div></div>
 
 <p>Windows:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ venv\Scripts\activate
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ venv\Scripts\activate
 </code></pre></div></div>
 
 <p><strong>Step 3.</strong> Install editable pyOCD</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install -e .[test]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install -e .[test]
 </code></pre></div></div>
 
 <p>If you switch branches, you may need to reinstall.</p>
 
-<p>Because the <code class="highlighter-rouge">develop</code> branch doesn’t have version tags except older tags from the <code class="highlighter-rouge">develop</code> branch point,
+<p>Because the <code class="language-plaintext highlighter-rouge">develop</code> branch doesn’t have version tags except older tags from the <code class="language-plaintext highlighter-rouge">develop</code> branch point,
 the version number of pyOCD might be significantly out of date. If this is an issue, you can override the
-version by setting the <code class="highlighter-rouge">SETUPTOOLS_SCM_PRETEND_VERSION</code> environment variable to the desired version number
+version by setting the <code class="language-plaintext highlighter-rouge">SETUPTOOLS_SCM_PRETEND_VERSION</code> environment variable to the desired version number
 (without a “v” prefix).</p>
 
 <p><strong>Step 4.</strong> Develop</p>
@@ -319,12 +319,12 @@ way to engage with the community and maintainers.</p>
 
 <p>To run the unit tests, you can execute the following.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pytest
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pytest
 </code></pre></div></div>
 
 <p>The automated test suite also needs to be run:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd test
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd test
 $ python ./automated_test.py
 </code></pre></div></div>
 
@@ -342,9 +342,9 @@ which branch to target.</p>
 <p>There are two primary branches:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">main</code>: Stable branch reflecting the most recent release. May contain bug fixes not yet released, but no new
+  <li><code class="language-plaintext highlighter-rouge">main</code>: Stable branch reflecting the most recent release. May contain bug fixes not yet released, but no new
   feature commits are allowed.</li>
-  <li><code class="highlighter-rouge">develop</code>: Active development branch for the next minor version. Merged into <code class="highlighter-rouge">main</code> at release time.</li>
+  <li><code class="language-plaintext highlighter-rouge">develop</code>: Active development branch for the next minor version. Merged into <code class="language-plaintext highlighter-rouge">main</code> at release time.</li>
 </ul>
 
 <p>There may be other development branches present to host long term development of major new features and backwards incompatible changes, such as API changes.</p>
@@ -352,11 +352,11 @@ which branch to target.</p>
 <p>The branch that your changes should be made against depends on the type and complexity of the changes:</p>
 
 <ul>
-  <li>Only a bug fix: please target <code class="highlighter-rouge">main</code>.</li>
-  <li>Any other changes, or a mix of changes: target the <code class="highlighter-rouge">develop</code> branch. This is also a good choice if you aren’t sure.</li>
+  <li>Only a bug fix: please target <code class="language-plaintext highlighter-rouge">main</code>.</li>
+  <li>Any other changes, or a mix of changes: target the <code class="language-plaintext highlighter-rouge">develop</code> branch. This is also a good choice if you aren’t sure.</li>
 </ul>
 
-<p>Maintainers will cherry-pick commits between <code class="highlighter-rouge">main</code> and <code class="highlighter-rouge">develop</code> as necessary to keep fixes in sync.</p>
+<p>Maintainers will cherry-pick commits between <code class="language-plaintext highlighter-rouge">main</code> and <code class="language-plaintext highlighter-rouge">develop</code> as necessary to keep fixes in sync.</p>
 
 <p>If you have any questions about how best to submit changes or the branch policy, please ask in the
 <a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Slack</a> workspace or
@@ -377,16 +377,16 @@ which branch to target.</p>
 
     <ul>
       <li>
-        <p>Set <code class="highlighter-rouge">pythonPath</code> to the python executable in the virtualenv.</p>
+        <p>Set <code class="language-plaintext highlighter-rouge">pythonPath</code> to the python executable in the virtualenv.</p>
       </li>
       <li>
-        <p>Set <code class="highlighter-rouge">module</code> to <code class="highlighter-rouge">pyocd.__main__</code>, to debug pyOCD entry point as a module. This works better than trying to debug the script <code class="highlighter-rouge">.../pyocd/__main__.py</code> as it ensures the relative module references inside pyOCD work correctly..</p>
+        <p>Set <code class="language-plaintext highlighter-rouge">module</code> to <code class="language-plaintext highlighter-rouge">pyocd.__main__</code>, to debug pyOCD entry point as a module. This works better than trying to debug the script <code class="language-plaintext highlighter-rouge">.../pyocd/__main__.py</code> as it ensures the relative module references inside pyOCD work correctly..</p>
       </li>
     </ul>
 
     <p>For instance, here is a VS Code launch config for pyOCD’s gdbserver:</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> {
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> {
      "name": "pyocd gdbserver",
      "type": "python",
      "request": "launch",
@@ -405,7 +405,7 @@ which branch to target.</p>
 
 <p>For remote debug, use a launch config like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    {
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    {
         "name": "Python: Attach using port",
         "type": "python",
         "request": "attach",
@@ -413,20 +413,20 @@ which branch to target.</p>
     }
 </code></pre></div></div>
 
-<p>If the pyOCD process is on another machine, add a <code class="highlighter-rouge">host</code> key to the launch config with the host name. (This defaults to localhost.)</p>
+<p>If the pyOCD process is on another machine, add a <code class="language-plaintext highlighter-rouge">host</code> key to the launch config with the host name. (This defaults to localhost.)</p>
 
 <p>Install <a href="https://github.com/microsoft/debugpy/">debugpy</a> with pip into your virtual environment.</p>
 
-<p>To remotely debug pyOCD from the command line, run it with the <code class="highlighter-rouge">debugpy</code> module. For instance, <code class="highlighter-rouge">python -m debugpy --listen 5678 -m pyocd gdb -v</code>. Additionally, <code class="highlighter-rouge">--wait-for-client</code> can be added after the port number to wait for the debug client to connect before running pyOCD.</p>
+<p>To remotely debug pyOCD from the command line, run it with the <code class="language-plaintext highlighter-rouge">debugpy</code> module. For instance, <code class="language-plaintext highlighter-rouge">python -m debugpy --listen 5678 -m pyocd gdb -v</code>. Additionally, <code class="language-plaintext highlighter-rouge">--wait-for-client</code> can be added after the port number to wait for the debug client to connect before running pyOCD.</p>
 
-<p>If you don’t control pyOCD’s launch, then <code class="highlighter-rouge">debugpy</code> can be called directly from pyOCD’s code. Add the following code to pyocd. Inside <code class="highlighter-rouge">pyocd.__main__.PyOCDTool.run()</code> is a good location, though it can be done at module level in <code class="highlighter-rouge">__main__.py</code>.</p>
+<p>If you don’t control pyOCD’s launch, then <code class="language-plaintext highlighter-rouge">debugpy</code> can be called directly from pyOCD’s code. Add the following code to pyocd. Inside <code class="language-plaintext highlighter-rouge">pyocd.__main__.PyOCDTool.run()</code> is a good location, though it can be done at module level in <code class="language-plaintext highlighter-rouge">__main__.py</code>.</p>
 
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">debugpy</span>
-<span class="n">debugpy</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5678</span><span class="p">)</span>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">debugpy</span>
+<span class="n">debugpy</span><span class="p">.</span><span class="nf">listen</span><span class="p">(</span><span class="mi">5678</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>To pause pyOCD’s execution and wait for the debug client to connect, add this line as well:</p>
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">debugpy</span><span class="p">.</span><span class="n">wait_for_client</span><span class="p">()</span>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">debugpy</span><span class="p">.</span><span class="nf">wait_for_client</span><span class="p">()</span>
 </code></pre></div></div>
 
 

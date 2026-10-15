@@ -270,9 +270,9 @@ to set log levels, both globally and with precise control.</p>
   <li>DEBUG</li>
 </ul>
 
-<p>The CRITICAL level is used only by the <code class="highlighter-rouge">pyocd</code> tool for reporting fatal errors.</p>
+<p>The CRITICAL level is used only by the <code class="language-plaintext highlighter-rouge">pyocd</code> tool for reporting fatal errors.</p>
 
-<p>Each subcommand for the <code class="highlighter-rouge">pyocd</code> tool has a default logging level.</p>
+<p>Each subcommand for the <code class="language-plaintext highlighter-rouge">pyocd</code> tool has a default logging level.</p>
 
 <table>
   <thead>
@@ -283,43 +283,43 @@ to set log levels, both globally and with precise control.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">commander</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commander</code></td>
       <td>WARNING</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">erase</code></td>
+      <td><code class="language-plaintext highlighter-rouge">erase</code></td>
       <td>WARNING</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">flash</code></td>
+      <td><code class="language-plaintext highlighter-rouge">flash</code></td>
       <td>WARNING</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">gdbserver</code></td>
+      <td><code class="language-plaintext highlighter-rouge">gdbserver</code></td>
       <td>INFO</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">json</code></td>
       <td>Logging fully disabled</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">list</code></td>
+      <td><code class="language-plaintext highlighter-rouge">list</code></td>
       <td>INFO</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pack</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pack</code></td>
       <td>INFO</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">reset</code></td>
+      <td><code class="language-plaintext highlighter-rouge">reset</code></td>
       <td>WARNING</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">rtt</code></td>
+      <td><code class="language-plaintext highlighter-rouge">rtt</code></td>
       <td>INFO</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">server</code></td>
+      <td><code class="language-plaintext highlighter-rouge">server</code></td>
       <td>INFO</td>
     </tr>
   </tbody>
@@ -327,26 +327,26 @@ to set log levels, both globally and with precise control.</p>
 
 <h2 id="basic-control">Basic control</h2>
 
-<p>For most users, the command line <code class="highlighter-rouge">--verbose</code>/<code class="highlighter-rouge">-v</code> and <code class="highlighter-rouge">--quiet</code>/<code class="highlighter-rouge">-q</code> arguments provide sufficient control
+<p>For most users, the command line <code class="language-plaintext highlighter-rouge">--verbose</code>/<code class="language-plaintext highlighter-rouge">-v</code> and <code class="language-plaintext highlighter-rouge">--quiet</code>/<code class="language-plaintext highlighter-rouge">-q</code> arguments provide sufficient control
 over logging. These arguments can be listed multiple times. Each use increases or decreases the
-logging verbosity level. For example, a single <code class="highlighter-rouge">--verbose</code> moves <code class="highlighter-rouge">pyocd flash</code> from the default
+logging verbosity level. For example, a single <code class="language-plaintext highlighter-rouge">--verbose</code> moves <code class="language-plaintext highlighter-rouge">pyocd flash</code> from the default
 level of WARNING to INFO.</p>
 
 <h2 id="color-logging">Color logging</h2>
 
 <p>By default, log output to a tty is colorised. Control over colorised log output is possible two ways.</p>
 
-<p>The command-line <code class="highlighter-rouge">--color</code> argument accepts an optional parameter that must be one of <code class="highlighter-rouge">auto</code>, <code class="highlighter-rouge">always</code>, or <code class="highlighter-rouge">never</code>.
-The default is <code class="highlighter-rouge">auto</code>, which will enable color only when outputting to a tty.</p>
+<p>The command-line <code class="language-plaintext highlighter-rouge">--color</code> argument accepts an optional parameter that must be one of <code class="language-plaintext highlighter-rouge">auto</code>, <code class="language-plaintext highlighter-rouge">always</code>, or <code class="language-plaintext highlighter-rouge">never</code>.
+The default is <code class="language-plaintext highlighter-rouge">auto</code>, which will enable color only when outputting to a tty.</p>
 
-<p>Another option for controlling color output is the <code class="highlighter-rouge">PYOCD_COLOR</code> environment variable. It should be set to one of the
-same values supported by <code class="highlighter-rouge">--color</code>. This environment variable changes the default color output setting, and is
-overridden by <code class="highlighter-rouge">--color</code> on the command line.</p>
+<p>Another option for controlling color output is the <code class="language-plaintext highlighter-rouge">PYOCD_COLOR</code> environment variable. It should be set to one of the
+same values supported by <code class="language-plaintext highlighter-rouge">--color</code>. This environment variable changes the default color output setting, and is
+overridden by <code class="language-plaintext highlighter-rouge">--color</code> on the command line.</p>
 
 <h2 id="loggers">Loggers</h2>
 
 <p>Each module in pyOCD uses its own module-specific logger with a name matching the dotted module
-name, for instance <code class="highlighter-rouge">pyocd.coresight.fpb</code>. This lets you control verbosity at the module level. Even
+name, for instance <code class="language-plaintext highlighter-rouge">pyocd.coresight.fpb</code>. This lets you control verbosity at the module level. Even
 more advanced configurations, such as routing a particular module’s log output to a separate file,
 are also possible.</p>
 
@@ -356,7 +356,7 @@ its package structure.</p>
 <h3 id="trace-loggers">Trace loggers</h3>
 
 <p>Certain modules define additional sub-module loggers that output debug trace logs. These loggers always have the
-suffix “.trace” and are disabled by default. This ensures the trace messages won’t be seen unless explicitly enabled by the <code class="highlighter-rouge">--log-level</code> / <code class="highlighter-rouge">-L</code> argument described in the following section.</p>
+suffix “.trace” and are disabled by default. This ensures the trace messages won’t be seen unless explicitly enabled by the <code class="language-plaintext highlighter-rouge">--log-level</code> / <code class="language-plaintext highlighter-rouge">-L</code> argument described in the following section.</p>
 
 <p>Currently defined trace loggers:</p>
 
@@ -369,71 +369,71 @@ suffix “.trace” and are disabled by default. This ensures the trace messages
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.coresight.ap.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.coresight.ap.trace</code></td>
       <td>AP memory transfers</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.coresight.dap.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.coresight.dap.trace</code></td>
       <td>AP and DP register accesses</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.debug.semihost.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.debug.semihost.trace</code></td>
       <td>Semihost file operations</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.debug.sequences.scope.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.debug.sequences.scope.trace</code></td>
       <td>Open-CMSIS-Pack debug sequence variable read/write</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.debug.sequences.sequences.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.debug.sequences.sequences.trace</code></td>
       <td>Open-CMSIS-Pack debug sequence statements</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.flash.flash.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.flash.flash.trace</code></td>
       <td>Flash algorithm operations</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.cmsis_dap_probe.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.cmsis_dap_probe.trace</code></td>
       <td>CMSIS-DAP probe API calls</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.jlink_probe.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.jlink_probe.trace</code></td>
       <td>Log output from JLink library</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.dap_access_cmsis_dap.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.pydapaccess.dap_access_cmsis_dap.trace</code></td>
       <td>CMSIS-DAP packet building</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.interface.hidapi_backend.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.pydapaccess.interface.hidapi_backend.trace</code></td>
       <td>CMSIS-DAP v1 hidapi backend USB transfers</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.interface.pyusb_backend.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.pydapaccess.interface.pyusb_backend.trace</code></td>
       <td>CMSIS-DAP v1 pyusb backend USB transfers</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.interface.pyusb_v2_backend.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.pydapaccess.interface.pyusb_v2_backend.trace</code></td>
       <td>CMSIS-DAP v2 pyusb backend USB transfers</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.pydapaccess.interface.pywinusb_backend.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.pydapaccess.interface.pywinusb_backend.trace</code></td>
       <td>CMSIS-DAP v1 pywinusb backend USB transfers</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.stlink.usb.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.stlink.usb.trace</code></td>
       <td>STLink USB transfers</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.tcp_client_probe.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.tcp_client_probe.trace</code></td>
       <td>Remote probe client requests and responses</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.probe.tcp_probe_server.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.probe.tcp_probe_server.trace</code></td>
       <td>Remote probe server requests and responses</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd.utility.notification.trace</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd.utility.notification.trace</code></td>
       <td>Sent notifications</td>
     </tr>
   </tbody>
@@ -441,7 +441,7 @@ suffix “.trace” and are disabled by default. This ensures the trace messages
 
 <h2 id="logger-level-control">Logger-level control</h2>
 
-<p>The <code class="highlighter-rouge">--log-level</code> / <code class="highlighter-rouge">-L</code> command line argument makes it easy to control logging at the level of individual loggers
+<p>The <code class="language-plaintext highlighter-rouge">--log-level</code> / <code class="language-plaintext highlighter-rouge">-L</code> command line argument makes it easy to control logging at the level of individual loggers
 or groups of loggers. The argument accepts a comma-separated list of logger names followed by an “=” sign and a
 log level name (case-insensitive).</p>
 
@@ -457,33 +457,33 @@ wildcards:</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">*</code></td>
+      <td><code class="language-plaintext highlighter-rouge">*</code></td>
       <td>matches everything</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">?</code></td>
+      <td><code class="language-plaintext highlighter-rouge">?</code></td>
       <td>matches any single character</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">[seq]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">[seq]</code></td>
       <td>matches any character in seq</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">[!seq]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">[!seq]</code></td>
       <td>matches any character not in seq</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">[*]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">[*]</code></td>
       <td>match literal “*”</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">[?]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">[?]</code></td>
       <td>match literal “?”</td>
     </tr>
   </tbody>
 </table>
 
-<p>The <code class="highlighter-rouge">--log-level</code> argument can be used more than once on a command line. The arguments are processed in the order they
+<p>The <code class="language-plaintext highlighter-rouge">--log-level</code> argument can be used more than once on a command line. The arguments are processed in the order they
 appear, so later arguments can refine log level settings made by earlier arguments.</p>
 
 <p>Setting the log level of parent loggers affects the level of all child loggers.</p>
@@ -491,13 +491,13 @@ appear, so later arguments can refine log level settings made by earlier argumen
 <p>Examples:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">-L 'pyocd.probe.*=debug'</code>: set all pyOCD debug probe modules to debug log level</li>
-  <li><code class="highlighter-rouge">-L pyocd.core.session,pyocd.core.options=info</code>: set two modules to info log level</li>
-  <li><code class="highlighter-rouge">-L '*.trace=debug -L *.jlink=warning'</code>: enable all trace loggers, but set JLink and its trace logger to warnings
+  <li><code class="language-plaintext highlighter-rouge">-L 'pyocd.probe.*=debug'</code>: set all pyOCD debug probe modules to debug log level</li>
+  <li><code class="language-plaintext highlighter-rouge">-L pyocd.core.session,pyocd.core.options=info</code>: set two modules to info log level</li>
+  <li><code class="language-plaintext highlighter-rouge">-L '*.trace=debug -L *.jlink=warning'</code>: enable all trace loggers, but set JLink and its trace logger to warnings
   only</li>
 </ul>
 
-<p>Note that you may need to place the value used with <code class="highlighter-rouge">--log-level</code> in quotes to prevent the shell from attempting to
+<p>Note that you may need to place the value used with <code class="language-plaintext highlighter-rouge">--log-level</code> in quotes to prevent the shell from attempting to
 expand wildcards as file names.</p>
 
 <h2 id="advanced-control">Advanced control</h2>
@@ -505,17 +505,17 @@ expand wildcards as file names.</p>
 <p>Fine-grained control of pyOCD log output is available through logging configuration. The logging
 package supports loading a configuration dictionary to control almost all aspects of log output.</p>
 
-<p>The <code class="highlighter-rouge">logging</code> session option is used to specify the logging configuration. It can be set to either a
+<p>The <code class="language-plaintext highlighter-rouge">logging</code> session option is used to specify the logging configuration. It can be set to either a
 logging configuration dictionary or the path to a YAML file containing a configuration dictionary.
-Usually it is easiest to include the configuration directly in a <code class="highlighter-rouge">pyocd.yaml</code> config file. See the
+Usually it is easiest to include the configuration directly in a <code class="language-plaintext highlighter-rouge">pyocd.yaml</code> config file. See the
 <a href="/docs/configuration.html">configuration documentation</a> for more on config files. The file path is most
-useful when passing the <code class="highlighter-rouge">logging</code> option via the command line, since you can’t provide a dictionary
+useful when passing the <code class="language-plaintext highlighter-rouge">logging</code> option via the command line, since you can’t provide a dictionary
 this way.</p>
 
 <h3 id="controlling-module-log-levels">Controlling module log levels</h3>
 
 <p>A basic logging configuration to control verbosity at the module level looks like this, as shown
-in a <code class="highlighter-rouge">pyocd.yaml</code> config file:</p>
+in a <code class="language-plaintext highlighter-rouge">pyocd.yaml</code> config file:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">logging</span><span class="pi">:</span>
   <span class="na">loggers</span><span class="pi">:</span>
@@ -525,16 +525,16 @@ in a <code class="highlighter-rouge">pyocd.yaml</code> config file:</p>
       <span class="na">level</span><span class="pi">:</span> <span class="s">DEBUG</span>
 </code></pre></div></div>
 
-<p>The top level <code class="highlighter-rouge">logging</code> key is the session option. Under it must be a <code class="highlighter-rouge">loggers</code> key, which has the
-name of each module you wish to configure as a child key. Then, under each module name, the <code class="highlighter-rouge">level</code>
+<p>The top level <code class="language-plaintext highlighter-rouge">logging</code> key is the session option. Under it must be a <code class="language-plaintext highlighter-rouge">loggers</code> key, which has the
+name of each module you wish to configure as a child key. Then, under each module name, the <code class="language-plaintext highlighter-rouge">level</code>
 key specifies the log level for that module. Due to the way logging propagation works, you do not
 need to set the level of parent loggers to match the child levels. In fact, setting the level of a
 parent logger
-such as <code class="highlighter-rouge">pyocd</code> will set the level for all children—this is an easy way to control the log level
+such as <code class="language-plaintext highlighter-rouge">pyocd</code> will set the level for all children—this is an easy way to control the log level
 for all of pyOCD.</p>
 
-<p>Note that because the <code class="highlighter-rouge">logging</code> option is passed to and handled by the Python logging module, it does not support
-wildcard matching against loggers like the <code class="highlighter-rouge">--log-level</code> argument.</p>
+<p>Note that because the <code class="language-plaintext highlighter-rouge">logging</code> option is passed to and handled by the Python logging module, it does not support
+wildcard matching against loggers like the <code class="language-plaintext highlighter-rouge">--log-level</code> argument.</p>
 
 <h3 id="full-control">Full control</h3>
 
@@ -545,9 +545,9 @@ The logging module’s
 has a good introduction to the features and log output flow, so you can better understand the
 configuration schema.</p>
 
-<p>The <code class="highlighter-rouge">version</code> key described in the schema is optional in pyOCD’s logging configuration. If not
+<p>The <code class="language-plaintext highlighter-rouge">version</code> key described in the schema is optional in pyOCD’s logging configuration. If not
 present, pyOCD will set the schema version to 1 (currently the only version). In addition, pyOCD
-will set the <code class="highlighter-rouge">disabled_existing_loggers</code> key to false unless it is specified in the configuration
+will set the <code class="language-plaintext highlighter-rouge">disabled_existing_loggers</code> key to false unless it is specified in the configuration
 (the default is true).</p>
 
 <p>Note that if you change the configuration for the root logger, you will need to define a handler
@@ -577,7 +577,7 @@ levels:</p>
       <span class="na">level</span><span class="pi">:</span> <span class="s">DEBUG</span>       <span class="c1"># set this logger to DEBUG level</span>
 </code></pre></div></div>
 
-<p>This example shows how to direct log output to a log file called <code class="highlighter-rouge">pyocd_log.txt</code>:</p>
+<p>This example shows how to direct log output to a log file called <code class="language-plaintext highlighter-rouge">pyocd_log.txt</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">logging</span><span class="pi">:</span>
   <span class="na">root</span><span class="pi">:</span>
@@ -591,7 +591,7 @@ levels:</p>
       <span class="na">formatter</span><span class="pi">:</span> <span class="s">precise</span>
       <span class="na">filename</span><span class="pi">:</span> <span class="s">pyocd_log.txt</span>
       <span class="na">mode</span><span class="pi">:</span> <span class="s">w</span>
-      <span class="na">delay</span><span class="pi">:</span> <span class="no">false</span>
+      <span class="na">delay</span><span class="pi">:</span> <span class="kc">false</span>
 </code></pre></div></div>
 
 

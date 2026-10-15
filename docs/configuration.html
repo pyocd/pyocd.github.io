@@ -252,7 +252,7 @@
 
 <ol>
   <li>Dedicated command-line arguments.</li>
-  <li><code class="highlighter-rouge">-O</code> command-line arguments.</li>
+  <li><code class="language-plaintext highlighter-rouge">-O</code> command-line arguments.</li>
   <li>Probe-specific options from a config file.</li>
   <li>Global options from a config file.</li>
   <li>Changes to an option’s default value. Used only in rare cases for certain subcommands.</li>
@@ -275,10 +275,10 @@ the project directory.</p>
 references to the home directory. Then it checks whether the filename is absolute, and if so, it
 uses the filename as-is. Otherwise, it looks for the file in the project directory.</p>
 
-<p>By default, the project directory is simply the working directory where you ran the <code class="highlighter-rouge">pyocd</code> tool.
-You can change the project directory to another location with the <code class="highlighter-rouge">-j</code>, <code class="highlighter-rouge">--project</code>, or <code class="highlighter-rouge">--dir</code> command line
+<p>By default, the project directory is simply the working directory where you ran the <code class="language-plaintext highlighter-rouge">pyocd</code> tool.
+You can change the project directory to another location with the <code class="language-plaintext highlighter-rouge">-j</code>, <code class="language-plaintext highlighter-rouge">--project</code>, or <code class="language-plaintext highlighter-rouge">--dir</code> command line
 arguments. This can be helpful if you are running pyOCD from another tool or application. The project
-directory can also be set using the <code class="highlighter-rouge">PYOCD_PROJECT_DIR</code> environment variable. Command line arguments
+directory can also be set using the <code class="language-plaintext highlighter-rouge">PYOCD_PROJECT_DIR</code> environment variable. Command line arguments
 have precedence over the environment variable.</p>
 
 <h2 id="config-file">Config file</h2>
@@ -286,20 +286,20 @@ have precedence over the environment variable.</p>
 <p>pyOCD supports a YAML configuration file that lets you set session options that either apply to
 all probes or to a single probe, based on the probe’s unique ID.</p>
 
-<p>The easiest way to use a config file is to place a <code class="highlighter-rouge">pyocd.yaml</code> file in the project directory.
-An alternate <code class="highlighter-rouge">.yml</code> extension and
+<p>The easiest way to use a config file is to place a <code class="language-plaintext highlighter-rouge">pyocd.yaml</code> file in the project directory.
+An alternate <code class="language-plaintext highlighter-rouge">.yml</code> extension and
 optional dot prefix on the config file name are allowed. Alternatively, you can use the
-<code class="highlighter-rouge">--config</code> command line option, for instance <code class="highlighter-rouge">--config=myconfig.yaml</code>. Finally, you can set the
-<code class="highlighter-rouge">config_file</code> option. If there is a need to prevent reading a config file, use the <code class="highlighter-rouge">--no-config</code>
+<code class="language-plaintext highlighter-rouge">--config</code> command line option, for instance <code class="language-plaintext highlighter-rouge">--config=myconfig.yaml</code>. Finally, you can set the
+<code class="language-plaintext highlighter-rouge">config_file</code> option. If there is a need to prevent reading a config file, use the <code class="language-plaintext highlighter-rouge">--no-config</code>
 argument.</p>
 
 <p>The top level of the YAML file is a dictionary. The keys in the top-level dictionary must be names
-of session options, or the key <code class="highlighter-rouge">probes</code>. Session options are set to the value corresponding to the
+of session options, or the key <code class="language-plaintext highlighter-rouge">probes</code>. Session options are set to the value corresponding to the
 dictionary entry. Unrecognized option names are ignored.</p>
 
-<p>If there is a top-level <code class="highlighter-rouge">probes</code> key, its value must be a dictionary with keys that match a
+<p>If there is a top-level <code class="language-plaintext highlighter-rouge">probes</code> key, its value must be a dictionary with keys that match a
 substring of debug probe unique IDs. Usually you would just use the complete unique ID shown by
-listing connected boards (i.e., <code class="highlighter-rouge">pyocd list</code>). The values for the unique ID entries are
+listing connected boards (i.e., <code class="language-plaintext highlighter-rouge">pyocd list</code>). The values for the unique ID entries are
 dictionaries containing session options, just like the top level of the YAML file. Of course, these
 options are only applied when connecting with the given probe. If the probe unique ID
 substring listed in the config file matches more than one probe, the corresponding options
@@ -314,7 +314,7 @@ will be applied to all matching probes.</p>
     <span class="na">test_binary</span><span class="pi">:</span>      <span class="s">stm32l475vg_iot01a.bin</span>
 
 <span class="c1"># Global options</span>
-<span class="na">auto_unlock</span><span class="pi">:</span> <span class="no">false</span>
+<span class="na">auto_unlock</span><span class="pi">:</span> <span class="kc">false</span>
 <span class="na">frequency</span><span class="pi">:</span> <span class="m">8000000</span> <span class="c1"># Set 8 MHz SWD default for all probes</span>
 </code></pre></div></div>
 

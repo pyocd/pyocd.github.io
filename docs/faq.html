@@ -257,7 +257,7 @@
       <li>A target-specific reason, such as a proprietary connection procedure that hasn’t been performed.</li>
     </ul>
   </li>
-  <li>The method to gain debug control of a powered down or sleeping device is target dependent. However, it generally involves first waking the device, then halting the CPU before the resident firmware can place the device in a low power state. For many MCUs, these steps can be accomplished by telling pyOCD to connect while the reset pin is held asserted, eg connecting under reset. To use this mode, pass <code class="highlighter-rouge">--connect=under-reset</code>. On certain devices this won’t work because the reset pin performs a cold reset that also resets debug logic. For these devices, please refer to the vendor’s reference manual or programming manual.</li>
+  <li>The method to gain debug control of a powered down or sleeping device is target dependent. However, it generally involves first waking the device, then halting the CPU before the resident firmware can place the device in a low power state. For many MCUs, these steps can be accomplished by telling pyOCD to connect while the reset pin is held asserted, eg connecting under reset. To use this mode, pass <code class="language-plaintext highlighter-rouge">--connect=under-reset</code>. On certain devices this won’t work because the reset pin performs a cold reset that also resets debug logic. For these devices, please refer to the vendor’s reference manual or programming manual.</li>
   <li>A similar method to waking a sleeping device is needed to gain control of a device whose firmware changes the SWD/JTAG pinmux after it starts running. Connecting under reset also works in this case, if the device support it.</li>
 </ul>
 

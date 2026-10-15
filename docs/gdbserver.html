@@ -259,25 +259,25 @@
                     </div>
                   </div>
 
-                  <p>The <code class="highlighter-rouge">pyocd gdbserver</code> subcommand runs a gdb remote serial protocol (RSP) server that allows gdb to debug embedded targets.</p>
+                  <p>The <code class="language-plaintext highlighter-rouge">pyocd gdbserver</code> subcommand runs a gdb remote serial protocol (RSP) server that allows gdb to debug embedded targets.</p>
 
 <p>To run a debug session, the pyOCD gdbserver needs to first be started. Then gdb connects to pyOCD and debugging can begin.</p>
 
 <h2 id="running-the-gdbserver">Running the gdbserver</h2>
 
-<p>The usual way to start the gdbserver is by running <code class="highlighter-rouge">pyocd gdbserver</code> (or <code class="highlighter-rouge">pyocd gdb</code>) on the command line. The gdbserver will remain available as long as the <code class="highlighter-rouge">pyocd</code> process is running.</p>
+<p>The usual way to start the gdbserver is by running <code class="language-plaintext highlighter-rouge">pyocd gdbserver</code> (or <code class="language-plaintext highlighter-rouge">pyocd gdb</code>) on the command line. The gdbserver will remain available as long as the <code class="language-plaintext highlighter-rouge">pyocd</code> process is running.</p>
 
 <p>If using an IDE like Microsoft Visual Studio Code or Eclipse Embedded with plugins that support pyOCD, the gdbserver will automatically be started when you launch a debug session. Alternatively, the plugin can be configured to connect to an already-running gdbserver.</p>
 
-<p>From the commander, a gdbserver can be run with the <a href="/docs/command_reference.html#gdbserver-1"><code class="highlighter-rouge">gdbserver</code> command</a>.</p>
+<p>From the commander, a gdbserver can be run with the <a href="/docs/command_reference.html#gdbserver-1"><code class="language-plaintext highlighter-rouge">gdbserver</code> command</a>.</p>
 
-<p>The default gdbserver TCP/IP port number is 3333. This can be changed using the <code class="highlighter-rouge">-p</code> / <code class="highlighter-rouge">--port</code> or the <code class="highlighter-rouge">gdbserver_port</code> session option.</p>
+<p>The default gdbserver TCP/IP port number is 3333. This can be changed using the <code class="language-plaintext highlighter-rouge">-p</code> / <code class="language-plaintext highlighter-rouge">--port</code> or the <code class="language-plaintext highlighter-rouge">gdbserver_port</code> session option.</p>
 
 <h3 id="multicore-targets">Multicore targets</h3>
 
 <p>pyOCD always runs separate gdbservers for each core on multicore devices. This requires separate gdb instances and debug sessions for the cores being debugged, but is the most reliable method since gdb doesn’t support heterogenous multicore.</p>
 
-<p>By default, a gdbserver is started for all cores on the target. This can be changed using the <code class="highlighter-rouge">--core</code> argument, which takes a comma-separated list of core numbers.</p>
+<p>By default, a gdbserver is started for all cores on the target. This can be changed using the <code class="language-plaintext highlighter-rouge">--core</code> argument, which takes a comma-separated list of core numbers.</p>
 
 <p>The TCP/IP port numbers for each core’s gdbserver are determined by adding the core number to the base port number (see above). For a dual core device, core 0 uses the default base port of 3333, and core 1 uses port 3334.</p>
 
@@ -285,68 +285,68 @@
 
 <h2 id="connecting-from-gdb">Connecting from gdb</h2>
 
-<p>To connect gdb to pyOCD’s gdbserver, use the <code class="highlighter-rouge">target remote &lt;host&gt;:&lt;port&gt;</code> command. These take the server’s host name and port number separated by a colon as an argument. For a server running on the same host as gdb, using the default pyOCD port (see above for how to change it), this will be <code class="highlighter-rouge">target remote localhost:3333</code>.</p>
+<p>To connect gdb to pyOCD’s gdbserver, use the <code class="language-plaintext highlighter-rouge">target remote &lt;host&gt;:&lt;port&gt;</code> command. These take the server’s host name and port number separated by a colon as an argument. For a server running on the same host as gdb, using the default pyOCD port (see above for how to change it), this will be <code class="language-plaintext highlighter-rouge">target remote localhost:3333</code>.</p>
 
-<p>PyOCD also support extended remote mode. In this case, the connect command is <code class="highlighter-rouge">target extended-remote &lt;host&gt;:&lt;port&gt;</code>. Extended remote mode allows using the gdb <code class="highlighter-rouge">disconnect</code> command to disconnect from pyOCD while keeping the gdbserver running.</p>
+<p>PyOCD also support extended remote mode. In this case, the connect command is <code class="language-plaintext highlighter-rouge">target extended-remote &lt;host&gt;:&lt;port&gt;</code>. Extended remote mode allows using the gdb <code class="language-plaintext highlighter-rouge">disconnect</code> command to disconnect from pyOCD while keeping the gdbserver running.</p>
 
 <p>After connecting gdb, perform the following steps to program updated firmware and run the new code.</p>
 
 <ol>
   <li>
-    <p>Program firmware using the <code class="highlighter-rouge">load</code> command.</p>
+    <p>Program firmware using the <code class="language-plaintext highlighter-rouge">load</code> command.</p>
   </li>
   <li>
-    <p>Reset the target and halt with <code class="highlighter-rouge">monitor reset halt</code>. This halts the core at the first instruction.</p>
+    <p>Reset the target and halt with <code class="language-plaintext highlighter-rouge">monitor reset halt</code>. This halts the core at the first instruction.</p>
   </li>
   <li>
-    <p>Set breakpoints and resume, or use a command line <code class="highlighter-rouge">until main</code> to run to the first line of <code class="highlighter-rouge">main()</code>.</p>
+    <p>Set breakpoints and resume, or use a command line <code class="language-plaintext highlighter-rouge">until main</code> to run to the first line of <code class="language-plaintext highlighter-rouge">main()</code>.</p>
   </li>
 </ol>
 
 <h2 id="gdbserver-exit">Gdbserver exit</h2>
 
-<p>The pyOCD gdbserver process will normally exit automatically when gdb detaches using any of the <code class="highlighter-rouge">detach</code>, <code class="highlighter-rouge">kill</code>, or <code class="highlighter-rouge">disconnect</code> commands. This can be changed with the <code class="highlighter-rouge">--persist</code> argument or <code class="highlighter-rouge">persist</code> session option, so that the gdbserver always remains running until terminated directly (by Control-C or equivalent signal).</p>
+<p>The pyOCD gdbserver process will normally exit automatically when gdb detaches using any of the <code class="language-plaintext highlighter-rouge">detach</code>, <code class="language-plaintext highlighter-rouge">kill</code>, or <code class="language-plaintext highlighter-rouge">disconnect</code> commands. This can be changed with the <code class="language-plaintext highlighter-rouge">--persist</code> argument or <code class="language-plaintext highlighter-rouge">persist</code> session option, so that the gdbserver always remains running until terminated directly (by Control-C or equivalent signal).</p>
 
-<p>When gdb connects in extended remote mode, the gdb <code class="highlighter-rouge">disconnect</code> command will detach gdb but keep the gdbserver running even if persist isn’t enabled.</p>
+<p>When gdb connects in extended remote mode, the gdb <code class="language-plaintext highlighter-rouge">disconnect</code> command will detach gdb but keep the gdbserver running even if persist isn’t enabled.</p>
 
 <h2 id="useful-commands">Useful commands</h2>
 
 <p>Gdb by default restricts memory accesses to regions defined in the target memory map provided by pyOCD. This has the unhappy side effect of preventing access to peripheral registers or other Device memory, since the memory maps do not include those regions.</p>
 
-<p>To work around this, disable gbd’s <code class="highlighter-rouge">mem inaccessible-by-default</code> setting.</p>
+<p>To work around this, disable gbd’s <code class="language-plaintext highlighter-rouge">mem inaccessible-by-default</code> setting.</p>
 
-<p>This line can be added into your <code class="highlighter-rouge">.gdbinit</code> file:</p>
+<p>This line can be added into your <code class="language-plaintext highlighter-rouge">.gdbinit</code> file:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) set mem inaccessible-by-default off
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) set mem inaccessible-by-default off
 </code></pre></div></div>
 
 <p>It can also be useful to add an alias to make monitor commands (below) easier to access:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) alias m = monitor
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) alias m = monitor
 </code></pre></div></div>
 
-<p>To catch crashes and unexpected exceptions, use <a href="/docs/command_reference.html#vector-catch"><code class="highlighter-rouge">set vector-catch</code></a> to enable the M-profile vector catch feature:</p>
+<p>To catch crashes and unexpected exceptions, use <a href="/docs/command_reference.html#vector-catch"><code class="language-plaintext highlighter-rouge">set vector-catch</code></a> to enable the M-profile vector catch feature:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor set vector-catch all
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor set vector-catch all
 </code></pre></div></div>
 
-<p>If the core halts in an exception handler, use <a href="/docs/command_reference.html#fault"><code class="highlighter-rouge">show fault</code></a> to print out the M-profile fault syndrome registers.</p>
+<p>If the core halts in an exception handler, use <a href="/docs/command_reference.html#fault"><code class="language-plaintext highlighter-rouge">show fault</code></a> to print out the M-profile fault syndrome registers.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor show fault
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor show fault
 </code></pre></div></div>
 
-<p>For most targets, peripheral registers can be accessed using pyOCD’s <a href="/docs/command_reference.html#reg"><code class="highlighter-rouge">reg</code></a> and <a href="/docs/command_reference.html#wreg"><code class="highlighter-rouge">wreg</code></a> commands.</p>
+<p>For most targets, peripheral registers can be accessed using pyOCD’s <a href="/docs/command_reference.html#reg"><code class="language-plaintext highlighter-rouge">reg</code></a> and <a href="/docs/command_reference.html#wreg"><code class="language-plaintext highlighter-rouge">wreg</code></a> commands.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor reg TIM21.PSC
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) monitor reg TIM21.PSC
 </code></pre></div></div>
 
 <p>Enabling access to all memory as described above is required for this to work.</p>
 
 <h2 id="monitor-commands">Monitor commands</h2>
 
-<p>Commands can be sent directly to pyOCD using the gdb <code class="highlighter-rouge">monitor</code> command. Any output from pyOCD is returned through gdb and printed on the console. This is effectively the same as running the <code class="highlighter-rouge">pyocd commander</code> subcommand. All <a href="/docs/command_reference.html">pyOCD commands</a> are available.</p>
+<p>Commands can be sent directly to pyOCD using the gdb <code class="language-plaintext highlighter-rouge">monitor</code> command. Any output from pyOCD is returned through gdb and printed on the console. This is effectively the same as running the <code class="language-plaintext highlighter-rouge">pyocd commander</code> subcommand. All <a href="/docs/command_reference.html">pyOCD commands</a> are available.</p>
 
-<p>pyOCD initial selects the core controlled by the gdbserver as the target for monitor commands. Similarly, the selected AP is initially set to the gdbserver’s core’s MEM-AP. PyOCD’s <a href="/docs/command_reference.html#core-1"><code class="highlighter-rouge">core</code> command</a> can be used to select a different core. This might be useful in order to release a secondary core from reset before starting to debug it, although a <a href="/docs/user_scripts.html">user script</a> could be a better choice.</p>
+<p>pyOCD initial selects the core controlled by the gdbserver as the target for monitor commands. Similarly, the selected AP is initially set to the gdbserver’s core’s MEM-AP. PyOCD’s <a href="/docs/command_reference.html#core-1"><code class="language-plaintext highlighter-rouge">core</code> command</a> can be used to select a different core. This might be useful in order to release a secondary core from reset before starting to debug it, although a <a href="/docs/user_scripts.html">user script</a> could be a better choice.</p>
 
 <h2 id="semihosting-and-rtt">Semihosting and RTT</h2>
 
@@ -356,40 +356,40 @@
 
 <p>Several forms of caching are supported to improve performance when communicating with gdb.</p>
 
-<p>Note that these caches are currently only used with gdb, not for pyOCD’s commander interface or the <code class="highlighter-rouge">Target</code> Python API. (But they will be used for the <code class="highlighter-rouge">DebugContext</code> objects return from <code class="highlighter-rouge">SoCTarget.get_target_context()</code>, if that is used through the Python API.)</p>
+<p>Note that these caches are currently only used with gdb, not for pyOCD’s commander interface or the <code class="language-plaintext highlighter-rouge">Target</code> Python API. (But they will be used for the <code class="language-plaintext highlighter-rouge">DebugContext</code> objects return from <code class="language-plaintext highlighter-rouge">SoCTarget.get_target_context()</code>, if that is used through the Python API.)</p>
 
 <h3 id="reading-memory-from-the-elf">Reading memory from the ELF</h3>
 
-<p>If provided the firmware’s ELF executable file with the <code class="highlighter-rouge">--elf</code> argument, pyOCD will read target memory contents present in the ELF from that file instead of reading from the target via SWD/JTAG. This can be faster, especially with slower debug probe connections or wire protocol speeds.</p>
+<p>If provided the firmware’s ELF executable file with the <code class="language-plaintext highlighter-rouge">--elf</code> argument, pyOCD will read target memory contents present in the ELF from that file instead of reading from the target via SWD/JTAG. This can be faster, especially with slower debug probe connections or wire protocol speeds.</p>
 
-<p>The <code class="highlighter-rouge">cache.read_code_from_elf</code> session option (bool) controls whether this feature is enabled. It’s turned on by default, but of course requires the ELF to be passed to pyOCD. (Unfortunately, there is no way to access the executable through gdb.)</p>
+<p>The <code class="language-plaintext highlighter-rouge">cache.read_code_from_elf</code> session option (bool) controls whether this feature is enabled. It’s turned on by default, but of course requires the ELF to be passed to pyOCD. (Unfortunately, there is no way to access the executable through gdb.)</p>
 
 <h3 id="memory-and-register-cache">Memory and register cache</h3>
 
 <p>Caches for target memory and core register values are present and enabled by default. Both caches are invalidated every time the core is resumed or stepped.</p>
 
-<p>The memory cache will cache any memory region marked as cacheable (all are by default). To disable caching for a memory region, a user script can be used to set its <code class="highlighter-rouge">is_cacheable</code> property to False.</p>
+<p>The memory cache will cache any memory region marked as cacheable (all are by default). To disable caching for a memory region, a user script can be used to set its <code class="language-plaintext highlighter-rouge">is_cacheable</code> property to False.</p>
 
 <p>For example, to disable caching of the “iram” region:</p>
 
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">will_connect</span><span class="p">():</span>
-    <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">get_first_matching_region</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"iram"</span><span class="p">).</span><span class="n">is_cacheable</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="nf">get_first_matching_region</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">iram</span><span class="sh">"</span><span class="p">).</span><span class="n">is_cacheable</span> <span class="o">=</span> <span class="bp">False</span>
 </code></pre></div></div>
 
-<p>(Use the <code class="highlighter-rouge">show map</code> command to see the list of memory regions.)</p>
+<p>(Use the <code class="language-plaintext highlighter-rouge">show map</code> command to see the list of memory regions.)</p>
 
 <p>These session options allow control over the memory and register caches. Both are enabled by default.</p>
 
 <ul>
-  <li><code class="highlighter-rouge">cache.enable_memory</code> (bool)</li>
-  <li><code class="highlighter-rouge">cache.enable_register</code> (bool)</li>
+  <li><code class="language-plaintext highlighter-rouge">cache.enable_memory</code> (bool)</li>
+  <li><code class="language-plaintext highlighter-rouge">cache.enable_register</code> (bool)</li>
 </ul>
 
 <h2 id="rtos-thread-awareness">RTOS thread awareness</h2>
 
 <p>The gdbserver supports thread awareness for several RTOSes. Additional RTOS support can be added with plugins.</p>
 
-<p>When gdb connects, pyOCD will attempt to enable thread awareness. By default, all available RTOS plugins are queried. When the first one is successfully enabled, the process stops. If the <code class="highlighter-rouge">rtos.name</code> session option is set to the name of an RTOS plugin, only that one will be queried. To completely disable thread awareness, set the <code class="highlighter-rouge">rtos.enable</code> session option to false.</p>
+<p>When gdb connects, pyOCD will attempt to enable thread awareness. By default, all available RTOS plugins are queried. When the first one is successfully enabled, the process stops. If the <code class="language-plaintext highlighter-rouge">rtos.name</code> session option is set to the name of an RTOS plugin, only that one will be queried. To completely disable thread awareness, set the <code class="language-plaintext highlighter-rouge">rtos.enable</code> session option to false.</p>
 
 <p>Builtin RTOS plugins are shown in the following table.</p>
 
@@ -426,7 +426,7 @@
 
 <h3 id="viewing-and-selecting-threads">Viewing and selecting threads</h3>
 
-<p>Within gdb, the set of current threads can be printed with <code class="highlighter-rouge">info threads</code>. gdb assigns each thread a unique integer identifier used to reference the thread in other commands.</p>
+<p>Within gdb, the set of current threads can be printed with <code class="language-plaintext highlighter-rouge">info threads</code>. gdb assigns each thread a unique integer identifier used to reference the thread in other commands.</p>
 
 <p>This example shows a gdb thread listing for a Zephyr RTOS program.</p>
 
@@ -445,7 +445,7 @@
 
 <p>Note how the thread name is shown in quotes, and thread state and priority are shown in parentheses. The actual description of threads is specific to each RTOS plugin.</p>
 
-<p>The <code class="highlighter-rouge">thread</code> command takes a gdb thread ID to switches between threads; after switching, <code class="highlighter-rouge">backtrace</code> will show the selected thread’s state.</p>
+<p>The <code class="language-plaintext highlighter-rouge">thread</code> command takes a gdb thread ID to switches between threads; after switching, <code class="language-plaintext highlighter-rouge">backtrace</code> will show the selected thread’s state.</p>
 
 <h3 id="thread-reporting">Thread reporting</h3>
 
@@ -462,15 +462,15 @@
 
 <p>The actual behaviour depends on the plugin, so there is some slight variation between RTOSes. But the general sequence applies.</p>
 
-<p>This logic not perfect, so there is a <a href="/docs/command_reference.html#threads-1"><code class="highlighter-rouge">threads</code> command</a> that provides manual control. It takes an argument with one of these actions:</p>
+<p>This logic not perfect, so there is a <a href="/docs/command_reference.html#threads-1"><code class="language-plaintext highlighter-rouge">threads</code> command</a> that provides manual control. It takes an argument with one of these actions:</p>
 <ul>
-  <li><code class="highlighter-rouge">status</code>: Show whether thread reporting is enabled.</li>
-  <li><code class="highlighter-rouge">enable</code>: Enable thread reporting.</li>
-  <li><code class="highlighter-rouge">disable</code>: Disallow thread reporting.</li>
-  <li><code class="highlighter-rouge">flush</code>: Forcibly invalidate the threads list.</li>
+  <li><code class="language-plaintext highlighter-rouge">status</code>: Show whether thread reporting is enabled.</li>
+  <li><code class="language-plaintext highlighter-rouge">enable</code>: Enable thread reporting.</li>
+  <li><code class="language-plaintext highlighter-rouge">disable</code>: Disallow thread reporting.</li>
+  <li><code class="language-plaintext highlighter-rouge">flush</code>: Forcibly invalidate the threads list.</li>
 </ul>
 
-<p>If <code class="highlighter-rouge">threads</code> is executed and an RTOS plugin has not successfully loaded, it will print “Threads are unavailable”.</p>
+<p>If <code class="language-plaintext highlighter-rouge">threads</code> is executed and an RTOS plugin has not successfully loaded, it will print “Threads are unavailable”.</p>
 
 <p>After thread reporting is enabled or disabled manually, you must step or resume in gdb to force gdb to refresh its view of threads. (There is no flush or invalidate for threads in gdb.)</p>
 
@@ -482,7 +482,7 @@
 
 <h4 id="zephyr-rtos">Zephyr RTOS</h4>
 
-<p>To enable thread awareness, the <code class="highlighter-rouge">CONFIG_DEBUG_THREAD_INFO</code> Kconfig setting must be enabled.</p>
+<p>To enable thread awareness, the <code class="language-plaintext highlighter-rouge">CONFIG_DEBUG_THREAD_INFO</code> Kconfig setting must be enabled.</p>
 
 <h3 id="handler-mode-thread">Handler mode thread</h3>
 

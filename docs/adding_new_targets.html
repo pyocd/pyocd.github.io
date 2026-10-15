@@ -258,33 +258,33 @@ such as the memory map for the target devices described by the DFP.</p>
 
 <ol>
   <li>
-    <p>Create a new <code class="highlighter-rouge">CoreSightTarget</code> subclass in a file under <code class="highlighter-rouge">pyocd/target/builtin/</code>. You can copy one of the
- existing target files like <code class="highlighter-rouge">pyocd/target/builtin/target_ncs36510.py</code> and rename the class.</p>
+    <p>Create a new <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> subclass in a file under <code class="language-plaintext highlighter-rouge">pyocd/target/builtin/</code>. You can copy one of the
+ existing target files like <code class="language-plaintext highlighter-rouge">pyocd/target/builtin/target_ncs36510.py</code> and rename the class.</p>
 
     <p>The target source file name must follow the pattern “target_&lt;device&gt;.py”, where “&lt;device&gt;” is the
- device’s <code class="highlighter-rouge">Dname</code> or <code class="highlighter-rouge">Dvariant</code> part number value from the appropriate CMSIS Device Family Pack (DFP). For
- instance, <code class="highlighter-rouge">target_LPC54608J512ET180.py</code>. You may substitute an “x” for certain fields in the part number,
+ device’s <code class="language-plaintext highlighter-rouge">Dname</code> or <code class="language-plaintext highlighter-rouge">Dvariant</code> part number value from the appropriate CMSIS Device Family Pack (DFP). For
+ instance, <code class="language-plaintext highlighter-rouge">target_LPC54608J512ET180.py</code>. You may substitute an “x” for certain fields in the part number,
  such as a package or pin count code, temperature code, or memory size (if multiple memory sizes are
- supported via classes within the one source file). For instance, <code class="highlighter-rouge">target_STM32F412xx.py</code>. If the device
+ supported via classes within the one source file). For instance, <code class="language-plaintext highlighter-rouge">target_STM32F412xx.py</code>. If the device
  doesn’t have a DFP, then use a similar, complete part number.</p>
   </li>
   <li>
-    <p>Set the <code class="highlighter-rouge">VENDOR</code> class attribute on the <code class="highlighter-rouge">CoreSightTarget</code> subclass. The vendor name must be one
+    <p>Set the <code class="language-plaintext highlighter-rouge">VENDOR</code> class attribute on the <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> subclass. The vendor name must be one
  of the standard values defined by the
- <a href="http://arm-software.github.io/CMSIS_5/Pack/html/pdsc_family_pg.html#DeviceVendorEnum"><code class="highlighter-rouge">DeviceVendorEnum</code></a>
+ <a href="http://arm-software.github.io/CMSIS_5/Pack/html/pdsc_family_pg.html#DeviceVendorEnum"><code class="language-plaintext highlighter-rouge">DeviceVendorEnum</code></a>
  type for CMSIS Packs. (If the vendor is not listed, please contact Arm.)</p>
   </li>
   <li>
-    <p>You may optionally add <code class="highlighter-rouge">PART_NUMBER</code> and/or <code class="highlighter-rouge">PART_FAMILIES</code> class attributes to your target class. T</p>
+    <p>You may optionally add <code class="language-plaintext highlighter-rouge">PART_NUMBER</code> and/or <code class="language-plaintext highlighter-rouge">PART_FAMILIES</code> class attributes to your target class. T</p>
   </li>
   <li>
     <p>Create the target’s memory map from information in the device’s reference manual. The memory map
- should be a <code class="highlighter-rouge">MEMORY_MAP</code> class attribute of the target class. Modifying an existing memory map is
+ should be a <code class="language-plaintext highlighter-rouge">MEMORY_MAP</code> class attribute of the target class. Modifying an existing memory map is
  easiest, and there are many examples in the other targets.</p>
   </li>
   <li>
     <p>To create the flash algo, the recommended method is to use the
- <a href="https://github.com/pyocd/pyocd/scripts/generate_flash_algo_.py"><code class="highlighter-rouge">scripts/generate_flash_algo_.py</code></a> script
+ <a href="https://github.com/pyocd/pyocd/scripts/generate_flash_algo_.py"><code class="language-plaintext highlighter-rouge">scripts/generate_flash_algo_.py</code></a> script
  included in the pyocd repo. This script will generate an output file in the form required for pyocd from
  an .FLM file that is included as part of a CMSIS DFP.</p>
 
@@ -293,35 +293,35 @@ such as the memory map for the target devices described by the DFP.</p>
         <p>Locate the correct .FLM file from the DFP for your target.</p>
       </li>
       <li>
-        <p>Run <code class="highlighter-rouge">scripts/generate_flash_algo_.py \&lt;path to FLM&gt;</code>. It will write the output files to the working directory
+        <p>Run <code class="language-plaintext highlighter-rouge">scripts/generate_flash_algo_.py \&lt;path to FLM&gt;</code>. It will write the output files to the working directory
  from where you called the script.</p>
       </li>
       <li>
-        <p>The <code class="highlighter-rouge">pyocd_blob.py</code> output file contains the Python code for the flash algo. Copy the <code class="highlighter-rouge">FLASH_ALGO_*</code>
+        <p>The <code class="language-plaintext highlighter-rouge">pyocd_blob.py</code> output file contains the Python code for the flash algo. Copy the <code class="language-plaintext highlighter-rouge">FLASH_ALGO_*</code>
  dictionary (the name will have a suffix based on the FLM name) into the target source file.</p>
       </li>
       <li>
-        <p>Review the addresses in the <code class="highlighter-rouge">flash_algo</code> dictionary to make sure they are valid. The memory
+        <p>Review the addresses in the <code class="language-plaintext highlighter-rouge">flash_algo</code> dictionary to make sure they are valid. The memory
 layout should look like:</p>
 
-        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|----------------|-------------|------------|-----|-----------------|-----------------|
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|----------------|-------------|------------|-----|-----------------|-----------------|
 |  load_address  | static_base | &lt;&lt; (stack) | ... | page_buffers[0] | page_buffers[1] |
 |----------------|-------------|------------|-----|-----------------|-----------------|
 ^                                           ^
 RAM start            begin_stack (grows down)
 </code></pre></div>        </div>
 
-        <p>Each of the addresses in the <code class="highlighter-rouge">page_buffers</code> list points to a buffer of the maximum page
+        <p>Each of the addresses in the <code class="language-plaintext highlighter-rouge">page_buffers</code> list points to a buffer of the maximum page
 size of any flash region. If there is not enough RAM to hold two page buffers, then remove
 one of the addresses from the list. This will disable double buffered flash programming.</p>
       </li>
       <li>
         <p>To enable efficient scanning for modified pages via CRC checking, you can set the
- <code class="highlighter-rouge">analyzer_supported</code> key to True and the <code class="highlighter-rouge">analyzer_address</code> to the start address for an
+ <code class="language-plaintext highlighter-rouge">analyzer_supported</code> key to True and the <code class="language-plaintext highlighter-rouge">analyzer_address</code> to the start address for an
  unused range of (1224 + 4 * number-of-flash-pages) bytes of RAM.</p>
       </li>
       <li>
-        <p>Pass the <code class="highlighter-rouge">FLASH_ALGO_*</code> dict for the <code class="highlighter-rouge">algo</code> parameter to the <code class="highlighter-rouge">FlashRegion</code> constructor in
+        <p>Pass the <code class="language-plaintext highlighter-rouge">FLASH_ALGO_*</code> dict for the <code class="language-plaintext highlighter-rouge">algo</code> parameter to the <code class="language-plaintext highlighter-rouge">FlashRegion</code> constructor in
  your memory map. This binds the flash algo to that flash memory region.</p>
       </li>
     </ol>
@@ -330,8 +330,8 @@ one of the addresses from the list. This will disable double buffered flash prog
     <p>If the target has multiple flash algos for different flash types, repeat step 5 as necessary.</p>
   </li>
   <li>
-    <p>Edit <code class="highlighter-rouge">pyocd/target/builtin/__init__.py</code> to import your target source file and add your new target
- to the <code class="highlighter-rouge">BUILTIN_TARGETS</code> dict.</p>
+    <p>Edit <code class="language-plaintext highlighter-rouge">pyocd/target/builtin/__init__.py</code> to import your target source file and add your new target
+ to the <code class="language-plaintext highlighter-rouge">BUILTIN_TARGETS</code> dict.</p>
   </li>
   <li>
     <p>You or your employer own the copyright on the new code, so make sure you set the copyright on the new target file.
@@ -339,8 +339,8 @@ one of the addresses from the list. This will disable double buffered flash prog
   </li>
 </ol>
 
-<p>Now your new target is available for use via the <code class="highlighter-rouge">--target</code> command line option! You can test its availability
-by running <code class="highlighter-rouge">pyocd list --targets --name &lt;target-name&gt;</code>.</p>
+<p>Now your new target is available for use via the <code class="language-plaintext highlighter-rouge">--target</code> command line option! You can test its availability
+by running <code class="language-plaintext highlighter-rouge">pyocd list --targets --name &lt;target-name&gt;</code>.</p>
 
 <h3 id="steps-to-add-a-new-board">Steps to add a new board</h3>
 
@@ -354,7 +354,7 @@ by running <code class="highlighter-rouge">pyocd list --targets --name &lt;targe
 </ul>
 
 <p>If neither applies, then pyOCD will be unable to automatically detect the board type. However, you
-can still use the target by passing the <code class="highlighter-rouge">--target</code> argument to pyOCD.</p>
+can still use the target by passing the <code class="language-plaintext highlighter-rouge">--target</code> argument to pyOCD.</p>
 
 <p>Follow these steps:</p>
 
@@ -363,18 +363,18 @@ can still use the target by passing the <code class="highlighter-rouge">--target
     <p>Identify the 4-character board ID.</p>
   </li>
   <li>
-    <p>Insert a row into the <code class="highlighter-rouge">BOARD_ID_TO_INFO</code> table in <code class="highlighter-rouge">pyocd/board/board_ids.py</code> with the board ID,
+    <p>Insert a row into the <code class="language-plaintext highlighter-rouge">BOARD_ID_TO_INFO</code> table in <code class="language-plaintext highlighter-rouge">pyocd/board/board_ids.py</code> with the board ID,
  board name, target type, and test binary file name.</p>
 
     <p>The new row should look similar to this:</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> "0205": BoardInfo(  "FRDM-KL28Z",           "kl28z",            "l1_kl28z.bin",         ),
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> "0205": BoardInfo(  "FRDM-KL28Z",           "kl28z",            "l1_kl28z.bin",         ),
 </code></pre></div>    </div>
 
     <p>Be sure to insert the row in sorted order by board ID, and please align columns.</p>
   </li>
   <li>
-    <p>Place a test firmware binary file listed in the board info into the <code class="highlighter-rouge">test/data/binaries/</code>
+    <p>Place a test firmware binary file listed in the board info into the <code class="language-plaintext highlighter-rouge">test/data/binaries/</code>
  directory. The test firmware can be nothing more than a tiny LED blinky demo. It must not require
  any user input, and should provide immediate visual feedback that the code is successfully
  running, assuming there are LEDs on the board.</p>

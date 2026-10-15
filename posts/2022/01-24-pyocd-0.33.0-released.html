@@ -91,40 +91,40 @@
 feature release, and this one includes some nice additions. A large number of smaller changes and bug fixes have also
 been included in this release. The complete list is shown below.</p>
 
-<p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
+<p>To upgrade pyOCD, just run <code class="language-plaintext highlighter-rouge">pip</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
 </code></pre></div></div>
 
-<p>The most exciting addition is an <code class="highlighter-rouge">rtt</code> subcommand that adds support for Segger RTT. This is just the start of more RTT
+<p>The most exciting addition is an <code class="language-plaintext highlighter-rouge">rtt</code> subcommand that adds support for Segger RTT. This is just the start of more RTT
 and trace related features. The new subcommand streams RTT output from the target to the console, and vice versa for
 input from the console. The best part is that it works with all debug probes, not just the J-Link. (But note that it
 doesn’t yet take advantage of the J-Link’s built-in RTT support.)</p>
 
-<p>The <code class="highlighter-rouge">commander</code> subcommand and user scripts have some additions, as well. Command files can be run using the new
-<code class="highlighter-rouge">-x</code> / <code class="highlighter-rouge">--execute</code> argument. Multiple command file arguments are allowed, and can be mixed with <code class="highlighter-rouge">-c</code> / <code class="highlighter-rouge">--command</code>
+<p>The <code class="language-plaintext highlighter-rouge">commander</code> subcommand and user scripts have some additions, as well. Command files can be run using the new
+<code class="language-plaintext highlighter-rouge">-x</code> / <code class="language-plaintext highlighter-rouge">--execute</code> argument. Multiple command file arguments are allowed, and can be mixed with <code class="language-plaintext highlighter-rouge">-c</code> / <code class="language-plaintext highlighter-rouge">--command</code>
 arguments. Pass a filename of “-“ to execute commands from stdin.</p>
 
 <p>It is now possible to create custom commands in the <a href="/docs/user_scripts.html">user script</a> using the
-<code class="highlighter-rouge">@command</code> decorator. User-defined commands are accessible both the <code class="highlighter-rouge">commander</code> subcommand and gdbserver
+<code class="language-plaintext highlighter-rouge">@command</code> decorator. User-defined commands are accessible both the <code class="language-plaintext highlighter-rouge">commander</code> subcommand and gdbserver
 monitor commands (basically anywhere you can run commands). Here’s a simple example that prints the first
 four vectors from a Cortex-M NVIC vector table.</p>
 
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s">"Decode and print the first few NVIC vectors"</span><span class="p">)</span>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@command</span><span class="p">(</span><span class="nb">help</span><span class="o">=</span><span class="sh">"</span><span class="s">Decode and print the first few NVIC vectors</span><span class="sh">"</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">vectable</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="n">vecs</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_memory_block32</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Initial SP:     </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"ResetHandler:   </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"NMI:            </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HardFault:      </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">vecs</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="nf">read_memory_block32</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Initial SP:     </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">ResetHandler:   </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">NMI:            </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">HardFault:      </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>It demonstrates how command function arguments are automatically parsed and converted. PyOCD sees the single <code class="highlighter-rouge">base</code>
-argument with an <code class="highlighter-rouge">int</code> type annotation, and thus will configure the command with one argument converted to an int.
+<p>It demonstrates how command function arguments are automatically parsed and converted. PyOCD sees the single <code class="language-plaintext highlighter-rouge">base</code>
+argument with an <code class="language-plaintext highlighter-rouge">int</code> type annotation, and thus will configure the command with one argument converted to an int.
 The <a href="/docs/user_scripts.html#user-defined-commands">user-defined commands documentation</a> has all the details.</p>
 
 <p>Aside from the above features, you will immediately notice that log output is colourised and the formatting simplified.
-The <code class="highlighter-rouge">--color</code> argument and the <code class="highlighter-rouge">PYOCD_COLOR</code> environment variable give you direct control if you wish to change the
+The <code class="language-plaintext highlighter-rouge">--color</code> argument and the <code class="language-plaintext highlighter-rouge">PYOCD_COLOR</code> environment variable give you direct control if you wish to change the
 default.</p>
 
 <p>Finally, it’s worth mentioning that the new CI system is up and running. Every commit and pull request will be
@@ -142,12 +142,12 @@ results are <a href="https://dev.azure.com/pyocd/pyocd/_build?definitionId=1&amp
 <h2 id="additions">Additions</h2>
 
 <ul>
-  <li>Basic SEGGER RTT read/write support with an <code class="highlighter-rouge">rtt</code> subcommand. This subcommand streams stdio from/to the target. It works with all debug probe types, not only J-Link. (Thanks @mikisama, @ccattuto)</li>
+  <li>Basic SEGGER RTT read/write support with an <code class="language-plaintext highlighter-rouge">rtt</code> subcommand. This subcommand streams stdio from/to the target. It works with all debug probe types, not only J-Link. (Thanks @mikisama, @ccattuto)</li>
   <li>There is no longer a need to install libusb separately when installing pyocd. The <a href="https://github.com/pyocd/libusb-package">libusb-package</a> Python package was created so that an up to date libusb library can be automatically installed along with pyocd on all OSes.</li>
-  <li>Log output is now colorized by default when outputting to a tty. The <code class="highlighter-rouge">--color</code> command line argument controls this feature. Also simplified the log output formatting so it is easier to read.</li>
-  <li>Commander: Add <code class="highlighter-rouge">-x</code>/<code class="highlighter-rouge">--execute</code> argument to run commands from a file. Multiple command files can be run and mixed with <code class="highlighter-rouge">-c</code> commands.</li>
-  <li>Commander: Add <code class="highlighter-rouge">-i</code>/<code class="highlighter-rouge">--interactive</code> to stay in REPL after running commands from either a file or command line.</li>
-  <li>Commander: Introduce the <code class="highlighter-rouge">@command</code> decorator that can be used in user scripts to create user-defined commands, accessible from Commander and as gdbserver monitor commands. See <a href="https://pyocd.io/docs/user_scripts.html#user-defined-commands">the documentation</a> for details.</li>
+  <li>Log output is now colorized by default when outputting to a tty. The <code class="language-plaintext highlighter-rouge">--color</code> command line argument controls this feature. Also simplified the log output formatting so it is easier to read.</li>
+  <li>Commander: Add <code class="language-plaintext highlighter-rouge">-x</code>/<code class="language-plaintext highlighter-rouge">--execute</code> argument to run commands from a file. Multiple command files can be run and mixed with <code class="language-plaintext highlighter-rouge">-c</code> commands.</li>
+  <li>Commander: Add <code class="language-plaintext highlighter-rouge">-i</code>/<code class="language-plaintext highlighter-rouge">--interactive</code> to stay in REPL after running commands from either a file or command line.</li>
+  <li>Commander: Introduce the <code class="language-plaintext highlighter-rouge">@command</code> decorator that can be used in user scripts to create user-defined commands, accessible from Commander and as gdbserver monitor commands. See <a href="https://pyocd.io/docs/user_scripts.html#user-defined-commands">the documentation</a> for details.</li>
 </ul>
 
 <h2 id="boards-and-targets">Boards and targets</h2>
@@ -164,36 +164,36 @@ results are <a href="https://dev.azure.com/pyocd/pyocd/_build?definitionId=1&amp
 
 <ul>
   <li>Cortex-M: Fix regression with writing CFBP and xPSR subregisters (CONTROL, FAULTMASK, BASEPRI, PRIMASK, and xPSR variants).</li>
-  <li>Gdbserver: While the target is running (<code class="highlighter-rouge">continue</code> command in gdb), retry reading target status within a timeout after the first fault on such a check. This is intended to primarily help with firmware putting the core to sleep. The <code class="highlighter-rouge">debug.status_fault_retry_timeout</code> session option controls the timeout; set it to 0 to disable this experimental feature.</li>
+  <li>Gdbserver: While the target is running (<code class="language-plaintext highlighter-rouge">continue</code> command in gdb), retry reading target status within a timeout after the first fault on such a check. This is intended to primarily help with firmware putting the core to sleep. The <code class="language-plaintext highlighter-rouge">debug.status_fault_retry_timeout</code> session option controls the timeout; set it to 0 to disable this experimental feature.</li>
   <li>Commander: Fix broken Python (“$”) and system (“!”) commands in certain cases.</li>
   <li>Commander: The shell-like lexer for commands has been replaced with a custom lexer that is simpler and more predictable. It breaks words on all non-alphanumeric characters except dash (for instance, “mem-ap” is considered one word). Single and double quoted values with backslash-escapes are supported.</li>
   <li>Commander: If a user script has been loaded, Python ‘$’ commands share the user script’s namespace.</li>
-  <li>Commands: Add <code class="highlighter-rouge">flushprobe</code> command that ensures all outstanding transfers on the probe have been completed.</li>
-  <li>Commands: Fix <code class="highlighter-rouge">reg</code> output so it is properly redirected when called as a gdbserver monitor command.</li>
-  <li>Commands: <code class="highlighter-rouge">reg</code> and <code class="highlighter-rouge">wreg' improvements. </code>-p<code class="highlighter-rouge"> option to force lookup as peripheral register. </code>reg<code class="highlighter-rouge"> will print any number of registers. Add </code>rr<code class="highlighter-rouge"> and </code>wr` aliases.</li>
-  <li>User scripts: <code class="highlighter-rouge">print()</code> calls from user scripts get routed through any output direction, for example, such that the output will appear in the gdb console when a user-defined command is called as a gdbserver monitor command.</li>
-  <li>Flash: Change default value of <code class="highlighter-rouge">keep_unwritten</code> session option to false.</li>
+  <li>Commands: Add <code class="language-plaintext highlighter-rouge">flushprobe</code> command that ensures all outstanding transfers on the probe have been completed.</li>
+  <li>Commands: Fix <code class="language-plaintext highlighter-rouge">reg</code> output so it is properly redirected when called as a gdbserver monitor command.</li>
+  <li>Commands: <code class="language-plaintext highlighter-rouge">reg</code> and <code class="language-plaintext highlighter-rouge">wreg' improvements. </code>-p<code class="language-plaintext highlighter-rouge"> option to force lookup as peripheral register. </code>reg<code class="language-plaintext highlighter-rouge"> will print any number of registers. Add </code>rr<code class="language-plaintext highlighter-rouge"> and </code>wr` aliases.</li>
+  <li>User scripts: <code class="language-plaintext highlighter-rouge">print()</code> calls from user scripts get routed through any output direction, for example, such that the output will appear in the gdb console when a user-defined command is called as a gdbserver monitor command.</li>
+  <li>Flash: Change default value of <code class="language-plaintext highlighter-rouge">keep_unwritten</code> session option to false.</li>
   <li>CMSIS-DAP: Better handling of protocol versions.</li>
   <li>CMSIS-DAP: All USB backends have a USB packet trace logger.</li>
-  <li>CMSIS-DAP: Add <code class="highlighter-rouge">cmsis_dap.prefer_v1</code> session option that forces pyocd to use the CMSIS-DAP v1 interface on a debug probe that provides both v1 and v2. (Naturally, the default is to choose v2, since it is faster.) This is intended primarily for testing.</li>
+  <li>CMSIS-DAP: Add <code class="language-plaintext highlighter-rouge">cmsis_dap.prefer_v1</code> session option that forces pyocd to use the CMSIS-DAP v1 interface on a debug probe that provides both v1 and v2. (Naturally, the default is to choose v2, since it is faster.) This is intended primarily for testing.</li>
   <li>CMSIS-DAP: Introduced timeouts for USB reads.</li>
   <li>CMSIS-DAP: Limit number of outstanding command packets to 30 on macOS using hidapi for CMSIS-DAP v1. This fixes a failure that occurred when certain memory transfers due to an in-built limit on the queue size in the macOS version of hidapi.</li>
   <li>CMSIS-DAP: Update list of known CMSIS-DAP probes; correspondingly update udev rules.</li>
-  <li>STLink: use <code class="highlighter-rouge">JTAG_GET_BOARD_IDENTIFIERS</code> command to read board ID faster than extracting it from the “mbed.htm” file on the MSD volume. Requires V2J36 or V3J6 firmware versions.</li>
+  <li>STLink: use <code class="language-plaintext highlighter-rouge">JTAG_GET_BOARD_IDENTIFIERS</code> command to read board ID faster than extracting it from the “mbed.htm” file on the MSD volume. Requires V2J36 or V3J6 firmware versions.</li>
   <li>STLink: Setting the SWD frequency on an STLinkV3 was completely broken, and is now fixed.</li>
-  <li>STLink: Add <code class="highlighter-rouge">stlink.v3_prescaler</code> session option to control the internal HCLK prescaler on the probe, which affects the set of available SWD/JTAG and other I/O frequencies.</li>
+  <li>STLink: Add <code class="language-plaintext highlighter-rouge">stlink.v3_prescaler</code> session option to control the internal HCLK prescaler on the probe, which affects the set of available SWD/JTAG and other I/O frequencies.</li>
   <li>Probe server: Fix race causing server to terminate immediately is certain rare cases.</li>
   <li>Probe server: Improve connect/disconnect log messages.</li>
   <li>Session options: Probe-specific options in a config file takes precedence over global options.</li>
   <li>Session options: A warning is logged if a multiple probe-specific option sections in a config file match the active debug probe’s UID.</li>
   <li>Session: Change the working directory to the project directory on session creation.</li>
-  <li>Gdbserver: Cleanup and fix connection disconnect code. This changes behaviour if the gdb <code class="highlighter-rouge">disconnect</code> command is used so that the <code class="highlighter-rouge">persist</code> option is honoured (<code class="highlighter-rouge">disconnect</code> previously would never cause the gdbserver to stop). (Thanks @claymation)</li>
-  <li>Gdbserver: <code class="highlighter-rouge">exit</code> monitor command that will shut down all gdbservers and quit pyocd.</li>
+  <li>Gdbserver: Cleanup and fix connection disconnect code. This changes behaviour if the gdb <code class="language-plaintext highlighter-rouge">disconnect</code> command is used so that the <code class="language-plaintext highlighter-rouge">persist</code> option is honoured (<code class="language-plaintext highlighter-rouge">disconnect</code> previously would never cause the gdbserver to stop). (Thanks @claymation)</li>
+  <li>Gdbserver: <code class="language-plaintext highlighter-rouge">exit</code> monitor command that will shut down all gdbservers and quit pyocd.</li>
   <li>Gdbserver: Handle connection aborted and reset errors more cleanly.</li>
   <li>Gdbserver: Better logging of RTOS discovery issues, and only one log message is output when attempting to load RTOS plugins, in addition to a message on successful load.</li>
   <li>CoreSight DAP: Unlock probe on error. (Thanks @claymation)</li>
   <li>CoreSight: Don’t read CoreSight registers for non-CoreSight components. (Thanks @j4cbo)</li>
-  <li>CoreSight: Set <code class="highlighter-rouge">CSW.DBGSWEN</code> for CSSoC-400 APB-AP to resolve an issue that caused <code class="highlighter-rouge">DBGMCU</code> (and other) peripherals to be inaccessible on certain STM32 devices, and likely similar issues on other devices.</li>
+  <li>CoreSight: Set <code class="language-plaintext highlighter-rouge">CSW.DBGSWEN</code> for CSSoC-400 APB-AP to resolve an issue that caused <code class="language-plaintext highlighter-rouge">DBGMCU</code> (and other) peripherals to be inaccessible on certain STM32 devices, and likely similar issues on other devices.</li>
   <li>Dependencies: Switch from naturalsort to natsort. (Thanks @dvzrv)</li>
 </ul>
 

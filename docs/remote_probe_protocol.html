@@ -255,7 +255,7 @@ which it belongs.</p>
 
 <h3 id="request-structure">Request structure</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
   "id": &lt;int&gt;,
   "request": &lt;str&gt;,
   "arguments": [
@@ -263,12 +263,12 @@ which it belongs.</p>
 }
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">arguments</code> key is a list of any arguments for the command. It may be elided if there are no
+<p>The <code class="language-plaintext highlighter-rouge">arguments</code> key is a list of any arguments for the command. It may be elided if there are no
 arguments required.</p>
 
 <h3 id="response-structure">Response structure</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
   "id": &lt;int&gt;,
   "status": &lt;int&gt;,
   ["error": &lt;str&gt;,]
@@ -276,14 +276,14 @@ arguments required.</p>
 }
 </code></pre></div></div>
 
-<p>A successful response must have a <code class="highlighter-rouge">status</code> value of 0. A non-zero <code class="highlighter-rouge">status</code> indicates that an error
-occurred, and must be accompanied by an <code class="highlighter-rouge">error</code> key with an error message (may be the empty string).
-If the response is successful, then a <code class="highlighter-rouge">result</code> key may be included with the return value of the
-command. If there is no return value, then <code class="highlighter-rouge">result</code> is excluded.</p>
+<p>A successful response must have a <code class="language-plaintext highlighter-rouge">status</code> value of 0. A non-zero <code class="language-plaintext highlighter-rouge">status</code> indicates that an error
+occurred, and must be accompanied by an <code class="language-plaintext highlighter-rouge">error</code> key with an error message (may be the empty string).
+If the response is successful, then a <code class="language-plaintext highlighter-rouge">result</code> key may be included with the return value of the
+command. If there is no return value, then <code class="language-plaintext highlighter-rouge">result</code> is excluded.</p>
 
 <h2 id="commands">Commands</h2>
 
-<p>The commands in the table below correspond directly to the methods of <code class="highlighter-rouge">DebugProbe</code>.</p>
+<p>The commands in the table below correspond directly to the methods of <code class="language-plaintext highlighter-rouge">DebugProbe</code>.</p>
 
 <table>
   <thead>
@@ -295,152 +295,152 @@ command. If there is no return value, then <code class="highlighter-rouge">resul
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">hello</code></td>
+      <td><code class="language-plaintext highlighter-rouge">hello</code></td>
       <td>version:int</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">readprop</code></td>
+      <td><code class="language-plaintext highlighter-rouge">readprop</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">open</code></td>
+      <td><code class="language-plaintext highlighter-rouge">open</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">close</code></td>
+      <td><code class="language-plaintext highlighter-rouge">close</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">lock</code></td>
+      <td><code class="language-plaintext highlighter-rouge">lock</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">unlock</code></td>
+      <td><code class="language-plaintext highlighter-rouge">unlock</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">connect</code></td>
+      <td><code class="language-plaintext highlighter-rouge">connect</code></td>
       <td>protocol:str</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">disconnect</code></td>
+      <td><code class="language-plaintext highlighter-rouge">disconnect</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">swj_sequence</code></td>
+      <td><code class="language-plaintext highlighter-rouge">swj_sequence</code></td>
       <td>length:int, bits:int</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">set_clock</code></td>
+      <td><code class="language-plaintext highlighter-rouge">set_clock</code></td>
       <td>freq:int</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">reset</code></td>
+      <td><code class="language-plaintext highlighter-rouge">reset</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assert_reset</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assert_reset</code></td>
       <td>asserted:bool</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">is_reset_asserted</code></td>
+      <td><code class="language-plaintext highlighter-rouge">is_reset_asserted</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">flush</code></td>
+      <td><code class="language-plaintext highlighter-rouge">flush</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">read_dp</code></td>
+      <td><code class="language-plaintext highlighter-rouge">read_dp</code></td>
       <td>addr:int</td>
       <td>int</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">write_dp</code></td>
+      <td><code class="language-plaintext highlighter-rouge">write_dp</code></td>
       <td>addr:int, data:int</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">read_ap</code></td>
+      <td><code class="language-plaintext highlighter-rouge">read_ap</code></td>
       <td>addr:int</td>
       <td>int</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">write_ap</code></td>
+      <td><code class="language-plaintext highlighter-rouge">write_ap</code></td>
       <td>addr:int, data:int</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">read_ap_multiple</code></td>
+      <td><code class="language-plaintext highlighter-rouge">read_ap_multiple</code></td>
       <td>addr:int, count:int</td>
       <td>List[int]</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">write_ap_multiple</code></td>
+      <td><code class="language-plaintext highlighter-rouge">write_ap_multiple</code></td>
       <td>addr:int, data:List[int]</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">swo_start</code></td>
+      <td><code class="language-plaintext highlighter-rouge">swo_start</code></td>
       <td>baudrate:int</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">swo_stop</code></td>
+      <td><code class="language-plaintext highlighter-rouge">swo_stop</code></td>
       <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">swo_read</code></td>
+      <td><code class="language-plaintext highlighter-rouge">swo_read</code></td>
       <td> </td>
       <td>List[int]</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">get_memory_interface_for_ap</code></td>
+      <td><code class="language-plaintext highlighter-rouge">get_memory_interface_for_ap</code></td>
       <td>ap_address_version:int, ap_nominal_address:int</td>
       <td>Option[int]</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">read_mem</code></td>
+      <td><code class="language-plaintext highlighter-rouge">read_mem</code></td>
       <td>handle:int, addr:int, xfer_size:int</td>
       <td>int</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">write_mem</code></td>
+      <td><code class="language-plaintext highlighter-rouge">write_mem</code></td>
       <td>handle:int, addr:int, value:int, xfer_size:int</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">read_block32</code></td>
+      <td><code class="language-plaintext highlighter-rouge">read_block32</code></td>
       <td>handle:int, addr:int, word_count:int</td>
       <td>List[int]</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">write_block32</code></td>
+      <td><code class="language-plaintext highlighter-rouge">write_block32</code></td>
       <td>handle:int, addr:int, data:List[int]</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">read_block8</code></td>
+      <td><code class="language-plaintext highlighter-rouge">read_block8</code></td>
       <td>handle:int, addr:int, word_count:int</td>
       <td>List[int]</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">write_block8</code></td>
+      <td><code class="language-plaintext highlighter-rouge">write_block8</code></td>
       <td>handle:int, addr:int, data:List[int]</td>
       <td> </td>
     </tr>
@@ -449,7 +449,7 @@ command. If there is no return value, then <code class="highlighter-rouge">resul
 
 <h2 id="semantics">Semantics</h2>
 
-<p>The <code class="highlighter-rouge">hello</code> command includes the version of the remote probe protocol supported by the client. The
+<p>The <code class="language-plaintext highlighter-rouge">hello</code> command includes the version of the remote probe protocol supported by the client. The
 server will return an error if this version doesn’t match the version of the protocol supported by
 the server.</p>
 

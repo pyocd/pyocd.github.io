@@ -251,44 +251,44 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">HPROT[0]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HPROT[0]</code></td>
       <td>data access</td>
       <td>instr fetch</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">HPROT[1]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HPROT[1]</code></td>
       <td>privileged</td>
       <td>user</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">HPROT[2]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HPROT[2]</code></td>
       <td>bufferable</td>
       <td>non bufferable</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">HPROT[3]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HPROT[3]</code></td>
       <td>cacheable/modifable</td>
       <td>non cacheable</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">HPROT[4]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HPROT[4]</code></td>
       <td>lookup in cache</td>
       <td>no cache</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">HPROT[5]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HPROT[5]</code></td>
       <td>allocate in cache</td>
       <td>no allocate in cache</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">HPROT[6]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HPROT[6]</code></td>
       <td>shareable</td>
       <td>non shareable</td>
     </tr>
   </tbody>
 </table>
 
-<p>Not all bits are implemented on all core/MEM-AP variants; each MEM-AP version implements slightly different sets of these options. For instance, the standard CM3 and CM4 MEM-AP only implements <code class="highlighter-rouge">HPROT[1]</code> (privileged/user). Check the documentation for your target and CPU(s) to verify available attributes.</p>
+<p>Not all bits are implemented on all core/MEM-AP variants; each MEM-AP version implements slightly different sets of these options. For instance, the standard CM3 and CM4 MEM-AP only implements <code class="language-plaintext highlighter-rouge">HPROT[1]</code> (privileged/user). Check the documentation for your target and CPU(s) to verify available attributes.</p>
 
 <p>AXI-AP attributes are much more complex and are not documented here.</p>
 
@@ -296,9 +296,9 @@
 
 <h2 id="controlling-attributes">Controlling attributes</h2>
 
-<p>In pyOCD, the HPROT value for memory transactions is set using the <code class="highlighter-rouge">set hprot &lt;value&gt;</code> command, and <code class="highlighter-rouge">show hprot</code> to view the current setting. These modify/view the currently selected MEM-AP (<code class="highlighter-rouge">set/show mem-ap</code>), which is independent of the gdbserver’s core (not something to worry about if you are only debugging core #0).</p>
+<p>In pyOCD, the HPROT value for memory transactions is set using the <code class="language-plaintext highlighter-rouge">set hprot &lt;value&gt;</code> command, and <code class="language-plaintext highlighter-rouge">show hprot</code> to view the current setting. These modify/view the currently selected MEM-AP (<code class="language-plaintext highlighter-rouge">set/show mem-ap</code>), which is independent of the gdbserver’s core (not something to worry about if you are only debugging core #0).</p>
 
-<p>As a reminder, these commands can be executed from gdb by prefixing them with the gdb <code class="highlighter-rouge">monitor</code> command. For example, to enable cacheable transfers from gdb, you’d run <code class="highlighter-rouge">monitor set hprot 0xb</code>. This can be placed in a connect script if you want cacheable transfers all the time.</p>
+<p>As a reminder, these commands can be executed from gdb by prefixing them with the gdb <code class="language-plaintext highlighter-rouge">monitor</code> command. For example, to enable cacheable transfers from gdb, you’d run <code class="language-plaintext highlighter-rouge">monitor set hprot 0xb</code>. This can be placed in a connect script if you want cacheable transfers all the time.</p>
 
 <p>To configure the used attributes in a pyOCD <a href="/docs/user_scripts.html">user script</a>, a snippet such as this is can be used:</p>
 
@@ -306,7 +306,7 @@
     <span class="n">target</span><span class="p">.</span><span class="n">aps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hprot</span> <span class="o">=</span> <span class="mh">0xb</span>
 </code></pre></div></div>
 
-<p>And if using pyOCD via a Python script, mirror the statement inside <code class="highlighter-rouge">did_connect()</code> above using your target object.</p>
+<p>And if using pyOCD via a Python script, mirror the statement inside <code class="language-plaintext highlighter-rouge">did_connect()</code> above using your target object.</p>
 
 <table>
   <tbody>

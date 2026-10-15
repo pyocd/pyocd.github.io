@@ -329,16 +329,16 @@ support SWO, while the Arm v6-M and Arm v8-M Baseline, architectures do not.</p>
 
 <h3 id="configuration">Configuration</h3>
 
-<p>If <code class="highlighter-rouge">enable_swv</code> is true, pyOCD will set up ITM and TPIU to output ITM stimulus ports over SWO at the specified baud
+<p>If <code class="language-plaintext highlighter-rouge">enable_swv</code> is true, pyOCD will set up ITM and TPIU to output ITM stimulus ports over SWO at the specified baud
 rate.  Currently, <a href="/docs/semihosting.html">semihosting</a> must also be enabled for SWV to work, so the
-<code class="highlighter-rouge">enable_semihosting</code> option must be on. A thread reads the data from the probe in the background and parses it.</p>
+<code class="language-plaintext highlighter-rouge">enable_semihosting</code> option must be on. A thread reads the data from the probe in the background and parses it.</p>
 
 <p>The SWV stream from ITM port 0 will be output to the semihosting console (see the <a href="/docs/semihosting.html#routing">Routing</a> section of the <a href="/docs/semihosting.html">semihosting documentation</a>), which is either the telnet
-server or stdout depending on the <code class="highlighter-rouge">semihost_console_type</code> option.</p>
+server or stdout depending on the <code class="language-plaintext highlighter-rouge">semihost_console_type</code> option.</p>
 
 <p>An example of running the gdbserver with SWV output is:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyocd gdb -S -Oenable_swv=1 -Oswv_system_clock=80000000 -Osemihost_console_type=console
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyocd gdb -S -Oenable_swv=1 -Oswv_system_clock=80000000 -Osemihost_console_type=console
 </code></pre></div></div>
 
 <p>This will turn on semihosting and SWV with the default 1 MHz baud rate, an 80 MHz system clock, and output to stdout.</p>
@@ -348,13 +348,13 @@ server or stdout depending on the <code class="highlighter-rouge">semihost_conso
 <p>Several session options are used to control and configure SWV:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">enable_swv</code> - Flag to enable SWV output.</li>
-  <li><code class="highlighter-rouge">swv_clock</code> - Optional baud rate for SWO, which defaults to 1 MHz if not set.</li>
-  <li><code class="highlighter-rouge">swv_system_clock</code> - Required system clock frequency. Used to compute TPIU baud rate divider.</li>
-  <li><code class="highlighter-rouge">swv_raw_enable</code> - Enable flag for the raw SWV stream server.</li>
-  <li><code class="highlighter-rouge">swv_raw_port</code> - TCP port number for the raw SWV stream server. The default port is 3443, which is the default port for the Orbuculum client.</li>
+  <li><code class="language-plaintext highlighter-rouge">enable_swv</code> - Flag to enable SWV output.</li>
+  <li><code class="language-plaintext highlighter-rouge">swv_clock</code> - Optional baud rate for SWO, which defaults to 1 MHz if not set.</li>
+  <li><code class="language-plaintext highlighter-rouge">swv_system_clock</code> - Required system clock frequency. Used to compute TPIU baud rate divider.</li>
+  <li><code class="language-plaintext highlighter-rouge">swv_raw_enable</code> - Enable flag for the raw SWV stream server.</li>
+  <li><code class="language-plaintext highlighter-rouge">swv_raw_port</code> - TCP port number for the raw SWV stream server. The default port is 3443, which is the default port for the Orbuculum client.</li>
+  <li><code class="language-plaintext highlighter-rouge">swv_raw_file</code> - File path for the raw SWV stream output.</li>
 </ul>
-
 
 
                 </div>

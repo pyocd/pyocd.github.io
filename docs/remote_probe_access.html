@@ -248,34 +248,34 @@ access a probe.</p>
     <p>Access a device from across the room while using a laptop on your couch.</p>
   </li>
   <li>
-    <p>While connected with pyOCD commander, upload new target firmware using the <code class="highlighter-rouge">pyocd flash</code>
+    <p>While connected with pyOCD commander, upload new target firmware using the <code class="language-plaintext highlighter-rouge">pyocd flash</code>
  subcommand.</p>
   </li>
 </ol>
 
 <h2 id="server">Server</h2>
 
-<p>The server side is quite simple. The <code class="highlighter-rouge">pyocd server</code> subcommand starts the server running for the
+<p>The server side is quite simple. The <code class="language-plaintext highlighter-rouge">pyocd server</code> subcommand starts the server running for the
 specified probe.</p>
 
 <p>The probe is selected via the usual connection-related command line arguments,
-such as <code class="highlighter-rouge">--uid</code>. Also as usual, a console menu will be printed to allow you to choose a probe to
+such as <code class="language-plaintext highlighter-rouge">--uid</code>. Also as usual, a console menu will be printed to allow you to choose a probe to
 serve if multiple are available and a unique ID is not specified.</p>
 
-<p>The probe server’s default port number is 5555. You can change the port by passing the <code class="highlighter-rouge">--port</code>
+<p>The probe server’s default port number is 5555. You can change the port by passing the <code class="language-plaintext highlighter-rouge">--port</code>
 argument. The port the server uses will appear in the log when the server starts running.</p>
 
 <p>By default, the server disallows remote connections. That is, other devices on the network are not allowed to connect to
 the server. This is fine if you don’t need remote access to the server, for example if you are only connecting from
 other processes running on the same computer as the server. It’s also a secure default.</p>
 
-<p>To allow remote clients to connect, pass the <code class="highlighter-rouge">--allow-remote</code> argument. Be aware that if the server is exposed on the
+<p>To allow remote clients to connect, pass the <code class="language-plaintext highlighter-rouge">--allow-remote</code> argument. Be aware that if the server is exposed on the
 Internet, then any other node on the Internet can connect to it, so please take appropriate protective measures. You
 may want to ensure that your network’s firewall blocks the port being used (default 5555).</p>
 
 <p>Example command line to start the server and allow remote connections:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd server --allow-remote
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd server --allow-remote
 </code></pre></div></div>
 
 <p>This command does not specify a unique ID for a probe, so it will show the console probe selection
@@ -290,19 +290,19 @@ is nearly transparent.</p>
 
 <p>The remote probe is selected by specifying a unique ID with a prefix of “remote:”, followed by the server IP address or
 domain name. The port can be included by appending another colon and the port number. For instance, to connect to a
-probe being served on the same computer, pass <code class="highlighter-rouge">--uid=remote:localhost</code> on the command line. With a custom port, this
-would be <code class="highlighter-rouge">--uid=remote:localhost:1234</code>.</p>
+probe being served on the same computer, pass <code class="language-plaintext highlighter-rouge">--uid=remote:localhost</code> on the command line. With a custom port, this
+would be <code class="language-plaintext highlighter-rouge">--uid=remote:localhost:1234</code>.</p>
 
 <p><strong>Important:</strong> Currently you must always specify the target type for the remote device, even in
 cases where the target type is automatically detected when you use the probe directly. To do this,
-pass the <code class="highlighter-rouge">--target</code> argument followed by the target type. See <a href="/docs/target_support.html">Target support</a>
+pass the <code class="language-plaintext highlighter-rouge">--target</code> argument followed by the target type. See <a href="/docs/target_support.html">Target support</a>
 for more information about target types.</p>
 
-<p>Note that remote probes will not appear in the list when you run <code class="highlighter-rouge">pyocd list --probes</code>.</p>
+<p>Note that remote probes will not appear in the list when you run <code class="language-plaintext highlighter-rouge">pyocd list --probes</code>.</p>
 
 <p>Example command line for running the gdbserver locally for a probe on a remote machine:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd gdbserver -uremote:myserver.example.com
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd gdbserver -uremote:myserver.example.com
 </code></pre></div></div>
 
 

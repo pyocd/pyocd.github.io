@@ -91,14 +91,14 @@
 release, and this one includes a major new addition. Some smaller changes and bug fixes have also been
 included in this release. The complete list is shown below.</p>
 
-<p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
+<p>To upgrade pyOCD, just run <code class="language-plaintext highlighter-rouge">pip</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
 </code></pre></div></div>
 
 <p>This release marks a significant milestone by introducing a built-in support for <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a>,
-enabling a standardized, YAML-driven workflow for specifying debug targets. By passing the new <code class="highlighter-rouge">--cbuild-run</code>
-command-line option followed by the path to a <code class="highlighter-rouge">*.cbuild-run.yml</code> file, the following is imported directly into the
+enabling a standardized, YAML-driven workflow for specifying debug targets. By passing the new <code class="language-plaintext highlighter-rouge">--cbuild-run</code>
+command-line option followed by the path to a <code class="language-plaintext highlighter-rouge">*.cbuild-run.yml</code> file, the following is imported directly into the
 active debug session:</p>
 <ul>
   <li>target selection,</li>
@@ -108,7 +108,7 @@ active debug session:</p>
   <li>debug sequences</li>
 </ul>
 
-<p>Because each YAML file fully describes a single target type, explicit use of <code class="highlighter-rouge">--target</code> is no longer required.
+<p>Because each YAML file fully describes a single target type, explicit use of <code class="language-plaintext highlighter-rouge">--target</code> is no longer required.
 This implementation integrates seamlessly with <a href="https://marketplace.visualstudio.com/items?itemName=Arm.vscode-cmsis-debugger">Arm CMSIS Debugger</a>
 extension for VS Code, streamlining end-to-end debug setup for CMSIS-Pack based projects.</p>
 
@@ -126,23 +126,23 @@ extension for VS Code, streamlining end-to-end debug setup for CMSIS-Pack based 
 <ul>
   <li><a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#run-and-debug-management">CMSIS-Toolbox Run and Debug Management</a> integration:
     <ul>
-      <li>add a <code class="highlighter-rouge">--cbuild-run</code> option across subcommands</li>
-      <li>select target based on <code class="highlighter-rouge">cbuild-run</code></li>
-      <li>debugger-clock setting from <code class="highlighter-rouge">cbuild-run</code></li>
+      <li>add a <code class="language-plaintext highlighter-rouge">--cbuild-run</code> option across subcommands</li>
+      <li>select target based on <code class="language-plaintext highlighter-rouge">cbuild-run</code></li>
+      <li>debugger-clock setting from <code class="language-plaintext highlighter-rouge">cbuild-run</code></li>
       <li>default memory map</li>
-      <li>primary-core and GDB server port selection based on <code class="highlighter-rouge">cbuild-run</code></li>
+      <li>primary-core and GDB server port selection based on <code class="language-plaintext highlighter-rouge">cbuild-run</code></li>
     </ul>
   </li>
   <li>GDB server:
     <ul>
       <li>add option for stetting soft breakpoints as hard</li>
       <li>add option for resetting and running the target without halting</li>
-      <li>stricter <code class="highlighter-rouge">qC</code> command handling (@tlyu)</li>
+      <li>stricter <code class="language-plaintext highlighter-rouge">qC</code> command handling (@tlyu)</li>
     </ul>
   </li>
   <li>Coresight:
     <ul>
-      <li>add <code class="highlighter-rouge">apid</code> handling</li>
+      <li>add <code class="language-plaintext highlighter-rouge">apid</code> handling</li>
       <li>add AP CSW register SPROT bit handling</li>
       <li>fix offset for APv2 in discovery step</li>
     </ul>
@@ -151,7 +151,7 @@ extension for VS Code, streamlining end-to-end debug setup for CMSIS-Pack based 
   <li>RTOS: add hint for Zephyr’s thread info configuration</li>
   <li>RTT: allow no down-channels (@laurensmiers)</li>
   <li>Debug sequence: increase robustness</li>
-  <li>Memory map: add <code class="highlighter-rouge">pname</code> based filtering</li>
+  <li>Memory map: add <code class="language-plaintext highlighter-rouge">pname</code> based filtering</li>
   <li>Probe: filter out Cypress KitProg3 bridge</li>
 </ul>
 
@@ -186,7 +186,7 @@ extension for VS Code, streamlining end-to-end debug setup for CMSIS-Pack based 
   <li>Docs:
     <ul>
       <li>fix incorrect documentation for default GDB server port (@FredeHoey)</li>
-      <li>document <code class="highlighter-rouge">cbuild-run</code> support</li>
+      <li>document <code class="language-plaintext highlighter-rouge">cbuild-run</code> support</li>
       <li>enhance load subcommand guidance</li>
     </ul>
   </li>

@@ -284,23 +284,23 @@ these types of debug probes:</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">cmsisdap</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cmsisdap</code></td>
       <td><a href="http://www.keil.com/pack/doc/CMSIS/DAP/html/index.html">CMSIS-DAP</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">picoprobe</code></td>
+      <td><code class="language-plaintext highlighter-rouge">picoprobe</code></td>
       <td>Raspberry Pi <a href="https://github.com/raspberrypi/picoprobe">Picoprobe</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">jlink</code></td>
+      <td><code class="language-plaintext highlighter-rouge">jlink</code></td>
       <td><a href="https://segger.com/">SEGGER</a> <a href="https://www.segger.com/products/debug-trace-probes/">J-Link</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">stlink</code></td>
+      <td><code class="language-plaintext highlighter-rouge">stlink</code></td>
       <td><a href="https://st.com/">STMicro</a> <a href="https://www.st.com/en/development-tools/st-link-v2.html">STLinkV2</a> and <a href="https://www.st.com/en/development-tools/stlink-v3set.html">STLinkV3</a></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">remote</code></td>
+      <td><code class="language-plaintext highlighter-rouge">remote</code></td>
       <td>pyOCD <a href="/docs/remote_probe_access.html">remote debug probe client</a></td>
     </tr>
   </tbody>
@@ -319,7 +319,7 @@ can be installed with pip:</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">pemicro</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pemicro</code></td>
       <td>pyocd-pemicro</td>
       <td><a href="https://pemicro.com/">PE Micro</a> Cyclone and Multilink.</td>
     </tr>
@@ -334,7 +334,7 @@ debug probes types are not connected with USB but are accessed across the networ
 is the probe’s network address.</p>
 
 <p>The unique ID parameter is actually a simple form of URL. It can be prefixed with the name of a debug probe plugin
-followed by a colon, e.g. <code class="highlighter-rouge">cmsisdap:</code>, to restrict the type of debug probe that will match. This form is also a
+followed by a colon, e.g. <code class="language-plaintext highlighter-rouge">cmsisdap:</code>, to restrict the type of debug probe that will match. This form is also a
 requirement for certain probe types, such as the remote probe client, where the unique ID is a host address rather than
 serial number.</p>
 
@@ -352,9 +352,9 @@ serial number.</p>
 
 <h2 id="listing-available-debug-probes">Listing available debug probes</h2>
 
-<p>To view the connected probes and their unique IDs, run <code class="highlighter-rouge">pyocd list</code>. This command will produce output looking like this:</p>
+<p>To view the connected probes and their unique IDs, run <code class="language-plaintext highlighter-rouge">pyocd list</code>. This command will produce output looking like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #   Probe/Board                       Unique ID                                          Target
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #   Probe/Board                       Unique ID                                          Target
 --------------------------------------------------------------------------------------------------------------------
   0   Arm DAPLink CMSIS-DAP             02400b0129164e4500440012706e0007f301000097969900   ✔︎ k64f
       NXP                               FRDM-K64F
@@ -384,8 +384,8 @@ specified manually in such cases, otherwise full functionality, such as flash pr
 available.</p>
 
 <p>In any case, whether required because the probe doesn’t have a default, or to override the default, the target
-type can be specified either on the command line with the <code class="highlighter-rouge">-t</code> / <code class="highlighter-rouge">--target</code> argument, or by setting the
-<code class="highlighter-rouge">target_override</code> session option (e.g., in a <a href="/docs/configuration.html#config_file">config file</a>).</p>
+type can be specified either on the command line with the <code class="language-plaintext highlighter-rouge">-t</code> / <code class="language-plaintext highlighter-rouge">--target</code> argument, or by setting the
+<code class="language-plaintext highlighter-rouge">target_override</code> session option (e.g., in a <a href="/docs/configuration.html#config_file">config file</a>).</p>
 
 <p>Note that the printed list includes only those probes that pyOCD can actively query for, which currently means
 only USB based probes.</p>
@@ -403,21 +403,21 @@ explicitly specify a debug probe.</p>
   </li>
   <li>
     <p>If there is more than one probe connected and pyOCD is not told which to use, it will ask on the console. It presents
- the same list of probes reported by <code class="highlighter-rouge">pyocd list</code>, plus this question:</p>
+ the same list of probes reported by <code class="language-plaintext highlighter-rouge">pyocd list</code>, plus this question:</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Enter the number of the debug probe or 'q' to quit&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Enter the number of the debug probe or 'q' to quit&gt;
 </code></pre></div>    </div>
 
     <p>and waits until a probe index is entered.</p>
   </li>
   <li>
-    <p>Explicitly, with the use of <code class="highlighter-rouge">-u UID</code> / <code class="highlighter-rouge">--uid=UID</code> / <code class="highlighter-rouge">--probe=UID</code> command line arguments. These arguments accept
+    <p>Explicitly, with the use of <code class="language-plaintext highlighter-rouge">-u UID</code> / <code class="language-plaintext highlighter-rouge">--uid=UID</code> / <code class="language-plaintext highlighter-rouge">--probe=UID</code> command line arguments. These arguments accept
  either a whole or partial unique ID.</p>
   </li>
 </ol>
 
 <p>If no probes are currently connected and pyOCD is executed without explicitly specifying the probe to use, it will
-by default print a message asking for a probe to be connected and wait. If the <code class="highlighter-rouge">-W</code> / <code class="highlighter-rouge">--no-wait</code> argument is passed,
+by default print a message asking for a probe to be connected and wait. If the <code class="language-plaintext highlighter-rouge">-W</code> / <code class="language-plaintext highlighter-rouge">--no-wait</code> argument is passed,
 pyOCD will exit with an error instead.</p>
 
 <h2 id="probe-driver-plug-in-notes">Probe driver plug-in notes</h2>
@@ -437,7 +437,7 @@ There are two major versions of CMSIS-DAP, which use different USB classes:</p>
   download and install drivers for new devices from the Internet.)</li>
 </ul>
 
-<p>If a debug probe provides both v1 and v2 interfaces, pyOCD will normally use the v2 interface. (See the <code class="highlighter-rouge">cmsis_dap.prefer_v1</code> option described below if this needs to be changed.)</p>
+<p>If a debug probe provides both v1 and v2 interfaces, pyOCD will normally use the v2 interface. (See the <code class="language-plaintext highlighter-rouge">cmsis_dap.prefer_v1</code> option described below if this needs to be changed.)</p>
 
 <p>These are some of the commercial probes by silicon vendors using the CMSIS-DAP protocol, both standalone and on-board:</p>
 
@@ -464,11 +464,11 @@ There are two major versions of CMSIS-DAP, which use different USB classes:</p>
 <h4 id="session-options">Session options</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">cmsis_dap.deferred_transfers</code> (bool, default True) Whether to use deferred transfers in the CMSIS-DAP probe backend.
+  <li><code class="language-plaintext highlighter-rouge">cmsis_dap.deferred_transfers</code> (bool, default True) Whether to use deferred transfers in the CMSIS-DAP probe backend.
   By disabling deferred transfers, all writes take effect immediately. However, performance is negatively affected.</li>
-  <li><code class="highlighter-rouge">cmsis_dap.limit_packets</code> (bool, default False) Restrict CMSIS-DAP backend to using a single in-flight command at a
+  <li><code class="language-plaintext highlighter-rouge">cmsis_dap.limit_packets</code> (bool, default False) Restrict CMSIS-DAP backend to using a single in-flight command at a
   time. This is useful on some systems where USB is problematic, in particular virtual machines.</li>
-  <li><code class="highlighter-rouge">cmsis_dap.prefer_v1</code> (bool, default False) Determines whether pyOCD will choose a CMSIS-DAP v1 interface of v2 in cases where a device provides both for backwards compatibility. There is rarely a reason to change this option, except for testing or issues. <strong>Note:</strong> This option can only be set in a default config file (e.g., <code class="highlighter-rouge">pyocd.yaml</code> in the working directory) because of how options loading is ordered in relation to debug probe enumeration.</li>
+  <li><code class="language-plaintext highlighter-rouge">cmsis_dap.prefer_v1</code> (bool, default False) Determines whether pyOCD will choose a CMSIS-DAP v1 interface of v2 in cases where a device provides both for backwards compatibility. There is rarely a reason to change this option, except for testing or issues. <strong>Note:</strong> This option can only be set in a default config file (e.g., <code class="language-plaintext highlighter-rouge">pyocd.yaml</code> in the working directory) because of how options loading is ordered in relation to debug probe enumeration.</li>
 </ul>
 
 <h4 id="microchip-edbg">Microchip EDBG</h4>
@@ -478,19 +478,19 @@ On macOS, reading command responses always times out. The probe works on other O
 
 <h3 id="ti-xds110">TI XDS110</h3>
 
-<p>XDS110 firmware version 03.00.00.25 is known to have an issue when using multiple outstanding packets (the default setting). To work around this, set the <code class="highlighter-rouge">cmsis_dap.limit_packets</code> session option, e.g. <code class="highlighter-rouge">-Ocmsis_dap.limit_packets=1</code> on the command line. Earlier firmware versions most likely exhibit the issue; it is unknown whether it is fixed in more recent versions.</p>
+<p>XDS110 firmware version 03.00.00.25 is known to have an issue when using multiple outstanding packets (the default setting). To work around this, set the <code class="language-plaintext highlighter-rouge">cmsis_dap.limit_packets</code> session option, e.g. <code class="language-plaintext highlighter-rouge">-Ocmsis_dap.limit_packets=1</code> on the command line. Earlier firmware versions most likely exhibit the issue; it is unknown whether it is fixed in more recent versions.</p>
 
 <h3 id="pe-micro-cyclone-and-multilink">PE Micro Cyclone and Multilink</h3>
 
 <p>The Cyclone and Multilink debug probes from PE Micro are supported through the use of a separate probe driver
-plugin called <code class="highlighter-rouge">pyocd-pemicro</code>. This plugin can be installed at any time using <code class="highlighter-rouge">pip</code>:</p>
+plugin called <code class="language-plaintext highlighter-rouge">pyocd-pemicro</code>. This plugin can be installed at any time using <code class="language-plaintext highlighter-rouge">pip</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install pyocd-pemicro
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install pyocd-pemicro
 </code></pre></div></div>
 
-<p>It can also be installed at the same time as pyOCD by adding the <code class="highlighter-rouge">pemicro</code> install extra:</p>
+<p>It can also be installed at the same time as pyOCD by adding the <code class="language-plaintext highlighter-rouge">pemicro</code> install extra:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install pyocd[pemicro]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install pyocd[pemicro]
 </code></pre></div></div>
 
 <p>Once the PE Micro probe driver is installed, Cyclone and Multilink probes connected by USB will immediately
@@ -516,8 +516,8 @@ is strongly recommended. Numerous bugs have been fixed, and new commands added f
   <li>V2J28: Minimum version for multicore target support.</li>
   <li>V2J32/V3J2: Allows access to banked DP registers. Usually not needed.</li>
   <li>V2J32/V3J2: Supports setting the AHB and AXI transfer attributes. See
-  <a href="/docs/command_reference.html#hnonsec"><code class="highlighter-rouge">set hnonsec</code></a> and
-  <a href="/docs/command_reference.html#hprot"><code class="highlighter-rouge">set hprot</code></a>.</li>
+  <a href="/docs/command_reference.html#hnonsec"><code class="language-plaintext highlighter-rouge">set hnonsec</code></a> and
+  <a href="/docs/command_reference.html#hprot"><code class="language-plaintext highlighter-rouge">set hprot</code></a>.</li>
 </ul>
 
 <p><a href="https://www.st.com/en/development-tools/stsw-link007.html">STLink firmware updates on www.st.com</a>.</p>
@@ -527,11 +527,11 @@ is strongly recommended. Numerous bugs have been fixed, and new commands added f
 <h4 id="stlinkv3-swdjtag-frequencies">STLinkV3 SWD/JTAG frequencies</h4>
 
 <p>The STLinkV3 has an internal clock frequency control for its HCLK prescaler that allows access to different SWD/JTAG
-frequencies. The prescaler can be set from pyOCD with the <code class="highlighter-rouge">stlink.v3_prescaler</code> session option to 1, 2, or 4. In
+frequencies. The prescaler can be set from pyOCD with the <code class="language-plaintext highlighter-rouge">stlink.v3_prescaler</code> session option to 1, 2, or 4. In
 addition to changing the available SWD/JTAG frequencies, modifying the prescaler also affects UART baud rates and
 frequencies of the serial I/O bridge interfaces.</p>
 
-<p>These are the SWD/JTAG frequencies available with different values of <code class="highlighter-rouge">stlink.v3_prescaler</code>:</p>
+<p>These are the SWD/JTAG frequencies available with different values of <code class="language-plaintext highlighter-rouge">stlink.v3_prescaler</code>:</p>
 
 <table>
   <thead>
@@ -578,7 +578,7 @@ frequencies of the serial I/O bridge interfaces.</p>
 <h4 id="session-options-1">Session options</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">stlink.v3_prescaler</code> (int, must be 1, 2, or 4, default 1)
+  <li><code class="language-plaintext highlighter-rouge">stlink.v3_prescaler</code> (int, must be 1, 2, or 4, default 1)
   Configures the HCLK prescaler of an STLinkV3 to modify the range of available SWD/JTAG frequencies, as described
   above. Affects available frequencies of other peripherals, such as UART, as well.</li>
 </ul>
@@ -590,7 +590,7 @@ and Windows.</p>
 
 <p><a href="https://www.segger.com/downloads/jlink/">J-Link firmware and driver installer and updates on www.segger.com</a></p>
 
-<p>On macOS, you can install the <code class="highlighter-rouge">segger-jlink</code> cask with Homebrew to get managed driver updates.</p>
+<p>On macOS, you can install the <code class="language-plaintext highlighter-rouge">segger-jlink</code> cask with Homebrew to get managed driver updates.</p>
 
 <p>Please note that flash programming performance using a J-Link through pyOCD is currently slower than using the J-Link
 software directly (or compared to CMSIS-DAP). This is because pyOCD uses the low-level DAP commands provided by J-Link,
@@ -605,14 +605,14 @@ use leading zeroes. PyOCD also does not use leading zeroes, as it interfaces wit
 <h4 id="session-options-2">Session options</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">jlink.device</code> (str, no default)
+  <li><code class="language-plaintext highlighter-rouge">jlink.device</code> (str, no default)
   If this option is set to a supported J-Link device name, then the J-Link will be asked connect
   using this name. Otherwise, the J-Link is configured for only the low-level CoreSight operations
   required by pyOCD. Ordinarily, it does not need to be set.</li>
-  <li><code class="highlighter-rouge">jlink.power</code> (bool, default True)
+  <li><code class="language-plaintext highlighter-rouge">jlink.power</code> (bool, default True)
   Enable target power when connecting via a J-Link probe, and disable power when
   disconnecting.</li>
-  <li><code class="highlighter-rouge">jlink.non_interactive</code> (bool, default True)
+  <li><code class="language-plaintext highlighter-rouge">jlink.non_interactive</code> (bool, default True)
   Controls whether the J-Link DLL is allowed to present UI dialog boxes and its control
   panel. Note that dialog boxes will actually still be visible, but the default option
   will be chosen automatically after 5 seconds.</li>

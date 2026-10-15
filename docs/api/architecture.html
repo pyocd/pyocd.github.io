@@ -255,45 +255,45 @@
 
 <p>The connections in the diagram represent composition.</p>
 
-<p>The root of the runtime object graph is a <code class="highlighter-rouge">Session</code> object. This object holds references to the debug probe and the board. Through the board object, the entire object graph is accessible. It is also responsible for managing per-session options that control various features and settings.</p>
+<p>The root of the runtime object graph is a <code class="language-plaintext highlighter-rouge">Session</code> object. This object holds references to the debug probe and the board. Through the board object, the entire object graph is accessible. It is also responsible for managing per-session options that control various features and settings.</p>
 
 <p>As shown in the diagram, the object graph mirrors the physical structure: board, SoC, and cores. There are many more objects connected with the ones shown here. The Arm ADI debug port (DP) and access ports (APs), other CoreSight components, the memory map, and so on.</p>
 
 <h2 id="top-level-objects">Top level objects</h2>
 
-<h3 id="session"><code class="highlighter-rouge">Session</code></h3>
+<h3 id="session"><code class="language-plaintext highlighter-rouge">Session</code></h3>
 
 <ul>
-  <li>In <code class="highlighter-rouge">pyocd.core.session</code>.</li>
+  <li>In <code class="language-plaintext highlighter-rouge">pyocd.core.session</code>.</li>
   <li>Represents a target connection through a debug probe.</li>
   <li>Root of object graph.</li>
-  <li>Owns the <code class="highlighter-rouge">Board</code> instance, and through that the <code class="highlighter-rouge">SoCTarget</code> instance.</li>
+  <li>Owns the <code class="language-plaintext highlighter-rouge">Board</code> instance, and through that the <code class="language-plaintext highlighter-rouge">SoCTarget</code> instance.</li>
   <li>Manages session options, user script, and project file access.</li>
 </ul>
 
-<h3 id="debugprobe"><code class="highlighter-rouge">DebugProbe</code></h3>
+<h3 id="debugprobe"><code class="language-plaintext highlighter-rouge">DebugProbe</code></h3>
 
 <ul>
-  <li>In <code class="highlighter-rouge">pyocd.probe.DebugProbe</code>.</li>
+  <li>In <code class="language-plaintext highlighter-rouge">pyocd.probe.DebugProbe</code>.</li>
   <li>Manages connection to probe.</li>
   <li>Abstracts target control actions.</li>
   <li>Concrete subclasses implement a debug probe’s protocol.</li>
   <li>Returns available instances of a debug probe type. For instance, for listing available probes.</li>
-  <li>Can be used alone (without <code class="highlighter-rouge">Target</code>) for some use cases.</li>
+  <li>Can be used alone (without <code class="language-plaintext highlighter-rouge">Target</code>) for some use cases.</li>
   <li>Each subclass is a plug-in.</li>
   <li>Concrete classes include
     <ul>
-      <li><code class="highlighter-rouge">CMSISDAPProbe</code></li>
-      <li><code class="highlighter-rouge">STLinkProbe</code></li>
+      <li><code class="language-plaintext highlighter-rouge">CMSISDAPProbe</code></li>
+      <li><code class="language-plaintext highlighter-rouge">STLinkProbe</code></li>
       <li>and more</li>
     </ul>
   </li>
 </ul>
 
-<h3 id="target"><code class="highlighter-rouge">Target</code></h3>
+<h3 id="target"><code class="language-plaintext highlighter-rouge">Target</code></h3>
 
 <ul>
-  <li>In <code class="highlighter-rouge">pyocd.core.target</code>.</li>
+  <li>In <code class="language-plaintext highlighter-rouge">pyocd.core.target</code>.</li>
   <li>Defines the abstract API primarily used by scripts.</li>
   <li>Superclass for both SoC and core classes.</li>
   <li>Functionality includes
@@ -306,55 +306,55 @@
       <li>Misc status</li>
     </ul>
   </li>
-  <li>Defines some enumerations used in many places, such as <code class="highlighter-rouge">Target.ResetType</code> and <code class="highlighter-rouge">Target.State</code>.</li>
+  <li>Defines some enumerations used in many places, such as <code class="language-plaintext highlighter-rouge">Target.ResetType</code> and <code class="language-plaintext highlighter-rouge">Target.State</code>.</li>
   <li>Concrete classes include
     <ul>
-      <li><code class="highlighter-rouge">CoreSightTarget</code></li>
-      <li><code class="highlighter-rouge">CortexM</code></li>
+      <li><code class="language-plaintext highlighter-rouge">CoreSightTarget</code></li>
+      <li><code class="language-plaintext highlighter-rouge">CortexM</code></li>
     </ul>
   </li>
 </ul>
 
 <h2 id="target-classes">Target classes</h2>
 
-<p>These classes are all either direct or indirect subclasses of <code class="highlighter-rouge">Target</code>.</p>
+<p>These classes are all either direct or indirect subclasses of <code class="language-plaintext highlighter-rouge">Target</code>.</p>
 
-<h3 id="soctarget"><code class="highlighter-rouge">SoCTarget</code></h3>
+<h3 id="soctarget"><code class="language-plaintext highlighter-rouge">SoCTarget</code></h3>
 
 <ul>
-  <li>In <code class="highlighter-rouge">pyocd.core.soc_target</code>.</li>
+  <li>In <code class="language-plaintext highlighter-rouge">pyocd.core.soc_target</code>.</li>
   <li>Abstract class for the SoC.</li>
   <li>Runs init sequence created by subclass.</li>
-  <li>Owns all cores, accessible through the <code class="highlighter-rouge">.cores</code> dict property.</li>
+  <li>Owns all cores, accessible through the <code class="language-plaintext highlighter-rouge">.cores</code> dict property.</li>
   <li>Has a notion of a <em>selected core</em>.</li>
   <li>Proxies Target methods to the selected core, which makes single-core MCUs transparent.</li>
 </ul>
 
-<h3 id="coretarget"><code class="highlighter-rouge">CoreTarget</code></h3>
+<h3 id="coretarget"><code class="language-plaintext highlighter-rouge">CoreTarget</code></h3>
 
 <ul>
-  <li>In <code class="highlighter-rouge">pyocd.core.core_target</code>.</li>
+  <li>In <code class="language-plaintext highlighter-rouge">pyocd.core.core_target</code>.</li>
   <li>Abstract class for a processor core.</li>
   <li>Used as a common, architecture-independent superclass for core target classes.</li>
   <li>Doesn’t provide much additional functionality on its own.</li>
 </ul>
 
-<h3 id="coresighttarget"><code class="highlighter-rouge">CoreSightTarget</code></h3>
+<h3 id="coresighttarget"><code class="language-plaintext highlighter-rouge">CoreSightTarget</code></h3>
 
 <ul>
-  <li>In <code class="highlighter-rouge">pyocd.coresight.coresight_target</code>.</li>
-  <li>Concrete SoC class for Arm CoreSight based devices (subclass of <code class="highlighter-rouge">SoCTarget</code>).</li>
-  <li>Used for generic Arm targets such as the <code class="highlighter-rouge">cortex_m</code> target type.</li>
+  <li>In <code class="language-plaintext highlighter-rouge">pyocd.coresight.coresight_target</code>.</li>
+  <li>Concrete SoC class for Arm CoreSight based devices (subclass of <code class="language-plaintext highlighter-rouge">SoCTarget</code>).</li>
+  <li>Used for generic Arm targets such as the <code class="language-plaintext highlighter-rouge">cortex_m</code> target type.</li>
   <li>Integrates CoreSight discovery into init sequence.</li>
   <li>Owns the DP and APs.</li>
 </ul>
 
-<h3 id="cortexm"><code class="highlighter-rouge">CortexM</code></h3>
+<h3 id="cortexm"><code class="language-plaintext highlighter-rouge">CortexM</code></h3>
 
 <ul>
-  <li>In <code class="highlighter-rouge">pyocd.coresight.cortex_m</code>.</li>
-  <li>Concrete CPU-level target for Arm M-profile cores, subclass of <code class="highlighter-rouge">CoreTarget</code>.</li>
-  <li>Implements most of the <code class="highlighter-rouge">Target</code> methods.</li>
+  <li>In <code class="language-plaintext highlighter-rouge">pyocd.coresight.cortex_m</code>.</li>
+  <li>Concrete CPU-level target for Arm M-profile cores, subclass of <code class="language-plaintext highlighter-rouge">CoreTarget</code>.</li>
+  <li>Implements most of the <code class="language-plaintext highlighter-rouge">Target</code> methods.</li>
   <li>Determines CPU type and supported extensions (FPU, etc) by reading ID registers.</li>
 </ul>
 

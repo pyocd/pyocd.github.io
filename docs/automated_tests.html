@@ -259,8 +259,8 @@ behavior during tests.</p>
 <span class="nv">$ </span>pytest
 </code></pre></div></div>
 
-<p>To make the tests pick the correct setup, a <a href="configuration.md"><code class="highlighter-rouge">pyocd.yaml</code> configuration file</a> has to be used.
-For functional testing the file should contain a reference to a <code class="highlighter-rouge">test_binary</code> from <code class="highlighter-rouge">test/data/binaries</code>.</p>
+<p>To make the tests pick the correct setup, a <a href="configuration.md"><code class="language-plaintext highlighter-rouge">pyocd.yaml</code> configuration file</a> has to be used.
+For functional testing the file should contain a reference to a <code class="language-plaintext highlighter-rouge">test_binary</code> from <code class="language-plaintext highlighter-rouge">test/data/binaries</code>.</p>
 
 <p>Example config file:</p>
 
@@ -273,36 +273,36 @@ For functional testing the file should contain a reference to a <code class="hig
 
 <h2 id="unit-tests">Unit tests</h2>
 
-<p>The unit tests are located in the <code class="highlighter-rouge">tests/unit</code> directory of the repo. They must be executed using
+<p>The unit tests are located in the <code class="language-plaintext highlighter-rouge">tests/unit</code> directory of the repo. They must be executed using
 pytest, as they rely on the advanced capabilities of this tool.</p>
 
-<p>To run the unit tests, simply invoke <code class="highlighter-rouge">pytest</code> in the root directory of the repo. Read the pytest
+<p>To run the unit tests, simply invoke <code class="language-plaintext highlighter-rouge">pytest</code> in the root directory of the repo. Read the pytest
 help to see the many options it provides.</p>
 
 <p>To get code coverage results, do the following:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pytest --cov-report=html --cov=pyocd
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pytest --cov-report=html --cov=pyocd
 $ open htmlcov/index.html
 </code></pre></div></div>
 
-<p>Note: The <code class="highlighter-rouge">semihosting.py</code> unit test requires a target connection and test binary. It is currently the only unit that uses a target. When no targets are available the test cases will be skipped.</p>
+<p>Note: The <code class="language-plaintext highlighter-rouge">semihosting.py</code> unit test requires a target connection and test binary. It is currently the only unit that uses a target. When no targets are available the test cases will be skipped.</p>
 
 <h2 id="functional-tests">Functional tests</h2>
 
-<p>A series of fairly comprehensive functional tests are provided in the <code class="highlighter-rouge">test/</code> directory.</p>
+<p>A series of fairly comprehensive functional tests are provided in the <code class="language-plaintext highlighter-rouge">test/</code> directory.</p>
 
-<p>The primary script for running these tests is <code class="highlighter-rouge">automated_test.py</code>. It will execute all functional tests in
+<p>The primary script for running these tests is <code class="language-plaintext highlighter-rouge">automated_test.py</code>. It will execute all functional tests in
 sequence for all connected debug probes, then produce a summary and JUnit-style XML report. This
 script is used to execute our CI test plan, and we frequently use it on our personal development
 systems to test prior to creating pull requests.</p>
 
-<p>The <code class="highlighter-rouge">automated_test.py</code> script has several command line arguments that can be used to control which test suites are run and on which debug probes. Use <code class="highlighter-rouge">--list-tests</code> to see available test suite names. Comma-separated lists of these names can be passed to the <code class="highlighter-rouge">-x</code> / <code class="highlighter-rouge">--exclude-tests</code> or <code class="highlighter-rouge">-i</code> / <code class="highlighter-rouge">--include-tests</code> arguments to exclude and include tests, respectively. Only one of these two arguments can be used at a time.</p>
+<p>The <code class="language-plaintext highlighter-rouge">automated_test.py</code> script has several command line arguments that can be used to control which test suites are run and on which debug probes. Use <code class="language-plaintext highlighter-rouge">--list-tests</code> to see available test suite names. Comma-separated lists of these names can be passed to the <code class="language-plaintext highlighter-rouge">-x</code> / <code class="language-plaintext highlighter-rouge">--exclude-tests</code> or <code class="language-plaintext highlighter-rouge">-i</code> / <code class="language-plaintext highlighter-rouge">--include-tests</code> arguments to exclude and include tests, respectively. Only one of these two arguments can be used at a time.</p>
 
-<p>The <code class="highlighter-rouge">-b</code> / <code class="highlighter-rouge">--board</code> argument is used to select a debug probe on which tests will be run. By default, tests will run on all available debug probes. Adding any <code class="highlighter-rouge">--board</code> arguments restricts tests to run on only the specified set of debug probes.</p>
+<p>The <code class="language-plaintext highlighter-rouge">-b</code> / <code class="language-plaintext highlighter-rouge">--board</code> argument is used to select a debug probe on which tests will be run. By default, tests will run on all available debug probes. Adding any <code class="language-plaintext highlighter-rouge">--board</code> arguments restricts tests to run on only the specified set of debug probes.</p>
 
 <h3 id="list-of-functional-tests">List of functional tests</h3>
 
-<p>Test scripts with an “n/a” for the test name are not run by <code class="highlighter-rouge">automated_test.py</code> (or in CI) and have to be run directly with Python.</p>
+<p>Test scripts with an “n/a” for the test name are not run by <code class="language-plaintext highlighter-rouge">automated_test.py</code> (or in CI) and have to be run directly with Python.</p>
 
 <table>
 
@@ -381,11 +381,11 @@ Verify loading of user scripts.
 
 <h2 id="test-binaries">Test binaries</h2>
 
-<p>The functional tests and some unit tests (currently only <code class="highlighter-rouge">test/unit/semihosting.py</code>) require a test firmware binary in order to run. This firmware can be extremely simple. The only requirement is that it have a valid vector table and be executable when loaded to the base of the boot memory. Ideally an LED is blinked so there is an easily-identifiable visual signal that the firmware is running.</p>
+<p>The functional tests and some unit tests (currently only <code class="language-plaintext highlighter-rouge">test/unit/semihosting.py</code>) require a test firmware binary in order to run. This firmware can be extremely simple. The only requirement is that it have a valid vector table and be executable when loaded to the base of the boot memory. Ideally an LED is blinked so there is an easily-identifiable visual signal that the firmware is running.</p>
 
-<p>Built-in targets almost all include a test binary in the pyOCD repository under <code class="highlighter-rouge">test/data/binaries/</code>. If the board has a board ID, e.g., those listed in <code class="highlighter-rouge">pyocd/board/board_ids.py</code>, the test binary is automatically identified.</p>
+<p>Built-in targets almost all include a test binary in the pyOCD repository under <code class="language-plaintext highlighter-rouge">test/data/binaries/</code>. If the board has a board ID, e.g., those listed in <code class="language-plaintext highlighter-rouge">pyocd/board/board_ids.py</code>, the test binary is automatically identified.</p>
 
-<p>If the target is not built-in (DFP) or does not have a board ID then, the <code class="highlighter-rouge">test_binary</code> session option must be set to the path of a test firmware binary file relative to the <code class="highlighter-rouge">test/data/binaries</code> directory. This can be conveniently added as probe-specific options in a <code class="highlighter-rouge">pyocd.yaml</code> config file placed under <code class="highlighter-rouge">test/</code>.</p>
+<p>If the target is not built-in (DFP) or does not have a board ID then, the <code class="language-plaintext highlighter-rouge">test_binary</code> session option must be set to the path of a test firmware binary file relative to the <code class="language-plaintext highlighter-rouge">test/data/binaries</code> directory. This can be conveniently added as probe-specific options in a <code class="language-plaintext highlighter-rouge">pyocd.yaml</code> config file placed under <code class="language-plaintext highlighter-rouge">test/</code>.</p>
 
 <h2 id="azure-pipelines">Azure Pipelines</h2>
 
@@ -402,11 +402,11 @@ comment of the form “/azp run” or “/AzurePipelines run”.</p>
 <h2 id="testing-with-tox">Testing with tox</h2>
 
 <p>pyOCD includes a configuration file for tox that enables easy testing of multiple Python versions.
-The tox tool is included in <code class="highlighter-rouge">test</code> install extra, so it will already be present in a standard
+The tox tool is included in <code class="language-plaintext highlighter-rouge">test</code> install extra, so it will already be present in a standard
 pyOCD developer virtual environment.</p>
 
-<p>To run the functional tests via tox, just execute <code class="highlighter-rouge">tox</code> from the root of the pyOCD
-repo. It will create new virtual environments for each Python version and run <code class="highlighter-rouge">automated_test.py</code>.</p>
+<p>To run the functional tests via tox, just execute <code class="language-plaintext highlighter-rouge">tox</code> from the root of the pyOCD
+repo. It will create new virtual environments for each Python version and run <code class="language-plaintext highlighter-rouge">automated_test.py</code>.</p>
 
 <p>Currently only the functional tests are included in the tox configuration.</p>
 

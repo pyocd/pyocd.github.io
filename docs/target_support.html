@@ -268,7 +268,7 @@ example, “k64f” or “stm32l072”.</p>
 <p>Target types are either built-in to pyOCD or come from CMSIS-Packs. The sections below describe more
 about the sources of target support.</p>
 
-<p>To see the available target types you can run <code class="highlighter-rouge">pyocd list --targets</code>. This command will print a
+<p>To see the available target types you can run <code class="language-plaintext highlighter-rouge">pyocd list --targets</code>. This command will print a
 table of supported target types, including the target name, vendor, and part number. In addition, it
 prints whether each target target is built-in or comes from a CMSIS-Pack.</p>
 
@@ -282,7 +282,7 @@ for certain devices that require special handling of operations such as reset an
 <p>Because of the limitations of the generic “cortex_m” target, the warning shown below will be logged
 if the target type is “cortex_m”.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0000183:WARNING:board:Generic cortex_m target type is selected; is this intentional? You will be
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0000183:WARNING:board:Generic cortex_m target type is selected; is this intentional? You will be
 able to debug but not program flash. To set the target type use the '--target' argument or
 'target_override' option. Use 'pyocd list --targets' to see available targets.
 </code></pre></div></div>
@@ -291,11 +291,11 @@ able to debug but not program flash. To set the target type use the '--target' a
 
 <p>There are two ways to specify the target type.</p>
 
-<p>The first is to pass the <code class="highlighter-rouge">--target</code> command line argument to the <code class="highlighter-rouge">pyocd</code> tool and pass the target
-type name. This argument must be passed every time you run <code class="highlighter-rouge">pyocd</code> with a subcommand that connects
+<p>The first is to pass the <code class="language-plaintext highlighter-rouge">--target</code> command line argument to the <code class="language-plaintext highlighter-rouge">pyocd</code> tool and pass the target
+type name. This argument must be passed every time you run <code class="language-plaintext highlighter-rouge">pyocd</code> with a subcommand that connects
 to the target.</p>
 
-<p>Another method is to set the <code class="highlighter-rouge">target_override</code> session option in a <code class="highlighter-rouge">pyocd.yaml</code> configuration file. The
+<p>Another method is to set the <code class="language-plaintext highlighter-rouge">target_override</code> session option in a <code class="language-plaintext highlighter-rouge">pyocd.yaml</code> configuration file. The
 <a href="/docs/configuration.html">configuration file documentation</a> describes how to do this for a specific debug
 probe instead of globally.</p>
 
@@ -305,14 +305,14 @@ probe instead of globally.</p>
 and STLinkV2-1 firmwares both support this feature. When using a probe with target type
 auto-detection, you do not need to tell pyOCD</p>
 
-<p>To check whether your debug probe supports auto-detection, run <code class="highlighter-rouge">pyocd list</code>. This command prints
+<p>To check whether your debug probe supports auto-detection, run <code class="language-plaintext highlighter-rouge">pyocd list</code>. This command prints
 a list of all connected debug probes. If a probe does not support auto-detection, the name of the
 probe firmware is printed. Whereas probes that do support auto-detection will show up with the
 name of the board plus the target type in brackets.</p>
 
 <p>Example probe listing:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #   Probe/Board                       Unique ID                                          Target
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #   Probe/Board                       Unique ID                                          Target
 --------------------------------------------------------------------------------------------------------------------
   0   Arm DAPLink CMSIS-DAP             02400b0129164e4500440012706e0007f301000097969900   ✔︎ k64f
       NXP                               FRDM-K64F
@@ -346,7 +346,7 @@ described above (see <a href="#generic_target_type">Generic target type</a> abov
 <p>PyOCD has built-in support for over 70 popular MCUs from various vendors.</p>
 
 <p>The best way to see the available built-in targets is
-by running <code class="highlighter-rouge">pyocd list --targets</code>. This command will print a table of supported target types.
+by running <code class="language-plaintext highlighter-rouge">pyocd list --targets</code>. This command will print a table of supported target types.
 Built-in targets will be identified as such in the “SOURCE” column.
 New built-in targets are added relatively infrequently since the addition of CMSIS-Pack based targets.</p>
 
@@ -375,7 +375,7 @@ should also report the issue to the pack vendor so it can be fixed.</p>
 
 <h4 id="managed-packs">Managed packs</h4>
 
-<p>The <code class="highlighter-rouge">pyocd</code> tool’s <code class="highlighter-rouge">pack</code> subcommand provides completely automated management of CMSIS-Packs. It
+<p>The <code class="language-plaintext highlighter-rouge">pyocd</code> tool’s <code class="language-plaintext highlighter-rouge">pack</code> subcommand provides completely automated management of CMSIS-Packs. It
 allows you to install new device support with a single command line invocation.</p>
 
 <p>As part of the pack management, pyOCD keeps an index of all available DFPs. The pack index is a two-
@@ -384,28 +384,28 @@ index is downloaded, pyOCD can very quickly locate the DFP that provides support
 MCU part number. To learn more about the index, see the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/packIndexFile.html">Open-CMSIS-Pack index
 files</a> documentation.</p>
 
-<p>The two most useful subcommands of the <code class="highlighter-rouge">pack</code> subcommand are <code class="highlighter-rouge">find</code> and <code class="highlighter-rouge">install</code>. The options accept a glob-style
+<p>The two most useful subcommands of the <code class="language-plaintext highlighter-rouge">pack</code> subcommand are <code class="language-plaintext highlighter-rouge">find</code> and <code class="language-plaintext highlighter-rouge">install</code>. The options accept a glob-style
 pattern that is matched against MCU part numbers in the index. If the index has not been downloaded yet, that will be
-done first, or you can run <code class="highlighter-rouge">pyocd pack update</code> yourself. The <code class="highlighter-rouge">find</code> subcommand will print out a list of matching part
-numbers and the names of the containing DFPs. <code class="highlighter-rouge">install</code> performs the same match, but downloads and installs the matching
+done first, or you can run <code class="language-plaintext highlighter-rouge">pyocd pack update</code> yourself. The <code class="language-plaintext highlighter-rouge">find</code> subcommand will print out a list of matching part
+numbers and the names of the containing DFPs. <code class="language-plaintext highlighter-rouge">install</code> performs the same match, but downloads and installs the matching
 DFPs. The part number patterns are matched case-insensitively and as a contains comparison.</p>
 
 <p>For instance, if you know the specific part number of the device you are using, say STM32L073, you
 can run this command to install support:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd pack install stm32l073
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd pack install stm32l073
 </code></pre></div></div>
 
 <p>This will download the index if required, then download the STM32L0xx_DFP pack. The</p>
 
 <p>As another example, to find which pack(s) support the NXP MK26F family, you could run:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd pack find k26
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd pack find k26
 </code></pre></div></div>
 
 <p>This will print a table similar to:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Part             Vendor   Pack          Version
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Part             Vendor   Pack          Version
 ---------------------------------------------------
   MK26FN2M0CAC18   NXP      MK26F18_DFP   11.0.1
   MK26FN2M0VLQ18   NXP      MK26F18_DFP   11.0.1
@@ -413,10 +413,10 @@ can run this command to install support:</p>
   MK26FN2M0VMI18   NXP      MK26F18_DFP   11.0.1
 </code></pre></div></div>
 
-<p>Once a DFP is installed, the <code class="highlighter-rouge">pyocd list --targets</code> command will show the new targets in its output,
-and you can immediately begin using the target support with the other <code class="highlighter-rouge">pyocd</code> subcommands.</p>
+<p>Once a DFP is installed, the <code class="language-plaintext highlighter-rouge">pyocd list --targets</code> command will show the new targets in its output,
+and you can immediately begin using the target support with the other <code class="language-plaintext highlighter-rouge">pyocd</code> subcommands.</p>
 
-<p>To get a list of all installed packs, use the <code class="highlighter-rouge">pack show</code> subcommand.</p>
+<p>To get a list of all installed packs, use the <code class="language-plaintext highlighter-rouge">pack show</code> subcommand.</p>
 
 <h4 id="manual-pack-usage">Manual pack usage</h4>
 
@@ -428,15 +428,15 @@ pack file used with a project in a project-relative location.</p>
 
 <p>There are two ways to use a manually downloaded pack.</p>
 
-<p>The simplest option is to pass the <code class="highlighter-rouge">--pack</code> option to the <code class="highlighter-rouge">pyocd</code> tool, specifying the path to the
+<p>The simplest option is to pass the <code class="language-plaintext highlighter-rouge">--pack</code> option to the <code class="language-plaintext highlighter-rouge">pyocd</code> tool, specifying the path to the
 .pack file. PyOCD does not cache any information about packs used this way, so this argument must be
 passed for every invocation in addition to the other arguments. For instance, to run the GDB server,
-you might execute <code class="highlighter-rouge">pyocd gdbserver --pack=Keil.STM32L4xx_DFP.2.2.0.pack</code>. Note that you can pass
-multiple <code class="highlighter-rouge">--pack</code> arguments to pyOCD, which might be useful in a scripted execution of pyOCD.</p>
+you might execute <code class="language-plaintext highlighter-rouge">pyocd gdbserver --pack=Keil.STM32L4xx_DFP.2.2.0.pack</code>. Note that you can pass
+multiple <code class="language-plaintext highlighter-rouge">--pack</code> arguments to pyOCD, which might be useful in a scripted execution of pyOCD.</p>
 
-<p>For a more permanent solution, use a <a href="/docs/configuration.html"><code class="highlighter-rouge">pyocd.yaml</code> configuration file</a>. In the
-config file, set the <code class="highlighter-rouge">pack</code> session option to either a single .pack file path or a list of paths. Now
-when you run the <code class="highlighter-rouge">pyocd</code> tool, it will automatically pick up the pack file(s) to use.</p>
+<p>For a more permanent solution, use a <a href="/docs/configuration.html"><code class="language-plaintext highlighter-rouge">pyocd.yaml</code> configuration file</a>. In the
+config file, set the <code class="language-plaintext highlighter-rouge">pack</code> session option to either a single .pack file path or a list of paths. Now
+when you run the <code class="language-plaintext highlighter-rouge">pyocd</code> tool, it will automatically pick up the pack file(s) to use.</p>
 
 <p>Here is an example config file that lists two packs.</p>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">pack</span><span class="pi">:</span>
@@ -444,28 +444,28 @@ when you run the <code class="highlighter-rouge">pyocd</code> tool, it will auto
   <span class="pi">-</span> <span class="s">/Users/admin/CMSIS-Packs/NXP.MKV58F24_DFP.11.0.0.pack</span>
 </code></pre></div></div>
 
-<p>To see the targets provided by a .pack file, run <code class="highlighter-rouge">pyocd list --targets</code> and pass the approprate
-<code class="highlighter-rouge">--pack</code> option or use a config file, as described above.</p>
+<p>To see the targets provided by a .pack file, run <code class="language-plaintext highlighter-rouge">pyocd list --targets</code> and pass the approprate
+<code class="language-plaintext highlighter-rouge">--pack</code> option or use a config file, as described above.</p>
 
 <p><em>Note:</em> .pack files are simply zip archives with a different extension. To examine the contents of
 a pack, change the extension to .zip and extract.</p>
 
 <p><em>Note:</em> PyOCD can work with expanded packs just like zipped .pack files. Pass the path to the root directory
-of the pack using the <code class="highlighter-rouge">--pack</code> argument, as above. This is very useful for cases such as development or
+of the pack using the <code class="language-plaintext highlighter-rouge">--pack</code> argument, as above. This is very useful for cases such as development or
 debugging of a pack, or for working with other CMSIS-Pack managers that store packs in decompressed form.</p>
 
 <h4 id="cmsis-toolbox-run-and-debug-management">CMSIS-Toolbox Run and Debug Management</h4>
 
 <p>Run and Debug Management is a part of the <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox">CMSIS-Toolbox</a> build
-information files when working with CSolution projects. Each <code class="highlighter-rouge">*.cbuild-run.yml</code> file contains relevant run and
-debug information for a single <code class="highlighter-rouge">target-type</code> defined in a CSolution project. The tool gathers and filters the
+information files when working with CSolution projects. Each <code class="language-plaintext highlighter-rouge">*.cbuild-run.yml</code> file contains relevant run and
+debug information for a single <code class="language-plaintext highlighter-rouge">target-type</code> defined in a CSolution project. The tool gathers and filters the
 target information from the BSP and DFP.</p>
 
-<p>To use the <code class="highlighter-rouge">cbuild-run</code> target information in PyOCD, pass the <code class="highlighter-rouge">--cbuild-run</code> option followed by the path to
-desired <code class="highlighter-rouge">*.cbuild-run.yml</code> file. The target information is not cached in PyOCD, which means the command-line
+<p>To use the <code class="language-plaintext highlighter-rouge">cbuild-run</code> target information in PyOCD, pass the <code class="language-plaintext highlighter-rouge">--cbuild-run</code> option followed by the path to
+desired <code class="language-plaintext highlighter-rouge">*.cbuild-run.yml</code> file. The target information is not cached in PyOCD, which means the command-line
 option should always be passed when launching the debugger.</p>
 
-<p>Because a single <code class="highlighter-rouge">target-type</code> is described in the YAML file, the <code class="highlighter-rouge">--target</code>
+<p>Because a single <code class="language-plaintext highlighter-rouge">target-type</code> is described in the YAML file, the <code class="language-plaintext highlighter-rouge">--target</code>
 command-line argument is not needed, as the target is automatically selected.</p>
 
 <p>More information on CMSIS-Toolbox and the CSolution project format for Run and Debug Management can be found in the

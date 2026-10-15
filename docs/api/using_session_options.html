@@ -240,72 +240,72 @@
 
 <h2 id="accessing-options">Accessing options</h2>
 
-<p>Options are quite easy to use from within Python code. The <code class="highlighter-rouge">Session</code> object has an <code class="highlighter-rouge">options</code> property which returns a dict-like <code class="highlighter-rouge">OptionsManager</code> object that is used to access options for that session. The <code class="highlighter-rouge">OptionsManager</code> object supports either slicing or <code class="highlighter-rouge">.get()</code>/<code class="highlighter-rouge">.set()</code> methods for reading and writing options.</p>
+<p>Options are quite easy to use from within Python code. The <code class="language-plaintext highlighter-rouge">Session</code> object has an <code class="language-plaintext highlighter-rouge">options</code> property which returns a dict-like <code class="language-plaintext highlighter-rouge">OptionsManager</code> object that is used to access options for that session. The <code class="language-plaintext highlighter-rouge">OptionsManager</code> object supports either slicing or <code class="language-plaintext highlighter-rouge">.get()</code>/<code class="language-plaintext highlighter-rouge">.set()</code> methods for reading and writing options.</p>
 
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Reading an option from the session using two techniques.
-</span><span class="n">value</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">[</span><span class="s">'reset_type'</span><span class="p">]</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'reset_type'</span><span class="p">)</span>
+</span><span class="n">value</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">[</span><span class="sh">'</span><span class="s">reset_type</span><span class="sh">'</span><span class="p">]</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">reset_type</span><span class="sh">'</span><span class="p">)</span>
 
 <span class="c1"># Changing the value of an option
-</span><span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">[</span><span class="s">'reset_type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'system'</span>
-<span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'reset_type'</span><span class="p">)</span> <span class="o">=</span> <span class="s">'system'</span>
+</span><span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">[</span><span class="sh">'</span><span class="s">reset_type</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">system</span><span class="sh">'</span>
+<span class="n">session</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="sh">'</span><span class="s">reset_type</span><span class="sh">'</span><span class="p">)</span> <span class="o">=</span> <span class="sh">'</span><span class="s">system</span><span class="sh">'</span>
 </code></pre></div></div>
 
-<p>Note that <code class="highlighter-rouge">.get()</code> does not take an optional second parameter for a default value if the session option is unset. Instead, this default value is determined from the session option’s definition.</p>
+<p>Note that <code class="language-plaintext highlighter-rouge">.get()</code> does not take an optional second parameter for a default value if the session option is unset. Instead, this default value is determined from the session option’s definition.</p>
 
 <h2 id="priority-layers">Priority layers</h2>
 
-<p>Session options have a priority based on their source. The <code class="highlighter-rouge">OptionsManager</code> class implements these priorities as an ordered sequence of layers from front (high priority) to back (low priority). Each layer is a dict of option name to value. There is also an implicit lowest-priority layer derived from default values specified in the option definitions.</p>
+<p>Session options have a priority based on their source. The <code class="language-plaintext highlighter-rouge">OptionsManager</code> class implements these priorities as an ordered sequence of layers from front (high priority) to back (low priority). Each layer is a dict of option name to value. There is also an implicit lowest-priority layer derived from default values specified in the option definitions.</p>
 
 <p>The priorities of the different sources, from front to back:</p>
 
 <ol>
-  <li>Keyword arguments to the <code class="highlighter-rouge">Session</code> constructor. Applies to most dedicated command-line arguments.</li>
-  <li><em>options</em> parameter to <code class="highlighter-rouge">Session</code> constructor. Applies to <code class="highlighter-rouge">-O</code> command-line arguments.</li>
-  <li>Options set by CMSIS-Toolbox Run and Debug Management (<code class="highlighter-rouge">cbuild-run</code>)</li>
+  <li>Keyword arguments to the <code class="language-plaintext highlighter-rouge">Session</code> constructor. Applies to most dedicated command-line arguments.</li>
+  <li><em>options</em> parameter to <code class="language-plaintext highlighter-rouge">Session</code> constructor. Applies to <code class="language-plaintext highlighter-rouge">-O</code> command-line arguments.</li>
+  <li>Options set by CMSIS-Toolbox Run and Debug Management (<code class="language-plaintext highlighter-rouge">cbuild-run</code>)</li>
   <li>Probe-specific options from a config file.</li>
   <li>Global options from a config file.</li>
-  <li><em>option_defaults</em> parameter to <code class="highlighter-rouge">Session</code> constructor. Used only in rare cases by subcommands to change the default value of options.</li>
+  <li><em>option_defaults</em> parameter to <code class="language-plaintext highlighter-rouge">Session</code> constructor. Used only in rare cases by subcommands to change the default value of options.</li>
   <li>Default values from option definitions.</li>
 </ol>
 
-<p>The <code class="highlighter-rouge">.set()</code> method simply modifies the value of the highest priority (aka front) copy of the option. Additional layers can be added to the front or back using the <code class="highlighter-rouge">.add_front()</code> and <code class="highlighter-rouge">.add_back()</code> methods. These methods take a dict of new option values.</p>
+<p>The <code class="language-plaintext highlighter-rouge">.set()</code> method simply modifies the value of the highest priority (aka front) copy of the option. Additional layers can be added to the front or back using the <code class="language-plaintext highlighter-rouge">.add_front()</code> and <code class="language-plaintext highlighter-rouge">.add_back()</code> methods. These methods take a dict of new option values.</p>
 
 <h2 id="how-options-are-configured">How options are configured</h2>
 
-<p>Loading of options from YAML files is handled automatically when the <code class="highlighter-rouge">Session</code> object is created. Probe-specific options are automatically set, too.</p>
+<p>Loading of options from YAML files is handled automatically when the <code class="language-plaintext highlighter-rouge">Session</code> object is created. Probe-specific options are automatically set, too.</p>
 
-<p>Options set through command line arguments, both dedicated arguments and <code class="highlighter-rouge">-O</code>, are passed into the <code class="highlighter-rouge">Session</code> constructor and added as their own layer. The <code class="highlighter-rouge">ConnectHelper</code> methods that are most often used to create sessions will pass through options related arguments to <code class="highlighter-rouge">Session</code>.</p>
+<p>Options set through command line arguments, both dedicated arguments and <code class="language-plaintext highlighter-rouge">-O</code>, are passed into the <code class="language-plaintext highlighter-rouge">Session</code> constructor and added as their own layer. The <code class="language-plaintext highlighter-rouge">ConnectHelper</code> methods that are most often used to create sessions will pass through options related arguments to <code class="language-plaintext highlighter-rouge">Session</code>.</p>
 
 <h2 id="name-and-value-modifications">Name and value modifications</h2>
 
 <p>Several changes are applied to option names and values when they are set. First, the names are normalised.</p>
 
 <ol>
-  <li>Convert all occurrences of double-underscores to a dot, e.g., <code class="highlighter-rouge">__</code> changes to a <code class="highlighter-rouge">.</code> character. Doing this makes it possible to set options with dots in the name using keyword arguments.</li>
+  <li>Convert all occurrences of double-underscores to a dot, e.g., <code class="language-plaintext highlighter-rouge">__</code> changes to a <code class="language-plaintext highlighter-rouge">.</code> character. Doing this makes it possible to set options with dots in the name using keyword arguments.</li>
   <li>Change to lower case.</li>
 </ol>
 
-<p>Then, any option set with a value of <code class="highlighter-rouge">None</code> is ignored. In that case, the option’s value from a lower priority layer will take precedence.</p>
+<p>Then, any option set with a value of <code class="language-plaintext highlighter-rouge">None</code> is ignored. In that case, the option’s value from a lower priority layer will take precedence.</p>
 
 <h2 id="adding-new-options">Adding new options</h2>
 
-<p>Session options are defined by an instance of <code class="highlighter-rouge">OptionInfo</code> (from <code class="highlighter-rouge">pyocd.core.options</code>) that specifies the name, type(s), default value, and a help string. At runtime, the complete set of options is in the <code class="highlighter-rouge">pyocd.core.options.OPTIONS_INFO</code> dict. Be sure to define any new options so they’re documented and get a default and help text.</p>
+<p>Session options are defined by an instance of <code class="language-plaintext highlighter-rouge">OptionInfo</code> (from <code class="language-plaintext highlighter-rouge">pyocd.core.options</code>) that specifies the name, type(s), default value, and a help string. At runtime, the complete set of options is in the <code class="language-plaintext highlighter-rouge">pyocd.core.options.OPTIONS_INFO</code> dict. Be sure to define any new options so they’re documented and get a default and help text.</p>
 
-<p>For example, this is the definition of the <code class="highlighter-rouge">frequency</code> option:</p>
+<p>For example, this is the definition of the <code class="language-plaintext highlighter-rouge">frequency</code> option:</p>
 
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">OptionInfo</span><span class="p">(</span><span class="s">'frequency'</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="s">"SWD/JTAG frequency in Hertz."</span><span class="p">)</span>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">OptionInfo</span><span class="p">(</span><span class="sh">'</span><span class="s">frequency</span><span class="sh">'</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="sh">"</span><span class="s">SWD/JTAG frequency in Hertz.</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>There are several places to define a new option.</p>
 
 <ul>
-  <li>Global and gdb server options should be added to the <code class="highlighter-rouge">BUILTIN_OPTIONS</code> list in <code class="highlighter-rouge">pyocd/core/options.py</code></li>
-  <li>Plugins can return a list of <code class="highlighter-rouge">OptionInfo</code> objects from the <code class="highlighter-rouge">.options</code> property of the <code class="highlighter-rouge">Plugin</code> subclass.</li>
-  <li>Python scripts, including <a href="/docs/user_scripts.html">user scripts</a>, can add new option definitions by calling <code class="highlighter-rouge">add_option_set()</code> (from <code class="highlighter-rouge">pyocd.core.options</code>) and passing a list of <code class="highlighter-rouge">OptionInfo</code> objects.</li>
+  <li>Global and gdb server options should be added to the <code class="language-plaintext highlighter-rouge">BUILTIN_OPTIONS</code> list in <code class="language-plaintext highlighter-rouge">pyocd/core/options.py</code></li>
+  <li>Plugins can return a list of <code class="language-plaintext highlighter-rouge">OptionInfo</code> objects from the <code class="language-plaintext highlighter-rouge">.options</code> property of the <code class="language-plaintext highlighter-rouge">Plugin</code> subclass.</li>
+  <li>Python scripts, including <a href="/docs/user_scripts.html">user scripts</a>, can add new option definitions by calling <code class="language-plaintext highlighter-rouge">add_option_set()</code> (from <code class="language-plaintext highlighter-rouge">pyocd.core.options</code>) and passing a list of <code class="language-plaintext highlighter-rouge">OptionInfo</code> objects.</li>
 </ul>
 
-<p>Supported types for options are <em>bool</em>, <em>int</em>, <em>float</em>, and <em>str</em>. An option that allows multiple types is specified with a tuple of those types. The <code class="highlighter-rouge">convert_session_options()</code> function from <code class="highlighter-rouge">pyocd.utility.cmdline</code> will convert the <em>bool</em>, <em>int</em>, and <em>float</em> options from a string value. However, there is not automatic type conversion when setting options directly on the <code class="highlighter-rouge">OptionsManager</code>.</p>
+<p>Supported types for options are <em>bool</em>, <em>int</em>, <em>float</em>, and <em>str</em>. An option that allows multiple types is specified with a tuple of those types. The <code class="language-plaintext highlighter-rouge">convert_session_options()</code> function from <code class="language-plaintext highlighter-rouge">pyocd.utility.cmdline</code> will convert the <em>bool</em>, <em>int</em>, and <em>float</em> options from a string value. However, there is not automatic type conversion when setting options directly on the <code class="language-plaintext highlighter-rouge">OptionsManager</code>.</p>
 
 
                 </div>

@@ -258,6 +258,8 @@
 <li class="toc-entry toc-h3"><a href="#mass_erase">mass_erase</a></li>
 <li class="toc-entry toc-h3"><a href="#trace_start">trace_start</a></li>
 <li class="toc-entry toc-h3"><a href="#trace_stop">trace_stop</a></li>
+<li class="toc-entry toc-h3"><a href="#trace_capture">trace_capture</a></li>
+<li class="toc-entry toc-h3"><a href="#trace_flush">trace_flush</a></li>
 </ul>
 </li>
 </ul>
@@ -271,10 +273,10 @@ that are loaded by pyOCD before it connects to the target. A user script can def
 are called as hooks at certain points in the connection lifetime, and can extend, modify, or
 completely override the default behaviour.</p>
 
-<p>If a file named <code class="highlighter-rouge">pyocd_user.py</code> or <code class="highlighter-rouge">.pyocd_user.py</code> is placed in the project directory, pyOCD will
+<p>If a file named <code class="language-plaintext highlighter-rouge">pyocd_user.py</code> or <code class="language-plaintext highlighter-rouge">.pyocd_user.py</code> is placed in the project directory, pyOCD will
 automatically detect it and load it as a user script. If you prefer another name, you can set the
-<code class="highlighter-rouge">user_script</code> session option, for example in a <a href="/docs/configuration.html">config file</a>, or
-by passing the <code class="highlighter-rouge">--script=&lt;path&gt;</code> command line argument. If a relative path is set either with the
+<code class="language-plaintext highlighter-rouge">user_script</code> session option, for example in a <a href="/docs/configuration.html">config file</a>, or
+by passing the <code class="language-plaintext highlighter-rouge">--script=&lt;path&gt;</code> command line argument. If a relative path is set either with the
 option or command line, it will be searched for in the project directory.</p>
 
 <h2 id="examples">Examples</h2>
@@ -285,14 +287,14 @@ option or command line, it will be searched for in the project directory.</p>
 </span>
 <span class="k">def</span> <span class="nf">will_connect</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
     <span class="c1"># Create the new ROM region for the FICR.
-</span>    <span class="n">ficr</span> <span class="o">=</span> <span class="n">RomRegion</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">"ficr"</span><span class="p">,</span>
+</span>    <span class="n">ficr</span> <span class="o">=</span> <span class="nc">RomRegion</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">ficr</span><span class="sh">"</span><span class="p">,</span>
                 <span class="n">start</span><span class="o">=</span><span class="mh">0x10000000</span><span class="p">,</span>
                 <span class="n">length</span><span class="o">=</span><span class="mh">0x460</span>
                 <span class="p">)</span>
 
     <span class="c1"># Add the FICR region to the memory map.
-</span>    <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">add_region</span><span class="p">(</span><span class="n">ficr</span><span class="p">)</span>
+</span>    <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="nf">add_region</span><span class="p">(</span><span class="n">ficr</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>This example shows how to override the flash algorithm for an external flash memory.</p>
@@ -302,10 +304,10 @@ option or command line, it will be searched for in the project directory.</p>
 <span class="c1"># Unlike the previous example, the board argument is excluded here.
 </span><span class="k">def</span> <span class="nf">will_connect</span><span class="p">():</span>
     <span class="c1"># Look up the external flash memory region.
-</span>    <span class="n">extFlash</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="n">get_first_matching_region</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"flexspi"</span><span class="p">)</span>
+</span>    <span class="n">extFlash</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">memory_map</span><span class="p">.</span><span class="nf">get_first_matching_region</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">flexspi</span><span class="sh">"</span><span class="p">)</span>
 
     <span class="c1"># Set the path to an .FLM flash algorithm.
-</span>    <span class="n">extFlash</span><span class="p">.</span><span class="n">flm</span> <span class="o">=</span> <span class="s">"MIMXRT105x_QuadSPI_4KB_SEC.FLM"</span>
+</span>    <span class="n">extFlash</span><span class="p">.</span><span class="n">flm</span> <span class="o">=</span> <span class="sh">"</span><span class="s">MIMXRT105x_QuadSPI_4KB_SEC.FLM</span><span class="sh">"</span>
 </code></pre></div></div>
 
 <p>This example demonstrates setting the DBGMCU_CR register after connecting for STM32 devices.</p>
@@ -316,7 +318,7 @@ option or command line, it will be searched for in the project directory.</p>
 
 <span class="k">def</span> <span class="nf">did_connect</span><span class="p">():</span>
     <span class="c1"># Set STANDBY, STOP, and SLEEP bits all to 1.
-</span>    <span class="n">target</span><span class="p">.</span><span class="n">write32</span><span class="p">(</span><span class="n">DBG_CR</span><span class="p">,</span> <span class="mh">0x7</span><span class="p">)</span>
+</span>    <span class="n">target</span><span class="p">.</span><span class="nf">write32</span><span class="p">(</span><span class="n">DBG_CR</span><span class="p">,</span> <span class="mh">0x7</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Another common use for a script is to initialize external memory such as SDRAM.</p>
@@ -326,9 +328,9 @@ option or command line, it will be searched for in the project directory.</p>
 <p>New commands accessible from the commander subcommand or gdbserver monitor commands can be easily created in a user
 script.</p>
 
-<p>User defined commands are created by using the <code class="highlighter-rouge">@command()</code> decorator on a function. The name of the new command can
-either be the same as the name of the decorated function, or can be set explicitly with a <code class="highlighter-rouge">name</code> (or first positional)
-argument to the decorator. For instance, either <code class="highlighter-rouge">@command('mycmd')</code> or <code class="highlighter-rouge">@command(name='anothercmd')</code>. Note that the
+<p>User defined commands are created by using the <code class="language-plaintext highlighter-rouge">@command()</code> decorator on a function. The name of the new command can
+either be the same as the name of the decorated function, or can be set explicitly with a <code class="language-plaintext highlighter-rouge">name</code> (or first positional)
+argument to the decorator. For instance, either <code class="language-plaintext highlighter-rouge">@command('mycmd')</code> or <code class="language-plaintext highlighter-rouge">@command(name='anothercmd')</code>. Note that the
 decorator requires parentheses (it must be called as a function) even if there are no parameters.</p>
 
 <p>Parameters for the new command are automatically determined using introspection and type annotations. Arguments for
@@ -336,15 +338,15 @@ parameters of these types are converted to the appropriate type before the funct
 
 <p>Supported parameter types:</p>
 <ul>
-  <li><code class="highlighter-rouge">int</code></li>
-  <li><code class="highlighter-rouge">float</code></li>
-  <li><code class="highlighter-rouge">str</code></li>
-  <li>Variable arguments, e.g. <code class="highlighter-rouge">*args</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">int</code></li>
+  <li><code class="language-plaintext highlighter-rouge">float</code></li>
+  <li><code class="language-plaintext highlighter-rouge">str</code></li>
+  <li>Variable arguments, e.g. <code class="language-plaintext highlighter-rouge">*args</code>.</li>
 </ul>
 
 <p>Keyword parameters are not allowed.</p>
 
-<p>An <code class="highlighter-rouge">int</code> parameter is converted using the same method as for other pyOCD commands. Hexadecimal and binary numbers are
+<p>An <code class="language-plaintext highlighter-rouge">int</code> parameter is converted using the same method as for other pyOCD commands. Hexadecimal and binary numbers are
 allowed, digits can be separated by underscores, and so on. For variable arguments, type annotations are ignored and the
 tuple passed to the function will contain strings as entered in the command invocation.</p>
 
@@ -352,17 +354,17 @@ tuple passed to the function will contain strings as entered in the command invo
 from other functions within the user script. This is true even if the function definition is not compatible with the
 command decorator, for instance if it has invalid parameter types.</p>
 
-<p>Help for the new command can be specified by passing a <code class="highlighter-rouge">help</code> argument to the <code class="highlighter-rouge">@command</code> decorator.</p>
+<p>Help for the new command can be specified by passing a <code class="language-plaintext highlighter-rouge">help</code> argument to the <code class="language-plaintext highlighter-rouge">@command</code> decorator.</p>
 
 <p>Example:</p>
 
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s">"Decode and print the first few vectors"</span><span class="p">)</span>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@command</span><span class="p">(</span><span class="nb">help</span><span class="o">=</span><span class="sh">"</span><span class="s">Decode and print the first few vectors</span><span class="sh">"</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">vectable</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="n">vecs</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="n">read_memory_block32</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Initial SP:     </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"ResetHandler:   </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"NMI:            </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HardFault:      </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">vecs</span> <span class="o">=</span> <span class="n">target</span><span class="p">.</span><span class="nf">read_memory_block32</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Initial SP:     </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">ResetHandler:   </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">NMI:            </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">HardFault:      </span><span class="si">{</span><span class="n">vecs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="c1">#010x</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="script-globals">Script globals</h2>
@@ -383,55 +385,55 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">aps</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aps</code></td>
       <td>Dictionary of CoreSight Access Port (AP) objects. The keys are the APSEL value.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">board</code></td>
-      <td>The <code class="highlighter-rouge">Board</code> object.</td>
+      <td><code class="language-plaintext highlighter-rouge">board</code></td>
+      <td>The <code class="language-plaintext highlighter-rouge">Board</code> object.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">command</code></td>
+      <td><code class="language-plaintext highlighter-rouge">command</code></td>
       <td>Decorator for defining new commands. See <a href="#user_defined_commands">user-defined commands</a> for details.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">debug</code></td>
+      <td><code class="language-plaintext highlighter-rouge">debug</code></td>
       <td>Log a debug message.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">dp</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dp</code></td>
       <td>The CoreSight Debug Port (DP) object.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">error</code></td>
+      <td><code class="language-plaintext highlighter-rouge">error</code></td>
       <td>Output an error log.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">info</code></td>
+      <td><code class="language-plaintext highlighter-rouge">info</code></td>
       <td>Output an info-level log message.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">LOG</code></td>
-      <td><code class="highlighter-rouge">Logger</code> object for the user script.</td>
+      <td><code class="language-plaintext highlighter-rouge">LOG</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Logger</code> object for the user script.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">options</code></td>
+      <td><code class="language-plaintext highlighter-rouge">options</code></td>
       <td>The session options dictionary.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">probe</code></td>
+      <td><code class="language-plaintext highlighter-rouge">probe</code></td>
       <td>The connected debug probe object.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">session</code></td>
+      <td><code class="language-plaintext highlighter-rouge">session</code></td>
       <td>The session object, which is the root of the connection object graph.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">target</code></td>
-      <td>The <code class="highlighter-rouge">CoreSightTarget</code> or subclass instance representing the MCU.</td>
+      <td><code class="language-plaintext highlighter-rouge">target</code></td>
+      <td>The <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> or subclass instance representing the MCU.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">warning</code></td>
+      <td><code class="language-plaintext highlighter-rouge">warning</code></td>
       <td>Log a warning.</td>
     </tr>
   </tbody>
@@ -448,103 +450,103 @@ both target related objects, as well as parts of the pyOCD Python API.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">BreakpointType</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BreakpointType</code></td>
       <td>Enumeration of breakpoint types.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">DeviceRegion</code></td>
+      <td><code class="language-plaintext highlighter-rouge">DeviceRegion</code></td>
       <td>Device-type memory region class.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">Error</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Error</code></td>
       <td>The base class for all pyOCD exceptions.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">Event</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Event</code></td>
       <td>Enumeration of notification event types.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">exceptions</code></td>
+      <td><code class="language-plaintext highlighter-rouge">exceptions</code></td>
       <td>Module containing the exception classes.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FileProgrammer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FileProgrammer</code></td>
       <td>Utility class to program files to target flash.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashEraser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashEraser</code></td>
       <td>Utility class to erase target flash.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashLoader</code></td>
-      <td>Utility class to program raw binary data to target memory. Deprecated, use <code class="highlighter-rouge">MemoryLoader</code> instead.</td>
+      <td><code class="language-plaintext highlighter-rouge">FlashLoader</code></td>
+      <td>Utility class to program raw binary data to target memory. Deprecated, use <code class="language-plaintext highlighter-rouge">MemoryLoader</code> instead.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashRegion</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashRegion</code></td>
       <td>Flash memory region.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">HaltReason</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HaltReason</code></td>
       <td>Enumeration of halt reasons.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">MemoryLoader</code></td>
+      <td><code class="language-plaintext highlighter-rouge">MemoryLoader</code></td>
       <td>Utility class to program raw binary data to target memory.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">MemoryMap</code></td>
+      <td><code class="language-plaintext highlighter-rouge">MemoryMap</code></td>
       <td>Class representing the device’s memory map.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">MemoryType</code></td>
+      <td><code class="language-plaintext highlighter-rouge">MemoryType</code></td>
       <td>Memory region type enumeration.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">pyocd</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pyocd</code></td>
       <td>The root pyOCD module.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">RamRegion</code></td>
+      <td><code class="language-plaintext highlighter-rouge">RamRegion</code></td>
       <td>RAM memory region.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">ResetType</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ResetType</code></td>
       <td>Reset type enumeration.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">RomRegion</code></td>
+      <td><code class="language-plaintext highlighter-rouge">RomRegion</code></td>
       <td>ROM memory region.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">RunType</code></td>
+      <td><code class="language-plaintext highlighter-rouge">RunType</code></td>
       <td>Enumeration of types of run operations (step or run).</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">SecurityState</code></td>
+      <td><code class="language-plaintext highlighter-rouge">SecurityState</code></td>
       <td>Enumeration of core security states.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">State</code></td>
+      <td><code class="language-plaintext highlighter-rouge">State</code></td>
       <td>Enumeration of target state.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">Target</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Target</code></td>
       <td>Base target class.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">TransferError</code></td>
+      <td><code class="language-plaintext highlighter-rouge">TransferError</code></td>
       <td>Exception class for all transfer errors.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">TransferFaultError</code></td>
-      <td>Exception subclass of <code class="highlighter-rouge">TransferError</code> for memory transfer faults.</td>
+      <td><code class="language-plaintext highlighter-rouge">TransferFaultError</code></td>
+      <td>Exception subclass of <code class="language-plaintext highlighter-rouge">TransferError</code> for memory transfer faults.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">VectorCatch</code></td>
+      <td><code class="language-plaintext highlighter-rouge">VectorCatch</code></td>
       <td>Namespace class containing bit mask constants for vector catch options.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">WatchpointType</code></td>
+      <td><code class="language-plaintext highlighter-rouge">WatchpointType</code></td>
       <td>Enumeration of watchpoint types.</td>
     </tr>
   </tbody>
@@ -557,7 +559,7 @@ notifications, while others allow for overriding of default behaviour. Collectiv
 
 <p>All parameters of user script delegate functions are optional. Parameters can be declared in any order, and
 those that are not needed can be excluded. In fact, most parameters are not necessary because the same objects
-are available as <a href="#script_globals">script globals</a>, for instance <code class="highlighter-rouge">session</code> and <code class="highlighter-rouge">target</code>.</p>
+are available as <a href="#script_globals">script globals</a>, for instance <code class="language-plaintext highlighter-rouge">session</code> and <code class="language-plaintext highlighter-rouge">target</code>.</p>
 
 <p>Those parameters that are present must have names matching the specification below, and there must not be
 additional unspecified, required parameters (those without a default value). Extra optional parameters are
@@ -569,34 +571,34 @@ within the script.</p>
 <h3 id="will_connect">will_connect</h3>
 
 <p>Pre-init notification for the board.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_connect(board: Board) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_connect(board: Board) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>board</em> - A <code class="highlighter-rouge">Board</code> instance that is about to be initialized. <br />
+<em>board</em> - A <code class="language-plaintext highlighter-rouge">Board</code> instance that is about to be initialized. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="did_connect">did_connect</h3>
 
 <p>Post-initialization notification for the board.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_connect(board: Board) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_connect(board: Board) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>board</em> - A <code class="highlighter-rouge">Board</code> instance. <br />
+<em>board</em> - A <code class="language-plaintext highlighter-rouge">Board</code> instance. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="will_init_target">will_init_target</h3>
 
 <p>Hook to review and modify init call sequence prior to execution.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_init_target(target: SoCTarget, init_sequence: CallSequence) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_init_target(target: SoCTarget, init_sequence: CallSequence) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object about to be initialized. <br />
-<em>init_sequence</em> - The <code class="highlighter-rouge">CallSequence</code> that will be invoked. Because call sequences are
+<em>target</em> - An <code class="language-plaintext highlighter-rouge">SoCTarget</code> object about to be initialized. <br />
+<em>init_sequence</em> - The <code class="language-plaintext highlighter-rouge">CallSequence</code> that will be invoked. Because call sequences are
   mutable, this parameter can be modified before return to change the init calls. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
@@ -604,22 +606,22 @@ Ignored.</p>
 <h3 id="did_init_target">did_init_target</h3>
 
 <p>Post-initialization notification.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_init_target(target: SoCTarget) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_init_target(target: SoCTarget) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
+<em>target</em> - An <code class="language-plaintext highlighter-rouge">SoCTarget</code> object. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="unlock_device">unlock_device</h3>
 
 <p>Hook to perform any required unlock sequence.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unlock_device(target: SoCTarget) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unlock_device(target: SoCTarget) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
+<em>target</em> - An <code class="language-plaintext highlighter-rouge">SoCTarget</code> object. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
@@ -628,17 +630,17 @@ access to the target. It can also be used to perform other pre-discovery actions
 
 <p>Note that because this hoook is called prior to discovery, APs and cores are not yet created. This means
 that any register accesses must be performed through the DP’s methods. (However, it’s possible to create
-a temporary instance of ‘AccessPort’ or one of its subclasses, such as <code class="highlighter-rouge">MEM_AP</code>.)</p>
+a temporary instance of ‘AccessPort’ or one of its subclasses, such as <code class="language-plaintext highlighter-rouge">MEM_AP</code>.)</p>
 
 <h3 id="will_start_debug_core">will_start_debug_core</h3>
 
 <p>Notification hook for before core debug is enabled.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_start_debug_core(core: CoreTarget) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_start_debug_core(core: CoreTarget) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object about to be initialized. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> object about to be initialized. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
@@ -649,11 +651,11 @@ the core’s presence during discovery).</p>
 <h3 id="start_debug_core">start_debug_core</h3>
 
 <p>Hook to enable debug for the given core.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start_debug_core(core: CoreTarget) -&gt; Optional[bool]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start_debug_core(core: CoreTarget) -&gt; Optional[bool]
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object about to be initialized. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> object about to be initialized. <br />
 <strong>Result</strong> <br />
 <em>True</em> Do not perform the normal procedure to start core debug. <br />
 <em>False/None</em> Continue with normal behaviour.</p>
@@ -661,11 +663,11 @@ the core’s presence during discovery).</p>
 <h3 id="did_start_debug_core">did_start_debug_core</h3>
 
 <p>Notification hook that core debug has been enabled.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_start_debug_core(core: CoreTarget) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_start_debug_core(core: CoreTarget) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> object. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
@@ -675,74 +677,74 @@ identified.</p>
 <h3 id="will_stop_debug_core">will_stop_debug_core</h3>
 
 <p>Pre core disconnect notification hook for the core.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_stop_debug_core(core: CoreTarget) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_stop_debug_core(core: CoreTarget) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> object. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="stop_debug_core">stop_debug_core</h3>
 
 <p>Core debug disable hook.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stop_debug_core(core: CoreTarget) -&gt; Optional[bool]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stop_debug_core(core: CoreTarget) -&gt; Optional[bool]
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> object. <br />
 <strong>Result</strong> <br />
 <em>True</em> Do not perform the normal procedure to disable core debug. <br />
 <em>False/None</em> Continue with normal behaviour.</p>
 
-<p>This delegate is only called if resuming the core on disconnect, e.g. the <code class="highlighter-rouge">resume_on_disconnect</code> session
+<p>This delegate is only called if resuming the core on disconnect, e.g. the <code class="language-plaintext highlighter-rouge">resume_on_disconnect</code> session
 option is True. Therefore, the delegate should ensure that the core has properly resumed execution if it
 returns True.</p>
 
 <h3 id="did_stop_debug_core">did_stop_debug_core</h3>
 
 <p>Post core disconnect notification hook for the core.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_stop_debug_core(core: CoreTarget) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_stop_debug_core(core: CoreTarget) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> object. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> object. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="will_disconnect">will_disconnect</h3>
 
 <p>Pre-disconnect notification.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_disconnect(target: SoCTarget, resume: bool) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_disconnect(target: SoCTarget, resume: bool) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
-<em>resume</em> - The value of the <code class="highlighter-rouge">disconnect_on_resume</code> option. <br />
+<em>target</em> - An <code class="language-plaintext highlighter-rouge">SoCTarget</code> object. <br />
+<em>resume</em> - The value of the <code class="language-plaintext highlighter-rouge">disconnect_on_resume</code> option. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="did_disconnect">did_disconnect</h3>
 
 <p>Post-disconnect notification.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_disconnect(target: SoCTarget, resume: bool) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_disconnect(target: SoCTarget, resume: bool) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
-<em>resume</em> - The value of the <code class="highlighter-rouge">disconnect_on_resume</code> option. <br />
+<em>target</em> - An <code class="language-plaintext highlighter-rouge">SoCTarget</code> object. <br />
+<em>resume</em> - The value of the <code class="language-plaintext highlighter-rouge">disconnect_on_resume</code> option. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="will_reset">will_reset</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_reset(core: CoreTarget, reset_type: Target.ResetType) -&gt; Optional[bool]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>will_reset(core: CoreTarget, reset_type: Target.ResetType) -&gt; Optional[bool]
 </code></pre></div></div>
 <p>Pre-reset hook.</p>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> instance. <br />
-<em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> instance. <br />
+<em>reset_type</em> - One of the <code class="language-plaintext highlighter-rouge">Target.ResetType</code> enumerations. <br />
 <strong>Result</strong> <br />
 <em>True</em> The hook performed the reset.  <br />
 <em>False/None</em> Caller should perform the normal reset procedure.</p>
@@ -750,24 +752,24 @@ Ignored.</p>
 <h3 id="did_reset">did_reset</h3>
 
 <p>Post-reset notification.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_reset(core: CoreTarget, reset_type: Target.ResetType) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>did_reset(core: CoreTarget, reset_type: Target.ResetType) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> instance. <br />
-<em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> instance. <br />
+<em>reset_type</em> - One of the <code class="language-plaintext highlighter-rouge">Target.ResetType</code> enumerations. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="set_reset_catch">set_reset_catch</h3>
 
 <p>Hook to prepare target for halting on reset.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set_reset_catch(core: CoreTarget, reset_type: Target.ResetType) -&gt; Optional[bool]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set_reset_catch(core: CoreTarget, reset_type: Target.ResetType) -&gt; Optional[bool]
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> instance. <br />
-<em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> instance. <br />
+<em>reset_type</em> - One of the <code class="language-plaintext highlighter-rouge">Target.ResetType</code> enumerations. <br />
 <strong>Result</strong> <br />
 <em>True</em> This hook handled setting up reset catch, caller should do nothing. <br />
 <em>False/None</em> Perform the default reset catch set using vector catch.</p>
@@ -775,23 +777,23 @@ Ignored.</p>
 <h3 id="clear_reset_catch">clear_reset_catch</h3>
 
 <p>Hook to clean up target after a reset and halt.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>clear_reset_catch(core: CoreTarget, reset_type: Target.ResetType) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>clear_reset_catch(core: CoreTarget, reset_type: Target.ResetType) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>core</em> - A <code class="highlighter-rouge">CoreTarget</code> instance. <br />
-<em>reset_type</em> - One of the <code class="highlighter-rouge">Target.ResetType</code> enumerations. <br />
+<em>core</em> - A <code class="language-plaintext highlighter-rouge">CoreTarget</code> instance. <br />
+<em>reset_type</em> - One of the <code class="language-plaintext highlighter-rouge">Target.ResetType</code> enumerations. <br />
 <strong>Result</strong> <br />
 Ignored.</p>
 
 <h3 id="mass_erase">mass_erase</h3>
 
 <p>Hook to override mass erase.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mass_erase(target: SoCTarget) -&gt; Optional[bool]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mass_erase(target: SoCTarget) -&gt; Optional[bool]
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>target</em> - An <code class="highlighter-rouge">SoCTarget</code> object. <br />
+<em>target</em> - An <code class="language-plaintext highlighter-rouge">SoCTarget</code> object. <br />
 <strong>Result</strong> <br />
 <em>True</em> Indicate that mass erase was performed by the hook. <br />
 <em>False/None</em> Mass erase was not overridden and the caller should proceed with the standard mass erase procedure.</p>
@@ -799,22 +801,46 @@ Ignored.</p>
 <h3 id="trace_start">trace_start</h3>
 
 <p>Notification to prepare for tracing the target.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trace_start(target: SoCTarget, mode: int) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trace_start(target: SoCTarget, mode: int) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object. <br />
+<em>target</em> - A <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> object. <br />
 <em>mode</em> - The trace mode. Currently always 0 to indicate SWO. <br />
 <em>Result</em> - Ignored.</p>
 
 <h3 id="trace_stop">trace_stop</h3>
 
 <p>Notification to clean up after tracing the target.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trace_stop(target: SoCTarget, mode: int) -&gt; None
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trace_stop(target: SoCTarget, mode: int) -&gt; None
 </code></pre></div></div>
 
 <p><strong>Parameters</strong> <br />
-<em>target</em> - A <code class="highlighter-rouge">CoreSightTarget</code> object. <br />
+<em>target</em> - A <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> object. <br />
+<em>mode</em> - The trace mode. Currently always 0 to indicate SWO. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="trace_capture">trace_capture</h3>
+
+<p>Notification to capture trace data.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trace_capture(target: SoCTarget, mode: int) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>target</em> - A <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> object. <br />
+<em>mode</em> - The trace mode. Currently always 0 to indicate SWO. <br />
+<strong>Result</strong> <br />
+Ignored.</p>
+
+<h3 id="trace_flush">trace_flush</h3>
+
+<p>Notification to flush trace data.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trace_flush(target: SoCTarget, mode: int) -&gt; None
+</code></pre></div></div>
+
+<p><strong>Parameters</strong> <br />
+<em>target</em> - A <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> object. <br />
 <em>mode</em> - The trace mode. Currently always 0 to indicate SWO. <br />
 <strong>Result</strong> <br />
 Ignored.</p>

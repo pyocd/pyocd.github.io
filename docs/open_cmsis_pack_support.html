@@ -307,15 +307,15 @@
 
 <h3 id="debug-variables">Debug variables</h3>
 
-<p>Debug sequences frequently make use of configurable variables called debug variables, or debugvars for short. Depending on the debug sequence, these variables can be modified to change the values written into registers, adjust timeouts, or for other, similar purposes. In other debuggers such as Keil MDK, debugvars are read from a <code class="highlighter-rouge">.dbgconf</code> file. In pyOCD, this is handled through the <code class="highlighter-rouge">pack.debug_sequences.debugvars</code> session option described below.</p>
+<p>Debug sequences frequently make use of configurable variables called debug variables, or debugvars for short. Depending on the debug sequence, these variables can be modified to change the values written into registers, adjust timeouts, or for other, similar purposes. In other debuggers such as Keil MDK, debugvars are read from a <code class="language-plaintext highlighter-rouge">.dbgconf</code> file. In pyOCD, this is handled through the <code class="language-plaintext highlighter-rouge">pack.debug_sequences.debugvars</code> session option described below.</p>
 
-<p>The <code class="highlighter-rouge">pack.debug_sequences.debugvars</code> session option must be set to a string containing C-style variable assignment statements. C-compatible integer expressions are allowed, and can refer to previously defined variables. Only those debug variables whose value is being changed need to be assigned a value; others will retain their default value. This option is one that you’d normally set in a yaml config file rather than the command line.</p>
+<p>The <code class="language-plaintext highlighter-rouge">pack.debug_sequences.debugvars</code> session option must be set to a string containing C-style variable assignment statements. C-compatible integer expressions are allowed, and can refer to previously defined variables. Only those debug variables whose value is being changed need to be assigned a value; others will retain their default value. This option is one that you’d normally set in a yaml config file rather than the command line.</p>
 
 <p>All debugvars defined by the CMSIS-Pack and their configured value are logged (at the Info log level) during target connection.</p>
 
-<p>This is an example of output for an ST Microelectronics STM32H750 MCU (target type name <code class="highlighter-rouge">stm32h750ibtx</code>) from the Keil.STM32H7_DFP pack:</p>
+<p>This is an example of output for an ST Microelectronics STM32H750 MCU (target type name <code class="language-plaintext highlighter-rouge">stm32h750ibtx</code>) from the Keil.STM32H7_DFP pack:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0001360 I debugvar 'DbgMCU_APB1L_Fz1' = 0xffffffff (4294967295) [pack_target]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0001360 I debugvar 'DbgMCU_APB1L_Fz1' = 0xffffffff (4294967295) [pack_target]
 0001360 I debugvar 'DbgMCU_APB2_Fz1' = 0xffffffff (4294967295) [pack_target]
 0001360 I debugvar 'DbgMCU_APB3_Fz1' = 0xffffffff (4294967295) [pack_target]
 0001360 I debugvar 'DbgMCU_APB4_Fz1' = 0xffffffff (4294967295) [pack_target]
@@ -327,7 +327,7 @@
 0001361 I debugvar 'TraceD3_Pin' = 0x40006 (262150) [pack_target]
 </code></pre></div></div>
 
-<p>To override some <code class="highlighter-rouge">DBGMCU</code> register values configured by the above target, this could be added to the <code class="highlighter-rouge">pyocd.yaml</code> <a href="/docs/configuration.html">configuration file</a>:</p>
+<p>To override some <code class="language-plaintext highlighter-rouge">DBGMCU</code> register values configured by the above target, this could be added to the <code class="language-plaintext highlighter-rouge">pyocd.yaml</code> <a href="/docs/configuration.html">configuration file</a>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">pack.debug_sequences.debugvars</span><span class="pi">:</span> <span class="pi">|</span>
   <span class="s">DbgMCU_APB1L_Fz1 = 0xffffffff;</span>
@@ -336,17 +336,17 @@
   <span class="s">DbgMCU_APB4_Fz1 = 0xffffffff;</span>
 </code></pre></div></div>
 
-<p>If the <code class="highlighter-rouge">pack.debug_sequences.debugvars</code> session option is modified during a connection, the new debugvar values will be used for any further debug sequence invocations. However, changes to a configuration file on disk will not be reloaded at runtime.</p>
+<p>If the <code class="language-plaintext highlighter-rouge">pack.debug_sequences.debugvars</code> session option is modified during a connection, the new debugvar values will be used for any further debug sequence invocations. However, changes to a configuration file on disk will not be reloaded at runtime.</p>
 
 <h3 id="disabling-debug-sequences">Disabling debug sequences</h3>
 
 <p>Like any software, DFPs and any contained debug sequences can have bugs. There may also be other cases where disabling a debug sequence is useful. PyOCD can be configured to disable debug sequences either as a whole or individually by using the following session options.</p>
 
-<h4 id="packdebug_sequencesenable"><code class="highlighter-rouge">pack.debug_sequences.enable</code></h4>
+<h4 id="packdebug_sequencesenable"><code class="language-plaintext highlighter-rouge">pack.debug_sequences.enable</code></h4>
 
 <p>This boolean session option globally controls debug sequence support. It defaults to True; setting to False will disable running of all debug sequences defined by the DFP for the chosen target.</p>
 
-<h4 id="packdebug_sequencesdisabled_sequences"><code class="highlighter-rouge">pack.debug_sequences.disabled_sequences</code></h4>
+<h4 id="packdebug_sequencesdisabled_sequences"><code class="language-plaintext highlighter-rouge">pack.debug_sequences.disabled_sequences</code></h4>
 
 <p>If specific debug sequences need to be disabled, they can be specified with this option. From the command line, the value must be a comma-separated list of sequence names. When set in a YAML config file, the value must be a YAML list of sequence names (instead of a single comma-separated string value).</p>
 
@@ -364,13 +364,13 @@
 
 <p>PyOCD is somewhat different in that it connects to the device as a whole, and then debugs one or more cores after the connection is established. This more closely reflects the hardware situation.</p>
 
-<p>This primarily impacts the <code class="highlighter-rouge">DebugPortSetup</code>, <code class="highlighter-rouge">DebugPortStart</code>, <code class="highlighter-rouge">DebugPortStop</code>, and <code class="highlighter-rouge">DebugDeviceUnlock</code> debug sequences that affect the entire SoC. These relate to the connect procedure for the Arm ADI DP (Debug Port) used for SWD/JTAG communications. While most sequences can be run separately for each core, these are run only once per target connection. The core-specific variant that is selected can affect the rest of the debugging session. (Technically, this is also true for debuggers that are presented as debugging a single core, in cases where a second instance of that debugger can be started to debug another core. But, the way it’s presented to the user is different.)</p>
+<p>This primarily impacts the <code class="language-plaintext highlighter-rouge">DebugPortSetup</code>, <code class="language-plaintext highlighter-rouge">DebugPortStart</code>, <code class="language-plaintext highlighter-rouge">DebugPortStop</code>, and <code class="language-plaintext highlighter-rouge">DebugDeviceUnlock</code> debug sequences that affect the entire SoC. These relate to the connect procedure for the Arm ADI DP (Debug Port) used for SWD/JTAG communications. While most sequences can be run separately for each core, these are run only once per target connection. The core-specific variant that is selected can affect the rest of the debugging session. (Technically, this is also true for debuggers that are presented as debugging a single core, in cases where a second instance of that debugger can be started to debug another core. But, the way it’s presented to the user is different.)</p>
 
-<p>The <code class="highlighter-rouge">primary_core</code> session option is used to select which core-specific version of the <code class="highlighter-rouge">DebugPort*</code>/<code class="highlighter-rouge">DebugDeviceUnlock</code> sequences is run during the target connection process. For all other sequences, the core-specific version that is run depends on which core is performing the action.</p>
+<p>The <code class="language-plaintext highlighter-rouge">primary_core</code> session option is used to select which core-specific version of the <code class="language-plaintext highlighter-rouge">DebugPort*</code>/<code class="language-plaintext highlighter-rouge">DebugDeviceUnlock</code> sequences is run during the target connection process. For all other sequences, the core-specific version that is run depends on which core is performing the action.</p>
 
 <h3 id="custom-default-reset-sequences">Custom default reset sequences</h3>
 
-<p>The DFP specification allows the definition of custom (nonstandard) reset sequences, and these can be selected as the default reset sequence for a core. The purpose of this is to keep the standard sequences unmodified and available for user selection. Because pyOCD does not currently support a custom reset type, this DFP feature is not supported. A custom default reset sequence will be replaced with <code class="highlighter-rouge">ResetSystem</code> and the custom behavior not performed.</p>
+<p>The DFP specification allows the definition of custom (nonstandard) reset sequences, and these can be selected as the default reset sequence for a core. The purpose of this is to keep the standard sequences unmodified and available for user selection. Because pyOCD does not currently support a custom reset type, this DFP feature is not supported. A custom default reset sequence will be replaced with <code class="language-plaintext highlighter-rouge">ResetSystem</code> and the custom behavior not performed.</p>
 
 <h3 id="debug-sequences-and-delegate-functions">Debug sequences and delegate functions</h3>
 
@@ -390,118 +390,138 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">DebugPortSetup</code></td>
+      <td><code class="language-plaintext highlighter-rouge">DebugPortSetup</code></td>
       <td>-</td>
-      <td>SWJ-DP switch; reading <code class="highlighter-rouge">DPIDR</code>; writing <code class="highlighter-rouge">TARGETSEL</code>.</td>
+      <td>SWJ-DP switch; reading <code class="language-plaintext highlighter-rouge">DPIDR</code>; writing <code class="language-plaintext highlighter-rouge">TARGETSEL</code>.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">DebugPortStart</code></td>
+      <td><code class="language-plaintext highlighter-rouge">DebugPortStart</code></td>
       <td>-</td>
       <td>Connect to the target debug port and power it up.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">DebugPortStop</code></td>
+      <td><code class="language-plaintext highlighter-rouge">DebugPortStop</code></td>
       <td>-</td>
       <td>Power down and disconnect from target debug port.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">DebugDeviceUnlock</code></td>
-      <td><code class="highlighter-rouge">unlock_device</code></td>
+      <td><code class="language-plaintext highlighter-rouge">DebugDeviceUnlock</code></td>
+      <td><code class="language-plaintext highlighter-rouge">unlock_device</code></td>
       <td>Ensure the device is accessible.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">DebugCoreStart</code></td>
-      <td><code class="highlighter-rouge">start_debug_core</code></td>
+      <td><code class="language-plaintext highlighter-rouge">DebugCoreStart</code></td>
+      <td><code class="language-plaintext highlighter-rouge">start_debug_core</code></td>
       <td>Initialize core debug.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">DebugCoreStop</code></td>
-      <td><code class="highlighter-rouge">stop_debug_core</code></td>
+      <td><code class="language-plaintext highlighter-rouge">DebugCoreStop</code></td>
+      <td><code class="language-plaintext highlighter-rouge">stop_debug_core</code></td>
       <td>Uninitialized core debug.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">DebugCodeMemRemap</code></td>
+      <td><code class="language-plaintext highlighter-rouge">DebugCodeMemRemap</code></td>
       <td>-</td>
       <td>Remap memory to execution location. Executed before verifying memory content after flash programming. This is required to replicate a memory remap of a device bootloader (that is not executed during debug connection).</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">ResetSystem</code></td>
-      <td><code class="highlighter-rouge">will_reset</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ResetSystem</code></td>
+      <td><code class="language-plaintext highlighter-rouge">will_reset</code></td>
       <td>System-wide reset without debug domain via software mechanisms.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">ResetProcessor</code></td>
-      <td><code class="highlighter-rouge">will_reset</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ResetProcessor</code></td>
+      <td><code class="language-plaintext highlighter-rouge">will_reset</code></td>
       <td>Local processor reset without peripherals and debug domains.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">ResetHardware</code></td>
-      <td><code class="highlighter-rouge">will_reset</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ResetHardware</code></td>
+      <td><code class="language-plaintext highlighter-rouge">will_reset</code></td>
       <td>System-wide reset without debug domain via the dedicated debugger reset line, e.g. nRST.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">ResetHardwareAssert</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ResetHardwareAssert</code></td>
       <td>-</td>
       <td>Assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">ResetHardwareDeassert</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ResetHardwareDeassert</code></td>
       <td>-</td>
       <td>De-assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">ResetCatchSet</code></td>
-      <td><code class="highlighter-rouge">set_reset_catch</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ResetCatchSet</code></td>
+      <td><code class="language-plaintext highlighter-rouge">set_reset_catch</code></td>
       <td>Configure the vector catch to stop code execution after the reset.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">ResetCatchClear</code></td>
-      <td><code class="highlighter-rouge">clear_reset_catch</code></td>
-      <td>Free hardware resources allocated by <code class="highlighter-rouge">ResetCatchSet</code>.</td>
+      <td><code class="language-plaintext highlighter-rouge">ResetCatchClear</code></td>
+      <td><code class="language-plaintext highlighter-rouge">clear_reset_catch</code></td>
+      <td>Free hardware resources allocated by <code class="language-plaintext highlighter-rouge">ResetCatchSet</code>.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashInit</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashEraseSetup</code></td>
+      <td>-</td>
+      <td>Optional setup before flash erase for flashinfo-based regions. May call <code class="language-plaintext highlighter-rouge">FlashLoadAlgorithm()</code> to use an FLM algorithm for erase.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FlashProgramSetup</code></td>
+      <td>-</td>
+      <td>Optional setup before flash program for flashinfo-based regions. May call <code class="language-plaintext highlighter-rouge">FlashLoadAlgorithm()</code> to use an FLM algorithm for programming.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FlashInit</code></td>
       <td>-</td>
       <td>Executed before starting a flash operation.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashUninit</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashUninit</code></td>
       <td>-</td>
       <td>Executed after a flash operation finished.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashEraseSector</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashEraseSector</code></td>
       <td>-</td>
       <td>Executed to erase a flash memory sector.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashEraseChip</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashEraseChip</code></td>
       <td>-</td>
       <td>Executed to erase all on-chip flash memory with target device specific erase technology.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashEraseDone</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashEraseDone</code></td>
       <td>-</td>
       <td>Executed after all flash memory erase operations are finished.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashProgramPage</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashProgramPage</code></td>
       <td>-</td>
       <td>Executed to program a single flash page.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">FlashProgramDone</code></td>
+      <td><code class="language-plaintext highlighter-rouge">FlashProgramDone</code></td>
       <td>-</td>
       <td>Executed after all flash programming operations are finished.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">TraceStart</code></td>
-      <td><code class="highlighter-rouge">trace_start</code></td>
+      <td><code class="language-plaintext highlighter-rouge">TraceStart</code></td>
+      <td><code class="language-plaintext highlighter-rouge">trace_start</code></td>
       <td>Enable target trace capture.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">TraceStop</code></td>
-      <td><code class="highlighter-rouge">trace_stop</code></td>
+      <td><code class="language-plaintext highlighter-rouge">TraceCapture</code></td>
+      <td><code class="language-plaintext highlighter-rouge">trace_capture</code></td>
+      <td>Capture trace data.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TraceFlush</code></td>
+      <td><code class="language-plaintext highlighter-rouge">trace_flush</code></td>
+      <td>Flush trace data.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TraceStop</code></td>
+      <td><code class="language-plaintext highlighter-rouge">trace_stop</code></td>
       <td>Disable target trace capture.</td>
     </tr>
   </tbody>
@@ -518,15 +538,15 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">RecoverySupportStart</code></td>
+      <td><code class="language-plaintext highlighter-rouge">RecoverySupportStart</code></td>
       <td>Before step or run command to support recovery from a lost target connection.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">RecoverySupportStop</code></td>
-      <td>After step or run command in context of the <code class="highlighter-rouge">RecoverySupportStart</code>.</td>
+      <td><code class="language-plaintext highlighter-rouge">RecoverySupportStop</code></td>
+      <td>After step or run command in context of the <code class="language-plaintext highlighter-rouge">RecoverySupportStart</code>.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">RecoveryAcknowledge</code></td>
+      <td><code class="language-plaintext highlighter-rouge">RecoveryAcknowledge</code></td>
       <td>Debugger acknowledge after recovering from a lost target connection.</td>
     </tr>
   </tbody>

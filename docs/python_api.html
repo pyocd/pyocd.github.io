@@ -237,7 +237,7 @@
                   </div>
 
                   <p>Using pyOCD’s Python API, you have extreme flexibility and precise control, and can do anything
-SWD allows, at the expense of more complexity compared to <code class="highlighter-rouge">pyocd commander</code>. Using pyOCD like this is
+SWD allows, at the expense of more complexity compared to <code class="language-plaintext highlighter-rouge">pyocd commander</code>. Using pyOCD like this is
 particularly useful for situations where other debuggers become ineffective, such as device and
 board bringup, or automated testing.</p>
 
@@ -249,114 +249,114 @@ they are connected.</p>
 <h2 id="connecting">Connecting</h2>
 
 <p>pyOCD provides a handful of helper routines that make it very easy to enumerate and connect to
-available debug probes. These routines are all available as static methods on the <code class="highlighter-rouge">ConnectHelper</code>
-class in <code class="highlighter-rouge">pyocd.core.helpers</code>.</p>
+available debug probes. These routines are all available as static methods on the <code class="language-plaintext highlighter-rouge">ConnectHelper</code>
+class in <code class="language-plaintext highlighter-rouge">pyocd.core.helpers</code>.</p>
 
-<p><code class="highlighter-rouge">ConnectHelper.session_with_chosen_probe()</code> is the primary connection helper. This method returns
-a single <code class="highlighter-rouge">Session</code> object, or None. If only a single probe is available, a new session for that
+<p><code class="language-plaintext highlighter-rouge">ConnectHelper.session_with_chosen_probe()</code> is the primary connection helper. This method returns
+a single <code class="language-plaintext highlighter-rouge">Session</code> object, or None. If only a single probe is available, a new session for that
 probe is returned immediately. But if there are multiple probes available, then by default, it will
 present a simple console UI that lets the user select which probe they want to use. Other options
 allow automatically picking the first available probe.</p>
 
-<p>One of the most useful parameters for <code class="highlighter-rouge">session_with_chosen_probe()</code> is <code class="highlighter-rouge">unique_id</code>. Pass whole or
+<p>One of the most useful parameters for <code class="language-plaintext highlighter-rouge">session_with_chosen_probe()</code> is <code class="language-plaintext highlighter-rouge">unique_id</code>. Pass whole or
 part of a probe’s unique ID (aka serial number) to programmatically select a specific probe.</p>
 
-<p>Session options may be passed to <code class="highlighter-rouge">session_with_chosen_probe()</code> in two ways. The <code class="highlighter-rouge">options</code>
+<p>Session options may be passed to <code class="language-plaintext highlighter-rouge">session_with_chosen_probe()</code> in two ways. The <code class="language-plaintext highlighter-rouge">options</code>
 parameter accepts a dictionary of session options. Or, you may pass options as keyword parameters.
 The two methods may be combined.</p>
 
 <h2 id="dp-access">DP access</h2>
 
-<p>The DP is controlled through an instance of the <code class="highlighter-rouge">DebugPort</code> class (in <code class="highlighter-rouge">pyocd.coresight.dap</code>). You
-get the <code class="highlighter-rouge">DebugPort</code> object via the ‘dp’ attribute of the target instance, i.e., <code class="highlighter-rouge">session.board.target.dp</code>.</p>
+<p>The DP is controlled through an instance of the <code class="language-plaintext highlighter-rouge">DebugPort</code> class (in <code class="language-plaintext highlighter-rouge">pyocd.coresight.dap</code>). You
+get the <code class="language-plaintext highlighter-rouge">DebugPort</code> object via the ‘dp’ attribute of the target instance, i.e., <code class="language-plaintext highlighter-rouge">session.board.target.dp</code>.</p>
 
-<p>The <code class="highlighter-rouge">DebugPort</code> class has <code class="highlighter-rouge">read_reg(addr)</code> and <code class="highlighter-rouge">write_reg(addr, data)</code> methods. ‘addr’ must be an
+<p>The <code class="language-plaintext highlighter-rouge">DebugPort</code> class has <code class="language-plaintext highlighter-rouge">read_reg(addr)</code> and <code class="language-plaintext highlighter-rouge">write_reg(addr, data)</code> methods. ‘addr’ must be an
 integer in the set (0x0, 0x4, 0x8, 0xC).</p>
 
 <p>Example:</p>
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">board</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">dp</span><span class="p">.</span><span class="n">read_reg</span><span class="p">(</span><span class="mh">0x4</span><span class="p">)</span>
-<span class="n">session</span><span class="p">.</span><span class="n">board</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">dp</span><span class="p">.</span><span class="n">write_reg</span><span class="p">(</span><span class="mh">0x8</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">)</span>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">board</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">dp</span><span class="p">.</span><span class="nf">read_reg</span><span class="p">(</span><span class="mh">0x4</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="n">board</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">dp</span><span class="p">.</span><span class="nf">write_reg</span><span class="p">(</span><span class="mh">0x8</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>For completeness, the DebugPort class also has <code class="highlighter-rouge">readDP(addr)</code>, <code class="highlighter-rouge">writeDP(addr, data)</code>, <code class="highlighter-rouge">readAP(addr)</code>, and
-<code class="highlighter-rouge">writeAP(addr, data)</code> methods. They work as described below, except that the <code class="highlighter-rouge">readAP()</code> and <code class="highlighter-rouge">writeAP()</code> methods
+<p>For completeness, the DebugPort class also has <code class="language-plaintext highlighter-rouge">readDP(addr)</code>, <code class="language-plaintext highlighter-rouge">writeDP(addr, data)</code>, <code class="language-plaintext highlighter-rouge">readAP(addr)</code>, and
+<code class="language-plaintext highlighter-rouge">writeAP(addr, data)</code> methods. They work as described below, except that the <code class="language-plaintext highlighter-rouge">readAP()</code> and <code class="language-plaintext highlighter-rouge">writeAP()</code> methods
 require the APSEL in the address (i.e., 0x010000fc to read ID of APSEL=1). The AP will automatically be
 selected.</p>
 
 <h2 id="ap-access">AP access</h2>
 
-<p>CoreSight APs are represented with <code class="highlighter-rouge">AccessPort</code> classes defined in <code class="highlighter-rouge">pyocd.coresight.ap</code>. These include
-the <code class="highlighter-rouge">MEM_AP</code> subclass and <code class="highlighter-rouge">AHB_AP</code> subclass of that.</p>
+<p>CoreSight APs are represented with <code class="language-plaintext highlighter-rouge">AccessPort</code> classes defined in <code class="language-plaintext highlighter-rouge">pyocd.coresight.ap</code>. These include
+the <code class="language-plaintext highlighter-rouge">MEM_AP</code> subclass and <code class="language-plaintext highlighter-rouge">AHB_AP</code> subclass of that.</p>
 
-<p>To get the AP objects you can use the ‘aps’ attribute of the <code class="highlighter-rouge">DebugPort</code>. This attribute is a dict
+<p>To get the AP objects you can use the ‘aps’ attribute of the <code class="language-plaintext highlighter-rouge">DebugPort</code>. This attribute is a dict
 with the keys being the APSEL number and values being AccessPort instances. For instance, use
-<code class="highlighter-rouge">session.board.target.aps[1]</code> to get the AP with APSEL=1, assuming it exists (if not, you’ll get an
-<code class="highlighter-rouge">IndexError</code> exception).</p>
+<code class="language-plaintext highlighter-rouge">session.board.target.aps[1]</code> to get the AP with APSEL=1, assuming it exists (if not, you’ll get an
+<code class="language-plaintext highlighter-rouge">IndexError</code> exception).</p>
 
-<p><code class="highlighter-rouge">AccessPort</code> also has <code class="highlighter-rouge">read_reg(addr)</code> and <code class="highlighter-rouge">write_reg(addr, data)</code> methods. For these methods, <code class="highlighter-rouge">addr</code> is
+<p><code class="language-plaintext highlighter-rouge">AccessPort</code> also has <code class="language-plaintext highlighter-rouge">read_reg(addr)</code> and <code class="language-plaintext highlighter-rouge">write_reg(addr, data)</code> methods. For these methods, <code class="language-plaintext highlighter-rouge">addr</code> is
 an integer of the register offset. Note that you do not need to include the APSEL in the address, and
 you do not need to modify the DP’s SELECT register prior to accessing AP registers. The AP will
 automatically be selected in the DP as required.</p>
 
-<p>The <code class="highlighter-rouge">MEM_AP</code>/<code class="highlighter-rouge">AHB_AP</code> class has the memory access methods that are available on
+<p>The <code class="language-plaintext highlighter-rouge">MEM_AP</code>/<code class="language-plaintext highlighter-rouge">AHB_AP</code> class has the memory access methods that are available on
 the target, but the access is, of course, performed through that specific AP. This is particularly
 useful for multicore devices or Cortex-A class devices.</p>
 
 <p>Example showing access of the proprietary MDM-AP of NXP Kinetis MCUs:</p>
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mdm_ap</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">board</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">dp</span><span class="p">.</span><span class="n">aps</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">idr</span> <span class="o">=</span> <span class="n">mdm_ap</span><span class="p">.</span><span class="n">read_reg</span><span class="p">(</span><span class="mh">0xfc</span><span class="p">)</span> <span class="c1"># Read IDR.
-</span><span class="n">mdm_ap</span><span class="p">.</span><span class="n">write_reg</span><span class="p">(</span><span class="mh">0x4</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">)</span>
+<span class="n">idr</span> <span class="o">=</span> <span class="n">mdm_ap</span><span class="p">.</span><span class="nf">read_reg</span><span class="p">(</span><span class="mh">0xfc</span><span class="p">)</span> <span class="c1"># Read IDR.
+</span><span class="n">mdm_ap</span><span class="p">.</span><span class="nf">write_reg</span><span class="p">(</span><span class="mh">0x4</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="reset-control">Reset control</h2>
 
 <p>To control reset, there are several options.</p>
 
-<p><code class="highlighter-rouge">DebugPort</code> has methods for driving the hardware reset signal:</p>
+<p><code class="language-plaintext highlighter-rouge">DebugPort</code> has methods for driving the hardware reset signal:</p>
 <ul>
-  <li><code class="highlighter-rouge">DebugPort.reset()</code>, asks the debug probe to perform a hardware reset of the target.</li>
-  <li><code class="highlighter-rouge">DebugPort.assert_reset(asserted)</code> to directly control the nRESET signal. Pass True to drive
+  <li><code class="language-plaintext highlighter-rouge">DebugPort.reset()</code>, asks the debug probe to perform a hardware reset of the target.</li>
+  <li><code class="language-plaintext highlighter-rouge">DebugPort.assert_reset(asserted)</code> to directly control the nRESET signal. Pass True to drive
 nRESET low, False to drive high.</li>
 </ul>
 
-<p>A wider range of reset options is provided by these <code class="highlighter-rouge">Target</code> methods:</p>
+<p>A wider range of reset options is provided by these <code class="language-plaintext highlighter-rouge">Target</code> methods:</p>
 <ul>
-  <li><code class="highlighter-rouge">Target.reset(reset_type=None)</code>. Normally performs a software reset unless the optional parameter
+  <li><code class="language-plaintext highlighter-rouge">Target.reset(reset_type=None)</code>. Normally performs a software reset unless the optional parameter
 is set to False.</li>
-  <li><code class="highlighter-rouge">Target.reset_and_halt(reset_type=None)</code> to perform a halting reset. Again, the reset defaults
+  <li><code class="language-plaintext highlighter-rouge">Target.reset_and_halt(reset_type=None)</code> to perform a halting reset. Again, the reset defaults
 to software but may be set to hardware.</li>
 </ul>
 
-<p>The <code class="highlighter-rouge">reset_type</code> parameter on the <code class="highlighter-rouge">Target</code> reset methods can be set to one of the <code class="highlighter-rouge">Target.ResetType</code>
+<p>The <code class="language-plaintext highlighter-rouge">reset_type</code> parameter on the <code class="language-plaintext highlighter-rouge">Target</code> reset methods can be set to one of the <code class="language-plaintext highlighter-rouge">Target.ResetType</code>
 enums:</p>
 <ul>
-  <li><code class="highlighter-rouge">ResetType.DEFAULT</code>: Uses the core’s default reset method. For pack targets <code class="highlighter-rouge">defaultResetSequence</code> is used.
-For internal targets, the default is mapped to <code class="highlighter-rouge">ResetType.SYSTEM</code>, unless <code class="highlighter-rouge">default_reset_type</code>
+  <li><code class="language-plaintext highlighter-rouge">ResetType.DEFAULT</code>: Uses the core’s default reset method. For pack targets <code class="language-plaintext highlighter-rouge">defaultResetSequence</code> is used.
+For internal targets, the default is mapped to <code class="language-plaintext highlighter-rouge">ResetType.SYSTEM</code>, unless <code class="language-plaintext highlighter-rouge">default_reset_type</code>
 property is explicitly set.</li>
-  <li><code class="highlighter-rouge">ResetType.HARDWARE</code>: Execute <code class="highlighter-rouge">ResetHardware</code> debug sequence for pack targets, if the sequence doesn’t exist,
+  <li><code class="language-plaintext highlighter-rouge">ResetType.HARDWARE</code>: Execute <code class="language-plaintext highlighter-rouge">ResetHardware</code> debug sequence for pack targets, if the sequence doesn’t exist,
 hardware reset using the nSRST signal is used. The same mapping applies for internal targets.</li>
-  <li><code class="highlighter-rouge">ResetType.SYSTEM</code>: Execute <code class="highlighter-rouge">ResetSystem</code> debug sequence for pack targets, if the sequence doesn’t exist,
+  <li><code class="language-plaintext highlighter-rouge">ResetType.SYSTEM</code>: Execute <code class="language-plaintext highlighter-rouge">ResetSystem</code> debug sequence for pack targets, if the sequence doesn’t exist,
 software reset using SYSRESETREQ is used. The same mapping applies for internal targets.</li>
-  <li><code class="highlighter-rouge">ResetType.CORE</code>: Execute <code class="highlighter-rouge">ResetProcessor</code> debug sequence for pack targets, if the sequence doesn’t exist,
+  <li><code class="language-plaintext highlighter-rouge">ResetType.CORE</code>: Execute <code class="language-plaintext highlighter-rouge">ResetProcessor</code> debug sequence for pack targets, if the sequence doesn’t exist,
 software reset using VECTRESET is used. The same mapping applies for internal targets.</li>
-  <li><code class="highlighter-rouge">ResetType.NSRST</code>: Hardware reset using the nSRST signal.</li>
-  <li><code class="highlighter-rouge">ResetType.SYSRESETREQ</code>: Software reset using SYSRESETREQ, which usually resets the entire system
+  <li><code class="language-plaintext highlighter-rouge">ResetType.NSRST</code>: Hardware reset using the nSRST signal.</li>
+  <li><code class="language-plaintext highlighter-rouge">ResetType.SYSRESETREQ</code>: Software reset using SYSRESETREQ, which usually resets the entire system
 on most MCUs.</li>
-  <li><code class="highlighter-rouge">ResetType.VECTRESET</code>: Software reset using VECTRESET, only available on v7-M targets. This
-resets only the core itself. If requested on non-v7-M targets, it will fall back to <code class="highlighter-rouge">ResetType.EMULATED</code>.</li>
-  <li><code class="highlighter-rouge">ResetType.EMULATED</code>: Restores the core to reset conditions by writing registers. However, this
+  <li><code class="language-plaintext highlighter-rouge">ResetType.VECTRESET</code>: Software reset using VECTRESET, only available on v7-M targets. This
+resets only the core itself. If requested on non-v7-M targets, it will fall back to <code class="language-plaintext highlighter-rouge">ResetType.EMULATED</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">ResetType.EMULATED</code>: Restores the core to reset conditions by writing registers. However, this
 will not trigger a reset vector catch.</li>
 </ul>
 
-<p>The <code class="highlighter-rouge">CortexM</code> objects have a <code class="highlighter-rouge">default_reset_type</code> property that lets you control the overall default reset type.
-Property value can be any one of the <code class="highlighter-rouge">ResetType</code> enums.</p>
+<p>The <code class="language-plaintext highlighter-rouge">CortexM</code> objects have a <code class="language-plaintext highlighter-rouge">default_reset_type</code> property that lets you control the overall default reset type.
+Property value can be any one of the <code class="language-plaintext highlighter-rouge">ResetType</code> enums.</p>
 
-<p>Another option for performing a halting reset is by setting vector catch with the target’s <code class="highlighter-rouge">set_vector_catch()</code>
+<p>Another option for performing a halting reset is by setting vector catch with the target’s <code class="language-plaintext highlighter-rouge">set_vector_catch()</code>
 method, then using a normal reset. This has the benefit of always halting at reset, if you leave the
 vector catch enabled.</p>
 
 <p>Example timed reset using the DP:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import time
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import time
 
 dp = session.board.target.dp
 
@@ -382,8 +382,8 @@ most interesting places to look at are:</p>
   <li>pyocd.flash.file_programmer: high level file programming.</li>
   <li>pyocd.flash.flash: low level flash programming API in the @ref pyocd.flash.flash.Flash “Flash”
   class. Each flash memory region has a @ref pyocd.flash.flash.Flash “Flash” class instance
-  associated with it, accessible from the <code class="highlighter-rouge">flash</code> property on the region. To get the boot flash
-  memory region, call <code class="highlighter-rouge">target.memory_map.get_boot_memory()</code>. The <code class="highlighter-rouge">flash</code> attribute of this region
+  associated with it, accessible from the <code class="language-plaintext highlighter-rouge">flash</code> property on the region. To get the boot flash
+  memory region, call <code class="language-plaintext highlighter-rouge">target.memory_map.get_boot_memory()</code>. The <code class="language-plaintext highlighter-rouge">flash</code> attribute of this region
   then returns the boot flash memory’s @ref pyocd.flash.flash.Flash “Flash” instance.</li>
 </ul>
 

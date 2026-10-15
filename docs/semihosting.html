@@ -241,7 +241,7 @@
                   <p>Semihosting is a technique for routing I/O requests performed on the target to the host. In addition to I/O, some other
 operations are supported. Most commonly, this means integration of the standard C library with the host’s console and
 file system. It allows you to log debug messages before you have peripheral drivers fully functioning or on hardware
-that does not have other debug output capabilities. It can be used to redirect <code class="highlighter-rouge">printf()</code> and other standard I/O to or
+that does not have other debug output capabilities. It can be used to redirect <code class="language-plaintext highlighter-rouge">printf()</code> and other standard I/O to or
 from the host, read keyboard input, access configuration files, transfer data to and from the target, and so on.</p>
 
 <p>The primary downside to semihosting is that it can be quite slow, depending on how it is used and considerations such
@@ -258,20 +258,20 @@ the specified action on the target’s behalf. Figure 1 below shows how semihost
 <p><img src="resources/semihosting.svg" alt="" /><br />
 <strong>Figure 1</strong>. Semihosting block diagram.</p>
 
-<p>The figure demonstrates and example of how a C standard library call is made to <code class="highlighter-rouge">printf()</code>. This is routed to a
+<p>The figure demonstrates and example of how a C standard library call is made to <code class="language-plaintext highlighter-rouge">printf()</code>. This is routed to a
 semihosting handler, which prepares the request parameters and triggers the debugger to perform the request, in this
 case writing “hello world” to the console.</p>
 
-<p>For Arm Cortex-M devices, a <code class="highlighter-rouge">BKPT</code> instruction with a parameter of 0xAB serves as the trigger detected by the debugger.</p>
+<p>For Arm Cortex-M devices, a <code class="language-plaintext highlighter-rouge">BKPT</code> instruction with a parameter of 0xAB serves as the trigger detected by the debugger.</p>
 
 <h3 id="enabling">Enabling</h3>
 
 <p>To use semihosting with pyOCD, it first must be enabled. This can be done in several ways:</p>
 
 <ul>
-  <li>Pass <code class="highlighter-rouge">-S</code>/<code class="highlighter-rouge">--semihosting</code> on the <code class="highlighter-rouge">pyocd gdbserver</code> command line.</li>
-  <li>Set the <code class="highlighter-rouge">enable_semihosting</code> session option to true.</li>
-  <li>From gdb, issue a <code class="highlighter-rouge">monitor arm semihosting enable</code> command. This command is supported for compatibility with OpenOCD.</li>
+  <li>Pass <code class="language-plaintext highlighter-rouge">-S</code>/<code class="language-plaintext highlighter-rouge">--semihosting</code> on the <code class="language-plaintext highlighter-rouge">pyocd gdbserver</code> command line.</li>
+  <li>Set the <code class="language-plaintext highlighter-rouge">enable_semihosting</code> session option to true.</li>
+  <li>From gdb, issue a <code class="language-plaintext highlighter-rouge">monitor arm semihosting enable</code> command. This command is supported for compatibility with OpenOCD.</li>
 </ul>
 
 <p>Assuming the default routing options and telnet port number are acceptable, no further configuration is required. When</p>
@@ -290,16 +290,16 @@ target control loop is implemented.
 first three file descriptions: stdin (0), stdout (1), and stderr (2). Certain semihosting requests are always console.
 All other requests, which are always for explicitly opened files, are classified as syscalls.</p>
 
-<p>Console requests have two options for routing, controlled with the <code class="highlighter-rouge">semihost_console_type</code> session option’s value.</p>
+<p>Console requests have two options for routing, controlled with the <code class="language-plaintext highlighter-rouge">semihost_console_type</code> session option’s value.</p>
 
 <ul>
   <li>“telnet”: I/O is connected to the “telnet” server. (In fact, it’s not a true telnet server because it doesn’t implement
-  the telnet control requests.) This server runs on the port indicated by the <code class="highlighter-rouge">telnet_port</code> session option or the
-  <code class="highlighter-rouge">-T</code>/<code class="highlighter-rouge">--telnet-port</code> command line argument of the gdbserver subcommand.</li>
+  the telnet control requests.) This server runs on the port indicated by the <code class="language-plaintext highlighter-rouge">telnet_port</code> session option or the
+  <code class="language-plaintext highlighter-rouge">-T</code>/<code class="language-plaintext highlighter-rouge">--telnet-port</code> command line argument of the gdbserver subcommand.</li>
   <li>“console”: pyOCD’s standard I/O is used.</li>
 </ul>
 
-<p>Syscall requests also have two routing options. The <code class="highlighter-rouge">semihost_use_syscalls</code> option controls this depending on whether it
+<p>Syscall requests also have two routing options. The <code class="language-plaintext highlighter-rouge">semihost_use_syscalls</code> option controls this depending on whether it
 is true or false.</p>
 
 <ul>
@@ -308,7 +308,7 @@ is true or false.</p>
   <li><em>true</em>: File I/O is passed to gdb for handling.</li>
 </ul>
 
-<p>Relative paths passed to the <code class="highlighter-rouge">SYS_OPEN</code> request are interpreted relative to the syscall handler’s working directory.
+<p>Relative paths passed to the <code class="language-plaintext highlighter-rouge">SYS_OPEN</code> request are interpreted relative to the syscall handler’s working directory.
 In addition, if pyOCD and gdb are running on different systems, absolute paths will be interpreter according to the
 appropriate system’s root filesystem.</p>
 
@@ -320,8 +320,8 @@ appropriate system’s root filesystem.</p>
 and newlib.</p>
 
 <ul>
-  <li>On the linker command line, add <code class="highlighter-rouge">--specs=rdimon.specs</code> and ensure <code class="highlighter-rouge">-nostartfiles</code> is not present.</li>
-  <li>Call <code class="highlighter-rouge">initialise_monitor_handles()</code> from your firmware before using semihosting.</li>
+  <li>On the linker command line, add <code class="language-plaintext highlighter-rouge">--specs=rdimon.specs</code> and ensure <code class="language-plaintext highlighter-rouge">-nostartfiles</code> is not present.</li>
+  <li>Call <code class="language-plaintext highlighter-rouge">initialise_monitor_handles()</code> from your firmware before using semihosting.</li>
 </ul>
 
 <p>The C runtime stdio will now be connected with semihosting.</p>
@@ -353,19 +353,19 @@ and newlib.</p>
 
 <h3 id="trace-logging">Trace logging</h3>
 
-<p>The semihosting agent supports a trace logger, <code class="highlighter-rouge">pyocd.debug.semihost.trace</code> that will output a log message every time a
-semihosting request is processed. This can be enabled on the command line with <code class="highlighter-rouge">-Lpyocd.debug.semihost.trace=debug</code>.</p>
+<p>The semihosting agent supports a trace logger, <code class="language-plaintext highlighter-rouge">pyocd.debug.semihost.trace</code> that will output a log message every time a
+semihosting request is processed. This can be enabled on the command line with <code class="language-plaintext highlighter-rouge">-Lpyocd.debug.semihost.trace=debug</code>.</p>
 
 <h3 id="session-options">Session options</h3>
 
 <p>These are the session options that control semihosting:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">enable_semihosting</code> - Set to true to handle semihosting requests.</li>
-  <li><code class="highlighter-rouge">semihost_console_type</code> - If set to ‘telnet’ then the semihosting telnet server will be started. If set to ‘console’ then semihosting will print to pyOCD’s console.</li>
-  <li><code class="highlighter-rouge">semihost.commandline</code> - Command line string return to the target for the <code class="highlighter-rouge">SYS_GET_CMDLINE</code> request.</li>
-  <li><code class="highlighter-rouge">semihost_use_syscalls</code> - Whether to use GDB syscalls for semihosting file access operations, or to have pyOCD perform the operations.)</li>
-  <li><code class="highlighter-rouge">telnet_port</code> - Base TCP port number for the semihosting telnet server. The core number, which will be 0 for the primary core, is added to this value.</li>
+  <li><code class="language-plaintext highlighter-rouge">enable_semihosting</code> - Set to true to handle semihosting requests.</li>
+  <li><code class="language-plaintext highlighter-rouge">semihost_console_type</code> - If set to ‘telnet’ then the semihosting telnet server will be started. If set to ‘console’ then semihosting will print to pyOCD’s console.</li>
+  <li><code class="language-plaintext highlighter-rouge">semihost.commandline</code> - Command line string return to the target for the <code class="language-plaintext highlighter-rouge">SYS_GET_CMDLINE</code> request.</li>
+  <li><code class="language-plaintext highlighter-rouge">semihost_use_syscalls</code> - Whether to use GDB syscalls for semihosting file access operations, or to have pyOCD perform the operations.)</li>
+  <li><code class="language-plaintext highlighter-rouge">telnet_port</code> - Base TCP port number for the semihosting telnet server. The core number, which will be 0 for the primary core, is added to this value.</li>
 </ul>
 
 <h3 id="supported-requests">Supported requests</h3>
@@ -373,53 +373,53 @@ semihosting request is processed. This can be enabled on the command line with <
 <p>The majority of standard Arm-defined semihosting requests are supported by pyOCD.</p>
 
 <ul>
-  <li><code class="highlighter-rouge">SYS_OPEN</code> (0x01): syscall
+  <li><code class="language-plaintext highlighter-rouge">SYS_OPEN</code> (0x01): syscall
     <ul>
-      <li>The special file name <code class="highlighter-rouge">:tt</code> is used to open standard I/O files, per the Arm semihosting specification. The open
+      <li>The special file name <code class="language-plaintext highlighter-rouge">:tt</code> is used to open standard I/O files, per the Arm semihosting specification. The open
   mode selects which standard I/O file is opened. “r” (0) is stdin, “w” (4) is stdout, “a” (8) is stderr. With pyOCD’s
   implementation, explicitly opening the standard I/O files is not required.</li>
-      <li>The special file name <code class="highlighter-rouge">:semihosting-features</code> will open the semihosting feature bits file. Supported
+      <li>The special file name <code class="language-plaintext highlighter-rouge">:semihosting-features</code> will open the semihosting feature bits file. Supported
   feature bits are:
         <ul>
-          <li><code class="highlighter-rouge">SH_EXT_EXIT_EXTENDED</code> (byte 0 bit 0): =0, meaning <code class="highlighter-rouge">SYS_EXIT_EXTENDED</code> is not supported</li>
-          <li><code class="highlighter-rouge">SH_EXT_STDOUT_STDERR</code> (byte 0 bit 1): =1, meaning both stdout and stderr are supported</li>
+          <li><code class="language-plaintext highlighter-rouge">SH_EXT_EXIT_EXTENDED</code> (byte 0 bit 0): =0, meaning <code class="language-plaintext highlighter-rouge">SYS_EXIT_EXTENDED</code> is not supported</li>
+          <li><code class="language-plaintext highlighter-rouge">SH_EXT_STDOUT_STDERR</code> (byte 0 bit 1): =1, meaning both stdout and stderr are supported</li>
         </ul>
       </li>
       <li>Standard I/O files opened via this request are only accessible when not routing console to the telnet server.</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">SYS_CLOSE</code> (0x02): syscall</li>
-  <li><code class="highlighter-rouge">SYS_WRITEC</code> (0x03): console</li>
-  <li><code class="highlighter-rouge">SYS_WRITE0</code> (0x04): console</li>
-  <li><code class="highlighter-rouge">SYS_WRITE</code> (0x05): console for stdout and stderr, otherwise syscall</li>
-  <li><code class="highlighter-rouge">SYS_READ</code> (0x06): console for stdin, otherwise syscall</li>
-  <li><code class="highlighter-rouge">SYS_READC</code> (0x07): console</li>
-  <li><code class="highlighter-rouge">SYS_ISTTY</code> (0x09): syscall</li>
-  <li><code class="highlighter-rouge">SYS_SEEK</code> (0x0a): syscall</li>
-  <li><code class="highlighter-rouge">SYS_FLEN</code> (0x0c): syscall</li>
-  <li><code class="highlighter-rouge">SYS_REMOVE</code> (0x0e): syscall</li>
-  <li><code class="highlighter-rouge">SYS_RENAME</code> (0x0f): syscall</li>
-  <li><code class="highlighter-rouge">SYS_CLOCK</code> (0x10): returns the number of centiseconds since pyOCD started (technically, since the semihosting agent
+  <li><code class="language-plaintext highlighter-rouge">SYS_CLOSE</code> (0x02): syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_WRITEC</code> (0x03): console</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_WRITE0</code> (0x04): console</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_WRITE</code> (0x05): console for stdout and stderr, otherwise syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_READ</code> (0x06): console for stdin, otherwise syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_READC</code> (0x07): console</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_ISTTY</code> (0x09): syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_SEEK</code> (0x0a): syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_FLEN</code> (0x0c): syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_REMOVE</code> (0x0e): syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_RENAME</code> (0x0f): syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_CLOCK</code> (0x10): returns the number of centiseconds since pyOCD started (technically, since the semihosting agent
   object was created, so this will not line up with timestamps in pyOCD’s log output)</li>
-  <li><code class="highlighter-rouge">SYS_TIME</code> (0x11): returns the number of seconds since midnight, January 1, 1970</li>
-  <li><code class="highlighter-rouge">SYS_ERRNO</code> (0x13): syscall</li>
-  <li><code class="highlighter-rouge">SYS_GET_CMDLINE</code> (0x15): returns the value of the <code class="highlighter-rouge">semihost.commandline</code> session option. If that option
+  <li><code class="language-plaintext highlighter-rouge">SYS_TIME</code> (0x11): returns the number of seconds since midnight, January 1, 1970</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_ERRNO</code> (0x13): syscall</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_GET_CMDLINE</code> (0x15): returns the value of the <code class="language-plaintext highlighter-rouge">semihost.commandline</code> session option. If that option
   is not set, the request fails (returns -1).</li>
-  <li><code class="highlighter-rouge">SYS_HEAPINFO</code> (0x16): stubbed to return all 0 values</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_HEAPINFO</code> (0x16): stubbed to return all 0 values</li>
 </ul>
 
 <p>The following semihosting requests are not supported. If invoked, the return code is -1 and pyOCD logs a
 warning message, such as “Semihost: unimplemented request pc=&lt;x&gt; r0=&lt;y&gt; r1=&lt;z&gt;”.</p>
 
 <ul>
-  <li><code class="highlighter-rouge">SYS_ISERROR</code> (0x08)</li>
-  <li><code class="highlighter-rouge">SYS_TMPNAM</code> (0x0d)</li>
-  <li><code class="highlighter-rouge">SYS_SYSTEM</code> (0x12)</li>
-  <li><code class="highlighter-rouge">angel_SWIreason_EnterSVC</code> (0x17)</li>
-  <li><code class="highlighter-rouge">SYS_EXIT</code> (0x18), also called <code class="highlighter-rouge">angel_SWIreason_ReportException</code></li>
-  <li><code class="highlighter-rouge">SYS_EXIT_EXTENDED</code> (0x20)</li>
-  <li><code class="highlighter-rouge">SYS_ELAPSED</code> (0x30)</li>
-  <li><code class="highlighter-rouge">SYS_TICKFREQ</code> (0x31)</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_ISERROR</code> (0x08)</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_TMPNAM</code> (0x0d)</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_SYSTEM</code> (0x12)</li>
+  <li><code class="language-plaintext highlighter-rouge">angel_SWIreason_EnterSVC</code> (0x17)</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_EXIT</code> (0x18), also called <code class="language-plaintext highlighter-rouge">angel_SWIreason_ReportException</code></li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_EXIT_EXTENDED</code> (0x20)</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_ELAPSED</code> (0x30)</li>
+  <li><code class="language-plaintext highlighter-rouge">SYS_TICKFREQ</code> (0x31)</li>
 </ul>
 
 <p>The <a href="https://developer.arm.com/documentation/dui0471/i/semihosting/semihosting-operations?lang=en">Arm semihosting operations</a>

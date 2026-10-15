@@ -241,22 +241,22 @@ the command-line GDB or a full IDE can be used.</p>
 <p>After you install pyOCD via pip or setup.py, you will be able to execute the following in order to
 start a GDB server powered by pyOCD:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd gdbserver
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyocd gdbserver
 </code></pre></div></div>
 
-<p>You can get additional help by running <code class="highlighter-rouge">pyocd gdbserver --help</code>.</p>
+<p>You can get additional help by running <code class="language-plaintext highlighter-rouge">pyocd gdbserver --help</code>.</p>
 
-<p>Example command line GDB session showing how to connect to a running <code class="highlighter-rouge">pyocd gdbserver</code> and load
+<p>Example command line GDB session showing how to connect to a running <code class="language-plaintext highlighter-rouge">pyocd gdbserver</code> and load
 firmware:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ arm-none-eabi-gdb application.elf
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ arm-none-eabi-gdb application.elf
 
 &lt;gdb&gt; target remote localhost:3333
 &lt;gdb&gt; load
 &lt;gdb&gt; monitor reset
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">pyocd gdbserver</code> subcommand is also usable as a drop in place replacement for OpenOCD in
+<p>The <code class="language-plaintext highlighter-rouge">pyocd gdbserver</code> subcommand is also usable as a drop in place replacement for OpenOCD in
 existing setups. The primary difference is the set of gdb monitor commands.</p>
 
 <h2 id="recommended-gdb-and-ide-setup">Recommended GDB and IDE setup</h2>
@@ -279,7 +279,7 @@ an included pyOCD debugging plugin.</p>
 
 <p>To view peripheral register values either the built-in Eclipse Embedded CDT register view can be used, or
 the Embedded System Register Viewer plugin can be installed. The latter can be installed from inside
-Eclipse adding <code class="highlighter-rouge">http://embsysregview.sourceforge.net/update</code> as a software update server URL
+Eclipse adding <code class="language-plaintext highlighter-rouge">http://embsysregview.sourceforge.net/update</code> as a software update server URL
 under the “Help -&gt; Install New Software…” menu item.</p>
 
 

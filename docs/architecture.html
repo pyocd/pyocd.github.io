@@ -245,15 +245,15 @@ composition, not inheritance.</p>
 
 <p><img src="resources/internal_architecture.svg" alt="" /></p>
 
-<p>The root of the runtime object graph is a <code class="highlighter-rouge">Session</code> object. This object holds references to the debug
+<p>The root of the runtime object graph is a <code class="language-plaintext highlighter-rouge">Session</code> object. This object holds references to the debug
 probe and the board. It is also responsible for managing per-session options that control
 various features and settings.</p>
 
-<p>Attached to the board is a <code class="highlighter-rouge">CoreSightTarget</code> instance, which represents an MCU. This owns the
-CoreSight related objects for communicating with the DP and APs and a <code class="highlighter-rouge">CortexM</code> object for each CPU
-core on the device. Both <code class="highlighter-rouge">CoreSightTarget</code> and <code class="highlighter-rouge">CortexM</code> are subclasses of the abstract <code class="highlighter-rouge">Target</code>
-class, which is referenced below, and share most of the same APIs. <code class="highlighter-rouge">CortexM</code> has a memory map
-comprised of <code class="highlighter-rouge">MemoryRegion</code> objects. The flash memory regions have a <code class="highlighter-rouge">Flash</code> object to control flash
+<p>Attached to the board is a <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> instance, which represents an MCU. This owns the
+CoreSight related objects for communicating with the DP and APs and a <code class="language-plaintext highlighter-rouge">CortexM</code> object for each CPU
+core on the device. Both <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> and <code class="language-plaintext highlighter-rouge">CortexM</code> are subclasses of the abstract <code class="language-plaintext highlighter-rouge">Target</code>
+class, which is referenced below, and share most of the same APIs. <code class="language-plaintext highlighter-rouge">CortexM</code> has a memory map
+comprised of <code class="language-plaintext highlighter-rouge">MemoryRegion</code> objects. The flash memory regions have a <code class="language-plaintext highlighter-rouge">Flash</code> object to control flash
 programming.</p>
 
 <h2 id="targets-and-boards">Targets and boards</h2>
@@ -264,15 +264,15 @@ programming.</p>
 
 <p>Each supported target enables debugging and flash programming a given MCU. A single target can be
 used for potentially multiple boards, or there may not be board with the target. Users can
-override the target type on the command line or when creating the <code class="highlighter-rouge">Session</code>.</p>
+override the target type on the command line or when creating the <code class="language-plaintext highlighter-rouge">Session</code>.</p>
 
-<p>Each supported target is defined as a <code class="highlighter-rouge">CoreSightTarget</code> subclass. Builtin targets are held in a
-Python file in the <code class="highlighter-rouge">pyocd/target/builtin</code> directory. If the target has internal or connected flash,
-then a flash algo dict and possibly a <code class="highlighter-rouge">Flash</code> subclass will be paired with it in the same source
-file. The <code class="highlighter-rouge">Flash</code> subclass is only required if special flash programming semantics are needed,
-otherwise the base <code class="highlighter-rouge">Flash</code> class is automatically used. The flash algo dict and/or <code class="highlighter-rouge">Flash</code> subclass
+<p>Each supported target is defined as a <code class="language-plaintext highlighter-rouge">CoreSightTarget</code> subclass. Builtin targets are held in a
+Python file in the <code class="language-plaintext highlighter-rouge">pyocd/target/builtin</code> directory. If the target has internal or connected flash,
+then a flash algo dict and possibly a <code class="language-plaintext highlighter-rouge">Flash</code> subclass will be paired with it in the same source
+file. The <code class="language-plaintext highlighter-rouge">Flash</code> subclass is only required if special flash programming semantics are needed,
+otherwise the base <code class="language-plaintext highlighter-rouge">Flash</code> class is automatically used. The flash algo dict and/or <code class="language-plaintext highlighter-rouge">Flash</code> subclass
 are set on flash memory regions when they are created in the memory map. Some device families have
-family subclasses under <code class="highlighter-rouge">pyocd/target/family</code>.</p>
+family subclasses under <code class="language-plaintext highlighter-rouge">pyocd/target/family</code>.</p>
 
 
 

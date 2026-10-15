@@ -90,9 +90,9 @@
 <p>pyOCD v0.44.0 has been released and is available from PyPI. This version includes several improvements and bug fixes.
 The complete list of changes is provided below</p>
 
-<p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
+<p>To upgrade pyOCD, just run <code class="language-plaintext highlighter-rouge">pip</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
 </code></pre></div></div>
 
 <p>This version introduces support for default debug sequences as defined in the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/debug_description.html#default_sequences">Open-CMSIS-Pack specification</a>,
@@ -100,8 +100,8 @@ improving consistency and standards alignment. It adds missing debug sequence su
 hardware reset. It also changes the flash programming strategy for programming multiple flash memories to a single
 erase-program sequence, spanning all targeted memory regions.</p>
 
-<p>The RTT support has also been updated with renamed channel mode <code class="highlighter-rouge">server</code> (previously <code class="highlighter-rouge">telnet</code>) and improved robustness,
-flexibility, and transfer speed. Another new feature is the SystemView Server mode for the <code class="highlighter-rouge">run</code> subcommand, which
+<p>The RTT support has also been updated with renamed channel mode <code class="language-plaintext highlighter-rouge">server</code> (previously <code class="language-plaintext highlighter-rouge">telnet</code>) and improved robustness,
+flexibility, and transfer speed. Another new feature is the SystemView Server mode for the <code class="language-plaintext highlighter-rouge">run</code> subcommand, which
 allows using SEGGER’s SystemView Recorder via IP (TCP/IP connection).</p>
 
 <p>Thanks again to all the contributors who helped make this release possible! ❤️</p>
@@ -116,11 +116,11 @@ allows using SEGGER’s SystemView Recorder via IP (TCP/IP connection).</p>
   <li>Debug sequences:
     <ul>
       <li>Use default debug sequences as defined in the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/debug_description.html#autotoc_md2">Open-CMSIS-Pack specification</a></li>
-      <li>Support debug sequences for hardware reset: <code class="highlighter-rouge">ResetHardwareAssert</code> and <code class="highlighter-rouge">ResetHardwareDeassert</code></li>
-      <li>Support debug sequences for flash programming: <code class="highlighter-rouge">FlashInit</code>, <code class="highlighter-rouge">FlashUninit</code>, <code class="highlighter-rouge">FlashEraseChip</code>, <code class="highlighter-rouge">FlashEraseSector</code>, <code class="highlighter-rouge">FlashEraseDone</code>, <code class="highlighter-rouge">FlashProgramPage</code>, <code class="highlighter-rouge">FlashProgramDone</code>, and <code class="highlighter-rouge">DebugCodeMemRemap</code></li>
+      <li>Support debug sequences for hardware reset: <code class="language-plaintext highlighter-rouge">ResetHardwareAssert</code> and <code class="language-plaintext highlighter-rouge">ResetHardwareDeassert</code></li>
+      <li>Support debug sequences for flash programming: <code class="language-plaintext highlighter-rouge">FlashInit</code>, <code class="language-plaintext highlighter-rouge">FlashUninit</code>, <code class="language-plaintext highlighter-rouge">FlashEraseChip</code>, <code class="language-plaintext highlighter-rouge">FlashEraseSector</code>, <code class="language-plaintext highlighter-rouge">FlashEraseDone</code>, <code class="language-plaintext highlighter-rouge">FlashProgramPage</code>, <code class="language-plaintext highlighter-rouge">FlashProgramDone</code>, and <code class="language-plaintext highlighter-rouge">DebugCodeMemRemap</code></li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">run</code> subcommand:
+  <li><code class="language-plaintext highlighter-rouge">run</code> subcommand:
     <ul>
       <li>Add SystemView Server mode to support SEGGER’s SystemView Recorder via IP (TCP/IP connection)</li>
     </ul>
@@ -153,7 +153,7 @@ allows using SEGGER’s SystemView Recorder via IP (TCP/IP connection).</p>
   </li>
   <li>RTT Configuration:
     <ul>
-      <li>Rename channel mode <code class="highlighter-rouge">telnet</code> to <code class="highlighter-rouge">server</code></li>
+      <li>Rename channel mode <code class="language-plaintext highlighter-rouge">telnet</code> to <code class="language-plaintext highlighter-rouge">server</code></li>
     </ul>
   </li>
 </ul>
@@ -167,8 +167,8 @@ allows using SEGGER’s SystemView Recorder via IP (TCP/IP connection).</p>
   </li>
   <li>Debug sequences:
     <ul>
-      <li>Support inline control flow statements (<code class="highlighter-rouge">if</code>, <code class="highlighter-rouge">while</code>)</li>
-      <li>Fix predefined debug access variable contents for <code class="highlighter-rouge">__protocol</code> and <code class="highlighter-rouge">__connection</code></li>
+      <li>Support inline control flow statements (<code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">while</code>)</li>
+      <li>Fix predefined debug access variable contents for <code class="language-plaintext highlighter-rouge">__protocol</code> and <code class="language-plaintext highlighter-rouge">__connection</code></li>
     </ul>
   </li>
   <li>Cortex-M:

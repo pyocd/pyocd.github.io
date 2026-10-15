@@ -94,15 +94,15 @@ released cmsis-pack-manager version 0.4.0 with pre-built wheels for Python 3.10.
 <p>One noteworthy change is for J-Link support. Previously, pyOCD would always “connect” the J-Link (versus only
 opening it) using a default device name of “Cortex-M4”. If the target’s CPU didn’t match, the J-Link driver
 would log a warning and carry on just fine. The warning was normally invisible to pyOCD users unless debug
-logging is turned on for the <code class="highlighter-rouge">pyocd.probes.jlink_probe.trace</code> logger, so it wasn’t much of an issue.</p>
+logging is turned on for the <code class="language-plaintext highlighter-rouge">pyocd.probes.jlink_probe.trace</code> logger, so it wasn’t much of an issue.</p>
 
 <p>In fact, connecting is unnecessary for the low-level CoreSight operations that pyOCD uses. The J-Link only
 needs to be opened and CoreSight configured. So now pyOCD will only connect the J-Link if the
-<code class="highlighter-rouge">jlink.device</code> session option is set to a valid J-Link device name. Currently, the benefit of setting this
+<code class="language-plaintext highlighter-rouge">jlink.device</code> session option is set to a valid J-Link device name. Currently, the benefit of setting this
 is minimal since pyOCD has its own target support. In the future, this option may be required to enable
 J-Link’s fast memory transfers.</p>
 
-<p>In addition the J-Link probe plug-in now supports a <code class="highlighter-rouge">jlink.non_interactive</code> session option to place the
+<p>In addition the J-Link probe plug-in now supports a <code class="language-plaintext highlighter-rouge">jlink.non_interactive</code> session option to place the
 J-Link driver in non-interactive mode and prevent dialogs from being presented requiring user action. It
 is enabled by default.</p>
 
@@ -115,13 +115,13 @@ is enabled by default.</p>
 
 <ul>
   <li>Explicit Python 3.10 support and 3.10 wheels.</li>
-  <li>JLinkProbe: added <code class="highlighter-rouge">jlink.non_interactive</code> option.</li>
+  <li>JLinkProbe: added <code class="language-plaintext highlighter-rouge">jlink.non_interactive</code> option.</li>
 </ul>
 
 <h3 id="targets">Targets</h3>
 
 <ul>
-  <li>Update flash algo for <code class="highlighter-rouge">lpc55s36</code>. (thanks @Hoohaha!)</li>
+  <li>Update flash algo for <code class="language-plaintext highlighter-rouge">lpc55s36</code>. (thanks @Hoohaha!)</li>
 </ul>
 
 <h3 id="fixes">Fixes</h3>
@@ -129,7 +129,7 @@ is enabled by default.</p>
 <ul>
   <li>Session options: correctly handle session options with float values from the command line.</li>
   <li>Board: log description of exception during uninit.</li>
-  <li>JLinkProbe: only connect if <code class="highlighter-rouge">jlink.device</code> is set.</li>
+  <li>JLinkProbe: only connect if <code class="language-plaintext highlighter-rouge">jlink.device</code> is set.</li>
   <li>CortexM: fixed missing format args for warnings from post reset checks.</li>
   <li>Packs: correct which vendor is output for find and show.</li>
 </ul>

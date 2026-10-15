@@ -276,14 +276,14 @@ rather than board IDs.
 <p>Currently these debug probe firmware support board IDs:</p>
 <ul>
   <li><a href="https://daplink.io/">DAPLink</a>, via the first 4 chars of the USB serial number</li>
-  <li>STLinkV2-1 and V3, via an <code class="highlighter-rouge">.htm</code> file on the associated USB mass storage volume and an STLink protocol command.</li>
+  <li>STLinkV2-1 and V3, via an <code class="language-plaintext highlighter-rouge">.htm</code> file on the associated USB mass storage volume and an STLink protocol command.</li>
 </ul>
 
 <h2 id="lists">Lists</h2>
 
-<p>The <code class="highlighter-rouge">BOARD_ID_TO_INFO</code> dict in pyOCD’s <a href="https://github.com/pyocd/pyOCD/blob/main/pyocd/board/board_ids.py"><code class="highlighter-rouge">board_ids.py</code></a> source file contains a list of board IDs known to pyOCD, with some extra data such as target type and test firmware file name. This is not a comprehensive list of board IDs, however.</p>
+<p>The <code class="language-plaintext highlighter-rouge">BOARD_ID_TO_INFO</code> dict in pyOCD’s <a href="https://github.com/pyocd/pyOCD/blob/main/pyocd/board/board_ids.py"><code class="language-plaintext highlighter-rouge">board_ids.py</code></a> source file contains a list of board IDs known to pyOCD, with some extra data such as target type and test firmware file name. This is not a comprehensive list of board IDs, however.</p>
 
-<p>You can see the full list of public Mbed platforms at <a href="https://os.mbed.com/api/v3/platforms/">https://os.mbed.com/api/v3/platforms/</a>. The <code class="highlighter-rouge">productcode</code> key is the board ID. This list only reports boards that are Mbed platforms. Any non-Mbed-enabled boards with an allocated board ID are marked as hidden (because this database is also used to generate the <a href="https://os.mbed.com/platforms/">Mbed platforms</a> web site), and thus will not be visible through this API. Be aware that the page take a <em>long</em> time to fully load. A tool like <code class="highlighter-rouge">curl</code> may be used to download the page as JSON instead.</p>
+<p>You can see the full list of public Mbed platforms at <a href="https://os.mbed.com/api/v3/platforms/">https://os.mbed.com/api/v3/platforms/</a>. The <code class="language-plaintext highlighter-rouge">productcode</code> key is the board ID. This list only reports boards that are Mbed platforms. Any non-Mbed-enabled boards with an allocated board ID are marked as hidden (because this database is also used to generate the <a href="https://os.mbed.com/platforms/">Mbed platforms</a> web site), and thus will not be visible through this API. Be aware that the page take a <em>long</em> time to fully load. A tool like <code class="language-plaintext highlighter-rouge">curl</code> may be used to download the page as JSON instead.</p>
 
 <h2 id="getting-a-new-id">Getting a new ID</h2>
 

@@ -90,25 +90,25 @@
 <p>pyOCD v0.43.0 has been released and is available from PyPI. This version includes several improvements and bug fixes.
 The complete list of changes is provided below</p>
 
-<p>To upgrade pyOCD, just run <code class="highlighter-rouge">pip</code>:</p>
+<p>To upgrade pyOCD, just run <code class="language-plaintext highlighter-rouge">pip</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
 </code></pre></div></div>
 
-<p>A major enhancement in this version is the extension of the <code class="highlighter-rouge">run</code> subcommand to support SEGGER’s <a href="https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer/">Real-Time Transfer (RTT)</a>
+<p>A major enhancement in this version is the extension of the <code class="language-plaintext highlighter-rouge">run</code> subcommand to support SEGGER’s <a href="https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer/">Real-Time Transfer (RTT)</a>
 and <a href="https://www.segger.com/products/development-tools/systemview/">SystemView</a>. RTT channels can now be configured
-individually through <code class="highlighter-rouge">*.cbuild-run.yml</code>, enabling flexible routing of target communication. Channels may operate as
+individually through <code class="language-plaintext highlighter-rouge">*.cbuild-run.yml</code>, enabling flexible routing of target communication. Channels may operate as
 standard I/O bridges, forwarding target output to the console while relaying user input back to the device, or as
 Telnet endpoints, where a dedicated TCP server bridges a remote client directly to a selected RTT channel.
 For trace-oriented workflows, specific channels can be configured for SystemView capture, allowing trace data to be
 written to a file for post-run analysis.</p>
 
 <p>SystemView integration includes automatic handling of start and stop commands, streamlining trace capture without
-manual synchronization. The generated <code class="highlighter-rouge">*.SVDat</code> files can be opened directly in SEGGER’s SystemView tool,
+manual synchronization. The generated <code class="language-plaintext highlighter-rouge">*.SVDat</code> files can be opened directly in SEGGER’s SystemView tool,
 tool for inspection and analysis.</p>
 
-<p>Double buffering has been re-enabled for internal targets, with <code class="highlighter-rouge">STM32H7xx</code> devices excluded due to known issues.
-Internal flash algorithms have been unified around the <code class="highlighter-rouge">page_buffers</code> mechanism, and legacy template elements have
+<p>Double buffering has been re-enabled for internal targets, with <code class="language-plaintext highlighter-rouge">STM32H7xx</code> devices excluded due to known issues.
+Internal flash algorithms have been unified around the <code class="language-plaintext highlighter-rouge">page_buffers</code> mechanism, and legacy template elements have
 been removed to simplify maintenance and ensure consistent behavior across targets.</p>
 
 <p>Improvements also include better log messages in GDB Server, when client disconnects from the server and non-blocking
@@ -123,12 +123,12 @@ reading of the STDIO console.</p>
 
 <h2 id="new-features">New Features</h2>
 <ul>
-  <li><code class="highlighter-rouge">run</code> subcommand:
+  <li><code class="language-plaintext highlighter-rouge">run</code> subcommand:
     <ul>
-      <li>Add support for SEGGER’s <a href="https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer/">RTT</a> and <a href="https://www.segger.com/products/development-tools/systemview/">SystemView</a> (configured via <code class="highlighter-rouge">*.cbuild-run.yml</code>)</li>
+      <li>Add support for SEGGER’s <a href="https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer/">RTT</a> and <a href="https://www.segger.com/products/development-tools/systemview/">SystemView</a> (configured via <code class="language-plaintext highlighter-rouge">*.cbuild-run.yml</code>)</li>
       <li>Support per-channel RTT configuration with the following modes:
         <ul>
-          <li>Standard I/O: All data received from the target on this channel will be printed to the <code class="highlighter-rouge">sdtout</code>, and all user input from the <code class="highlighter-rouge">stdin</code> will be sent to the target</li>
+          <li>Standard I/O: All data received from the target on this channel will be printed to the <code class="language-plaintext highlighter-rouge">sdtout</code>, and all user input from the <code class="language-plaintext highlighter-rouge">stdin</code> will be sent to the target</li>
           <li>Telnet: A Telnet server is started on the specified port, creating a bridge between the TCP connection and the corresponding RTT channel</li>
           <li>SystemView: Capture the trace data from the specified RTT channel and save it to a user-defined file</li>
         </ul>
@@ -136,7 +136,7 @@ reading of the STDIO console.</p>
       <li>SystemView integration:
         <ul>
           <li>Support for automatic start and stop command handling</li>
-          <li>Captured trace data (<code class="highlighter-rouge">*.SVDat</code> file) can be directly opened using SEGGER’s SystemView analysis tool</li>
+          <li>Captured trace data (<code class="language-plaintext highlighter-rouge">*.SVDat</code> file) can be directly opened using SEGGER’s SystemView analysis tool</li>
         </ul>
       </li>
     </ul>
@@ -148,8 +148,8 @@ reading of the STDIO console.</p>
   <li>Flash programming:
     <ul>
       <li>Re-enable double buffering mechanism for internal targets, except STM32H7xx (known to have issues)</li>
-      <li>Migrate all internal target support to use <code class="highlighter-rouge">page_buffers</code> instead of <code class="highlighter-rouge">begin_data</code> in flash algorithms</li>
-      <li>Remove <code class="highlighter-rouge">begin_data</code> from the algorithm template</li>
+      <li>Migrate all internal target support to use <code class="language-plaintext highlighter-rouge">page_buffers</code> instead of <code class="language-plaintext highlighter-rouge">begin_data</code> in flash algorithms</li>
+      <li>Remove <code class="language-plaintext highlighter-rouge">begin_data</code> from the algorithm template</li>
     </ul>
   </li>
   <li>GDB Server:
@@ -183,25 +183,25 @@ reading of the STDIO console.</p>
 <ul>
   <li>Flash programming:
     <ul>
-      <li>Fix LPC4088 flash algorithm <code class="highlighter-rouge">page_size</code></li>
+      <li>Fix LPC4088 flash algorithm <code class="language-plaintext highlighter-rouge">page_size</code></li>
     </ul>
   </li>
   <li>CMSIS-Packs:
     <ul>
-      <li>Fix raised exception on <code class="highlighter-rouge">filename</code> property access when using extracted packs (@timll-mchp)</li>
+      <li>Fix raised exception on <code class="language-plaintext highlighter-rouge">filename</code> property access when using extracted packs (@timll-mchp)</li>
     </ul>
   </li>
   <li>RTT:
     <ul>
       <li>Fix retrieval of available/free bytes for up/down channels</li>
-      <li>Fix <code class="highlighter-rouge">control-block</code> not found when the first character of the <code class="highlighter-rouge">control-block ID</code> was not present in the read memory (@HaoYDai)</li>
+      <li>Fix <code class="language-plaintext highlighter-rouge">control-block</code> not found when the first character of the <code class="language-plaintext highlighter-rouge">control-block ID</code> was not present in the read memory (@HaoYDai)</li>
     </ul>
   </li>
 </ul>
 
 <h2 id="other">Other</h2>
 <ul>
-  <li>CI: add nightly workflow that builds PyInstaller artifacts from the <code class="highlighter-rouge">develop</code> branch</li>
+  <li>CI: add nightly workflow that builds PyInstaller artifacts from the <code class="language-plaintext highlighter-rouge">develop</code> branch</li>
 </ul>
 
 <h2 id="new-contributors">New Contributors</h2>
