@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>pyOCD 0.45.0 released &mdash; pyOCD</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RKCB4KZ7S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2RKCB4KZ7S');
+  </script>
+</head>
+
+  <body id="top">
+    <div class="full-view-height d-flex flex-column">
+      <div class="flex-shrink-0">
+        <nav class="navbar navbar-expand-md navbar-dark py-1">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/pyocd_logo_white.svg" height="42" width="auto" alt=""></img>
+    </a>
+    <a class="navbar-brand color-secondary" href="/">
+      <span class="display-lg project-name">pyOCD</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <ul class="navbar-nav">
+        
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/docs/">Documentation</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="/posts/">Posts</a>
+        </li>
+        
+        <li class="nav-item mr-auto mx-1">
+          <a class="nav-link" href="https://github.com/pyocd/pyOCD"><i class="bi bi-github"></i></a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      </div>
+      <div class="container flex-grow-1">
+        <div class="row">
+          <main role="main" class="content-scroll p-3 p-md-4">
+            <p>&larr; <a href="/posts/">View all posts</a></p>
+
+<h1><a href="/posts/2026/07-15-pyocd-0.45.0-released.html">pyOCD 0.45.0 released</a></h1>
+
+<div class="post-header">
+<p class="text-muted border-bottom">
+  <strong>Jul 15, 2026</strong>
+  <br/>Teo Mahnic
+  
+</p>
+</div>
+
+<p>pyOCD v0.45.0 has been released and is available from PyPI. This version includes several improvements and bug fixes.
+Highlights include extended CMSIS-Pack debug sequence support and file-based RTT and SWV capture. The complete list of changes is provided below.</p>
+
+<p>To upgrade pyOCD, just run <code class="language-plaintext highlighter-rouge">pip</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pyocd
+</code></pre></div></div>
+
+<p>This release extends <a href="https://pyocd.io/docs/open_cmsis_pack_support.html">CMSIS-Pack debug sequence support</a> with new
+flash programming setup sequences. It adds <code class="language-plaintext highlighter-rouge">FlashEraseSetup</code> and <code class="language-plaintext highlighter-rouge">FlashProgramSetup</code> for flashinfo based regions, along
+with a fallback to an FLM flash algorithm when a CMSIS-Pack does not provide flash programming debug sequences. The new
+<code class="language-plaintext highlighter-rouge">RunPythonScript</code> function allows debug sequences to run Python scripts, while <code class="language-plaintext highlighter-rouge">TraceCapture</code> and <code class="language-plaintext highlighter-rouge">TraceFlush</code> hooks
+extend support for trace capture.</p>
+
+<p>RTT channels now support file-based input and output, making it possible to capture test output and supply scripted
+input to the target. The raw SWV trace stream can also be saved directly to a file for later processing. Together,
+these additions make it easier to integrate target output capture into automated workflows.</p>
+
+<p>Standard I/O session options now use the <code class="language-plaintext highlighter-rouge">stdio_*</code> prefix instead of <code class="language-plaintext highlighter-rouge">telnet_*</code>, reflecting that standard I/O is not
+limited to Telnet transport. Existing <code class="language-plaintext highlighter-rouge">telnet_*</code> option names remain supported as aliases.</p>
+
+<p>CoreSight discovery now makes non-core components available to target-specific integrations and supports filtering
+components by their properties. This release also improves compatibility with newer J-Link DLLs and fixes issues
+affecting flash programming, CMSIS-DAP probe matching, and RTT memory access.</p>
+
+<p>Thanks again to all the contributors who helped make this release possible! ❤️</p>
+
+<p><a href="https://github.com/pyocd/pyOCD/releases/tag/v0.45.0">v0.45.0 on GitHub</a> <br />
+<a href="https://pypi.org/project/pyocd/0.45.0">v0.45.0 on PyPI</a></p>
+
+<hr />
+
+<h2 id="important-note">Important note</h2>
+<p>With this release, support for Python 3.14 is enabled and Python 3.8 is no longer supported. The minimum Python version is now 3.9.0.</p>
+
+<h2 id="new-features">New Features</h2>
+<ul>
+  <li>Debug sequences:
+    <ul>
+      <li>Introduce support for <code class="language-plaintext highlighter-rouge">FlashEraseSetup</code> and <code class="language-plaintext highlighter-rouge">FlashProgramSetup</code> sequences used by flashinfo based regions</li>
+      <li>Add support for <code class="language-plaintext highlighter-rouge">RunPythonScript</code> function for running Python scripts from debug sequences</li>
+      <li>Fall back to an FLM algorithm when flash programming debug sequences are not provided by a CMSIS-Pack</li>
+      <li>Add <code class="language-plaintext highlighter-rouge">TraceCapture</code> and <code class="language-plaintext highlighter-rouge">TraceFlush</code> sequence hooks, along with <code class="language-plaintext highlighter-rouge">__traceclockin</code> and <code class="language-plaintext highlighter-rouge">__traceclockout</code> debug access variables</li>
+    </ul>
+  </li>
+  <li>RTT:
+    <ul>
+      <li>Enable file-based input and output for RTT channels, supporting automated test output capture and scripted target input</li>
+    </ul>
+  </li>
+  <li>SWV:
+    <ul>
+      <li>Enable saving the raw SWV trace stream directly to a file</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="improvements">Improvements</h2>
+<ul>
+  <li>CoreSight:
+    <ul>
+      <li>Attach discovered non-core components to the target, making them available to target-specific integrations</li>
+      <li>Add support for filtering the components based on their properties</li>
+    </ul>
+  </li>
+  <li>J-Link:
+    <ul>
+      <li>Improve J-Link compatibility with newer J-Link DLL releases (@dottspina)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="changes">Changes</h2>
+<ul>
+  <li>Standard I/O:
+    <ul>
+      <li>Replace the <code class="language-plaintext highlighter-rouge">telnet_*</code> session option names with <code class="language-plaintext highlighter-rouge">stdio_*</code>, reflecting that standard I/O is not limited to Telnet transport</li>
+      <li>Continue to accept legacy <code class="language-plaintext highlighter-rouge">telnet_*</code> option names as aliases</li>
+    </ul>
+  </li>
+  <li>SWV:
+    <ul>
+      <li>Move SWV trace management to the device layer for consistent behavior across subcommands</li>
+      <li>Limit SWV console output to ITM Channel 0</li>
+    </ul>
+  </li>
+  <li>Flash programming:
+    <ul>
+      <li>Improve smart flash reliability by updating flash page states after erase operations</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="fixes">Fixes</h2>
+<ul>
+  <li>CMSIS-DAP:
+    <ul>
+      <li>Fix matching CMSIS-DAP probes that report an empty serial number</li>
+    </ul>
+  </li>
+  <li>Flash programming:
+    <ul>
+      <li>Suppress disconnect errors while closing a session after programming</li>
+      <li>Fix flashinfo subregion bounds when it covers more than one defined memory region</li>
+    </ul>
+  </li>
+  <li>Command line:
+    <ul>
+      <li>Fix the <code class="language-plaintext highlighter-rouge">n_srst</code> reset-type mapping</li>
+    </ul>
+  </li>
+  <li>RTT:
+    <ul>
+      <li>Fix target memory access for RTT up-channels</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="other">Other</h2>
+<ul>
+  <li>CI:
+    <ul>
+      <li>Drop Python 3.8 and add support for Python 3.14</li>
+      <li>Update workflow dependencies</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Full Changelog</strong>: <a href="https://github.com/pyocd/pyOCD/compare/v0.44.1...v0.45.0">v0.44.1…v0.45.0</a></p>
+
+
+          </main>
+        </div>
+      </div>
+    
+      <div class="flex-shrink-0">
+        <footer class="pyocd-footer p-0 mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-4">
+    <div class="col-3">
+      <p class="small">
+          Copyright &copy; 2021-2026 PyOCD Authors.
+      </p>
+      <p class="small">
+        Site and docs are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br/>
+        Project code is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.
+      </p>
+    </div>
+    <div class="col-3">  <!-- mt-3 mb-3 mx-4 -->
+      <h5>Links</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="/docs/">Documentation</a>
+        </li>
+        <li>
+          <a href="/posts/">Posts</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/blob/main/CONTRIBUTING.md">Contributing</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Projects</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD">pyOCD</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/cmsis-pack-manager">cmsis-pack-manager</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/FlashAlgo">FlashAlgo</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <h5>Community</h5>
+      <ul class="list-unstyled">
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/issues">Issues</a>
+        </li>
+        <li>
+          <a href="https://github.com/pyocd/pyOCD/discussions">Discussions</a>
+        </li>
+        <li>
+          <a href="https://join.slack.com/t/pyocd/shared_invite/zt-zqjv6zr5-ZfGAXl_mFCGGmFlB_8riHA">Slack</a>
+        </li>
+        <li>
+          <a href="https://groups.google.com/g/pyocd">Mailing list</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="/assets/javascript/jquery-3.6.0.slim.min.js"></script>
+<!-- 
+<script type="text/javascript" src="/assets/javascript/index.js"></script>
+ -->
+
+  </body>
+</html>
